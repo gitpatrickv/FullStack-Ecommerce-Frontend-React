@@ -13,17 +13,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { z } from "zod";
-import { schema } from "../entities/User";
+import { User, schema } from "../entities/User";
 import APIClient from "../services/api-client";
-import { useState } from "react";
 
-const apiClient = new APIClient<any>("/user/register");
+const apiClient = new APIClient<User>("/user/register");
 
 const RegisterationForm = () => {
-  type FormData = z.infer<typeof schema>;
   const [loading, isLoading] = useState(false);
 
   const {
@@ -31,9 +29,9 @@ const RegisterationForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<User>({ resolver: zodResolver(schema) });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<User> = async (data) => {
     try {
       isLoading(true);
       await apiClient.post(data);

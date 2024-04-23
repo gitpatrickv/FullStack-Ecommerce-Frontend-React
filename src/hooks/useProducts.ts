@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import Product from "../entities/Product";
 import { axiosInstance } from "../services/api-client";
-import Inventory from "../entities/Inventory";
 
 const apiClient = axiosInstance;
 
-const useProduct = () => {
-    const [products, setProducts] = useState<Product[]>([]);
+const useProducts = () => {
+    const [products, setProducts] = useState<Product[]>([]);  //initial state is an empty array, setProducts will be used to update this state
   
     useEffect(() => {
         const fetchData = async () => {
@@ -27,4 +26,4 @@ const useProduct = () => {
   )
 }
 
-export default useProduct
+export default useProducts

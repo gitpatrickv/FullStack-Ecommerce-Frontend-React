@@ -8,6 +8,7 @@ const SearchInput = () => {
         borderRadius={20}
         placeholder="Search products..."
         variant="filled"
+        style={{ width: "85%" }}
       />
     </InputGroup>
   );

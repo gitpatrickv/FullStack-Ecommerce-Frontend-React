@@ -12,7 +12,7 @@ interface FormData {
 
   const apiClient = axiosInstance;
   
-const useLogin = () => {
+  const useLogin = () => {
 
     const { register, handleSubmit } = useForm<FormData>();
     
@@ -20,7 +20,8 @@ const useLogin = () => {
   const navigate = useNavigate();
     
   const mutation = useMutation((data: FormData) =>
-    apiClient.post("/user/login", data).then((res) => res.data)
+    apiClient.post("/user/login", data)
+  .then((res) => res.data)
   );
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {

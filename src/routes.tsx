@@ -3,6 +3,7 @@ import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import LoginPage from "./pages/LoginPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 import RegisterPage from "./pages/RegisterPage";
 
 const router = createBrowserRouter([
@@ -14,20 +15,9 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/register", element: <RegisterPage /> },
       { path: "/login", element: <LoginPage /> },
+      { path: `/api/product/:productId`, element: <ProductDetailPage /> },
     ],
   },
-  // {
-  //   path: "/login",
-  //   element: <LoginPage />,
-  // },
-  // {
-  //   path: "/register",
-  //   element: <RegisterPage />,
-  // },
-  // {
-  //   path: '/products/:productId',    //dynamic path
-  //   element: <Product />
-  // }
 ]);
 
 export default router;

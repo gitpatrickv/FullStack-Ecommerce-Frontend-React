@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+export interface User {
+  email: string;
+  name: string;
+  address: string;
+  contactNumber: string;
+  password: string;
+  confirmPassword: string;
+  role: string;
+}
+
 export const schema = z.object({
     email: z.string().email(),
     name: z.string(),
