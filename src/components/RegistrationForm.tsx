@@ -92,13 +92,13 @@ const RegisterationForm = () => {
                   <Input
                     disabled={loading}
                     {...register("password")}
-                    type="text"
+                    type="password"
                     placeholder="Password"
                   />
                   <Input
                     disabled={loading}
                     {...register("confirmPassword")}
-                    type="text"
+                    type="password"
                     placeholder="Confirm Password"
                   />
                   <Input

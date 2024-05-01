@@ -1,4 +1,5 @@
 import Inventory from "./Inventory";
+import ProductImage from "./ProductImage";
 
 export default interface Product {
     photoUrl: string;
@@ -6,8 +7,8 @@ export default interface Product {
     shopName: string;
     productName: string;
     productDescription: string;
-    // inventory: Inventory[];
-    // productImage: string[];
+    inventory: Inventory[];
+    productImage: string[];
     price: number;
     quantity: number;
 }
