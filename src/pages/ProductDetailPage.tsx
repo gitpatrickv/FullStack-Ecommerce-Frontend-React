@@ -1,6 +1,6 @@
-import { Grid, GridItem, Spinner } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import ProductDetail from "../components/ProductDetail";
+import ProductDetail from "../components/Product/ProductDetail";
 import useProductDetail from "../hooks/useProductDetail";
 
 const ProductDetailPage = () => {

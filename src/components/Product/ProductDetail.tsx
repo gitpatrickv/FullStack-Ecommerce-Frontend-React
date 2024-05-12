@@ -9,8 +9,8 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import Product from "../entities/Product";
-import useAddToCart from "../hooks/useAddToCart";
+import Product from "../../entities/Product";
+import useAddToCart from "../../hooks/useAddToCart";
 
 interface Props {
   product: Product;

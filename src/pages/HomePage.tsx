@@ -1,6 +1,6 @@
 import { Grid, GridItem, Show, Text } from "@chakra-ui/react";
-import ProductGrid from "../components/ProductGrid";
-import Category from "../components/Category";
+import ProductGrid from "../components/Product/ProductGrid";
+import Category from "../components/Category/Category";
 
 const HomePage = () => {
   return (

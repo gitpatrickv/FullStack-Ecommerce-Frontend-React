@@ -2,7 +2,7 @@ import { HStack } from "@chakra-ui/react";
 import { FaHome } from "react-icons/fa";
 import { IoIosCart } from "react-icons/io";
 import { Link } from "react-router-dom";
-import SearchInput from "./SearchInput";
+import SearchInput from "../Product/SearchInput";
 
 const NavBar = () => {
   return (

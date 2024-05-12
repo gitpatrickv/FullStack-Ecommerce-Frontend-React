@@ -1,4 +1,4 @@
-import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 
 const SearchInput = () => {
   return (

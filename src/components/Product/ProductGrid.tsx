@@ -1,5 +1,5 @@
 import { SimpleGrid, Spinner } from "@chakra-ui/react";
-import useProducts from "../hooks/useProducts";
+import useProducts from "../../hooks/useProducts";
 import ProductCard from "./ProductCard";
 import ProductCardContainer from "./ProductCardContainer";
 

@@ -1,7 +1,7 @@
 import { Spinner } from "@chakra-ui/react";
-import CartItem from "../components/CartItem";
+import CartItem from "../components/Cart/CartItem";
 import useCarts from "../hooks/useCarts";
-import CartHeader from "../components/CartHeader";
+import CartHeader from "../components/Cart/CartHeader";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");

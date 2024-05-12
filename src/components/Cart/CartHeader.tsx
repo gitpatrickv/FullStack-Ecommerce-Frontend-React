@@ -1,5 +1,4 @@
 import { Box, Card, CardBody, Text } from "@chakra-ui/react";
-import React from "react";
 
 const CartHeader = () => {
   return (

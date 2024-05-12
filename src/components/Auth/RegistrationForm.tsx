@@ -16,8 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { User, schema } from "../entities/User";
-import APIClient from "../services/api-client";
+import { User, schema } from "../../entities/User";
+import APIClient from "../../services/api-client";
 
 const apiClient = new APIClient<User>("/user/register");
 

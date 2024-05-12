@@ -1,5 +1,5 @@
 import { Box, Card, CardBody, Image, Text } from "@chakra-ui/react";
-import Cart from "../entities/Cart";
+import Cart from "../../entities/Cart";
 
 interface Props {
   cart: Cart;
@@ -32,6 +32,7 @@ const CartItem = ({ cart }: Props) => {
               display="flex"
               justifyContent="space-between"
               alignItems="center"
+              pr="35px"
             >
               <Image src={cart.photoUrl} w={[50, 100]} />
               <Text

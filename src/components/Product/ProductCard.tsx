@@ -1,6 +1,6 @@
 import { Box, Card, CardBody, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import Product from "../entities/Product";
+import Product from "../../entities/Product";
 import { MdStar } from "react-icons/md";
 
 interface Props {
