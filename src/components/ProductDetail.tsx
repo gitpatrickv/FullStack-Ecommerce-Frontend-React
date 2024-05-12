@@ -32,10 +32,14 @@ const ProductDetail = ({ product }: Props) => {
     }
   };
 
+  const addToCart = useAddToCart();
+
   const handleAddToCartClick = () => {
-    const productId = product.productId;
-    const quantity = count;
-    useAddToCart(productId, quantity, jwtToken || "");
+    addToCart.mutate({
+      productId: product.productId,
+      quantity: count,
+      jwtToken: jwtToken || "",
+    });
   };
 
   return (
