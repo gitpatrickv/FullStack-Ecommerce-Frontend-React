@@ -1,4 +1,4 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 
 const SearchInput = () => {
   return (
@@ -8,10 +8,10 @@ const SearchInput = () => {
         borderRadius={20}
         placeholder="Search products..."
         variant="filled"
+        textAlign={{ base: "center", md: "left" }}
         style={{ width: "80%" }}
         maxWidth={{ base: "80%", md: "unset" }}
         mx={{ base: "auto", md: 0 }}
-        textAlign={{ base: "center", md: "left" }}
       />
     </InputGroup>
   );

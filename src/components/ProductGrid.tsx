@@ -8,7 +8,7 @@ const ProductGrid = () => {
 
   return (
     <SimpleGrid
-      columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+      columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
       spacing={6}
       padding="10px"
     >

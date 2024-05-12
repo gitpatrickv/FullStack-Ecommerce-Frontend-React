@@ -12,27 +12,7 @@ const ProductDetailPage = () => {
 
   if (error || !data) throw error;
 
-  return (
-    <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " aside main" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "300px 1fr",
-      }}
-    >
-      <GridItem area="main">
-        <ProductDetail product={data} />
-      </GridItem>
-    </Grid>
-  );
+  return <ProductDetail product={data} />;
 };
 
 export default ProductDetailPage;
-
-// <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={5}>
-// <Text>PRODUCT DETAIL PAGE</Text>
-// <ProductDetail product={data} />
-// </Grid>

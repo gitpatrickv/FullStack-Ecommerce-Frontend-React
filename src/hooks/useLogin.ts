@@ -33,6 +33,7 @@ const useLogin = () => {
       }else{
         navigate("/")
       }
+      console.log("login successful", role)
     },
     onError: (error) => {
       console.error("Login failed", error);

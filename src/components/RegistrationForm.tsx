@@ -66,11 +66,9 @@ const RegisterationForm = () => {
                     type="text"
                     placeholder="Email"
                   />
-                  /*{" "}
                   {errors.email && (
                     <Text color="red">{errors.email.message}</Text>
-                  )}{" "}
-                  */
+                  )}
                   <Input
                     disabled={loading}
                     {...register("name")}

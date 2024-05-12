@@ -4,7 +4,7 @@ import ColorModeSwitch from "./ColorModeSwitch";
 
 const Header = () => {
   return (
-    <Flex p="4" alignItems="center" px="10">
+    <Flex p="4" px="10">
       <Spacer />
       <HStack spacing={5}>
         <Link to="/login">
