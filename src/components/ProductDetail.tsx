@@ -10,10 +10,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Product from "../entities/Product";
+import useAddToCart from "../hooks/useAddToCart";
 
 interface Props {
   product: Product;
 }
+
+const jwtToken = localStorage.getItem("jwtToken");
 
 const ProductDetail = ({ product }: Props) => {
   const [count, setCount] = useState(1);
@@ -25,9 +28,15 @@ const ProductDetail = ({ product }: Props) => {
     setCount((prevState) => prevState - 1);
   };
 
+  const handleAddToCartClick = () => {
+    const productId = product.productId;
+    const quantity = count;
+    useAddToCart(productId, quantity, jwtToken || "");
+  };
+
   return (
     <Center>
-      <Box m="20" p="20" border="3px solid">
+      <Box m="20" p="20">
         <HStack>
           <Box p="5" w={[400, 500, 600]}>
             {product.productImage &&
@@ -65,7 +74,9 @@ const ProductDetail = ({ product }: Props) => {
                     {product.quantity} pieces available
                   </Text>
                 </HStack>
-                <Button mt="4">Add to Cart</Button>
+                <Button mt="4" onClick={handleAddToCartClick}>
+                  Add to Cart
+                </Button>
               </Box>
             </VStack>
           </Flex>
