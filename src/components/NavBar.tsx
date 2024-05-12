@@ -1,7 +1,7 @@
-import { Box, Flex, HStack, Spacer } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 import { FaHome } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { IoIosCart } from "react-icons/io";
+import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
 
 const NavBar = () => {
@@ -11,7 +11,9 @@ const NavBar = () => {
         <FaHome size="50" />
       </Link>
       <SearchInput />
-      <IoIosCart size="60" />
+      <Link to="/cart">
+        <IoIosCart size="60" />
+      </Link>
     </HStack>
   );
 };

@@ -22,10 +22,14 @@ const ProductDetail = ({ product }: Props) => {
   const [count, setCount] = useState(1);
 
   const handleClickPlus = () => {
-    setCount((prevState) => prevState + 1);
+    if (count < product.quantity) {
+      setCount((prevState) => prevState + 1);
+    }
   };
   const handleClickMinus = () => {
-    setCount((prevState) => prevState - 1);
+    if (count > 1) {
+      setCount((prevState) => prevState - 1);
+    }
   };
 
   const handleAddToCartClick = () => {
@@ -58,7 +62,7 @@ const ProductDetail = ({ product }: Props) => {
                 fontSize="xl"
                 fontWeight="semibold"
                 lineHeight="short"
-                textTransform="uppercase"
+                textTransform="capitalize"
               >
                 {product.productName}
               </Text>

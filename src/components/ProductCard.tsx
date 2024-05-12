@@ -13,7 +13,7 @@ const ProductCard = ({ product }: Props) => {
       <Card>
         <Image src={product.photoUrl} h={[200, 250]} />
         <CardBody>
-          <Text fontSize="xl" fontWeight="semibold" textTransform="uppercase">
+          <Text fontSize="xl" fontWeight="semibold" textTransform="capitalize">
             {product?.productName}
           </Text>
           <Text>₱{product?.price}</Text>

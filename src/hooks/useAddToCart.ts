@@ -1,4 +1,3 @@
-import Cart from '../entities/Cart';
 import { axiosInstance } from '../services/api-client';
 
 const apiClient = axiosInstance;
