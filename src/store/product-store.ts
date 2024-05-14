@@ -11,6 +11,7 @@ interface ProductQueryStore {
     setProductId: (productId: string) => void;
     increment: (quantity: number) => void;
     decrement: (quantity: number) => void;
+    reset: () => void;
 }
 
 const useProductQueryStore = create<ProductQueryStore>(set => ({
@@ -27,7 +28,8 @@ const useProductQueryStore = create<ProductQueryStore>(set => ({
             return { productQuery: { ...state.productQuery, count: state.productQuery.count - 1 }}
         }
         return state;
-    })
+    }),
+    reset: () => set({ productQuery: {count: 1}})
 }))
 
 export default useProductQueryStore;

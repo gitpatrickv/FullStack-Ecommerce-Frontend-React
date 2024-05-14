@@ -1,16 +1,19 @@
-import { Box, Card, CardBody, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Image, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
+import useProductQueryStore from "../../store/product-store";
 
 interface Props {
   cart: Cart;
 }
 
 const CartItem = ({ cart }: Props) => {
+  const reset = useProductQueryStore((state) => state.reset);
   const navigate = useNavigate();
 
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
+    reset();
   };
 
   return (
@@ -60,10 +63,17 @@ const CartItem = ({ cart }: Props) => {
               >
                 {cart.productName}
               </Text>
-
-              <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
-                {cart.quantity}
-              </Text>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <Button position="relative" right="10px">
+                  -
+                </Button>
+                <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
+                  {cart.quantity}
+                </Text>
+                <Button position="relative" left="10px">
+                  +
+                </Button>
+              </Box>
               <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
                 ₱{cart.price}
               </Text>

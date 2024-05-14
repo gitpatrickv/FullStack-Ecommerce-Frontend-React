@@ -23,6 +23,7 @@ const ProductDetail = ({ product }: Props) => {
   const count = useProductQueryStore((state) => state.productQuery.count);
   const increment = useProductQueryStore((state) => state.increment);
   const decrement = useProductQueryStore((state) => state.decrement);
+  const reset = useProductQueryStore((state) => state.reset);
 
   const handleClickPlus = () => {
     increment(product.quantity);
@@ -59,6 +60,7 @@ const ProductDetail = ({ product }: Props) => {
         isClosable: true,
       });
     }
+    reset();
   };
 
   return (
