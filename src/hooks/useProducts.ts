@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Product from "../entities/Product";
 import { axiosInstance } from "../services/api-client";
-import { useQuery } from "@tanstack/react-query";
+
 
 const apiClient = axiosInstance;
 

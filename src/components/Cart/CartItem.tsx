@@ -1,4 +1,5 @@
 import { Box, Card, CardBody, Image, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
 
 interface Props {
@@ -6,6 +7,12 @@ interface Props {
 }
 
 const CartItem = ({ cart }: Props) => {
+  const navigate = useNavigate();
+
+  const handleNavigateClick = () => {
+    navigate(`/api/product/` + cart?.productId);
+  };
+
   return (
     <Box>
       <Card
@@ -14,7 +21,7 @@ const CartItem = ({ cart }: Props) => {
         pt="30px"
         position="relative"
         margin="auto"
-        mt="30px"
+        mt="10px"
       >
         <CardBody>
           <Box>
@@ -34,15 +41,26 @@ const CartItem = ({ cart }: Props) => {
               alignItems="center"
               pr="35px"
             >
-              <Image src={cart.photoUrl} w={[50, 100]} />
+              <Image
+                src={cart.photoUrl}
+                w={[50, 100]}
+                boxSize="70px"
+                onClick={handleNavigateClick}
+                cursor="pointer"
+              />
               <Text
                 fontSize="xl"
                 fontWeight="semibold"
                 lineHeight="short"
                 textTransform="capitalize"
+                position="relative"
+                left="-20px"
+                onClick={handleNavigateClick}
+                cursor="pointer"
               >
                 {cart.productName}
               </Text>
+
               <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
                 {cart.quantity}
               </Text>

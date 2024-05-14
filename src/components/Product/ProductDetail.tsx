@@ -7,6 +7,7 @@ import {
   Image,
   Text,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Product from "../../entities/Product";
@@ -32,14 +33,33 @@ const ProductDetail = ({ product }: Props) => {
     }
   };
 
-  const addToCart = useAddToCart();
+  const toast = useToast();
 
-  const handleAddToCartClick = () => {
-    addToCart.mutate({
-      productId: product.productId,
-      quantity: count,
-      jwtToken: jwtToken || "",
-    });
+  const { mutate } = useAddToCart();
+
+  const handleAddToCartClick = async () => {
+    try {
+      await mutate({
+        productId: product.productId,
+        quantity: count,
+        jwtToken: jwtToken || "",
+      });
+      toast({
+        position: "top",
+        title: "Item has been added to your cart",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        position: "top",
+        title: "Error",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -47,10 +67,9 @@ const ProductDetail = ({ product }: Props) => {
       <Box m="20" p="20">
         <HStack>
           <Box p="5" w={[400, 500, 600]}>
-            {product.productImage &&
-              product.productImage.map((image, index) => (
-                <Image key={index} src={image} h={[200, 300]} />
-              ))}
+            {product?.productImage.map((image, index) => (
+              <Image key={index} src={image} h={[200, 300]} />
+            ))}
           </Box>
           <Flex alignSelf="start">
             <VStack alignItems="start" m="4">

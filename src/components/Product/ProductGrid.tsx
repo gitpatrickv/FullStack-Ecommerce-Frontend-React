@@ -4,7 +4,6 @@ import ProductCard from "./ProductCard";
 import ProductCardContainer from "./ProductCardContainer";
 
 const ProductGrid = () => {
-  // const products = useProducts();
   const { data, isLoading, error } = useProducts();
   if (isLoading) return <Spinner />;
 

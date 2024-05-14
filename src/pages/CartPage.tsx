@@ -15,7 +15,7 @@ const CartPage = () => {
   return (
     <>
       <CartHeader />
-      {data.data.map((cartItem, index) => (
+      {data?.data.map((cartItem, index) => (
         <CartItem key={index} cart={cartItem} />
       ))}
     </>
