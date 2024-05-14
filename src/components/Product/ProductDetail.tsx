@@ -9,9 +9,9 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import Product from "../../entities/Product";
 import useAddToCart from "../../hooks/useAddToCart";
+import useProductQueryStore from "../../store/product-store";
 
 interface Props {
   product: Product;
@@ -20,17 +20,16 @@ interface Props {
 const jwtToken = localStorage.getItem("jwtToken");
 
 const ProductDetail = ({ product }: Props) => {
-  const [count, setCount] = useState(1);
+  const count = useProductQueryStore((state) => state.productQuery.count);
+  const increment = useProductQueryStore((state) => state.increment);
+  const decrement = useProductQueryStore((state) => state.decrement);
 
   const handleClickPlus = () => {
-    if (count < product.quantity) {
-      setCount((prevState) => prevState + 1);
-    }
+    increment(product.quantity);
   };
+
   const handleClickMinus = () => {
-    if (count > 1) {
-      setCount((prevState) => prevState - 1);
-    }
+    decrement(product.quantity);
   };
 
   const toast = useToast();
