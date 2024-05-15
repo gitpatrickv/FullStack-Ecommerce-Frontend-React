@@ -45,7 +45,7 @@ const ProductDetail = ({ product }: Props) => {
         position: "top",
         title: "Item has been added to your cart",
         status: "success",
-        duration: 2000,
+        duration: 1000,
         isClosable: true,
       });
     } catch (error) {
@@ -53,7 +53,7 @@ const ProductDetail = ({ product }: Props) => {
         position: "top",
         title: "Error",
         status: "error",
-        duration: 3000,
+        duration: 2000,
         isClosable: true,
       });
     }

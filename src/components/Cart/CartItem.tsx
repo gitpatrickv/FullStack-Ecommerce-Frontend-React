@@ -1,20 +1,64 @@
-import { Box, Button, Card, CardBody, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Checkbox,
+  Image,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
+import useDecrementQuantity from "../../hooks/useDecrementQuantity";
+import useDeleteCart from "../../hooks/useDeleteCart";
+import useIncrementQuantity from "../../hooks/useIncrementQuantity";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   cart: Cart;
 }
+const jwtToken = localStorage.getItem("jwtToken");
 
 const CartItem = ({ cart }: Props) => {
   const reset = useProductQueryStore((state) => state.reset);
   const navigate = useNavigate();
+  const { mutate: deleteCart } = useDeleteCart();
+  const { mutate: decrementQuantity } = useDecrementQuantity();
+  const { mutate: incrementQuantity } = useIncrementQuantity();
+  const toast = useToast();
 
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
     reset();
+  };
+
+  const handleClickDecrement = () => {
+    decrementQuantity({
+      productId: cart.productId,
+      cartId: cart.cartId,
+      jwtToken: jwtToken || "",
+    });
+  };
+
+  const handleClickIncrement = () => {
+    incrementQuantity({
+      productId: cart.productId,
+      cartId: cart.cartId,
+      jwtToken: jwtToken || "",
+    });
+  };
+
+  const handleDeleteCart = () => {
+    deleteCart({ jwtToken: jwtToken || "", cartId: cart.cartId });
+    toast({
+      position: "top",
+      title: "Item has been deleted from your cart",
+      status: "success",
+      duration: 1000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -44,6 +88,8 @@ const CartItem = ({ cart }: Props) => {
               justifyContent="space-between"
               alignItems="center"
             >
+              <Checkbox size="lg" colorScheme="green" />
+
               <Image
                 src={cart.photoUrl}
                 w={[50, 100]}
@@ -63,13 +109,21 @@ const CartItem = ({ cart }: Props) => {
               </Text>
 
               <Box display="flex" justifyContent="center" alignItems="center">
-                <Button position="relative" right="10px">
+                <Button
+                  position="relative"
+                  right="10px"
+                  onClick={handleClickDecrement}
+                >
                   -
                 </Button>
                 <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
                   {cart.quantity}
                 </Text>
-                <Button position="relative" left="10px">
+                <Button
+                  position="relative"
+                  left="10px"
+                  onClick={handleClickIncrement}
+                >
                   +
                 </Button>
               </Box>
@@ -80,7 +134,7 @@ const CartItem = ({ cart }: Props) => {
               <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
                 {formatCurrency(cart.totalAmount)}
               </Text>
-              <Button>Delete</Button>
+              <Button onClick={handleDeleteCart}>Delete</Button>
             </Box>
           </Box>
         </CardBody>

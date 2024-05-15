@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation,useQueryClient } from '@tanstack/react-query';
 import { axiosInstance } from '../services/api-client';
 
 interface AddToCartProps {
@@ -10,6 +10,7 @@ interface AddToCartProps {
 const apiClient = axiosInstance;
 
 const useAddToCart = () => {
+  const queryClient = useQueryClient();
   return useMutation(
     async ({ productId, quantity, jwtToken }: AddToCartProps) => {
       const { data } = await apiClient.put(
@@ -22,6 +23,11 @@ const useAddToCart = () => {
         }
       );
       return data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['cart']);
+      }
     }
   );
 };

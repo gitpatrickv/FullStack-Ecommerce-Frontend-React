@@ -1,5 +1,5 @@
 export default interface Cart{
-    cartId:number;
+    cartId:string;
     photoUrl: string;
     productId: string;
     shopName: string;
