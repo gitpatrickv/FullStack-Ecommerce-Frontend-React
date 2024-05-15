@@ -1,8 +1,9 @@
 import { Box, Card, CardBody, Flex, Image, Text } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
-import Product from "../../entities/Product";
 import { MdStar } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import Product from "../../entities/Product";
 import useProductQueryStore from "../../store/product-store";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   product: Product;
@@ -23,7 +24,7 @@ const ProductCard = ({ product }: Props) => {
         <Text fontSize="xl" fontWeight="semibold" textTransform="capitalize">
           {product?.productName}
         </Text>
-        <Text>₱{product?.price}</Text>
+        <Text>{formatCurrency(product.price)}</Text>
         <Flex mt={2} align="center">
           <Box as={MdStar} color="orange.400" />
           <Text ml={1} fontSize="sm">

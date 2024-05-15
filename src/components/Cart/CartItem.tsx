@@ -2,6 +2,7 @@ import { Box, Button, Card, CardBody, Image, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
 import useProductQueryStore from "../../store/product-store";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   cart: Cart;
@@ -42,7 +43,6 @@ const CartItem = ({ cart }: Props) => {
               display="flex"
               justifyContent="space-between"
               alignItems="center"
-              pr="35px"
             >
               <Image
                 src={cart.photoUrl}
@@ -56,13 +56,12 @@ const CartItem = ({ cart }: Props) => {
                 fontWeight="semibold"
                 lineHeight="short"
                 textTransform="capitalize"
-                position="relative"
-                left="-20px"
                 onClick={handleNavigateClick}
                 cursor="pointer"
               >
                 {cart.productName}
               </Text>
+
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Button position="relative" right="10px">
                   -
@@ -74,11 +73,12 @@ const CartItem = ({ cart }: Props) => {
                   +
                 </Button>
               </Box>
+
               <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
-                ₱{cart.price}
+                {formatCurrency(cart.price)}
               </Text>
               <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
-                ₱{cart.totalAmount}
+                {formatCurrency(cart.totalAmount)}
               </Text>
             </Box>
           </Box>

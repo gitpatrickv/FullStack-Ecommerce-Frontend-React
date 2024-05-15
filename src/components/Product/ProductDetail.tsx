@@ -12,6 +12,7 @@ import {
 import Product from "../../entities/Product";
 import useAddToCart from "../../hooks/useAddToCart";
 import useProductQueryStore from "../../store/product-store";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   product: Product;
@@ -90,8 +91,7 @@ const ProductDetail = ({ product }: Props) => {
               >
                 {product.productName}
               </Text>
-              <Text>₱{product.price}</Text>
-
+              <Text>{formatCurrency(product.price)}</Text>
               <Box position="relative" bottom="-100px">
                 <HStack mt="4">
                   <Text>Quantity</Text>
