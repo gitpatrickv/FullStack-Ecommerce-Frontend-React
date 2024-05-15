@@ -80,6 +80,7 @@ const CartItem = ({ cart }: Props) => {
               <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
                 {formatCurrency(cart.totalAmount)}
               </Text>
+              <Button>Delete</Button>
             </Box>
           </Box>
         </CardBody>

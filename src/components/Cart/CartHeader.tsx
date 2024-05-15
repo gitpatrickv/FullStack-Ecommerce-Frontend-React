@@ -10,45 +10,23 @@ const CartHeader = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              lineHeight="short"
-              textTransform="uppercase"
-            >
+            <Text fontSize="xl" fontWeight="semibold">
               Shop Name
             </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              lineHeight="short"
-              textTransform="uppercase"
-            >
+            <Text fontSize="xl" fontWeight="semibold">
               Product
             </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              lineHeight="short"
-              textTransform="uppercase"
-            >
+            <Text fontSize="xl" fontWeight="semibold">
               Quantity
             </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              lineHeight="short"
-              textTransform="uppercase"
-            >
+            <Text fontSize="xl" fontWeight="semibold">
               Price
             </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              lineHeight="short"
-              textTransform="uppercase"
-            >
+            <Text fontSize="xl" fontWeight="semibold">
               Total Amount
+            </Text>
+            <Text fontSize="xl" fontWeight="semibold">
+              Actions
             </Text>
           </Box>
         </CardBody>

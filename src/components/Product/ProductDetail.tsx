@@ -21,18 +21,14 @@ interface Props {
 const jwtToken = localStorage.getItem("jwtToken");
 
 const ProductDetail = ({ product }: Props) => {
-  const count = useProductQueryStore((state) => state.productQuery.count);
-  const increment = useProductQueryStore((state) => state.increment);
-  const decrement = useProductQueryStore((state) => state.decrement);
-  const reset = useProductQueryStore((state) => state.reset);
-
-  const handleClickPlus = () => {
-    increment(product.quantity);
-  };
-
-  const handleClickMinus = () => {
-    decrement(product.quantity);
-  };
+  const { count, increment, decrement, reset } = useProductQueryStore(
+    (state) => ({
+      count: state.productQuery.count,
+      increment: state.increment,
+      decrement: state.decrement,
+      reset: state.reset,
+    })
+  );
 
   const toast = useToast();
 
@@ -95,9 +91,9 @@ const ProductDetail = ({ product }: Props) => {
               <Box position="relative" bottom="-100px">
                 <HStack mt="4">
                   <Text>Quantity</Text>
-                  <Button onClick={handleClickMinus}>-</Button>
+                  <Button onClick={() => decrement(product.quantity)}>-</Button>
                   <Text>{count}</Text>
-                  <Button onClick={handleClickPlus}>+</Button>
+                  <Button onClick={() => increment(product.quantity)}>+</Button>
                   <Text color="gray.500">
                     {product.quantity} pieces available
                   </Text>

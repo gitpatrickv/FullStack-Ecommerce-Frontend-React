@@ -1,4 +1,4 @@
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import { FaHome, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
@@ -16,12 +16,23 @@ const NavBar = () => {
           <Box
             h="30px"
             w="30px"
-            bg="red"
+            bg="gray.700"
             borderRadius="30px"
             position="relative"
             right="-35px"
             top="-60px"
-          ></Box>
+          >
+            <Text
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              color="white"
+              fontSize="20px"
+              fontWeight="semibold"
+            >
+              3
+            </Text>
+          </Box>
         </Box>
       </Link>
     </HStack>
