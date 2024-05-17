@@ -7,5 +7,6 @@ export default interface Cart{
     price: number;
     quantity: number;
     totalAmount: number;
-
+    filter: boolean;
+    cartTotal: number;
 }

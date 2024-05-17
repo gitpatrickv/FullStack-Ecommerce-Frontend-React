@@ -4,8 +4,11 @@ import {
   Card,
   CardBody,
   Checkbox,
+  Divider,
+  HStack,
   Image,
   Text,
+  useCheckbox,
   useToast,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +18,10 @@ import useDeleteCart from "../../hooks/useDeleteCart";
 import useIncrementQuantity from "../../hooks/useIncrementQuantity";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useFilterCart from "../../hooks/useFilterCart";
+import { useState } from "react";
+import useCartTotal from "../../hooks/useCartTotal";
+import useCarts from "../../hooks/useCarts";
 
 interface Props {
   cart: Cart;
@@ -27,31 +34,56 @@ const CartItem = ({ cart }: Props) => {
   const { mutate: deleteCart } = useDeleteCart();
   const { mutate: decrementQuantity } = useDecrementQuantity();
   const { mutate: incrementQuantity } = useIncrementQuantity();
+  const { mutate: filterCart } = useFilterCart();
+  const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
+  const { refetch: refetchCarts } = useCarts(jwtToken || "");
   const toast = useToast();
-
+  const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
     reset();
   };
 
   const handleClickDecrement = () => {
-    decrementQuantity({
-      productId: cart.productId,
-      cartId: cart.cartId,
-      jwtToken: jwtToken || "",
-    });
+    decrementQuantity(
+      {
+        productId: cart.productId,
+        cartId: cart.cartId,
+        jwtToken: jwtToken || "",
+      },
+      {
+        onSuccess: () => {
+          refetchTotal();
+        },
+      }
+    );
   };
 
   const handleClickIncrement = () => {
-    incrementQuantity({
-      productId: cart.productId,
-      cartId: cart.cartId,
-      jwtToken: jwtToken || "",
-    });
+    incrementQuantity(
+      {
+        productId: cart.productId,
+        cartId: cart.cartId,
+        jwtToken: jwtToken || "",
+      },
+      {
+        onSuccess: () => {
+          refetchTotal();
+        },
+      }
+    );
   };
 
   const handleDeleteCart = () => {
-    deleteCart({ jwtToken: jwtToken || "", cartId: cart.cartId });
+    deleteCart(
+      { jwtToken: jwtToken || "", cartId: cart.cartId },
+      {
+        onSuccess: () => {
+          refetchTotal();
+          refetchCarts();
+        },
+      }
+    );
     toast({
       position: "top",
       title: "Item has been deleted from your cart",
@@ -59,6 +91,18 @@ const CartItem = ({ cart }: Props) => {
       duration: 1000,
       isClosable: true,
     });
+  };
+
+  const handleFilterChange = () => {
+    filterCart(
+      { cartId: cart.cartId, jwtToken: jwtToken || "" },
+      {
+        onSuccess: () => {
+          refetchTotal();
+        },
+      }
+    );
+    setIsFiltered(!isFiltered);
   };
 
   return (
@@ -75,66 +119,73 @@ const CartItem = ({ cart }: Props) => {
           <Box>
             <Box
               position="absolute"
-              top="15px"
+              top="5px"
               fontSize="xl"
               fontWeight="semibold"
-              lineHeight="short"
               textTransform="uppercase"
             >
               <Text>{cart.shopName}</Text>
+              <Divider w="1650px" position="relative" left="-20px" pt="3px" />
             </Box>
             <Box
               display="flex"
               justifyContent="space-between"
               alignItems="center"
             >
-              <Checkbox size="lg" colorScheme="green" />
-
-              <Image
-                src={cart.photoUrl}
-                w={[50, 100]}
-                boxSize="70px"
-                onClick={handleNavigateClick}
-                cursor="pointer"
-              />
-              <Text
-                fontSize="xl"
-                fontWeight="semibold"
-                lineHeight="short"
-                textTransform="capitalize"
-                onClick={handleNavigateClick}
-                cursor="pointer"
-              >
-                {cart.productName}
-              </Text>
-
-              <Box display="flex" justifyContent="center" alignItems="center">
-                <Button
-                  position="relative"
-                  right="10px"
-                  onClick={handleClickDecrement}
+              <Box display="flex" alignItems="center">
+                <Checkbox
+                  size="lg"
+                  colorScheme="green"
+                  pr="20px"
+                  isChecked={isFiltered}
+                  onChange={handleFilterChange}
+                />
+                <Image
+                  src={cart.photoUrl}
+                  w={[50, 100]}
+                  boxSize="70px"
+                  onClick={handleNavigateClick}
+                  cursor="pointer"
+                />
+                <Text
+                  fontSize="xl"
+                  fontWeight="semibold"
+                  textTransform="capitalize"
+                  onClick={handleNavigateClick}
+                  cursor="pointer"
+                  pl="20px"
                 >
-                  -
-                </Button>
-                <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
-                  {cart.quantity}
+                  {cart.productName}
                 </Text>
-                <Button
-                  position="relative"
-                  left="10px"
-                  onClick={handleClickIncrement}
-                >
-                  +
-                </Button>
               </Box>
-
-              <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
-                {formatCurrency(cart.price)}
-              </Text>
-              <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
-                {formatCurrency(cart.totalAmount)}
-              </Text>
-              <Button onClick={handleDeleteCart}>Delete</Button>
+              <HStack spacing="275px">
+                <Text fontSize="xl" fontWeight="semibold">
+                  {formatCurrency(cart.price)}
+                </Text>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                  <Button
+                    position="relative"
+                    right="10px"
+                    onClick={handleClickDecrement}
+                  >
+                    -
+                  </Button>
+                  <Text fontSize="xl" fontWeight="semibold">
+                    {cart.quantity}
+                  </Text>
+                  <Button
+                    position="relative"
+                    left="10px"
+                    onClick={handleClickIncrement}
+                  >
+                    +
+                  </Button>
+                </Box>
+                <Text fontSize="xl" fontWeight="semibold">
+                  {formatCurrency(cart.totalAmount)}
+                </Text>
+                <Button onClick={handleDeleteCart}>Delete</Button>
+              </HStack>
             </Box>
           </Box>
         </CardBody>
