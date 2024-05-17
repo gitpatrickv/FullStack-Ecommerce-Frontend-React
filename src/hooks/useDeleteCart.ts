@@ -20,7 +20,7 @@ const useDeleteCart = () => {
         }),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart']);
+                queryClient.invalidateQueries(['cart', 'cartTotal']);
             }
         }
     );

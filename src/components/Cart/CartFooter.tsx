@@ -16,8 +16,10 @@ const CartFooter = ({ cartTotal }: Props) => {
             alignItems="center"
           >
             <Spacer />
-            <Text pr="20px">CART TOTAL: </Text>
-            <Text>{formatCurrency(cartTotal)}</Text>
+            <Text pr="20px" fontSize="x-large">
+              CART TOTAL:
+            </Text>
+            <Text fontSize="x-large">{formatCurrency(cartTotal)}</Text>
           </Box>
         </CardBody>
       </Card>

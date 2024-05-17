@@ -23,7 +23,7 @@ const useFilterCart = () => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart']);
+                queryClient.invalidateQueries(['cart', 'cartTotal']);
             }
         },
     )

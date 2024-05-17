@@ -4,12 +4,14 @@ import CartHeader from "../components/Cart/CartHeader";
 import CartItem from "../components/Cart/CartItem";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
+import useFilterCart from "../hooks/useFilterCart";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
 
   const { data, isLoading, error } = useCarts(jwtToken || "");
   const { data: total } = useCartTotal(jwtToken || "");
+  const { data: totalFilter } = useFilterCart();
 
   if (isLoading) return <Spinner />;
 

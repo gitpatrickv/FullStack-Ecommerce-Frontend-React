@@ -20,6 +20,8 @@ import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import useFilterCart from "../../hooks/useFilterCart";
 import { useState } from "react";
+import useCartTotal from "../../hooks/useCartTotal";
+import useCarts from "../../hooks/useCarts";
 
 interface Props {
   cart: Cart;
@@ -32,7 +34,9 @@ const CartItem = ({ cart }: Props) => {
   const { mutate: deleteCart } = useDeleteCart();
   const { mutate: decrementQuantity } = useDecrementQuantity();
   const { mutate: incrementQuantity } = useIncrementQuantity();
-  const { mutate: filterCart, data } = useFilterCart();
+  const { mutate: filterCart } = useFilterCart();
+  const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
+  const { refetch: refetchCarts } = useCarts(jwtToken || "");
   const toast = useToast();
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const handleNavigateClick = () => {
@@ -41,23 +45,45 @@ const CartItem = ({ cart }: Props) => {
   };
 
   const handleClickDecrement = () => {
-    decrementQuantity({
-      productId: cart.productId,
-      cartId: cart.cartId,
-      jwtToken: jwtToken || "",
-    });
+    decrementQuantity(
+      {
+        productId: cart.productId,
+        cartId: cart.cartId,
+        jwtToken: jwtToken || "",
+      },
+      {
+        onSuccess: () => {
+          refetchTotal();
+        },
+      }
+    );
   };
 
   const handleClickIncrement = () => {
-    incrementQuantity({
-      productId: cart.productId,
-      cartId: cart.cartId,
-      jwtToken: jwtToken || "",
-    });
+    incrementQuantity(
+      {
+        productId: cart.productId,
+        cartId: cart.cartId,
+        jwtToken: jwtToken || "",
+      },
+      {
+        onSuccess: () => {
+          refetchTotal();
+        },
+      }
+    );
   };
 
   const handleDeleteCart = () => {
-    deleteCart({ jwtToken: jwtToken || "", cartId: cart.cartId });
+    deleteCart(
+      { jwtToken: jwtToken || "", cartId: cart.cartId },
+      {
+        onSuccess: () => {
+          refetchTotal();
+          refetchCarts();
+        },
+      }
+    );
     toast({
       position: "top",
       title: "Item has been deleted from your cart",
@@ -68,7 +94,14 @@ const CartItem = ({ cart }: Props) => {
   };
 
   const handleFilterChange = () => {
-    filterCart({ cartId: cart.cartId, jwtToken: jwtToken || "" });
+    filterCart(
+      { cartId: cart.cartId, jwtToken: jwtToken || "" },
+      {
+        onSuccess: () => {
+          refetchTotal();
+        },
+      }
+    );
     setIsFiltered(!isFiltered);
   };
 
