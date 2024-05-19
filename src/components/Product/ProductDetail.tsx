@@ -13,6 +13,8 @@ import Product from "../../entities/Product";
 import useAddToCart from "../../hooks/useAddToCart";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useCartTotal from "../../hooks/useCartTotal";
+import useCarts from "../../hooks/useCarts";
 
 interface Props {
   product: Product;
@@ -31,16 +33,24 @@ const ProductDetail = ({ product }: Props) => {
   );
 
   const toast = useToast();
-
-  const { mutate } = useAddToCart();
-
+  const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
+  const { mutate: addToCart } = useAddToCart();
+  const { refetch: refetchCarts } = useCarts(jwtToken || "");
   const handleAddToCartClick = async () => {
     try {
-      await mutate({
-        productId: product.productId,
-        quantity: count,
-        jwtToken: jwtToken || "",
-      });
+      await addToCart(
+        {
+          productId: product.productId,
+          quantity: count,
+          jwtToken: jwtToken || "",
+        },
+        {
+          onSuccess: () => {
+            refetchCarts();
+            refetchTotal();
+          },
+        }
+      );
       toast({
         position: "top",
         title: "Item has been added to your cart",

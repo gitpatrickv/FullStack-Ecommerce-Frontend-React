@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../services/api-client";
-import Cart from "../entities/Cart";
 import CartTotal from "../entities/CartTotal";
+import { axiosInstance } from "../services/api-client";
 
 const apiClient = axiosInstance;
 

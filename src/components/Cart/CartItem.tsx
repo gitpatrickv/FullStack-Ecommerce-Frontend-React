@@ -8,22 +8,21 @@ import {
   HStack,
   Image,
   Text,
-  useCheckbox,
   useToast,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
+import useCartTotal from "../../hooks/useCartTotal";
+import useCarts from "../../hooks/useCarts";
 import useDecrementQuantity from "../../hooks/useDecrementQuantity";
 import useDeleteCart from "../../hooks/useDeleteCart";
+import useFilterCart from "../../hooks/useFilterCart";
 import useIncrementQuantity from "../../hooks/useIncrementQuantity";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import useFilterCart from "../../hooks/useFilterCart";
-import { useState } from "react";
-import useCartTotal from "../../hooks/useCartTotal";
-import useCarts from "../../hooks/useCarts";
 
-interface Props {
+export interface Props {
   cart: Cart;
 }
 const jwtToken = localStorage.getItem("jwtToken");
