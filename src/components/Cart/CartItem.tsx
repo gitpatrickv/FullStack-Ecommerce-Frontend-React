@@ -10,11 +10,10 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
 import useCartTotal from "../../hooks/useCartTotal";
-import useCarts from "../../hooks/useCarts";
 import useDecrementQuantity from "../../hooks/useDecrementQuantity";
 import useDeleteCart from "../../hooks/useDeleteCart";
 import useFilterCart from "../../hooks/useFilterCart";
@@ -24,24 +23,28 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 
 export interface Props {
   cart: Cart;
+  refetchCarts: () => void;
 }
 const jwtToken = localStorage.getItem("jwtToken");
 
-const CartItem = ({ cart }: Props) => {
+const CartItem = ({ cart, refetchCarts }: Props) => {
   const reset = useProductQueryStore((state) => state.reset);
   const navigate = useNavigate();
+  const toast = useToast();
   const { mutate: deleteCart } = useDeleteCart();
   const { mutate: decrementQuantity } = useDecrementQuantity();
   const { mutate: incrementQuantity } = useIncrementQuantity();
   const { mutate: filterCart } = useFilterCart();
   const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
-  const { refetch: refetchCarts } = useCarts(jwtToken || "");
-  const toast = useToast();
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
     reset();
   };
+
+  useEffect(() => {
+    setIsFiltered(cart.filter);
+  }, [cart.filter]);
 
   const handleClickDecrement = () => {
     decrementQuantity(
@@ -98,10 +101,11 @@ const CartItem = ({ cart }: Props) => {
       {
         onSuccess: () => {
           refetchTotal();
+          refetchCarts();
+          setIsFiltered(!isFiltered);
         },
       }
     );
-    setIsFiltered(!isFiltered);
   };
 
   return (

@@ -4,25 +4,48 @@ import CartHeader from "../components/Cart/CartHeader";
 import CartItem from "../components/Cart/CartItem";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
+import useFilterAllCarts from "../hooks/useFilterAllCarts";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
 
-  const { data, isLoading, error } = useCarts(jwtToken || "");
-  const { data: total } = useCartTotal(jwtToken || "");
-  if (isLoading) return <Spinner />;
-  if (error || !data) throw error;
+  const {
+    data: carts,
+    isLoading,
+    error,
+    refetch: refetchCarts,
+  } = useCarts(jwtToken || "");
+  const { data: cartTotal, refetch: refetchTotal } = useCartTotal(
+    jwtToken || ""
+  );
+  const { mutate: filterAllCart } = useFilterAllCarts();
 
-  const filterCart = data.data.every((f) => f.filter);
+  if (isLoading) return <Spinner />;
+  if (error || !carts) throw error;
+
+  const handleFilterAll = () => {
+    filterAllCart(
+      { jwtToken: jwtToken || "" },
+      {
+        onSuccess: () => {
+          refetchCarts();
+          refetchTotal();
+        },
+      }
+    );
+  };
 
   return (
     <>
-      <CartHeader isChecked={filterCart} />
+      <CartHeader
+        isChecked={carts?.data.every((cart) => cart.filter)}
+        onFilterAll={handleFilterAll}
+      />
 
-      {data?.data.map((cartItem, index) => (
-        <CartItem key={index} cart={cartItem} />
+      {carts?.data.map((cart) => (
+        <CartItem key={cart.cartId} cart={cart} refetchCarts={refetchCarts} />
       ))}
-      <CartFooter cartTotal={total?.cartTotal ?? 0} />
+      <CartFooter cartTotal={cartTotal?.cartTotal ?? 0} />
     </>
   );
 };

@@ -21,10 +21,9 @@ const useFilterAllCarts = () => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart', 'cartTotal'])
-                
+                queryClient.invalidateQueries(['cart', 'cartTotal']);
             }
-        }
+        },
     
     )
 }

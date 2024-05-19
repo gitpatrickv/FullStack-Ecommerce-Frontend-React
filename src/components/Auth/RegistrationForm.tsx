@@ -58,7 +58,12 @@ const RegisterationForm = () => {
               </Link>
             </Box>
             <CardBody>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  handleSubmit(onSubmit)(event);
+                }}
+              >
                 <Stack spacing={3}>
                   <Input
                     disabled={loading}

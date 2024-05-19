@@ -1,28 +1,20 @@
 import { Box, Card, CardBody, Checkbox, Text } from "@chakra-ui/react";
-import { useState } from "react";
-import useCartTotal from "../../hooks/useCartTotal";
-import useFilterAllCarts from "../../hooks/useFilterAllCarts";
-
-const jwtToken = localStorage.getItem("jwtToken");
+import { useEffect, useState } from "react";
 
 interface Props {
   isChecked: boolean;
+  onFilterAll: () => void;
 }
 
-const CartHeader = ({ isChecked }: Props) => {
-  const { mutate: filterAllCart } = useFilterAllCarts();
-  const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
+const CartHeader = ({ isChecked, onFilterAll }: Props) => {
   const [isFiltered, setIsFiltered] = useState<boolean>(isChecked);
 
+  useEffect(() => {
+    setIsFiltered(isChecked);
+  }, [isChecked]);
+
   const handleAllFilterChange = () => {
-    filterAllCart(
-      { jwtToken: jwtToken || "" },
-      {
-        onSuccess: () => {
-          refetchTotal();
-        },
-      }
-    );
+    onFilterAll();
     setIsFiltered(!isFiltered);
   };
 
