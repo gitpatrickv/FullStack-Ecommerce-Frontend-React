@@ -1,20 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../services/api-client";
 
-interface Props{
-    cartId: string;
+interface Props {
     jwtToken: string;
 }
 
 const apiClient = axiosInstance;
-
-const useFilterCart = () => {
+const useFilterAllCarts = () => {
     const queryClient = useQueryClient();
+    
     return useMutation(
-        async({cartId, jwtToken} : Props) => {
-            await apiClient.put(`/cart/filter/${cartId}`, {},
+        async({jwtToken} : Props) => {
+            await apiClient.put(`/cart/filter`, {},
                 {
-                    headers: {
+                    headers:{
                         Authorization: `Bearer ${jwtToken}`,
                     }
                 }
@@ -22,10 +21,12 @@ const useFilterCart = () => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart', 'cartTotal']);
+                queryClient.invalidateQueries(['cart', 'cartTotal'])
+                
             }
-        },
+        }
+    
     )
 }
 
-export default useFilterCart
+export default useFilterAllCarts
