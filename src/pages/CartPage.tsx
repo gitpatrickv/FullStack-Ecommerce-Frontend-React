@@ -6,6 +6,7 @@ import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
+import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -20,6 +21,7 @@ const CartPage = () => {
     jwtToken || ""
   );
   const { mutate: filterAllCart } = useFilterAllCarts();
+  const { mutate: deleteAllCarts } = useDeleteAllCarts();
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;
 
@@ -30,6 +32,18 @@ const CartPage = () => {
         onSuccess: () => {
           refetchCarts();
           refetchTotal();
+        },
+      }
+    );
+  };
+
+  const handleDeleteAllCart = () => {
+    deleteAllCarts(
+      { jwtToken: jwtToken || "" },
+      {
+        onSuccess: () => {
+          refetchTotal();
+          refetchCarts();
         },
       }
     );
@@ -54,13 +68,8 @@ const CartPage = () => {
       {groupedCarts &&
         Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
           return (
-            <Box pt="10px">
-              <Card
-                key={storeName}
-                maxW="70%"
-                position="relative"
-                margin="auto"
-              >
+            <Box pt="10px" key={storeName}>
+              <Card maxW="70%" position="relative" margin="auto">
                 <CardBody>
                   {storeCarts.map((cart) => (
                     <CartItem
@@ -75,7 +84,14 @@ const CartPage = () => {
             </Box>
           );
         })}
-      <CartFooter cartTotal={cartTotal?.cartTotal ?? 0} />
+      <CartFooter
+        cartTotal={cartTotal?.cartTotal ?? 0}
+        cartItem={cartTotal?.cartItems ?? 0}
+        qty={cartTotal?.qty ?? 0}
+        isChecked={isChecked}
+        onDeleteAll={handleDeleteAllCart}
+        onFilterAll={handleFilterAll}
+      />
     </>
   );
 };
