@@ -87,7 +87,7 @@ const ProductDetail = ({ product }: Props) => {
                 lineHeight="short"
                 textTransform="uppercase"
               >
-                {product.shopName}
+                {product.storeName}
               </Text>
               <Text
                 fontSize="xl"

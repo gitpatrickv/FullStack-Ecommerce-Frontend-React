@@ -2,7 +2,7 @@ export default interface Cart{
     cartId:string;
     photoUrl: string;
     productId: string;
-    shopName: string;
+    storeName: string;
     productName: string;
     price: number;
     quantity: number;
