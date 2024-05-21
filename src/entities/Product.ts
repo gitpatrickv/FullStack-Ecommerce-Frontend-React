@@ -1,7 +1,7 @@
 export default interface Product {
     photoUrl: string;
     productId: string;
-    shopName: string;
+    storeName: string;
     productName: string;
     productDescription: string;
     productImage: string[];
