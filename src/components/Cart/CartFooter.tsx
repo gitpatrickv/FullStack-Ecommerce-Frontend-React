@@ -99,7 +99,11 @@ const CartFooter = ({
             <Spacer />
             <Box display="flex" justifyContent="center">
               <Text pr="20px" fontSize="x-large" fontWeight="semibold">
-                Total ({qty} items) :
+                Total (
+                <Text as="span" color="orange">
+                  {qty} items
+                </Text>
+                ):
               </Text>
               <Text
                 fontSize="x-large"
