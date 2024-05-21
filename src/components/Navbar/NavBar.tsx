@@ -2,8 +2,10 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 import { FaHome, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SearchInput from "./SearchInput";
-
+import useCartTotal from "../../hooks/useCartTotal";
+const jwtToken = localStorage.getItem("jwtToken");
 const NavBar = () => {
+  const { data: cartTotal } = useCartTotal(jwtToken || "");
   return (
     <HStack spacing={{ base: 2, md: 4 }} px={{ base: 2, md: 10 }}>
       <Link to="/">
@@ -26,11 +28,11 @@ const NavBar = () => {
               display="flex"
               justifyContent="center"
               alignItems="center"
-              color="white"
+              color="orange"
               fontSize="20px"
               fontWeight="semibold"
             >
-              3
+              {cartTotal?.cartItems ?? 0}
             </Text>
           </Box>
         </Box>

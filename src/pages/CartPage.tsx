@@ -68,13 +68,8 @@ const CartPage = () => {
       {groupedCarts &&
         Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
           return (
-            <Box pt="10px">
-              <Card
-                key={storeName}
-                maxW="70%"
-                position="relative"
-                margin="auto"
-              >
+            <Box pt="10px" key={storeName}>
+              <Card maxW="70%" position="relative" margin="auto">
                 <CardBody>
                   {storeCarts.map((cart) => (
                     <CartItem
@@ -91,6 +86,7 @@ const CartPage = () => {
         })}
       <CartFooter
         cartTotal={cartTotal?.cartTotal ?? 0}
+        cartItem={cartTotal?.cartItems ?? 0}
         isChecked={isChecked}
         onDeleteAll={handleDeleteAllCart}
         onFilterAll={handleFilterAll}

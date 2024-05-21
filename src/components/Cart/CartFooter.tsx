@@ -13,6 +13,7 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 interface Props {
   cartTotal: number;
   isChecked: boolean;
+  cartItem: number;
   onDeleteAll: () => void;
   onFilterAll: () => void;
 }
@@ -20,6 +21,7 @@ interface Props {
 const CartFooter = ({
   cartTotal,
   isChecked,
+  cartItem,
   onDeleteAll,
   onFilterAll,
 }: Props) => {
@@ -63,8 +65,16 @@ const CartFooter = ({
                 isChecked={isFiltered}
                 onChange={handleAllFilterChange}
               />
-              <Text fontSize="xl" fontWeight="semibold" pr="20px">
-                Select All (6)
+              <Text fontSize="xl" fontWeight="semibold" pr="3px">
+                Select All
+              </Text>
+              <Text
+                color="orange"
+                fontSize="xl"
+                fontWeight="semibold"
+                pr="20px"
+              >
+                ({cartItem})
               </Text>
               <Text
                 cursor="pointer"
