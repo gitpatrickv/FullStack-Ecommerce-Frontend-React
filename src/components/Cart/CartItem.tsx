@@ -201,7 +201,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               +
             </Button>
           </Box>
-          <Text fontSize="xl" fontWeight="semibold">
+          <Text fontSize="xl" fontWeight="semibold" color="orange">
             {formatCurrency(cart.totalAmount)}
           </Text>
           <Button onClick={handleDeleteCart}>Delete</Button>

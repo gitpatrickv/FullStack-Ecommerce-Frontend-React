@@ -1,18 +1,18 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../services/api-client";
 
 interface Props {
     jwtToken: string;
-    cartId: string;
 }
+
 const apiClient = axiosInstance;
 
-const useDeleteCart = () => {
-  const queryClient = useQueryClient();
-    
+const useDeleteAllCarts = () => {
+    const queryClient = useQueryClient();
+
     return useMutation(
-        async({jwtToken, cartId} : Props) => 
-            await apiClient.delete(`/cart/delete/${cartId}`, 
+        async({jwtToken} : Props) => 
+            await apiClient.delete(`/cart/delete`, 
          {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -24,8 +24,6 @@ const useDeleteCart = () => {
             }
         }
     );
-  
-   
-  };
+}
 
-export default useDeleteCart
+export default useDeleteAllCarts

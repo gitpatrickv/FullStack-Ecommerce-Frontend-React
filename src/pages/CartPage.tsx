@@ -6,6 +6,7 @@ import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
+import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -20,6 +21,7 @@ const CartPage = () => {
     jwtToken || ""
   );
   const { mutate: filterAllCart } = useFilterAllCarts();
+  const { mutate: deleteAllCarts } = useDeleteAllCarts();
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;
 
@@ -30,6 +32,18 @@ const CartPage = () => {
         onSuccess: () => {
           refetchCarts();
           refetchTotal();
+        },
+      }
+    );
+  };
+
+  const handleDeleteAllCart = () => {
+    deleteAllCarts(
+      { jwtToken: jwtToken || "" },
+      {
+        onSuccess: () => {
+          refetchTotal();
+          refetchCarts();
         },
       }
     );
@@ -75,7 +89,12 @@ const CartPage = () => {
             </Box>
           );
         })}
-      <CartFooter cartTotal={cartTotal?.cartTotal ?? 0} />
+      <CartFooter
+        cartTotal={cartTotal?.cartTotal ?? 0}
+        isChecked={isChecked}
+        onDeleteAll={handleDeleteAllCart}
+        onFilterAll={handleFilterAll}
+      />
     </>
   );
 };
