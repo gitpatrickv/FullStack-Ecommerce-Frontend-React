@@ -14,6 +14,7 @@ interface Props {
   cartTotal: number;
   isChecked: boolean;
   cartItem: number;
+  qty: number;
   onDeleteAll: () => void;
   onFilterAll: () => void;
 }
@@ -22,6 +23,7 @@ const CartFooter = ({
   cartTotal,
   isChecked,
   cartItem,
+  qty,
   onDeleteAll,
   onFilterAll,
 }: Props) => {
@@ -97,7 +99,7 @@ const CartFooter = ({
             <Spacer />
             <Box display="flex" justifyContent="center">
               <Text pr="20px" fontSize="x-large" fontWeight="semibold">
-                CART TOTAL :
+                Total ({qty} items) :
               </Text>
               <Text
                 fontSize="x-large"
