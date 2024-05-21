@@ -23,10 +23,11 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 export interface Props {
   cart: Cart;
   refetchCarts: () => void;
+  isChecked: boolean;
 }
 const jwtToken = localStorage.getItem("jwtToken");
 
-const CartItem = ({ cart, refetchCarts }: Props) => {
+const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const reset = useProductQueryStore((state) => state.reset);
   const navigate = useNavigate();
   const toast = useToast();
@@ -37,6 +38,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
   const { mutate: filterStoreCart } = useFilterByStoreName();
   const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
+  const [isCheck, setIsCheck] = useState<boolean>(isChecked);
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
     reset();
@@ -44,7 +46,8 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
 
   useEffect(() => {
     setIsFiltered(cart.filter);
-  }, [cart.filter]);
+    setIsCheck(isChecked);
+  }, [cart.filter, isChecked]);
 
   const handleClickDecrement = () => {
     decrementQuantity(
@@ -115,7 +118,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
         onSuccess: () => {
           refetchTotal();
           refetchCarts();
-          setIsFiltered(!isFiltered);
+          setIsCheck(!isCheck);
         },
       }
     );

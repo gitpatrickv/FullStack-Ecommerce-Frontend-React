@@ -46,12 +46,11 @@ const CartPage = () => {
     {}
   );
 
+  const isChecked = carts?.data.every((cart) => cart.filter);
+
   return (
     <>
-      <CartHeader
-        isChecked={carts?.data.every((cart) => cart.filter)}
-        onFilterAll={handleFilterAll}
-      />
+      <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
       {groupedCarts &&
         Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
           return (
@@ -68,6 +67,7 @@ const CartPage = () => {
                       key={cart.cartId}
                       cart={cart}
                       refetchCarts={refetchCarts}
+                      isChecked={isChecked}
                     />
                   ))}
                 </CardBody>
