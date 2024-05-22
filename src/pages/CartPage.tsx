@@ -5,8 +5,8 @@ import CartItem from "../components/Cart/CartItem";
 import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
-import useFilterAllCarts from "../hooks/useFilterAllCarts";
 import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
+import useFilterAllCarts from "../hooks/useFilterAllCarts";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -63,13 +63,13 @@ const CartPage = () => {
   const isChecked = carts?.data.every((cart) => cart.filter);
 
   return (
-    <>
+    <Box>
       <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
       {groupedCarts &&
         Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
           return (
             <Box pt="10px" key={storeName}>
-              <Card maxW="70%" position="relative" margin="auto">
+              <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
                 <CardBody>
                   {storeCarts.map((cart) => (
                     <CartItem
@@ -92,7 +92,7 @@ const CartPage = () => {
         onDeleteAll={handleDeleteAllCart}
         onFilterAll={handleFilterAll}
       />
-    </>
+    </Box>
   );
 };
 export default CartPage;
