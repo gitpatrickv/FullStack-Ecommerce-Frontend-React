@@ -8,7 +8,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
@@ -18,6 +17,7 @@ interface Props {
   qty: number;
   onDeleteAll: () => void;
   onFilterAll: () => void;
+  onCheckout: () => void;
 }
 
 const CartFooter = ({
@@ -27,17 +27,13 @@ const CartFooter = ({
   qty,
   onDeleteAll,
   onFilterAll,
+  onCheckout,
 }: Props) => {
   const [isFiltered, setIsFiltered] = useState<boolean>(isChecked);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setIsFiltered(isChecked);
   }, [isChecked]);
-
-  const handleNavigateCheckoutClick = () => {
-    navigate("/checkout");
-  };
 
   const handleDeleteAllCarts = () => {
     onDeleteAll();
@@ -127,7 +123,7 @@ const CartFooter = ({
             >
               {formatCurrency(cartTotal)}
             </Text>
-            <Button onClick={handleNavigateCheckoutClick}>Check Out</Button>
+            <Button onClick={onCheckout}>Check Out</Button>
           </Box>
         </Box>
       </CardBody>

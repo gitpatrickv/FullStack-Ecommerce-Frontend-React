@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import Cart from "../entities/Cart";
+import { User } from "../entities/User";
 import { axiosInstance } from "../services/api-client";
-
 const apiClient = axiosInstance;
 
-const useCheckout = (jwtToken : string) => {
+const useGetUser = (jwtToken : string) => {
     return useQuery({
-        queryKey: ['checkout'],
-        queryFn: () => apiClient.get<Cart[]>('/cart/checkout',
+        queryKey: ['user'],
+        queryFn: () => apiClient.get<User>('/user', 
         {
             headers: {
                 Authorization: `Bearer ${jwtToken}`,
@@ -16,4 +15,4 @@ const useCheckout = (jwtToken : string) => {
     })
 }
 
-export default useCheckout
+export default useGetUser

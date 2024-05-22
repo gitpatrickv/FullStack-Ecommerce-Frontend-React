@@ -7,6 +7,8 @@ import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
 import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
+import useCheckout from "../hooks/useCheckout";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -22,8 +24,22 @@ const CartPage = () => {
   );
   const { mutate: filterAllCart } = useFilterAllCarts();
   const { mutate: deleteAllCarts } = useDeleteAllCarts();
+  const { data: checkout, refetch: refetchCheckout } = useCheckout(
+    jwtToken || ""
+  );
+  const navigate = useNavigate();
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;
+
+  const handleNavigateCheckoutClick = () => {
+    if (cartTotal?.cartTotal === 0) {
+      console.log("select an item");
+      return;
+    }
+    checkout;
+    refetchCheckout();
+    navigate("/checkout");
+  };
 
   const handleFilterAll = () => {
     filterAllCart(
@@ -91,6 +107,7 @@ const CartPage = () => {
         isChecked={isChecked}
         onDeleteAll={handleDeleteAllCart}
         onFilterAll={handleFilterAll}
+        onCheckout={handleNavigateCheckoutClick}
       />
     </Box>
   );

@@ -164,8 +164,8 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
           />
           <Image
             src={cart.photoUrl}
-            w={{ base: "20px", md: "50px", lg: "80px" }}
-            boxSize={{ base: "20px", md: "50px", lg: "80px" }}
+            w={{ base: "20px", md: "50px", lg: "100px" }}
+            boxSize={{ base: "20px", md: "50px", lg: "100px" }}
             onClick={handleNavigateClick}
             cursor="pointer"
           />
@@ -177,7 +177,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
             cursor="pointer"
             pl="20px"
             isTruncated
-            maxW={{ base: "50px", md: "100px", lg: "150px", xl: "250px" }}
+            maxW={{ base: "50px", md: "100px", lg: "120px", xl: "250px" }}
           >
             {cart.productName}
           </Text>

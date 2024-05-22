@@ -1,8 +1,13 @@
 import { Box, Button, Card, CardBody, Spacer, Text } from "@chakra-ui/react";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
-const Payment = () => {
+interface Props {
+  cartTotal: number;
+}
+
+const Payment = ({ cartTotal }: Props) => {
   return (
-    <Card maxW="70%" margin="auto" mt="15px">
+    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="10px">
       <CardBody>
         <Box
           display="flex"
@@ -46,8 +51,12 @@ const Payment = () => {
           <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold" pr="45px">
             Total Payment:
           </Text>
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            ₱1234.00
+          <Text
+            fontSize={["sm", "md", "lg"]}
+            fontWeight="semibold"
+            color="orange"
+          >
+            {formatCurrency(cartTotal)}
           </Text>
         </Box>
         <Box display="flex" justifyContent="end" alignItems="center" pt="20px">

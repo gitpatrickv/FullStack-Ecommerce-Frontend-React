@@ -60,7 +60,7 @@ const CartHeader = ({ isChecked, onFilterAll }: Props) => {
             left={{
               base: "0px",
               sm: "5px",
-              md: "10px",
+              md: "45px",
               lg: "100px",
               xl: "150px",
             }}
@@ -74,7 +74,7 @@ const CartHeader = ({ isChecked, onFilterAll }: Props) => {
             left={{
               base: "0px",
               sm: "20px",
-              md: "40px",
+              md: "45px",
               lg: "80px",
               xl: "120px",
             }}
@@ -85,7 +85,7 @@ const CartHeader = ({ isChecked, onFilterAll }: Props) => {
             fontSize={["sm", "md", "lg", "xl"]}
             fontWeight="semibold"
             position="relative"
-            left={{ base: "0", lg: "40px", xl: "50px" }}
+            left={{ base: "0", md: "20px", lg: "40px", xl: "50px" }}
           >
             Total Amount
           </Text>
