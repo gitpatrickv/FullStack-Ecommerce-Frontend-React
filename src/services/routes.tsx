@@ -8,6 +8,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import RegisterPage from "../pages/RegisterPage";
 import SellerPage from "../pages/SellerPage";
+import CheckoutPage from "../pages/CheckoutPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: `/api/product/:productId`, element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
+      { path: "/checkout", element: <CheckoutPage /> },
     ],
   },
   {

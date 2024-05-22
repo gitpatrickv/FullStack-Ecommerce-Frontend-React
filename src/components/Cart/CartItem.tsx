@@ -6,6 +6,7 @@ import {
   HStack,
   Image,
   Text,
+  useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -39,6 +40,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const [isCheck, setIsCheck] = useState<boolean>(isChecked);
+  const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
     reset();
@@ -126,16 +128,9 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
 
   return (
     <Box>
-      <Box
-        position="absolute"
-        top="10px"
-        left="60px"
-        fontSize="xl"
-        fontWeight="semibold"
-        textTransform="uppercase"
-      >
+      <Box position="absolute" top="10px" left="60px">
         <Checkbox
-          size="lg"
+          size={checkboxSize}
           colorScheme="green"
           position="absolute"
           top="5px"
@@ -143,18 +138,25 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
           isChecked={isFiltered}
           onChange={handleStoreFilterChange}
         />
-        <Text>{cart.storeName}</Text>
-        <Divider w="1636px" position="relative" left="-60px" pt="10px" />
+        <Text
+          fontSize={["sm", "md", "lg", "xl"]}
+          fontWeight="semibold"
+          textTransform="uppercase"
+        >
+          {cart.storeName}
+        </Text>
+        <Divider w="250px" position="relative" left="-60px" pt="10px" />
       </Box>
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         pt="50px"
+        flexWrap="wrap"
       >
         <Box display="flex" alignItems="center">
           <Checkbox
-            size="lg"
+            size={checkboxSize}
             colorScheme="green"
             pr="20px"
             isChecked={isFiltered}
@@ -162,24 +164,36 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
           />
           <Image
             src={cart.photoUrl}
-            w={[50, 100]}
-            boxSize="70px"
+            w={{ base: "20px", md: "50px", lg: "100px" }}
+            boxSize={{ base: "20px", md: "50px", lg: "100px" }}
             onClick={handleNavigateClick}
             cursor="pointer"
           />
           <Text
-            fontSize="xl"
+            fontSize={["sm", "md", "lg", "xl"]}
             fontWeight="semibold"
             textTransform="capitalize"
             onClick={handleNavigateClick}
             cursor="pointer"
             pl="20px"
+            isTruncated
+            maxW={{ base: "50px", md: "100px", lg: "120px", xl: "250px" }}
           >
             {cart.productName}
           </Text>
         </Box>
-        <HStack spacing="275px">
-          <Text fontSize="xl" fontWeight="semibold">
+        <HStack
+          spacing={{
+            base: "0px",
+            sm: "5px",
+            md: "50px",
+            lg: "60px",
+            xl: "150px",
+          }}
+          display="flex"
+          flexWrap="wrap"
+        >
+          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
             {formatCurrency(cart.price)}
           </Text>
           <Box display="flex" justifyContent="center" alignItems="center">
@@ -190,7 +204,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
             >
               -
             </Button>
-            <Text fontSize="xl" fontWeight="semibold">
+            <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
               {cart.quantity}
             </Text>
             <Button
@@ -201,7 +215,11 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               +
             </Button>
           </Box>
-          <Text fontSize="xl" fontWeight="semibold" color="orange">
+          <Text
+            fontSize={["sm", "md", "lg", "xl"]}
+            fontWeight="semibold"
+            color="orange"
+          >
             {formatCurrency(cart.totalAmount)}
           </Text>
           <Button onClick={handleDeleteCart}>Delete</Button>

@@ -1,4 +1,11 @@
-import { Box, Card, CardBody, Checkbox, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Checkbox,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -18,63 +25,81 @@ const CartHeader = ({ isChecked, onFilterAll }: Props) => {
     setIsFiltered(!isFiltered);
   };
 
+  const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
+
   return (
-    <>
-      <Card maxW="70%" position="relative" margin="auto" h="70px">
-        <CardBody>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box display="flex">
-              <Checkbox
-                size="lg"
-                colorScheme="green"
-                pr="20px"
-                isChecked={isFiltered}
-                onChange={handleAllFilterChange}
-              />
-              <Text fontSize="xl" fontWeight="semibold">
-                Product
-              </Text>
-            </Box>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              position="relative"
-              left="35px"
-            >
-              Price
-            </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              position="relative"
-              left="45px"
-            >
-              Quantity
-            </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              position="relative"
-              left="20px"
-            >
-              Total Amount
-            </Text>
-            <Text
-              fontSize="xl"
-              fontWeight="semibold"
-              position="relative"
-              left="-10px"
-            >
-              Actions
+    <Card
+      maxW={{ base: "100%", lg: "70%" }}
+      position="relative"
+      margin="auto"
+      h="70px"
+    >
+      <CardBody>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          <Box display="flex">
+            <Checkbox
+              size={checkboxSize}
+              colorScheme="green"
+              pr="20px"
+              isChecked={isFiltered}
+              onChange={handleAllFilterChange}
+            />
+            <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
+              Product
             </Text>
           </Box>
-        </CardBody>
-      </Card>
-    </>
+          <Text
+            fontSize={["sm", "md", "lg", "xl"]}
+            fontWeight="semibold"
+            position="relative"
+            left={{
+              base: "0px",
+              sm: "5px",
+              md: "45px",
+              lg: "100px",
+              xl: "150px",
+            }}
+          >
+            Price
+          </Text>
+          <Text
+            fontSize={["sm", "md", "lg", "xl"]}
+            fontWeight="semibold"
+            position="relative"
+            left={{
+              base: "0px",
+              sm: "20px",
+              md: "45px",
+              lg: "80px",
+              xl: "120px",
+            }}
+          >
+            Quantity
+          </Text>
+          <Text
+            fontSize={["sm", "md", "lg", "xl"]}
+            fontWeight="semibold"
+            position="relative"
+            left={{ base: "0", md: "20px", lg: "40px", xl: "50px" }}
+          >
+            Total Amount
+          </Text>
+          <Text
+            fontSize={["sm", "md", "lg", "xl"]}
+            fontWeight="semibold"
+            position="relative"
+            left="-5px"
+          >
+            Actions
+          </Text>
+        </Box>
+      </CardBody>
+    </Card>
   );
 };
 
