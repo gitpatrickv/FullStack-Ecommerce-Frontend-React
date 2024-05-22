@@ -164,8 +164,8 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
           />
           <Image
             src={cart.photoUrl}
-            w={{ base: "20px", md: "50px", lg: "100px" }}
-            boxSize={{ base: "20px", md: "50px", lg: "100px" }}
+            w={{ base: "20px", md: "50px", lg: "80px" }}
+            boxSize={{ base: "20px", md: "50px", lg: "80px" }}
             onClick={handleNavigateClick}
             cursor="pointer"
           />
