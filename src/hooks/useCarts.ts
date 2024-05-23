@@ -13,6 +13,7 @@ const useCarts = (jwtToken : string) => {
             Authorization: `Bearer ${jwtToken}`, 
         },
     }),
+    enabled: !!jwtToken,
 })
 };
 

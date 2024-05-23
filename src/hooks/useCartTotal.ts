@@ -15,6 +15,7 @@ const useCartTotal = (jwtToken: string,) => {
           });
           return data;
         },
+        enabled: !!jwtToken,
       });
     
 }

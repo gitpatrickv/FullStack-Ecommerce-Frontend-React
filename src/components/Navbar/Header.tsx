@@ -1,37 +1,68 @@
-import { Box, Flex, HStack, Spacer, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useGetUser from "../../hooks/useGetUser";
 import ColorModeSwitch from "../ColorModeSwitch";
 
-const jwtToken = localStorage.getItem("jwtToken");
 const Header = () => {
-  const { data: user } = useGetUser(jwtToken || "");
+  const queryClient = useQueryClient();
+  const jwtToken = localStorage.getItem("jwtToken") || "";
+  const { data: user, refetch: refetchUser } = useGetUser(jwtToken);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken");
+    queryClient.invalidateQueries(["user"]);
+    refetchUser();
+    navigate("/");
+  };
   return (
     <Flex p="4" px="10">
       <Spacer />
       <HStack spacing={5}>
-        {user?.data ? (
+        {user ? (
           <>
-            <Box position="relative" left="15px">
-              <FaUserCircle size="25px" />
+            <Text position="relative" right="-15px">
+              {user.email}
+            </Text>
+            <Box>
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<FaUserCircle size="30px" />}
+                  variant="none"
+                />
+                <MenuList>
+                  <MenuItem>My Account</MenuItem>
+                  <MenuItem>My Purchase</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
             </Box>
-            <Text>{user?.data.email}</Text>
           </>
         ) : (
-          <Link to="/login">
-            <Text _hover={{ textDecoration: "underline" }}>Login</Text>
-          </Link>
+          <>
+            <Link to="/login">
+              <Text _hover={{ textDecoration: "underline" }}>Login</Text>
+            </Link>
+            <Link to="/register">
+              <Text _hover={{ textDecoration: "underline" }}>Register</Text>
+            </Link>
+          </>
         )}
-        {user?.data ? (
-          ""
-        ) : (
-          <Link to="/register">
-            <Text _hover={{ textDecoration: "underline" }}>Register</Text>
-          </Link>
-        )}
-
         <ColorModeSwitch />
       </HStack>
     </Flex>

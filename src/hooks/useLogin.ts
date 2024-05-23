@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -12,10 +12,11 @@ interface FormData {
 const apiClient = axiosInstance;
 
 const useLogin = () => {
+  const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   const mutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("/user/login", data)
     .then((res) => res.data),
@@ -23,7 +24,7 @@ const useLogin = () => {
     onSuccess: (response) => {
       const jwtToken = response.jwtToken;
       localStorage.setItem("jwtToken", jwtToken);
-      
+      queryClient.invalidateQueries(['user']);
       const role = response.role;
       if(role==="ADMIN"){
         navigate("/admin");
@@ -34,6 +35,7 @@ const useLogin = () => {
         navigate("/")
       }
       console.log("login successful", role)
+      
     },
     onError: (error) => {
       console.error("Login failed", error);
