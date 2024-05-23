@@ -81,7 +81,7 @@ const ProductDetail = ({ product }: Props) => {
 
   return (
     <Center>
-      <Box m="20" p="20">
+      <Box m="5" p="5">
         <HStack>
           <Box p="5" w={[400, 500, 600]}>
             {product?.productImage.map((image, index) => (

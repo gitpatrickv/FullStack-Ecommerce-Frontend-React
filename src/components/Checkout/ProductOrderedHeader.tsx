@@ -2,7 +2,7 @@ import { Box, Card, CardBody, Text } from "@chakra-ui/react";
 
 const ProductOrderedHeader = () => {
   return (
-    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="10px">
+    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="5px">
       <CardBody>
         <Box
           display="flex"

@@ -10,45 +10,78 @@ const NavBar = () => {
   const { data: user } = useGetUser(jwtToken || "");
 
   return (
-    <HStack spacing={{ base: 2, md: 4 }} px={{ base: 2, md: 10 }}>
-      <Link to="/">
-        <FaHome size="55" />
-      </Link>
-      <SearchInput />
-      {user ? (
-        <>
-          <Link to="/cart">
-            <Box position="relative" bottom="-20px">
-              <FaShoppingCart size="50" />
+    <Box position="relative" top="-10px">
+      <HStack spacing={{ base: 2, md: 4 }} px={{ base: 2, md: 10 }}>
+        <Link to="/">
+          <Box
+            position="relative"
+            left={{
+              base: "20px",
+              md: "40px",
+              lg: "70px",
+              xl: "150px",
+            }}
+          >
+            <FaHome size="55" />
+          </Box>
+        </Link>
+        <SearchInput />
+        {user ? (
+          <>
+            <Link to="/cart">
               <Box
-                h="30px"
-                w="30px"
-                bg="gray.700"
-                borderRadius="30px"
                 position="relative"
-                right="-35px"
-                top="-60px"
+                bottom="-15px"
+                right={{
+                  base: "20px",
+                  md: "40px",
+                  lg: "70px",
+                  xl: "150px",
+                }}
               >
-                <Text
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  color="orange"
-                  fontSize="20px"
-                  fontWeight="semibold"
+                <FaShoppingCart size="50px" />
+                <Box
+                  h="30px"
+                  w="30px"
+                  bg="gray.700"
+                  borderRadius="30px"
+                  position="relative"
+                  right="-35px"
+                  top="-60px"
                 >
-                  {cartTotal?.cartItems ?? 0}
-                </Text>
+                  <Text
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    color="orange"
+                    fontSize="20px"
+                    fontWeight="semibold"
+                  >
+                    {cartTotal?.cartItems ?? 0}
+                  </Text>
+                </Box>
               </Box>
+            </Link>
+          </>
+        ) : (
+          <Link to="/login">
+            <Box
+              position="relative"
+              bottom="-15px"
+              right={{
+                base: "20px",
+                md: "40px",
+                lg: "70px",
+                xl: "150px",
+              }}
+              top="-2px"
+            >
+              <FaShoppingCart size="50" />
             </Box>
           </Link>
-        </>
-      ) : (
-        <Link to="/login">
-          <FaShoppingCart size="50" />
-        </Link>
-      )}
-    </HStack>
+        )}
+      </HStack>
+    </Box>
   );
 };
 

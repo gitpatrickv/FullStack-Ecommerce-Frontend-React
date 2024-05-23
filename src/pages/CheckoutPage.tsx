@@ -35,7 +35,7 @@ const CheckoutPage = () => {
       {groupedCarts &&
         Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
           return (
-            <Box pt="10px" key={storeName}>
+            <Box mt="5px" key={storeName}>
               <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
                 <CardBody>
                   {storeCarts.map((cart) => (

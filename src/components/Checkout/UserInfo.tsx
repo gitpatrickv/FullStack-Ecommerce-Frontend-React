@@ -29,14 +29,14 @@ const UserInfo = () => {
           </Box>
           <Box display="flex">
             <Text pr="25px" fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-              {user?.data.name}
+              {user?.name}
             </Text>
             <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-              {user?.data.address}
+              {user?.address}
             </Text>
           </Box>
           <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            {user?.data.contactNumber}
+            {user?.contactNumber}
           </Text>
         </CardBody>
       </Card>

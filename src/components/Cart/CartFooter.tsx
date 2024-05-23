@@ -52,7 +52,7 @@ const CartFooter = ({
       bottom="0.25rem"
       margin="auto"
       h="80px"
-      mt="20px"
+      mt="5px"
     >
       <CardBody>
         <Box

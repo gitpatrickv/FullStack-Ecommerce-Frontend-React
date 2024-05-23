@@ -7,7 +7,7 @@ interface Props {
 
 const Payment = ({ cartTotal }: Props) => {
   return (
-    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="10px">
+    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="5px">
       <CardBody>
         <Box
           display="flex"

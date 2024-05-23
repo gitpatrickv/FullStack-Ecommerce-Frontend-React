@@ -15,6 +15,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import useGetUser from "../../hooks/useGetUser";
 import ColorModeSwitch from "../ColorModeSwitch";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Header = () => {
   const queryClient = useQueryClient();
@@ -62,7 +63,20 @@ const Header = () => {
             </Link>
           </>
         )}
-        <ColorModeSwitch />
+        {/* <ColorModeSwitch /> */}
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<RxHamburgerMenu />}
+            variant="outline"
+          />
+          <MenuList>
+            <MenuItem>
+              <ColorModeSwitch />
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </HStack>
     </Flex>
   );

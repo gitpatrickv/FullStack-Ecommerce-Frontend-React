@@ -19,9 +19,9 @@ const ProductCard = ({ product }: Props) => {
 
   return (
     <Card onClick={handleNavigateClick} cursor="pointer">
-      <Image src={product.photoUrl} h={[200, 250]} />
+      <Image src={product.photoUrl} h={[150, 200]} />
       <CardBody>
-        <Text fontSize="xl" fontWeight="semibold" textTransform="capitalize">
+        <Text fontSize="large" fontWeight="semibold" textTransform="capitalize">
           {product?.productName}
         </Text>
         <Text>{formatCurrency(product.price)}</Text>
