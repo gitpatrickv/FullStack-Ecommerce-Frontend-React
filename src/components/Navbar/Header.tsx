@@ -19,13 +19,12 @@ import ColorModeSwitch from "../ColorModeSwitch";
 const Header = () => {
   const queryClient = useQueryClient();
   const jwtToken = localStorage.getItem("jwtToken") || "";
-  const { data: user, refetch: refetchUser } = useGetUser(jwtToken);
+  const { data: user } = useGetUser(jwtToken);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("jwtToken");
-    queryClient.invalidateQueries(["user"]);
-    refetchUser();
+    queryClient.setQueryData(["user"], null);
     navigate("/");
   };
   return (
