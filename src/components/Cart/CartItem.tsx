@@ -151,7 +151,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        pt="50px"
+        pt="45px"
         flexWrap="wrap"
       >
         <Box display="flex" alignItems="center">
@@ -165,7 +165,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
           <Image
             src={cart.photoUrl}
             w={{ base: "20px", md: "50px", lg: "100px" }}
-            boxSize={{ base: "20px", md: "50px", lg: "100px" }}
+            boxSize={{ base: "20px", md: "50px", lg: "80px" }}
             onClick={handleNavigateClick}
             cursor="pointer"
           />

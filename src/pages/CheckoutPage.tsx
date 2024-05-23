@@ -5,8 +5,8 @@ import Payment from "../components/Checkout/Payment";
 import ProductOrderedHeader from "../components/Checkout/ProductOrderedHeader";
 import UserInfo from "../components/Checkout/UserInfo";
 import Cart from "../entities/Cart";
-import useCheckout from "../hooks/useCheckout";
 import useCartTotal from "../hooks/useCartTotal";
+import useCheckout from "../hooks/useCheckout";
 
 const CheckoutPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -39,11 +39,7 @@ const CheckoutPage = () => {
               <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
                 <CardBody>
                   {storeCarts.map((cart) => (
-                    <Checkout
-                      key={cart.cartId}
-                      cart={cart}
-                      // refetchCarts={refetchCarts}
-                    />
+                    <Checkout key={cart.cartId} cart={cart} />
                   ))}
                 </CardBody>
               </Card>

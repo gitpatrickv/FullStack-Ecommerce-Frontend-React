@@ -20,7 +20,7 @@ const Payment = ({ cartTotal }: Props) => {
           </Text>
           <Spacer />
           <Text pr="60px" fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            Delivery Option
+            Cash On Delivery
           </Text>
           <Text
             color="orange"
