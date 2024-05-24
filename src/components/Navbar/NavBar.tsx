@@ -43,7 +43,7 @@ const NavBar = () => {
                 <Box
                   h="30px"
                   w="30px"
-                  bg="gray.700"
+                  bg="gray.600"
                   borderRadius="30px"
                   position="relative"
                   right="-35px"

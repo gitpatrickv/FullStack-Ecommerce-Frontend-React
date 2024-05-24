@@ -31,7 +31,7 @@ const Header = () => {
     navigate("/");
   };
   return (
-    <Card height="130px" background="gray.800">
+    <Card height="130px">
       <Flex p="4" px="10">
         <Spacer />
         <HStack spacing={5}>
