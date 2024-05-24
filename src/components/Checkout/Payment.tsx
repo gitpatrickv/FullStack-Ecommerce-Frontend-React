@@ -1,4 +1,13 @@
-import { Box, Button, Card, CardBody, Spacer, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
@@ -6,62 +15,101 @@ interface Props {
 }
 
 const Payment = ({ cartTotal }: Props) => {
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
   return (
-    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="10px">
+    <Card maxW="100%" mt="5px">
       <CardBody>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          flexWrap="wrap"
+        <Grid
+          templateColumns="2fr  0.5fr 0.3fr"
+          templateAreas={`
+  "content1 content2 content3"
+`}
         >
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            Payment Method
-          </Text>
-          <Spacer />
-          <Text pr="60px" fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            Delivery Option
-          </Text>
-          <Text
-            color="orange"
-            fontSize={["sm", "md", "lg"]}
-            fontWeight="semibold"
-            cursor="pointer"
-          >
-            Change
-          </Text>
-        </Box>
-        <Box display="flex" justifyContent="end" flexWrap="wrap">
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold" pr="45px">
-            Merchandise Subtotal:
-          </Text>
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            ₱1234.00
-          </Text>
-        </Box>
-        <Box display="flex" justifyContent="end">
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold" pr="45px">
-            Shipping Total:
-          </Text>
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            ₱1234.00
-          </Text>
-        </Box>
-        <Box display="flex" justifyContent="end">
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold" pr="45px">
-            Total Payment:
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg"]}
-            fontWeight="semibold"
-            color="orange"
-          >
-            {formatCurrency(cartTotal)}
-          </Text>
-        </Box>
-        <Box display="flex" justifyContent="end" alignItems="center" pt="20px">
-          <Button>Place Order</Button>
-        </Box>
+          <GridItem area="content1">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              textAlign="start"
+              pr="100px"
+              whiteSpace="nowrap"
+            >
+              Payment Method
+            </Text>
+          </GridItem>
+
+          <GridItem area="content2">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              textAlign="end"
+            >
+              Cash On Delivery
+            </Text>
+
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              textAlign="end"
+            >
+              Merchandise Subtotal:
+            </Text>
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              textAlign="end"
+            >
+              Shipping Total:
+            </Text>
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              textAlign="end"
+            >
+              Total Payment:
+            </Text>
+          </GridItem>
+          <GridItem area="content3">
+            <Text
+              color="orange"
+              fontSize={fontSize}
+              fontWeight="semibold"
+              cursor="pointer"
+              textAlign="end"
+            >
+              Change
+            </Text>
+
+            <Text fontSize={fontSize} fontWeight="semibold" textAlign="end">
+              ₱1234.00
+            </Text>
+
+            <Text fontSize={fontSize} fontWeight="semibold" textAlign="end">
+              ₱1234.00
+            </Text>
+
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              color="orange"
+              textAlign="end"
+              pl="5px"
+            >
+              {formatCurrency(cartTotal)}
+            </Text>
+            <Box display="flex" justifyContent="flex-end" mt="20px">
+              <Button>Place Order</Button>
+            </Box>
+          </GridItem>
+        </Grid>
       </CardBody>
     </Card>
   );

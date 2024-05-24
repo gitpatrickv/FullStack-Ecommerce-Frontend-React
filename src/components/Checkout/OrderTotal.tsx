@@ -1,4 +1,11 @@
-import { Box, Card, CardBody, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
@@ -7,25 +14,48 @@ interface Props {
 }
 
 const OrderTotal = ({ cartTotal, qty }: Props) => {
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
   return (
-    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
+    <Card maxW="100%">
       <CardBody>
-        <Box display="flex" justifyContent="end">
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold" pr="45px">
-            Order Total (
-            <Text as="span" color="orange">
-              {qty} items
+        <Grid
+          templateColumns="2fr  0.5fr 0.3fr"
+          templateAreas={`
+  "content1 content2 content3"
+`}
+          alignItems="center"
+        >
+          <GridItem area="content2">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              textAlign="end"
+            >
+              Order Total (
+              <Text as="span" color="orange">
+                {qty} items
+              </Text>
+              ):
             </Text>
-            ):
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg"]}
-            fontWeight="semibold"
-            color="orange"
-          >
-            {formatCurrency(cartTotal)}
-          </Text>
-        </Box>
+          </GridItem>
+          <GridItem area="content3">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              color="orange"
+              textAlign="end"
+              pl="5px"
+            >
+              {formatCurrency(cartTotal)}
+            </Text>
+          </GridItem>
+        </Grid>
       </CardBody>
     </Card>
   );

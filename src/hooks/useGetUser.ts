@@ -4,14 +4,19 @@ import { axiosInstance } from "../services/api-client";
 const apiClient = axiosInstance;
 
 const useGetUser = (jwtToken : string) => {
-    return useQuery({
+    return useQuery<User>({
         queryKey: ['user'],
-        queryFn: () => apiClient.get<User>('/user', 
+        queryFn: async () => {
+        const {data} = await apiClient.get<User>('/user', 
         {
             headers: {
                 Authorization: `Bearer ${jwtToken}`,
             }
         })
+        return data;
+    },
+    enabled: !!jwtToken,
+ 
     })
 }
 

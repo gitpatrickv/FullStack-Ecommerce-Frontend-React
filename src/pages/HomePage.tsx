@@ -7,15 +7,15 @@ const HomePage = () => {
     <Grid
       templateAreas={{
         base: `"main"`,
-        lg: ` " aside main" `,
+        lg: ` " asideLeft main asideRight" `,
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px 1fr",
+        lg: "200px 1fr 200px",
       }}
     >
       <Show above="lg">
-        <GridItem area="aside" paddingX={5}>
+        <GridItem area="asideLeft" paddingX={5}>
           <Category />
           <Text>CATEGORY</Text>
           <Text>CATEGORY</Text>

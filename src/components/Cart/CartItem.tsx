@@ -2,8 +2,8 @@ import {
   Box,
   Button,
   Checkbox,
-  Divider,
-  HStack,
+  Grid,
+  GridItem,
   Image,
   Text,
   useBreakpointValue,
@@ -41,6 +41,11 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const [isCheck, setIsCheck] = useState<boolean>(isChecked);
   const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
+  const buttonSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+  });
+  const fontSize = useBreakpointValue({ base: "sm", xl: "xl" });
   const handleNavigateClick = () => {
     navigate(`/api/product/` + cart?.productId);
     reset();
@@ -127,105 +132,114 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   };
 
   return (
-    <Box>
-      <Box position="absolute" top="10px" left="60px">
-        <Checkbox
-          size={checkboxSize}
-          colorScheme="green"
-          position="absolute"
-          top="5px"
-          left="-40px"
-          isChecked={isFiltered}
-          onChange={handleStoreFilterChange}
-        />
-        <Text
-          fontSize={["sm", "md", "lg", "xl"]}
-          fontWeight="semibold"
-          textTransform="uppercase"
-        >
-          {cart.storeName}
-        </Text>
-        <Divider w="250px" position="relative" left="-60px" pt="10px" />
-      </Box>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        pt="50px"
-        flexWrap="wrap"
-      >
-        <Box display="flex" alignItems="center">
+    <Grid
+      templateColumns="1fr 0.5fr 0.5fr 0.5fr 0.5fr"
+      templateAreas={`
+      "content1 content2 content3 content4 content5"
+    `}
+      gap={4}
+      p={3}
+    >
+      <GridItem area="content1">
+        <Box display="flex" flexDirection="column" alignItems="flex-start">
           <Checkbox
             size={checkboxSize}
             colorScheme="green"
-            pr="20px"
+            position="absolute"
+            top="20px"
+            left="32px"
             isChecked={isFiltered}
-            onChange={handleFilterChange}
+            onChange={handleStoreFilterChange}
           />
-          <Image
-            src={cart.photoUrl}
-            w={{ base: "20px", md: "50px", lg: "100px" }}
-            boxSize={{ base: "20px", md: "50px", lg: "100px" }}
-            onClick={handleNavigateClick}
-            cursor="pointer"
-          />
-          <Text
-            fontSize={["sm", "md", "lg", "xl"]}
-            fontWeight="semibold"
-            textTransform="capitalize"
-            onClick={handleNavigateClick}
-            cursor="pointer"
-            pl="20px"
-            isTruncated
-            maxW={{ base: "50px", md: "100px", lg: "120px", xl: "250px" }}
-          >
-            {cart.productName}
-          </Text>
+          <Box display="flex" alignItems="center">
+            <Checkbox
+              size={checkboxSize}
+              colorScheme="green"
+              pr="20px"
+              isChecked={isFiltered}
+              onChange={handleFilterChange}
+            />
+            <Image
+              src={cart.photoUrl}
+              w={{ base: "40px", md: "80px", lg: "100px" }}
+              h={{ base: "40px", md: "60px", lg: "80px" }}
+              onClick={handleNavigateClick}
+              cursor="pointer"
+            />
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              textTransform="capitalize"
+              onClick={handleNavigateClick}
+              cursor="pointer"
+              pl="20px"
+            >
+              {cart.productName}
+            </Text>
+          </Box>
         </Box>
-        <HStack
-          spacing={{
-            base: "0px",
-            sm: "5px",
-            md: "50px",
-            lg: "60px",
-            xl: "150px",
-          }}
-          display="flex"
-          flexWrap="wrap"
-        >
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            {formatCurrency(cart.price)}
-          </Text>
+      </GridItem>
+      <GridItem
+        area="content2"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Text fontSize={fontSize} fontWeight="semibold">
+          {formatCurrency(cart.price)}
+        </Text>
+      </GridItem>
+      <GridItem
+        area="content3"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Box display="flex" alignItems="center">
           <Box display="flex" justifyContent="center" alignItems="center">
             <Button
               position="relative"
               right="10px"
               onClick={handleClickDecrement}
+              size={buttonSize}
             >
               -
             </Button>
-            <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
+            <Text fontSize={fontSize} fontWeight="semibold">
               {cart.quantity}
             </Text>
             <Button
               position="relative"
               left="10px"
               onClick={handleClickIncrement}
+              size={buttonSize}
             >
               +
             </Button>
           </Box>
-          <Text
-            fontSize={["sm", "md", "lg", "xl"]}
-            fontWeight="semibold"
-            color="orange"
-          >
-            {formatCurrency(cart.totalAmount)}
-          </Text>
-          <Button onClick={handleDeleteCart}>Delete</Button>
-        </HStack>
-      </Box>
-    </Box>
+        </Box>
+      </GridItem>
+      <GridItem
+        area="content4"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Text fontSize={fontSize} fontWeight="semibold" color="orange">
+          {formatCurrency(cart.totalAmount)}
+        </Text>
+      </GridItem>
+      <GridItem
+        area="content5"
+        display="flex"
+        alignItems="center"
+        justifyContent="flex-end"
+      >
+        <Button onClick={handleDeleteCart} size={buttonSize}>
+          <Text fontSize={fontSize}>Delete</Text>
+        </Button>
+      </GridItem>
+    </Grid>
   );
 };
 

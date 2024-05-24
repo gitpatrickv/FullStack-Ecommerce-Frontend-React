@@ -1,50 +1,65 @@
-import { Box, Card, CardBody, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 
 const ProductOrderedHeader = () => {
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
   return (
-    <Card maxW={{ base: "100%", lg: "70%" }} margin="auto" mt="10px">
+    <Card maxW="100%" mt="5px">
       <CardBody>
-        <Box
-          display="flex"
-          justifyContent="space-between"
+        <Grid
+          templateColumns="1.3fr 0.7fr 0.7fr 0.7fr"
+          templateAreas={`
+  "content1 content2 content3 content4"
+`}
           alignItems="center"
-          flexWrap="wrap"
         >
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            Products Ordered
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg"]}
-            fontWeight="semibold"
-            position="relative"
-            left={{
-              base: "0px",
-              sm: "20px",
-              md: "40px",
-              lg: "80px",
-              xl: "170px",
-            }}
-          >
-            Price
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg"]}
-            fontWeight="semibold"
-            position="relative"
-            left={{
-              base: "0px",
-              sm: "20px",
-              md: "40px",
-              lg: "80px",
-              xl: "120px",
-            }}
-          >
-            Quantity
-          </Text>
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-            Item Subtotal
-          </Text>
-        </Box>
+          <GridItem area="content1" textAlign="start">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              pr="10px"
+            >
+              Products Ordered
+            </Text>
+          </GridItem>
+          <GridItem area="content2">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              textAlign="center"
+              pr="10px"
+            >
+              Price
+            </Text>
+          </GridItem>
+          <GridItem area="content3" textAlign="center">
+            <Text fontSize={fontSize} fontWeight="semibold" pr="10px">
+              Quantity
+            </Text>
+          </GridItem>
+          <GridItem area="content4" textAlign="end">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+              pr="10px"
+            >
+              Item Subtotal
+            </Text>
+          </GridItem>
+        </Grid>
       </CardBody>
     </Card>
   );

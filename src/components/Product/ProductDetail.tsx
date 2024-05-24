@@ -9,12 +9,14 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import Product from "../../entities/Product";
 import useAddToCart from "../../hooks/useAddToCart";
-import useProductQueryStore from "../../store/product-store";
-import { formatCurrency } from "../../utilities/formatCurrency";
 import useCartTotal from "../../hooks/useCartTotal";
 import useCarts from "../../hooks/useCarts";
+import useGetUser from "../../hooks/useGetUser";
+import useProductQueryStore from "../../store/product-store";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   product: Product;
@@ -36,43 +38,50 @@ const ProductDetail = ({ product }: Props) => {
   const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
   const { mutate: addToCart } = useAddToCart();
   const { refetch: refetchCarts } = useCarts(jwtToken || "");
+  const { data: user } = useGetUser(jwtToken || "");
+  const navigate = useNavigate();
+
   const handleAddToCartClick = async () => {
-    try {
-      await addToCart(
-        {
-          productId: product.productId,
-          quantity: count,
-          jwtToken: jwtToken || "",
-        },
-        {
-          onSuccess: () => {
-            refetchCarts();
-            refetchTotal();
+    if (user) {
+      try {
+        await addToCart(
+          {
+            productId: product.productId,
+            quantity: count,
+            jwtToken: jwtToken || "",
           },
-        }
-      );
-      toast({
-        position: "top",
-        title: "Item has been added to your cart",
-        status: "success",
-        duration: 1000,
-        isClosable: true,
-      });
-    } catch (error) {
-      toast({
-        position: "top",
-        title: "Error",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
-      });
+          {
+            onSuccess: () => {
+              refetchCarts();
+              refetchTotal();
+            },
+          }
+        );
+        toast({
+          position: "top",
+          title: "Item has been added to your cart",
+          status: "success",
+          duration: 1000,
+          isClosable: true,
+        });
+      } catch (error) {
+        toast({
+          position: "top",
+          title: "Error",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+      reset();
+    } else {
+      navigate("/login");
     }
-    reset();
   };
 
   return (
     <Center>
-      <Box m="20" p="20">
+      <Box m="5" p="5">
         <HStack>
           <Box p="5" w={[400, 500, 600]}>
             {product?.productImage.map((image, index) => (

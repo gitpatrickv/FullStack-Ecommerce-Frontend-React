@@ -11,7 +11,7 @@ const ProductGrid = () => {
   return (
     <SimpleGrid
       columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
-      spacing={6}
+      spacing={2}
       padding="10px"
     >
       {data?.data.map((prod) => (
