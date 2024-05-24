@@ -3,6 +3,8 @@ import {
   Card,
   CardBody,
   Checkbox,
+  Grid,
+  GridItem,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -15,7 +17,13 @@ interface Props {
 
 const CartHeader = ({ isChecked, onFilterAll }: Props) => {
   const [isFiltered, setIsFiltered] = useState<boolean>(isChecked);
-
+  const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
   useEffect(() => {
     setIsFiltered(isChecked);
   }, [isChecked]);
@@ -25,79 +33,98 @@ const CartHeader = ({ isChecked, onFilterAll }: Props) => {
     setIsFiltered(!isFiltered);
   };
 
-  const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
-
   return (
-    <Card
-      maxW={{ base: "100%", lg: "70%" }}
-      position="relative"
-      margin="auto"
-      h="70px"
-    >
+    <Card maxW="100%">
       <CardBody>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          flexWrap="wrap"
+        <Grid
+          templateColumns="1fr 0.5fr 0.5fr 0.5fr 0.5fr"
+          templateAreas={`
+    "content1 content2 content3 content4 content5"
+`}
         >
-          <Box display="flex">
-            <Checkbox
-              size={checkboxSize}
-              colorScheme="green"
-              pr="20px"
-              isChecked={isFiltered}
-              onChange={handleAllFilterChange}
-            />
-            <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-              Product
+          <GridItem area="content1">
+            <Box display="flex" alignItems="center">
+              <Checkbox
+                size={checkboxSize}
+                colorScheme="green"
+                position="absolute"
+                top="26px"
+                left="32px"
+                pr="20px"
+                isChecked={isFiltered}
+                onChange={handleAllFilterChange}
+              />
+              <Text
+                fontSize={fontSize}
+                fontWeight="semibold"
+                position="relative"
+                left="52px"
+              >
+                Product
+              </Text>
+            </Box>
+          </GridItem>
+          <GridItem
+            area="content2"
+            alignItems="center"
+            display="flex"
+            justifyContent="center"
+          >
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              position="relative"
+              left="-15px"
+            >
+              Price
             </Text>
-          </Box>
-          <Text
-            fontSize={["sm", "md", "lg", "xl"]}
-            fontWeight="semibold"
-            position="relative"
-            left={{
-              base: "0px",
-              sm: "5px",
-              md: "45px",
-              lg: "100px",
-              xl: "150px",
-            }}
+          </GridItem>
+          <GridItem
+            area="content3"
+            alignItems="center"
+            display="flex"
+            justifyContent="center"
           >
-            Price
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg", "xl"]}
-            fontWeight="semibold"
-            position="relative"
-            left={{
-              base: "0px",
-              sm: "20px",
-              md: "45px",
-              lg: "80px",
-              xl: "120px",
-            }}
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              position="relative"
+              left="-15px"
+            >
+              Quantity
+            </Text>
+          </GridItem>
+          <GridItem
+            area="content4"
+            alignItems="center"
+            display="flex"
+            justifyContent="center"
           >
-            Quantity
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg", "xl"]}
-            fontWeight="semibold"
-            position="relative"
-            left={{ base: "0", md: "20px", lg: "40px", xl: "50px" }}
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              position="relative"
+              left="-15px"
+            >
+              Total
+            </Text>
+          </GridItem>
+          <GridItem
+            area="content5"
+            alignItems="center"
+            display="flex"
+            justifyContent="flex-end"
           >
-            Total Amount
-          </Text>
-          <Text
-            fontSize={["sm", "md", "lg", "xl"]}
-            fontWeight="semibold"
-            position="relative"
-            left="-5px"
-          >
-            Actions
-          </Text>
-        </Box>
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              position="absolute"
+              right="42px"
+            >
+              Actions
+            </Text>
+          </GridItem>
+        </Grid>
       </CardBody>
     </Card>
   );

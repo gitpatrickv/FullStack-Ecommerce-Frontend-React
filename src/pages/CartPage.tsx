@@ -1,14 +1,23 @@
-import { Box, Card, CardBody, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Divider,
+  Grid,
+  GridItem,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import CartFooter from "../components/Cart/CartFooter";
 import CartHeader from "../components/Cart/CartHeader";
 import CartItem from "../components/Cart/CartItem";
 import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
+import useCheckout from "../hooks/useCheckout";
 import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
-import useCheckout from "../hooks/useCheckout";
-import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
@@ -79,37 +88,66 @@ const CartPage = () => {
   const isChecked = carts?.data.every((cart) => cart.filter);
 
   return (
-    <Box>
-      <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
-      {groupedCarts &&
-        Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
-          return (
-            <Box pt="5px" key={storeName}>
-              <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
-                <CardBody>
-                  {storeCarts.map((cart) => (
-                    <CartItem
-                      key={cart.cartId}
-                      cart={cart}
-                      refetchCarts={refetchCarts}
-                      isChecked={isChecked}
-                    />
-                  ))}
-                </CardBody>
-              </Card>
-            </Box>
-          );
-        })}
-      <CartFooter
-        cartTotal={cartTotal?.cartTotal ?? 0}
-        cartItem={cartTotal?.cartItems ?? 0}
-        qty={cartTotal?.qty ?? 0}
-        isChecked={isChecked}
-        onDeleteAll={handleDeleteAllCart}
-        onFilterAll={handleFilterAll}
-        onCheckout={handleNavigateCheckoutClick}
-      />
-    </Box>
+    <Grid
+      templateAreas={{
+        base: `"main"`,
+        lg: ` " asideLeft main asideRight" `,
+      }}
+      templateColumns={{
+        base: "1fr",
+        lg: "200px 1fr 200px",
+      }}
+    >
+      <GridItem area="main">
+        <Box>
+          <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
+          {groupedCarts &&
+            Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
+              return (
+                <Box pt="5px" key={storeName}>
+                  <Card maxW="100%" margin="auto">
+                    <CardBody>
+                      <Text
+                        fontSize={{
+                          base: "sm",
+                          md: "md",
+                          lg: "lg",
+                          xl: "xl",
+                        }}
+                        fontWeight="bold"
+                        textTransform="uppercase"
+                        position="relative"
+                        left="52px"
+                        top="-5px"
+                      >
+                        {storeName}
+                      </Text>
+                      <Divider mt={2} mb={2} />
+                      {storeCarts.map((cart) => (
+                        <CartItem
+                          key={cart.cartId}
+                          cart={cart}
+                          refetchCarts={refetchCarts}
+                          isChecked={isChecked}
+                        />
+                      ))}
+                    </CardBody>
+                  </Card>
+                </Box>
+              );
+            })}
+          <CartFooter
+            cartTotal={cartTotal?.cartTotal ?? 0}
+            cartItem={cartTotal?.cartItems ?? 0}
+            qty={cartTotal?.qty ?? 0}
+            isChecked={isChecked}
+            onDeleteAll={handleDeleteAllCart}
+            onFilterAll={handleFilterAll}
+            onCheckout={handleNavigateCheckoutClick}
+          />
+        </Box>
+      </GridItem>
+    </Grid>
   );
 };
 export default CartPage;

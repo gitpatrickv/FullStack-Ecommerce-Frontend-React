@@ -64,21 +64,7 @@ const NavBar = () => {
             </Link>
           </>
         ) : (
-          <Link to="/login">
-            <Box
-              position="relative"
-              bottom="-15px"
-              right={{
-                base: "20px",
-                md: "40px",
-                lg: "70px",
-                xl: "150px",
-              }}
-              top="-2px"
-            >
-              <FaShoppingCart size="50" />
-            </Box>
-          </Link>
+          ""
         )}
       </HStack>
     </Box>

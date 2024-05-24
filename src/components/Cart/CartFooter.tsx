@@ -4,8 +4,10 @@ import {
   Card,
   CardBody,
   Checkbox,
-  Spacer,
+  Grid,
+  GridItem,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utilities/formatCurrency";
@@ -30,7 +32,17 @@ const CartFooter = ({
   onCheckout,
 }: Props) => {
   const [isFiltered, setIsFiltered] = useState<boolean>(isChecked);
-
+  const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
+  const buttonSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+  });
   useEffect(() => {
     setIsFiltered(isChecked);
   }, [isChecked]);
@@ -47,7 +59,7 @@ const CartFooter = ({
 
   return (
     <Card
-      maxW={{ base: "100%", lg: "70%" }}
+      maxW="100%"
       position="sticky"
       bottom="0.25rem"
       margin="auto"
@@ -55,77 +67,92 @@ const CartFooter = ({
       mt="5px"
     >
       <CardBody>
-        <Box
+        <Grid
+          templateColumns="1fr 0.5fr 1fr"
+          templateAreas={`
+  "content1  content4  content2"
+`}
+          alignItems="center"
           display="flex"
           justifyContent="space-between"
-          alignItems="center"
-          flexWrap="wrap"
         >
-          <Box display="flex" alignItems="center">
-            <Checkbox
-              size="lg"
-              colorScheme="green"
-              pr="20px"
-              isChecked={isFiltered}
-              onChange={handleAllFilterChange}
-            />
-            <Text
-              fontSize={{ base: "sm", lg: "xl" }}
-              fontWeight="semibold"
-              pr="3px"
-            >
-              Select All
-            </Text>
-            <Text
-              color="orange"
-              fontSize={{ base: "sm", lg: "xl" }}
-              fontWeight="semibold"
-              pr="20px"
-            >
-              ({cartItem})
-            </Text>
-            <Text
-              cursor="pointer"
-              fontSize={{ base: "sm", lg: "xl" }}
-              fontWeight="semibold"
-              pr="20px"
-              onClick={handleDeleteAllCarts}
-            >
-              Delete
-            </Text>
-            <Text
-              cursor="pointer"
-              fontSize={{ base: "sm", lg: "xl" }}
-              fontWeight="semibold"
-              color="orange"
-            >
-              Add to Favorites
-            </Text>
-          </Box>
-          <Spacer />
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Text
-              pr="20px"
-              fontSize={{ base: "sm", lg: "xl" }}
-              fontWeight="semibold"
-            >
-              Total (
-              <Text as="span" color="orange">
-                {qty} items
+          <GridItem area="content1" pr="10px">
+            <Box display="flex" alignItems="center">
+              <Checkbox
+                size={checkboxSize}
+                colorScheme="green"
+                pr="30px"
+                isChecked={isFiltered}
+                onChange={handleAllFilterChange}
+                position="relative"
+                left="12px"
+              />
+              <Text
+                fontSize={fontSize}
+                fontWeight="semibold"
+                pr="3px"
+                whiteSpace="nowrap"
+              >
+                Select All
               </Text>
-              ):
-            </Text>
-            <Text
-              fontSize={{ base: "sm", lg: "xl" }}
-              pr="60px"
-              color="orange"
-              fontWeight="semibold"
-            >
-              {formatCurrency(cartTotal)}
-            </Text>
-            <Button onClick={onCheckout}>Check Out</Button>
-          </Box>
-        </Box>
+              <Text
+                color="orange"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                pr="20px"
+              >
+                ({cartItem})
+              </Text>
+              <Text
+                cursor="pointer"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                pr="20px"
+                onClick={handleDeleteAllCarts}
+              >
+                Delete
+              </Text>
+              <Text
+                cursor="pointer"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                color="orange"
+                whiteSpace="nowrap"
+              >
+                Add to Favorites
+              </Text>
+            </Box>
+          </GridItem>
+
+          <GridItem area="content2">
+            <Box display="flex" alignItems="center">
+              <Text
+                fontSize={fontSize}
+                fontWeight="semibold"
+                whiteSpace="nowrap"
+                pr="7px"
+              >
+                Total (
+                <Text as="span" color="orange">
+                  {qty} items
+                </Text>
+                ):
+              </Text>
+              <Text
+                fontSize={fontSize}
+                color="orange"
+                fontWeight="semibold"
+                pr="25px"
+              >
+                {formatCurrency(cartTotal)}
+              </Text>
+
+              <Button onClick={onCheckout}>
+                <Text fontSize={fontSize}>Check Out</Text>
+              </Button>
+            </Box>
+          </GridItem>
+        </Grid>
       </CardBody>
     </Card>
   );
