@@ -1,4 +1,13 @@
-import { Box, Card, CardBody, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Divider,
+  Grid,
+  GridItem,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import Checkout from "../components/Checkout/Checkout";
 import OrderTotal from "../components/Checkout/OrderTotal";
 import Payment from "../components/Checkout/Payment";
@@ -28,32 +37,58 @@ const CheckoutPage = () => {
   );
 
   return (
-    <>
-      <UserInfo />
-      <ProductOrderedHeader />
+    <Grid
+      templateAreas={{
+        base: `"main"`,
+        lg: ` " asideLeft main asideRight" `,
+      }}
+      templateColumns={{
+        base: "1fr",
+        lg: "200px 1fr 200px",
+      }}
+    >
+      <GridItem area="main">
+        <UserInfo />
+        <ProductOrderedHeader />
 
-      {groupedCarts &&
-        Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
-          return (
-            <Box mt="5px" key={storeName}>
-              <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
-                <CardBody>
-                  {storeCarts.map((cart) => (
-                    <Checkout key={cart.cartId} cart={cart} />
-                  ))}
-                </CardBody>
-              </Card>
-            </Box>
-          );
-        })}
-      {cartTotal && (
-        <OrderTotal
-          cartTotal={cartTotal?.cartTotal ?? 0}
-          qty={cartTotal?.qty ?? 0}
-        />
-      )}
-      {cartTotal && <Payment cartTotal={cartTotal?.cartTotal ?? 0} />}
-    </>
+        {groupedCarts &&
+          Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
+            return (
+              <Box mt="5px" key={storeName}>
+                <Card maxW="100%">
+                  <CardBody>
+                    <Text
+                      fontSize={{
+                        base: "sm",
+                        md: "md",
+                        lg: "lg",
+                        xl: "xl",
+                      }}
+                      fontWeight="semibold"
+                      textTransform="uppercase"
+                      position="relative"
+                      top="-13px"
+                    >
+                      {storeName}
+                    </Text>
+                    <Divider mt={-2} />
+                    {storeCarts.map((cart) => (
+                      <Checkout key={cart.cartId} cart={cart} />
+                    ))}
+                  </CardBody>
+                </Card>
+              </Box>
+            );
+          })}
+        {cartTotal && (
+          <OrderTotal
+            cartTotal={cartTotal?.cartTotal ?? 0}
+            qty={cartTotal?.qty ?? 0}
+          />
+        )}
+        {cartTotal && <Payment cartTotal={cartTotal?.cartTotal ?? 0} />}
+      </GridItem>
+    </Grid>
   );
 };
 

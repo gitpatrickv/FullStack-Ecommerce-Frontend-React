@@ -1,4 +1,10 @@
-import { Box, Card, CardBody, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 
 import { IoLocation } from "react-icons/io5";
 import useGetUser from "../../hooks/useGetUser";
@@ -6,37 +12,42 @@ import useGetUser from "../../hooks/useGetUser";
 const UserInfo = () => {
   const jwtToken = localStorage.getItem("jwtToken");
   const { data: user } = useGetUser(jwtToken || "");
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
 
   return (
     <Box>
-      <Card maxW={{ base: "100%", lg: "70%" }} margin="auto">
+      <Card maxW="100%">
         <CardBody>
           <Box
             display="flex"
             justifyContent="start"
             alignItems="center"
-            pb="20px"
+            pb="5px"
           >
             <IoLocation size="25px" color="orange" />
             <Text
               pl="5px"
-              fontSize={["sm", "md", "lg"]}
+              fontSize={fontSize}
               fontWeight="semibold"
               color="orange"
             >
               Delivery Address
             </Text>
           </Box>
-          <Box display="flex">
-            <Text pr="25px" fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-              {user?.name}
-            </Text>
-            <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
-              {user?.address}
-            </Text>
-          </Box>
-          <Text fontSize={["sm", "md", "lg"]} fontWeight="semibold">
+
+          <Text fontSize={fontSize} fontWeight="semibold">
+            {user?.name}
+          </Text>
+          <Text fontSize={fontSize} fontWeight="semibold">
             {user?.contactNumber}
+          </Text>
+          <Text fontSize={fontSize} fontWeight="semibold">
+            {user?.address}
           </Text>
         </CardBody>
       </Card>
