@@ -10,7 +10,7 @@ const NavBar = () => {
   const { data: user } = useGetUser(jwtToken || "");
 
   return (
-    <Box position="relative" top="-10px">
+    <Box position="relative" top="-20px">
       <HStack spacing={{ base: 2, md: 4 }} px={{ base: 2, md: 10 }}>
         <Link to="/">
           <Box
