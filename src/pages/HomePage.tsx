@@ -1,6 +1,6 @@
 import { Grid, GridItem, Show, Text } from "@chakra-ui/react";
-import ProductGrid from "../components/Product/ProductGrid";
 import Category from "../components/Category/Category";
+import ProductGrid from "../components/Product/ProductGrid";
 
 const HomePage = () => {
   return (
@@ -26,6 +26,11 @@ const HomePage = () => {
         </GridItem>
       </Show>
       <GridItem area="main">
+        {/* <Image
+          src="https://down-ph.img.susercontent.com/file/ph-50009109-7b9fae9a063f50ac17699b7ea90d0dd4"
+          w="full"
+          height="25vh"
+        /> */}
         <ProductGrid />
       </GridItem>
     </Grid>

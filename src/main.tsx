@@ -1,11 +1,11 @@
-import { ChakraProvider, ColorModeScript, theme } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import router from "./services/routes.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import theme from "./theme";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { staleTime: 10 * 60 * 1000, cacheTime: 30 * 60 * 1000 },

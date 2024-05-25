@@ -3,36 +3,51 @@ import {
   IconButton,
   Input,
   InputGroup,
-  InputLeftElement,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { FaSearch } from "react-icons/fa";
-
+import { useRef, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 const SearchInput = () => {
+  const ref = useRef<HTMLInputElement>(null);
+  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const text = ref.current?.value || "";
+    setSearchText(text);
+    navigate(`/search?keyword=${encodeURIComponent(text)}`);
+  };
+
+  const query = searchParams.get("keyword") || "";
   return (
-    <InputGroup justifyContent={{ base: "center", md: "flex-center" }}>
-      <InputLeftElement />
-      <Input
-        borderRadius={20}
-        placeholder="Search products..."
-        variant="filled"
-        textAlign={{ base: "center", md: "left" }}
-        style={{ width: "60%" }}
-        maxWidth={{ base: "80%", md: "unset" }}
-        mx={{ base: "auto", md: 0 }}
-        fontSize={["sm", "md", "lg"]}
-      />
-      <Box
-        position="relative"
-        right={{
-          base: "70px",
-          md: "40px",
-          xl: "45px",
-        }}
-        top="8px"
-      >
-        <FaSearch size="22px" />
-      </Box>
-    </InputGroup>
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <InputGroup justifyContent={{ base: "center", md: "flex-start" }}>
+          <Input
+            ref={ref}
+            borderRadius={20}
+            placeholder="Search products..."
+            variant="filled"
+            textAlign={{ base: "center", md: "left" }}
+            fontSize={["sm", "md", "lg"]}
+            defaultValue={query}
+            w={{ base: "100%" }}
+          />
+          <InputRightElement>
+            <IconButton
+              aria-label="Search"
+              icon={<BsSearch />}
+              type="submit"
+              bg="transparent"
+              _hover={{ bg: "transparent" }}
+            />
+          </InputRightElement>
+        </InputGroup>
+      </form>
+    </Box>
   );
 };
 
