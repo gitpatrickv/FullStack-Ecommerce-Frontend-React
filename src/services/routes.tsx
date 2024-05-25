@@ -9,6 +9,7 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import RegisterPage from "../pages/RegisterPage";
 import SellerPage from "../pages/SellerPage";
 import CheckoutPage from "../pages/CheckoutPage";
+import { SearchPage } from "../pages/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: `/api/product/:productId`, element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/checkout", element: <CheckoutPage /> },
+      { path: "/search", element: <SearchPage /> },
     ],
   },
   {
