@@ -10,6 +10,7 @@ import RegisterPage from "../pages/RegisterPage";
 import SellerPage from "../pages/SellerPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import { SearchPage } from "../pages/SearchPage";
+import DailyDiscoverPage from "../pages/DailyDiscoverPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/cart", element: <CartPage /> },
       { path: "/checkout", element: <CheckoutPage /> },
       { path: "/search", element: <SearchPage /> },
+      { path: "/daily_discover", element: <DailyDiscoverPage /> },
     ],
   },
   {
