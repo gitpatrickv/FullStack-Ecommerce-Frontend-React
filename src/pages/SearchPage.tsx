@@ -44,7 +44,7 @@ export const SearchPage = () => {
             >
               {searchResults.map((product: Product) => (
                 <ProductCardContainer key={product.productId}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} /> //TODO: FIX ERROR HERE
                 </ProductCardContainer>
               ))}
             </SimpleGrid>

@@ -4,8 +4,8 @@ const SellerPage = () => {
   return (
     <Card maxW="75%" margin="auto">
       <Grid
-        templateColumns="1fr 2fr 1fr"
-        templateRows="0.2fr 0.4fr"
+        templateColumns="1fr 5fr 1fr"
+        templateRows="5vh 0.4fr"
         templateAreas={`
     "content1 content2 content3"
     "content4 content5 content6"
