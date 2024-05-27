@@ -11,23 +11,29 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useProducts from "../../hooks/useProducts";
+import { paginationRange } from "../../utilities/pagination.ts";
 import ProductCard from "./ProductCard";
 import ProductCardContainer from "./ProductCardContainer";
 const ProductGrid = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(2);
-  const pageSize = 50;
+  const pageSize = 25;
 
   const { data, isLoading, error } = useProducts({ pageNo: page, pageSize });
 
-  const totalElements = data?.data.pageResponse.totalElements ?? 0;
   const totalPages = data?.data.pageResponse.totalPages ?? 0;
   const currentPage = data?.data.pageResponse.pageNo ?? 0;
-  const isLastPage = data?.data.pageResponse.last ?? false;
-  const maxPage = 5;
 
+  const isLastPage = data?.data.pageResponse.last ?? false;
+  const totalElements = data?.data.pageResponse.totalElements ?? 0;
   const pages = Math.ceil(totalElements / pageSize);
-  const selectPage = [...Array(pages + 1).keys()].slice(1);
+
+  const paginationRangeArray = paginationRange({
+    totalPage: pages,
+    page,
+    limit: pageSize,
+    siblings: 1,
+  });
 
   if (isLoading) return <Spinner />;
   if (error || !data) throw error;
@@ -37,42 +43,47 @@ const ProductGrid = () => {
     navigate(`/daily_discover?pageNo=${newPage}&pageSize=${pageSize}`);
   };
 
-  const handleClickPrevPage = () => {
-    if (page > 1) {
-      updatePage(page - 1);
+  function handlePageChange(value: any) {
+    if (value === "&laquo;" || value === "... ") {
+      updatePage(1);
+    } else if (value === "&lsaquo;") {
+      if (page > 1) {
+        updatePage(page - 1);
+      }
+    } else if (value === "&rsaquo;") {
+      if (!isLastPage) {
+        updatePage(page + 1);
+      }
+    } else if (value === "&raquo;" || value === " ...") {
+      updatePage(pages);
+    } else {
+      updatePage(value);
     }
-  };
-
-  const handleClickNextPage = () => {
-    if (!isLastPage) {
-      updatePage(page + 1);
-    }
-  };
-
-  const handleClickPage = (index: number) => {
-    updatePage(index);
-  };
+  }
 
   return (
     <>
       <Box display="flex" justifyContent="center" alignItems="center" pt="20px">
         <HStack justifyContent="center">
-          <Button onClick={handleClickPrevPage}>Prev</Button>
-
-          {selectPage.map((number, index) => (
-            <Button
-              key={index}
-              color={page === number ? "blue.500" : "gray.500"}
-              onClick={() => handleClickPage(number)}
-            >
-              {number}
-            </Button>
-          ))}
-
-          <Button onClick={handleClickNextPage}>Next</Button>
+          <Button onClick={() => handlePageChange("&laquo;")}>&laquo;</Button>
+          <Button onClick={() => handlePageChange("&lsaquo;")}>&lsaquo;</Button>
+          {paginationRangeArray.map((number, index) => {
+            if (number === number) {
+              return (
+                <Button
+                  key={index}
+                  onClick={() => handlePageChange(number)}
+                  color={page === number ? "blue.500" : "gray.500"}
+                >
+                  {number}
+                </Button>
+              );
+            }
+          })}
+          <Button onClick={() => handlePageChange("&rsaquo;")}>&rsaquo;</Button>
+          <Button onClick={() => handlePageChange("&raquo;")}>&raquo;</Button>
         </HStack>
       </Box>
-
       <Card mt="20px" mb="20px">
         <CardBody>
           <Text textAlign="center" fontSize="larger" color="orange">
