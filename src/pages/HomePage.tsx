@@ -19,7 +19,7 @@ import useProducts from "../hooks/useProducts";
 const HomePage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const pageSize = 50;
+  const pageSize = 25;
   const { data } = useProducts({ pageNo: page, pageSize });
 
   const onClickNavigate = () => {
@@ -49,9 +49,6 @@ const HomePage = () => {
         </GridItem>
       </Show>
       <GridItem area="main">
-        <Box display="flex" justifyContent="center" pt="20px">
-          <Button onClick={onClickNavigate}>See More</Button>
-        </Box>
         <Card mt="20px" mb="20px">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange">
@@ -70,6 +67,9 @@ const HomePage = () => {
             </ProductCardContainer>
           ))}
         </SimpleGrid>
+        <Box display="flex" justifyContent="center" pt="20px">
+          <Button onClick={onClickNavigate}>See More</Button>
+        </Box>
       </GridItem>
     </Grid>
   );
