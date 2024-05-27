@@ -1,14 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
+import AllProductsResponse from "../entities/AllProductResponse";
 import { axiosInstance } from "../services/api-client";
-import Product from "../entities/Product";
+
+interface Props{
+  keyword: string
+  pageNo: number;
+  pageSize: number;
+}
 
 const apiClient = axiosInstance;
-const useSearchProducts = (keyword: string) => useQuery<Product[]>({
-    queryKey: ['product', keyword],
+const useSearchProducts = ({ keyword, pageNo, pageSize }: Props) => useQuery({
+    queryKey: ['product', keyword, pageNo, pageSize],
     queryFn: async () => {
-        if(!keyword) return [];
-        const {data} = await apiClient.get<Product[]>('/product/search', {
-          params: { keyword: keyword },
+        const {data} = await apiClient.get<AllProductsResponse>('/product/search', {
+          params: { 
+            keyword: keyword,
+            pageNo: pageNo - 1,
+            pageSize: pageSize
+          },
         });
         return data;
     },

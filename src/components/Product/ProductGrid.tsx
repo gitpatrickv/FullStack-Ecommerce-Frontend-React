@@ -103,7 +103,7 @@ const ProductGrid = () => {
                 <Button
                   key={index}
                   onClick={() => handlePageChange(number)}
-                  color={page === number ? "blue.500" : "gray.500"}
+                  color={page === number ? "orange" : "gray.500"}
                 >
                   {number}
                 </Button>
