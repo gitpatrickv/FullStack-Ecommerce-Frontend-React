@@ -45,7 +45,6 @@ const CartPage = () => {
       console.log("select an item");
       return;
     }
-    checkout;
     refetchCheckout();
     navigate("/checkout");
   };

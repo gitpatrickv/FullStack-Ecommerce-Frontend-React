@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Card,
-  CardBody,
   Divider,
   Grid,
   GridItem,

@@ -1,0 +1,58 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { SubmitHandler } from "react-hook-form";
+import { axiosInstance } from "../services/api-client";
+import { useToast } from "@chakra-ui/react";
+
+interface UpdateAccountProps{
+    name:string;
+    address:string;
+    contactNumber:string;
+    
+}
+const apiClient = axiosInstance;
+
+const useUpdateAccountInfo = () => {
+    const queryClient = useQueryClient();
+    const toast = useToast();
+    const [loading, setLoading] = useState(false);
+    const jwtToken = localStorage.getItem("jwtToken");
+  
+    const mutation =  useMutation(
+    async ({name, address, contactNumber}: UpdateAccountProps) => {
+        const {data} = await apiClient.put(
+            "/user/account",
+            {name, address, contactNumber},
+            {
+                headers:{
+                    Authorization: `Bearer ${jwtToken}`,
+                }
+            }
+        )
+        return data;
+    },
+    {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['user']);         
+        }
+    }
+)
+    const onSubmit: SubmitHandler<UpdateAccountProps> = (data) => {
+        mutation.mutate(data);
+        toast({
+            position: "top",
+            title: "Successfully updated account info.",
+            status: "success",
+            duration: 1000,
+            isClosable: true,
+          });
+    };
+    
+    return {
+         onSubmit, loading
+    }
+    
+ 
+}
+
+export default useUpdateAccountInfo
