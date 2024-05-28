@@ -5,6 +5,7 @@ import {
   CardBody,
   Grid,
   GridItem,
+  Image,
   Show,
   SimpleGrid,
   Text,
@@ -49,6 +50,11 @@ const HomePage = () => {
         </GridItem>
       </Show>
       <GridItem area="main">
+        <Image
+          src="https://miro.medium.com/v2/resize:fit:1024/0*el52j7p-1MrKjgrN.png"
+          w="100%"
+          h="12%"
+        />
         <Card mt="20px" mb="20px">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange">

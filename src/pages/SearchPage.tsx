@@ -2,13 +2,11 @@ import {
   Box,
   Button,
   Card,
-  CardBody,
   Grid,
   GridItem,
   HStack,
   SimpleGrid,
   Spacer,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -64,7 +62,7 @@ export const SearchPage = () => {
     if (results) {
       setSearchResults(results.allProductModels);
     }
-  }, [location.search, results, page]);
+  }, [location.search, results]);
 
   const updatePage = (newPage: number) => {
     setPage(newPage);
@@ -111,7 +109,12 @@ export const SearchPage = () => {
           </Text>
           <Card p="13px" mb="20px">
             <Box display="flex" alignItems="center">
-              <Text fontSize="medium">Sort By</Text>
+              <Text fontSize="medium" pr="10px">
+                Sort By
+              </Text>
+              <Text pr="10px">Latest</Text>
+              <Text pr="10px">Top Sales</Text>
+              <Text>Price</Text>
               <Spacer />
               <Text pr="15px" fontSize="medium">
                 <Text as="span" color="orange">

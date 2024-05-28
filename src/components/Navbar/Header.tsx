@@ -59,10 +59,9 @@ const Header = () => {
                       <MenuButton
                         as={IconButton}
                         aria-label="Options"
-                        // icon={<FaUserCircle size="30px" />}
                         icon={
                           <Avatar
-                            name="Dan Abrahmov"
+                            name="Patrick"
                             src="https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
                             size="sm"
                           />
@@ -72,8 +71,12 @@ const Header = () => {
                       <MenuList>
                         <MenuItem>{user.email}</MenuItem>
                         <MenuDivider />
-                        <MenuItem>My Account</MenuItem>
-                        <MenuItem>My Purchase</MenuItem>
+                        <Link to="/user/account/profile">
+                          <MenuItem>My Account</MenuItem>
+                        </Link>
+                        <Link to="/user/purchase">
+                          <MenuItem>My Purchase</MenuItem>
+                        </Link>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </MenuList>
                     </Menu>

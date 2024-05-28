@@ -1,49 +1,40 @@
-import { Card, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Card, Grid, GridItem, Text } from "@chakra-ui/react";
 
 const SellerPage = () => {
   return (
-    <Card maxW="75%" margin="auto">
-      <Grid
-        templateColumns="1fr 5fr 1fr"
-        templateRows="5vh 0.4fr"
-        templateAreas={`
-    "content1 content2 content3"
-    "content4 content5 content6"
-`}
-        alignItems="center"
-      >
-        <GridItem area="content1" background="red">
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            logo
-          </Text>
-        </GridItem>
-        <GridItem area="content2" background="blue">
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            space
-          </Text>
-        </GridItem>
-        <GridItem area="content3" background="green">
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            login register
-          </Text>
-        </GridItem>
-        <GridItem area="content4" background="orange">
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            home
-          </Text>
-        </GridItem>{" "}
-        <GridItem area="content5" background="skyblue">
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            search input
-          </Text>
-        </GridItem>
-        <GridItem area="content6" background="brown">
-          <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-            cart logo
-          </Text>
-        </GridItem>
-      </Grid>
-    </Card>
+    <Grid
+      height="100vh"
+      templateColumns=" 0.5fr 1fr 0.8fr  "
+      templateRows="0.2fr  3fr "
+      templateAreas={`
+      "header header header "
+      
+      "content1 content2 content3  "
+      
+    `}
+    >
+      <GridItem area="header">
+        <Box bg="maroon" height="100%">
+          header
+        </Box>
+      </GridItem>
+
+      <GridItem area="content1">
+        <Box bg="red" height="100%">
+          Content 1
+        </Box>
+      </GridItem>
+      <GridItem area="content2">
+        <Box bg="green" height="100%">
+          Content 2
+        </Box>
+      </GridItem>
+      <GridItem area="content3">
+        <Box bg="yellow" height="100%">
+          Content 3
+        </Box>
+      </GridItem>
+    </Grid>
   );
 };
 
