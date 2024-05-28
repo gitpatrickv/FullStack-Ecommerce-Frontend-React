@@ -39,10 +39,6 @@ const CartFooter = ({
     lg: "lg",
     xl: "xl",
   });
-  const buttonSize = useBreakpointValue({
-    base: "sm",
-    md: "md",
-  });
   useEffect(() => {
     setIsFiltered(isChecked);
   }, [isChecked]);

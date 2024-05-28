@@ -18,7 +18,7 @@ const SearchInput = () => {
     event.preventDefault();
     const text = ref.current?.value || "";
     setSearchText(text);
-    navigate(`/search?keyword=${encodeURIComponent(text)}`);
+    navigate(`/search?keyword=${encodeURIComponent(text)}&pageNo=&pageSize=`);
   };
 
   const query = searchParams.get("keyword") || "";

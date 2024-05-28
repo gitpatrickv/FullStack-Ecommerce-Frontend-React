@@ -1,8 +1,32 @@
-import { Grid, GridItem, Show, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  Image,
+  Show,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Category from "../components/Category/Category";
-import ProductGrid from "../components/Product/ProductGrid";
+import ProductCard from "../components/Product/ProductCard";
+import ProductCardContainer from "../components/Product/ProductCardContainer";
+import useProducts from "../hooks/useProducts";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const pageSize = 25;
+  const { data } = useProducts({ pageNo: page, pageSize });
+
+  const onClickNavigate = () => {
+    navigate(`/daily_discover?pageNo=${page + 1}&pageSize=${pageSize}`);
+  };
+
   return (
     <Grid
       templateAreas={{
@@ -26,12 +50,32 @@ const HomePage = () => {
         </GridItem>
       </Show>
       <GridItem area="main">
-        {/* <Image
-          src="https://down-ph.img.susercontent.com/file/ph-50009109-7b9fae9a063f50ac17699b7ea90d0dd4"
-          w="full"
-          height="25vh"
-        /> */}
-        <ProductGrid />
+        <Image
+          src="https://miro.medium.com/v2/resize:fit:1024/0*el52j7p-1MrKjgrN.png"
+          w="100%"
+          h="12%"
+        />
+        <Card mt="20px" mb="20px">
+          <CardBody>
+            <Text textAlign="center" fontSize="larger" color="orange">
+              DAILY DISCOVER
+            </Text>
+          </CardBody>
+        </Card>
+        <SimpleGrid
+          columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
+          spacing={2}
+          padding="10px"
+        >
+          {data?.data.allProductModels.map((prod) => (
+            <ProductCardContainer key={prod.productId}>
+              <ProductCard product={prod} />
+            </ProductCardContainer>
+          ))}
+        </SimpleGrid>
+        <Box display="flex" justifyContent="center" pt="20px">
+          <Button onClick={onClickNavigate}>See More</Button>
+        </Box>
       </GridItem>
     </Grid>
   );

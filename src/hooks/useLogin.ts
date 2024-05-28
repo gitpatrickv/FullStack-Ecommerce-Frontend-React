@@ -25,6 +25,9 @@ const useLogin = () => {
       const jwtToken = response.jwtToken;
       localStorage.setItem("jwtToken", jwtToken);
       queryClient.invalidateQueries(['user']);
+      queryClient.invalidateQueries(['cart']);
+      queryClient.invalidateQueries(['cartTotal']);
+      queryClient.invalidateQueries(['product']);
       const role = response.role;
       if(role==="ADMIN"){
         navigate("/admin");

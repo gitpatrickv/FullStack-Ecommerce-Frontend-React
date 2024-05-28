@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import Header from "../components/Navbar/Header";
 
 const Layout = () => {
@@ -18,6 +18,7 @@ const Layout = () => {
       <GridItem area="main">
         <Box padding={5}>
           <Outlet />
+          <ScrollRestoration />
         </Box>
       </GridItem>
     </Grid>

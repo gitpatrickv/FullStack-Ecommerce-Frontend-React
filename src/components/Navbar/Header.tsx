@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Card,
   Grid,
@@ -13,7 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { FaHome, FaShoppingCart, FaUserCircle } from "react-icons/fa";
+import { FaHome, FaShoppingCart } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import useCartTotal from "../../hooks/useCartTotal";
@@ -35,41 +36,47 @@ const Header = () => {
     navigate("/");
   };
   return (
-    <Card height="110px">
+    <Card height="125px">
       <Grid
         templateColumns="0.4fr 0.5fr 2fr 0.5fr 0.4fr"
-        templateRows="1px 0.3fr 0.5fr"
+        templateRows=" 0.3fr 0.5fr"
         templateAreas={`
-        "m m m m m"
+  
     "asideLeft content1 content2 content3 asideRight"
     "asideLeft content4 content5 content6 asideRight"
 `}
         alignItems="center"
-        gridGap="10px"
+        gridGap="25px"
+        mt="5px"
       >
         <GridItem area="content3" display="flex" justifyContent="flex-end">
           <Box>
-            <HStack spacing={5}>
+            <HStack spacing={3}>
               {user ? (
                 <>
-                  <Text
-                    position="relative"
-                    right="-15px"
-                    fontSize="medium"
-                  ></Text>
                   <Box>
                     <Menu>
                       <MenuButton
                         as={IconButton}
                         aria-label="Options"
-                        icon={<FaUserCircle size="30px" />}
+                        icon={
+                          <Avatar
+                            name="Patrick"
+                            src="https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
+                            size="sm"
+                          />
+                        }
                         variant="none"
                       />
                       <MenuList>
                         <MenuItem>{user.email}</MenuItem>
                         <MenuDivider />
-                        <MenuItem>My Account</MenuItem>
-                        <MenuItem>My Purchase</MenuItem>
+                        <Link to="/user/account/profile">
+                          <MenuItem>My Account</MenuItem>
+                        </Link>
+                        <Link to="/user/purchase">
+                          <MenuItem>My Purchase</MenuItem>
+                        </Link>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </MenuList>
                     </Menu>
@@ -91,8 +98,9 @@ const Header = () => {
                 <MenuButton
                   as={IconButton}
                   aria-label="Options"
-                  icon={<RxHamburgerMenu size="30px" />}
+                  icon={<RxHamburgerMenu size="22px" />}
                   variant="outline"
+                  size="sm"
                 />
                 <MenuList>
                   <MenuItem>
