@@ -56,7 +56,7 @@ const Checkout = ({ cart }: Props) => {
         </Text>
       </GridItem>
       <GridItem area="content4" textAlign="end">
-        <Text fontSize={fontSize} fontWeight="semibold" color="orange">
+        <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
           {formatCurrency(cart.totalAmount)}
         </Text>
       </GridItem>

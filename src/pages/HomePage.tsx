@@ -57,7 +57,7 @@ const HomePage = () => {
         />
         <Card mt="20px" mb="20px">
           <CardBody>
-            <Text textAlign="center" fontSize="larger" color="orange">
+            <Text textAlign="center" fontSize="larger" color="orange.400">
               DAILY DISCOVER
             </Text>
           </CardBody>
@@ -74,7 +74,9 @@ const HomePage = () => {
           ))}
         </SimpleGrid>
         <Box display="flex" justifyContent="center" pt="20px">
-          <Button onClick={onClickNavigate}>See More</Button>
+          <Button onClick={onClickNavigate} _hover={{ color: "orange.400" }}>
+            See More
+          </Button>
         </Box>
       </GridItem>
     </Grid>

@@ -51,15 +51,6 @@ const Payment = ({ cartTotal }: Props) => {
             >
               Cash On Delivery
             </Text>
-
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              whiteSpace="nowrap"
-              textAlign="end"
-            >
-              Merchandise Subtotal:
-            </Text>
             <Text
               fontSize={fontSize}
               fontWeight="semibold"
@@ -79,7 +70,7 @@ const Payment = ({ cartTotal }: Props) => {
           </GridItem>
           <GridItem area="content3">
             <Text
-              color="orange"
+              color="orange.400"
               fontSize={fontSize}
               fontWeight="semibold"
               cursor="pointer"
@@ -88,24 +79,30 @@ const Payment = ({ cartTotal }: Props) => {
               Change
             </Text>
 
-            <Text fontSize={fontSize} fontWeight="semibold" textAlign="end">
-              ₱1234.00
-            </Text>
-
-            <Text fontSize={fontSize} fontWeight="semibold" textAlign="end">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              textAlign="end"
+              color="orange.400"
+            >
               ₱1234.00
             </Text>
 
             <Text
               fontSize={fontSize}
               fontWeight="semibold"
-              color="orange"
+              color="orange.400"
               textAlign="end"
               pl="5px"
             >
               {formatCurrency(cartTotal)}
             </Text>
-            <Box display="flex" justifyContent="flex-end" mt="20px">
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              mt="20px"
+              _hover={{ color: "orange.400" }}
+            >
               <Button>Place Order</Button>
             </Box>
           </GridItem>

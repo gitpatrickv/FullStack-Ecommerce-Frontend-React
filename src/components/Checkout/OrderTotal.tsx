@@ -38,7 +38,7 @@ const OrderTotal = ({ cartTotal, qty }: Props) => {
               textAlign="end"
             >
               Order Total (
-              <Text as="span" color="orange">
+              <Text as="span" color="orange.400">
                 {qty} items
               </Text>
               ):
@@ -48,7 +48,7 @@ const OrderTotal = ({ cartTotal, qty }: Props) => {
             <Text
               fontSize={fontSize}
               fontWeight="semibold"
-              color="orange"
+              color="orange.400"
               textAlign="end"
               pl="5px"
             >

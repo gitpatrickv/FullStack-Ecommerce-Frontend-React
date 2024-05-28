@@ -140,7 +140,7 @@ const Header = () => {
                       display="flex"
                       justifyContent="center"
                       alignItems="center"
-                      color="orange"
+                      color="orange.400"
                       fontSize="18px"
                       fontWeight="semibold"
                     >

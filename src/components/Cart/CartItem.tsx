@@ -202,6 +202,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               right="10px"
               onClick={handleClickDecrement}
               size={buttonSize}
+              _hover={{ color: "orange.400" }}
             >
               -
             </Button>
@@ -213,6 +214,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               left="10px"
               onClick={handleClickIncrement}
               size={buttonSize}
+              _hover={{ color: "orange.400" }}
             >
               +
             </Button>
@@ -225,7 +227,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         alignItems="center"
         justifyContent="center"
       >
-        <Text fontSize={fontSize} fontWeight="semibold" color="orange">
+        <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
           {formatCurrency(cart.totalAmount)}
         </Text>
       </GridItem>
@@ -235,7 +237,11 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         alignItems="center"
         justifyContent="flex-end"
       >
-        <Button onClick={handleDeleteCart} size={buttonSize}>
+        <Button
+          onClick={handleDeleteCart}
+          size={buttonSize}
+          _hover={{ color: "orange.400" }}
+        >
           <Text fontSize={fontSize}>Delete</Text>
         </Button>
       </GridItem>

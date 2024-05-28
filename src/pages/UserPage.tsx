@@ -54,7 +54,11 @@ const UserPage = () => {
           >
             <FaRegUser size="20px" />
             <Link to="/user/account/profile">
-              <Text fontSize={fontSize} pl="15px" _hover={{ color: "orange" }}>
+              <Text
+                fontSize={fontSize}
+                pl="15px"
+                _hover={{ color: "orange.400" }}
+              >
                 My Account
               </Text>
             </Link>
@@ -70,7 +74,11 @@ const UserPage = () => {
           >
             <FaRegFileAlt size="20px" />
             <Link to="/user/purchase">
-              <Text fontSize={fontSize} pl="15px" _hover={{ color: "orange" }}>
+              <Text
+                fontSize={fontSize}
+                pl="15px"
+                _hover={{ color: "orange.400" }}
+              >
                 My Purchase
               </Text>
             </Link>
