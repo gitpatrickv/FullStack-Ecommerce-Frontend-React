@@ -19,9 +19,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import useCartTotal from "../../hooks/useCartTotal";
 import useGetUser from "../../hooks/useGetUser";
+import { useAuthQueryStore } from "../../store/auth-store";
 import ColorModeSwitch from "../ColorModeSwitch";
 import SearchInput from "./SearchInput";
-import { useAuthQueryStore } from "../../store/auth-store";
 
 const Header = () => {
   const queryClient = useQueryClient();
@@ -62,8 +62,11 @@ const Header = () => {
                         aria-label="Options"
                         icon={
                           <Avatar
-                            name="Patrick"
-                            src="https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
+                            src={
+                              user?.photoUrl
+                                ? user?.photoUrl
+                                : "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
+                            }
                             size="sm"
                           />
                         }

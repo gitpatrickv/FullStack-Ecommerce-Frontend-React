@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Divider,
@@ -10,9 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FaRegUser } from "react-icons/fa";
 import useGetUser from "../hooks/useGetUser";
 import useUpdateAccountInfo from "../hooks/useUpdateAccountInfo";
+import useUploadUserPhoto from "../hooks/useUploadUserPhoto";
 import { useAuthQueryStore } from "../store/auth-store";
 
 interface UpdateAccountProps {
@@ -25,6 +26,8 @@ const AccountProfilePage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: user } = useGetUser(jwtToken);
+  const { onSubmit, loading } = useUpdateAccountInfo();
+  const uploadPhoto = useUploadUserPhoto();
   const { register, handleSubmit, setValue } = useForm<UpdateAccountProps>({
     defaultValues: {
       name: user?.name,
@@ -41,7 +44,12 @@ const AccountProfilePage = () => {
     }
   }, [user, setValue]);
 
-  const { onSubmit, loading } = useUpdateAccountInfo();
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      uploadPhoto.mutate({ jwtToken: jwtToken, file: file });
+    }
+  };
 
   return (
     <Grid
@@ -126,8 +134,26 @@ const AccountProfilePage = () => {
       <GridItem area="content3" pt="20px">
         <Box display="flex" justifyContent="center">
           <Box display="flex" flexDirection="column" alignItems="center">
-            <FaRegUser size="100px" />
-            <Button mt="20px">Select Image</Button>
+            <Avatar
+              src={
+                user?.photoUrl
+                  ? user?.photoUrl
+                  : "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
+              }
+              size="2xl"
+            />
+            <input
+              type="file"
+              accept=".jpeg, .png"
+              onChange={handleUploadImage}
+              style={{ display: "none" }}
+              id="file-upload"
+            />
+            <label htmlFor="file-upload">
+              <Button as="span" mt="20px" cursor="pointer">
+                Select Image
+              </Button>
+            </label>
             <Text mt="10px">File size: maximum 1 MB</Text>
             <Text>File extension: .JPEG, .PNG</Text>
           </Box>

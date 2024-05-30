@@ -8,6 +8,7 @@ export interface User {
   password: string;
   confirmPassword: string;
   role: string;
+  photoUrl: string;
 }
 
 export const schema = z.object({
