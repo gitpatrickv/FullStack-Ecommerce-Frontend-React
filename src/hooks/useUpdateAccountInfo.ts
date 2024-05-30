@@ -1,8 +1,9 @@
+import { useToast } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { axiosInstance } from "../services/api-client";
-import { useToast } from "@chakra-ui/react";
+import { useAuthQueryStore } from "../store/auth-store";
 
 interface UpdateAccountProps{
     name:string;
@@ -16,7 +17,8 @@ const useUpdateAccountInfo = () => {
     const queryClient = useQueryClient();
     const toast = useToast();
     const [loading, setLoading] = useState(false);
-    const jwtToken = localStorage.getItem("jwtToken");
+    const { authStore } = useAuthQueryStore();
+    const jwtToken = authStore.jwtToken;
   
     const mutation =  useMutation(
     async ({name, address, contactNumber}: UpdateAccountProps) => {

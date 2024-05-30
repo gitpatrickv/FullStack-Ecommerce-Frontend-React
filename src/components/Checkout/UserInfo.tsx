@@ -8,10 +8,12 @@ import {
 
 import { IoLocation } from "react-icons/io5";
 import useGetUser from "../../hooks/useGetUser";
+import { useAuthQueryStore } from "../../store/auth-store";
 
 const UserInfo = () => {
-  const jwtToken = localStorage.getItem("jwtToken");
-  const { data: user } = useGetUser(jwtToken || "");
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: user } = useGetUser(jwtToken);
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",

@@ -18,24 +18,22 @@ import useCarts from "../hooks/useCarts";
 import useCheckout from "../hooks/useCheckout";
 import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
+import { useAuthQueryStore } from "../store/auth-store";
 
 const CartPage = () => {
-  const jwtToken = localStorage.getItem("jwtToken");
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
 
   const {
     data: carts,
     isLoading,
     error,
     refetch: refetchCarts,
-  } = useCarts(jwtToken || "");
-  const { data: cartTotal, refetch: refetchTotal } = useCartTotal(
-    jwtToken || ""
-  );
+  } = useCarts(jwtToken);
+  const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
   const { mutate: filterAllCart } = useFilterAllCarts();
   const { mutate: deleteAllCarts } = useDeleteAllCarts();
-  const { data: checkout, refetch: refetchCheckout } = useCheckout(
-    jwtToken || ""
-  );
+  const { data: checkout, refetch: refetchCheckout } = useCheckout(jwtToken);
   const navigate = useNavigate();
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;
@@ -51,7 +49,7 @@ const CartPage = () => {
 
   const handleFilterAll = () => {
     filterAllCart(
-      { jwtToken: jwtToken || "" },
+      { jwtToken: jwtToken },
       {
         onSuccess: () => {
           refetchCarts();
@@ -63,7 +61,7 @@ const CartPage = () => {
 
   const handleDeleteAllCart = () => {
     deleteAllCarts(
-      { jwtToken: jwtToken || "" },
+      { jwtToken: jwtToken },
       {
         onSuccess: () => {
           refetchTotal();

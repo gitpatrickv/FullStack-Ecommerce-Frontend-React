@@ -21,19 +21,20 @@ import useCartTotal from "../../hooks/useCartTotal";
 import useGetUser from "../../hooks/useGetUser";
 import ColorModeSwitch from "../ColorModeSwitch";
 import SearchInput from "./SearchInput";
+import { useAuthQueryStore } from "../../store/auth-store";
 
 const Header = () => {
   const queryClient = useQueryClient();
-  const jwtToken = localStorage.getItem("jwtToken") || "";
+  const { logout, authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
   const { data: user } = useGetUser(jwtToken);
   const { data: cartTotal } = useCartTotal(jwtToken);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
+    logout(navigate);
     queryClient.setQueryData(["user"], null);
-    navigate("/");
   };
   return (
     <Card height="125px">

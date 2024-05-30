@@ -8,11 +8,12 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { FaRegUser } from "react-icons/fa";
 import useGetUser from "../hooks/useGetUser";
 import useUpdateAccountInfo from "../hooks/useUpdateAccountInfo";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useAuthQueryStore } from "../store/auth-store";
 
 interface UpdateAccountProps {
   name: string;
@@ -21,8 +22,9 @@ interface UpdateAccountProps {
 }
 
 const AccountProfilePage = () => {
-  const jwtToken = localStorage.getItem("jwtToken");
-  const { data: user } = useGetUser(jwtToken || "");
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: user } = useGetUser(jwtToken);
   const { register, handleSubmit, setValue } = useForm<UpdateAccountProps>({
     defaultValues: {
       name: user?.name,
