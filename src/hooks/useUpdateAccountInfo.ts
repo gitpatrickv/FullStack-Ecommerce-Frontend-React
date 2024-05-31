@@ -5,7 +5,7 @@ import { SubmitHandler } from "react-hook-form";
 import { axiosInstance } from "../services/api-client";
 import { useAuthQueryStore } from "../store/auth-store";
 
-interface UpdateAccountProps{
+export interface UpdateAccountProps{
     name:string;
     address:string;
     contactNumber:string;

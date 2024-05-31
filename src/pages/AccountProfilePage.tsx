@@ -15,12 +15,7 @@ import useGetUser from "../hooks/useGetUser";
 import useUpdateAccountInfo from "../hooks/useUpdateAccountInfo";
 import useUploadUserPhoto from "../hooks/useUploadUserPhoto";
 import { useAuthQueryStore } from "../store/auth-store";
-
-interface UpdateAccountProps {
-  name: string;
-  address: string;
-  contactNumber: string;
-}
+import { UpdateAccountProps } from "../hooks/useUpdateAccountInfo";
 
 const AccountProfilePage = () => {
   const { authStore } = useAuthQueryStore();
