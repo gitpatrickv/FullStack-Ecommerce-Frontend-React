@@ -15,6 +15,7 @@ import useAddToCart from "../../hooks/useAddToCart";
 import useCartTotal from "../../hooks/useCartTotal";
 import useCarts from "../../hooks/useCarts";
 import useGetUser from "../../hooks/useGetUser";
+import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
@@ -22,9 +23,10 @@ interface Props {
   product: Product;
 }
 
-const jwtToken = localStorage.getItem("jwtToken");
-
 const ProductDetail = ({ product }: Props) => {
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+
   const { count, increment, decrement, reset } = useProductQueryStore(
     (state) => ({
       count: state.productQuery.count,
@@ -35,10 +37,10 @@ const ProductDetail = ({ product }: Props) => {
   );
 
   const toast = useToast();
-  const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
+  const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { mutate: addToCart } = useAddToCart();
-  const { refetch: refetchCarts } = useCarts(jwtToken || "");
-  const { data: user } = useGetUser(jwtToken || "");
+  const { refetch: refetchCarts } = useCarts(jwtToken);
+  const { data: user } = useGetUser(jwtToken);
   const navigate = useNavigate();
 
   const handleAddToCartClick = async () => {
@@ -48,7 +50,7 @@ const ProductDetail = ({ product }: Props) => {
           {
             productId: product.productId,
             quantity: count,
-            jwtToken: jwtToken || "",
+            jwtToken: jwtToken,
           },
           {
             onSuccess: () => {

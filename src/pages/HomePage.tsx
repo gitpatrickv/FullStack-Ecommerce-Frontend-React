@@ -52,12 +52,12 @@ const HomePage = () => {
       <GridItem area="main">
         <Image
           src="https://miro.medium.com/v2/resize:fit:1024/0*el52j7p-1MrKjgrN.png"
-          w="100%"
-          h="12%"
+          w={{ base: "100%", md: "100%", lg: "100%", xl: "100%" }}
+          h={{ base: "1%", md: "4%", lg: "4%", xl: "11%" }}
         />
         <Card mt="20px" mb="20px">
           <CardBody>
-            <Text textAlign="center" fontSize="larger" color="orange">
+            <Text textAlign="center" fontSize="larger" color="orange.400">
               DAILY DISCOVER
             </Text>
           </CardBody>
@@ -74,7 +74,9 @@ const HomePage = () => {
           ))}
         </SimpleGrid>
         <Box display="flex" justifyContent="center" pt="20px">
-          <Button onClick={onClickNavigate}>See More</Button>
+          <Button onClick={onClickNavigate} _hover={{ color: "orange.400" }}>
+            See More
+          </Button>
         </Box>
       </GridItem>
     </Grid>

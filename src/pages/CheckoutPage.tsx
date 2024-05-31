@@ -16,11 +16,13 @@ import UserInfo from "../components/Checkout/UserInfo";
 import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
 import useCheckout from "../hooks/useCheckout";
+import { useAuthQueryStore } from "../store/auth-store";
 
 const CheckoutPage = () => {
-  const jwtToken = localStorage.getItem("jwtToken");
-  const { data: carts, isLoading, error } = useCheckout(jwtToken || "");
-  const { data: cartTotal } = useCartTotal(jwtToken || "");
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: carts, isLoading, error } = useCheckout(jwtToken);
+  const { data: cartTotal } = useCartTotal(jwtToken);
 
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;

@@ -18,6 +18,7 @@ import useDeleteCart from "../../hooks/useDeleteCart";
 import useFilterByStoreName from "../../hooks/useFilterByStoreName";
 import useFilterCart from "../../hooks/useFilterCart";
 import useIncrementQuantity from "../../hooks/useIncrementQuantity";
+import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
@@ -26,20 +27,22 @@ export interface Props {
   refetchCarts: () => void;
   isChecked: boolean;
 }
-const jwtToken = localStorage.getItem("jwtToken");
 
 const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const reset = useProductQueryStore((state) => state.reset);
   const navigate = useNavigate();
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
   const toast = useToast();
   const { mutate: deleteCart } = useDeleteCart();
   const { mutate: decrementQuantity } = useDecrementQuantity();
   const { mutate: incrementQuantity } = useIncrementQuantity();
   const { mutate: filterCart } = useFilterCart();
   const { mutate: filterStoreCart } = useFilterByStoreName();
-  const { refetch: refetchTotal } = useCartTotal(jwtToken || "");
+  const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const [isCheck, setIsCheck] = useState<boolean>(isChecked);
+
   const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
   const buttonSize = useBreakpointValue({
     base: "sm",
@@ -61,7 +64,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
       {
         productId: cart.productId,
         cartId: cart.cartId,
-        jwtToken: jwtToken || "",
+        jwtToken: jwtToken,
       },
       {
         onSuccess: () => {
@@ -76,7 +79,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
       {
         productId: cart.productId,
         cartId: cart.cartId,
-        jwtToken: jwtToken || "",
+        jwtToken: jwtToken,
       },
       {
         onSuccess: () => {
@@ -88,7 +91,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
 
   const handleDeleteCart = () => {
     deleteCart(
-      { jwtToken: jwtToken || "", cartId: cart.cartId },
+      { jwtToken: jwtToken, cartId: cart.cartId },
       {
         onSuccess: () => {
           refetchTotal();
@@ -107,7 +110,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
 
   const handleFilterChange = () => {
     filterCart(
-      { cartId: cart.cartId, jwtToken: jwtToken || "" },
+      { cartId: cart.cartId, jwtToken: jwtToken },
       {
         onSuccess: () => {
           refetchTotal();
@@ -120,7 +123,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
 
   const handleStoreFilterChange = () => {
     filterStoreCart(
-      { storeName: cart.storeName, jwtToken: jwtToken || "" },
+      { storeName: cart.storeName, jwtToken: jwtToken },
       {
         onSuccess: () => {
           refetchTotal();
@@ -202,6 +205,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               right="10px"
               onClick={handleClickDecrement}
               size={buttonSize}
+              _hover={{ color: "orange.400" }}
             >
               -
             </Button>
@@ -213,6 +217,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               left="10px"
               onClick={handleClickIncrement}
               size={buttonSize}
+              _hover={{ color: "orange.400" }}
             >
               +
             </Button>
@@ -225,7 +230,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         alignItems="center"
         justifyContent="center"
       >
-        <Text fontSize={fontSize} fontWeight="semibold" color="orange">
+        <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
           {formatCurrency(cart.totalAmount)}
         </Text>
       </GridItem>
@@ -235,7 +240,11 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         alignItems="center"
         justifyContent="flex-end"
       >
-        <Button onClick={handleDeleteCart} size={buttonSize}>
+        <Button
+          onClick={handleDeleteCart}
+          size={buttonSize}
+          _hover={{ color: "orange.400" }}
+        >
           <Text fontSize={fontSize}>Delete</Text>
         </Button>
       </GridItem>

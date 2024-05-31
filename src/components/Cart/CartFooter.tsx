@@ -92,7 +92,7 @@ const CartFooter = ({
                 Select All
               </Text>
               <Text
-                color="orange"
+                color="orange.400"
                 fontSize={fontSize}
                 fontWeight="semibold"
                 pr="20px"
@@ -105,6 +105,7 @@ const CartFooter = ({
                 fontWeight="semibold"
                 pr="20px"
                 onClick={handleDeleteAllCarts}
+                _hover={{ color: "orange.400" }}
               >
                 Delete
               </Text>
@@ -112,7 +113,7 @@ const CartFooter = ({
                 cursor="pointer"
                 fontSize={fontSize}
                 fontWeight="semibold"
-                color="orange"
+                color="orange.400"
                 whiteSpace="nowrap"
               >
                 Add to Favorites
@@ -129,21 +130,21 @@ const CartFooter = ({
                 pr="7px"
               >
                 Total (
-                <Text as="span" color="orange">
+                <Text as="span" color="orange.400">
                   {qty} items
                 </Text>
                 ):
               </Text>
               <Text
                 fontSize={fontSize}
-                color="orange"
+                color="orange.400"
                 fontWeight="semibold"
                 pr="25px"
               >
                 {formatCurrency(cartTotal)}
               </Text>
 
-              <Button onClick={onCheckout}>
+              <Button onClick={onCheckout} _hover={{ color: "orange.400" }}>
                 <Text fontSize={fontSize}>Check Out</Text>
               </Button>
             </Box>

@@ -14,6 +14,7 @@ import RegisterPage from "../pages/RegisterPage";
 import { SearchPage } from "../pages/SearchPage";
 import SellerPage from "../pages/SellerPage";
 import UserPage from "../pages/UserPage";
+import ChangePasswordPage from "../pages/ChangePasswordPage";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
         element: <UserPage />,
         children: [
           { path: "account/profile", element: <AccountProfilePage /> },
+          { path: "account/password", element: <ChangePasswordPage /> },
           { path: "purchase", element: <MyPurchasePage /> },
         ],
       },

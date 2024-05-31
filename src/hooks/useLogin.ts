@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../services/api-client';
+import { useAuthQueryStore } from '../store/auth-store';
 
 interface FormData {
   email: string;
@@ -16,6 +17,7 @@ const useLogin = () => {
   const { register, handleSubmit } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {setJwtToken} = useAuthQueryStore();
   
   const mutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("/user/login", data)
@@ -23,7 +25,7 @@ const useLogin = () => {
 
     onSuccess: (response) => {
       const jwtToken = response.jwtToken;
-      localStorage.setItem("jwtToken", jwtToken);
+      setJwtToken(jwtToken);
       queryClient.invalidateQueries(['user']);
       queryClient.invalidateQueries(['cart']);
       queryClient.invalidateQueries(['cartTotal']);
