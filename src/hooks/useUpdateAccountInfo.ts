@@ -23,7 +23,7 @@ const useUpdateAccountInfo = () => {
     const mutation =  useMutation(
     async ({name, address, contactNumber}: UpdateAccountProps) => {
         const {data} = await apiClient.put(
-            "/user/account",
+            "/user/account/profile",
             {name, address, contactNumber},
             {
                 headers:{
@@ -35,19 +35,20 @@ const useUpdateAccountInfo = () => {
     },
     {
         onSuccess: () => {
-            queryClient.invalidateQueries(['user']);         
+            queryClient.invalidateQueries(['user']);    
+            toast({
+                position: "top",
+                title: "Successfully updated account info.",
+                status: "success",
+                duration: 1000,
+                isClosable: true,
+              });     
         }
     }
 )
     const onSubmit: SubmitHandler<UpdateAccountProps> = (data) => {
         mutation.mutate(data);
-        toast({
-            position: "top",
-            title: "Successfully updated account info.",
-            status: "success",
-            duration: 1000,
-            isClosable: true,
-          });
+  
     };
     
     return {

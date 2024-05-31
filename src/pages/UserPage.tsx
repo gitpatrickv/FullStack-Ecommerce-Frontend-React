@@ -19,6 +19,7 @@ const UserPage = () => {
     base: "sm",
     md: "md",
   });
+
   const [isProfilePage, setIsProfilePage] = useState(false);
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
@@ -26,7 +27,7 @@ const UserPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    setIsProfilePage(location.pathname === "/user/account/profile");
+    setIsProfilePage(location.pathname.startsWith("/user/account"));
   }, [location.pathname]);
 
   return (
@@ -94,23 +95,34 @@ const UserPage = () => {
             <Box display="flex" flexDirection="column">
               {isProfilePage && (
                 <>
-                  <Text
-                    pl="15px"
-                    fontSize={fontSize}
-                    color={isProfilePage ? "orange.400" : "gray.600"}
-                    cursor="pointer"
-                  >
-                    Profile
-                  </Text>
-                  <Text
-                    pl="15px"
-                    fontSize={fontSize}
-                    color="gray.600"
-                    _hover={{ color: "orange.400" }}
-                    cursor="pointer"
-                  >
-                    Change password
-                  </Text>
+                  <Link to="/user/account/profile">
+                    <Text
+                      pl="15px"
+                      fontSize={fontSize}
+                      color={
+                        location.pathname === "/user/account/profile"
+                          ? "orange.400"
+                          : "gray.600"
+                      }
+                      cursor="pointer"
+                    >
+                      Profile
+                    </Text>
+                  </Link>
+                  <Link to="/user/account/password">
+                    <Text
+                      pl="15px"
+                      fontSize={fontSize}
+                      color={
+                        location.pathname === "/user/account/password"
+                          ? "orange.400"
+                          : "gray.600"
+                      }
+                      cursor="pointer"
+                    >
+                      Change password
+                    </Text>
+                  </Link>
                 </>
               )}
             </Box>
