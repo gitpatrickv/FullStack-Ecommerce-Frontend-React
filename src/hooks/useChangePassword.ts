@@ -46,8 +46,14 @@ const useChangePassword = () => {
                   });
                   reset();
             },
-            onError: (error) => {
-                console.error('Error changing password', error);
+            onError: () => {
+                toast({
+                    position: "top",                    
+                    title: "Invalid Password!",
+                    status: "error",
+                    duration: 2000,
+                    isClosable: true,
+                  });
             }
         }
     )

@@ -123,6 +123,20 @@ const UserPage = () => {
                       Change password
                     </Text>
                   </Link>
+                  <Link to="/user/account/favorite">
+                    <Text
+                      pl="15px"
+                      fontSize={fontSize}
+                      color={
+                        location.pathname === "/user/account/favorite"
+                          ? "orange.400"
+                          : "gray.600"
+                      }
+                      cursor="pointer"
+                    >
+                      My Favorites
+                    </Text>
+                  </Link>
                 </>
               )}
             </Box>
@@ -151,11 +165,17 @@ const UserPage = () => {
         </Box>
       </GridItem>
       <GridItem area="main">
-        <Box>
-          <Card>
+        {location.pathname === "/user/account/favorite" ? (
+          <Box>
             <Outlet />
-          </Card>
-        </Box>
+          </Box>
+        ) : (
+          <Box>
+            <Card>
+              <Outlet />
+            </Card>
+          </Box>
+        )}
       </GridItem>
     </Grid>
   );

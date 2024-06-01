@@ -3,6 +3,7 @@ export default interface AllProductModels {
     productName: string;
     price: number;
     photoUrl: string;
+    favorites: boolean;
 }
 
 interface PageResponse {

@@ -10,6 +10,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoIosEye } from "react-icons/io";
@@ -18,15 +19,25 @@ import useChangePassword from "../hooks/useChangePassword";
 
 const ChangePasswordPage = () => {
   const { onSubmit, loading, register, handleSubmit } = useChangePassword();
+  const isTruncated = useBreakpointValue({ base: true });
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const fontSize = useBreakpointValue({
+    base: "sm",
+    md: "md",
+    lg: "lg",
+  });
   const handleShowOldPasswordClick = () => {
     setShowOldPassword(!showOldPassword);
   };
 
   const handleShowNewPasswordClick = () => {
     setShowNewPassword(!showNewPassword);
+  };
+
+  const handleShowConfirmPasswordClick = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -45,30 +56,34 @@ const ChangePasswordPage = () => {
           <Text fontSize="xl" fontWeight="semibold">
             Change Password
           </Text>
-          <Text fontSize="md">
+          <Text fontSize="md" whiteSpace="nowrap" isTruncated={isTruncated}>
             For your account's security, do not share your password with anyone
             else
           </Text>
           <Divider pt="15px" />
         </Box>
       </GridItem>
-      <GridItem area="content1" pt="10px">
+      <GridItem area="content1" pt="30px" whiteSpace="nowrap">
         <Box>
           <Box textAlign="end">
-            <Text fontSize="large" mb="33px" fontWeight="semibold">
+            <Text fontSize={fontSize} mb="33px" fontWeight="semibold">
               Current Password
             </Text>
-            <Text fontSize="large" mb="33px" fontWeight="semibold">
+            <Text fontSize={fontSize} mb="33px" fontWeight="semibold">
               New Password
             </Text>
-            <Text fontSize="large" fontWeight="semibold">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              isTruncated={isTruncated}
+            >
               Confirm Password
             </Text>
           </Box>
         </Box>
       </GridItem>
 
-      <GridItem area="content2">
+      <GridItem area="content2" pt="20px">
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box textAlign="start">
             <FormControl pb="20px">
@@ -130,20 +145,20 @@ const ChangePasswordPage = () => {
                 <Input
                   disabled={loading}
                   {...register("confirmPassword")}
-                  type={showNewPassword ? "text" : "password"}
+                  type={showConfirmPassword ? "text" : "password"}
                   borderColor="gray.500"
                 />
                 <InputRightElement>
                   <IconButton
                     aria-label="show"
                     icon={
-                      showNewPassword ? (
+                      showConfirmPassword ? (
                         <IoIosEye size="25px" />
                       ) : (
                         <RiEyeCloseLine size="25px" />
                       )
                     }
-                    onClick={handleShowNewPasswordClick}
+                    onClick={handleShowConfirmPasswordClick}
                     bg="transparent"
                     _hover={{ bg: "transparent" }}
                     mr="15px"
