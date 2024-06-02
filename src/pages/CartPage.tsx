@@ -13,11 +13,13 @@ import CartFooter from "../components/Cart/CartFooter";
 import CartHeader from "../components/Cart/CartHeader";
 import CartItem from "../components/Cart/CartItem";
 import Cart from "../entities/Cart";
+import useAddToFavoritesByFilter from "../hooks/useAddToFavoritesByFilter";
 import useCartTotal from "../hooks/useCartTotal";
 import useCarts from "../hooks/useCarts";
 import useCheckout from "../hooks/useCheckout";
 import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
+import useGetAllFavorites from "../hooks/useGetAllFavorites";
 import { useAuthQueryStore } from "../store/auth-store";
 
 const CartPage = () => {
@@ -31,9 +33,11 @@ const CartPage = () => {
     refetch: refetchCarts,
   } = useCarts(jwtToken);
   const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
+  const { data: checkout, refetch: refetchCheckout } = useCheckout(jwtToken);
+  const { refetch: refetchFavorites } = useGetAllFavorites();
   const { mutate: filterAllCart } = useFilterAllCarts();
   const { mutate: deleteAllCarts } = useDeleteAllCarts();
-  const { data: checkout, refetch: refetchCheckout } = useCheckout(jwtToken);
+  const { mutate: addToFavoritesByFilter } = useAddToFavoritesByFilter();
   const navigate = useNavigate();
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;
@@ -66,6 +70,19 @@ const CartPage = () => {
         onSuccess: () => {
           refetchTotal();
           refetchCarts();
+        },
+      }
+    );
+  };
+
+  const handleAddToFavorites = () => {
+    addToFavoritesByFilter(
+      { jwtToken: jwtToken },
+      {
+        onSuccess: () => {
+          refetchCarts();
+          refetchTotal();
+          refetchFavorites();
         },
       }
     );
@@ -141,6 +158,7 @@ const CartPage = () => {
             onDeleteAll={handleDeleteAllCart}
             onFilterAll={handleFilterAll}
             onCheckout={handleNavigateCheckoutClick}
+            onAddToFavorites={handleAddToFavorites}
           />
         </Box>
       </GridItem>

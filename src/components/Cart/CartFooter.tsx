@@ -20,6 +20,7 @@ interface Props {
   onDeleteAll: () => void;
   onFilterAll: () => void;
   onCheckout: () => void;
+  onAddToFavorites: () => void;
 }
 
 const CartFooter = ({
@@ -30,6 +31,7 @@ const CartFooter = ({
   onDeleteAll,
   onFilterAll,
   onCheckout,
+  onAddToFavorites,
 }: Props) => {
   const [isFiltered, setIsFiltered] = useState<boolean>(isChecked);
   const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
@@ -115,6 +117,7 @@ const CartFooter = ({
                 fontWeight="semibold"
                 color="orange.400"
                 whiteSpace="nowrap"
+                onClick={onAddToFavorites}
               >
                 Add to Favorites
               </Text>
