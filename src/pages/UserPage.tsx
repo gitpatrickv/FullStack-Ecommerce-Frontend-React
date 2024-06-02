@@ -105,6 +105,7 @@ const UserPage = () => {
                           : "gray.600"
                       }
                       cursor="pointer"
+                      mb="5px"
                     >
                       Profile
                     </Text>
@@ -119,6 +120,7 @@ const UserPage = () => {
                           : "gray.600"
                       }
                       cursor="pointer"
+                      mb="5px"
                     >
                       Change password
                     </Text>

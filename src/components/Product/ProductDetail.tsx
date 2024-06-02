@@ -4,21 +4,25 @@ import {
   Center,
   Flex,
   HStack,
+  IconButton,
   Image,
   Text,
   VStack,
   useToast,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Product from "../../entities/Product";
 import useAddToCart from "../../hooks/useAddToCart";
+import useAddToFavorites from "../../hooks/useAddToFavorites";
 import useCartTotal from "../../hooks/useCartTotal";
 import useCarts from "../../hooks/useCarts";
+import useGetFavoritesStatus from "../../hooks/useGetFavoritesStatus";
 import useGetUser from "../../hooks/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-
 interface Props {
   product: Product;
 }
@@ -38,10 +42,19 @@ const ProductDetail = ({ product }: Props) => {
 
   const toast = useToast();
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
-  const { mutate: addToCart } = useAddToCart();
   const { refetch: refetchCarts } = useCarts(jwtToken);
+  const { mutate: addToCart } = useAddToCart();
+  const { mutate: addToFavorites } = useAddToFavorites();
   const { data: user } = useGetUser(jwtToken);
+  const { data: status } = useGetFavoritesStatus(product.productId);
+  const [addToFavorite, setAddToFavorite] = useState<boolean>(
+    status?.favorites || false
+  );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setAddToFavorite(status?.favorites || false);
+  }, [status?.favorites]);
 
   const handleAddToCartClick = async () => {
     if (user) {
@@ -79,6 +92,14 @@ const ProductDetail = ({ product }: Props) => {
     } else {
       navigate("/login");
     }
+  };
+
+  const handleAddToFavoritesClick = () => {
+    addToFavorites(product.productId, {
+      onSuccess: () => {
+        setAddToFavorite(!addToFavorite);
+      },
+    });
   };
 
   return (
@@ -119,9 +140,36 @@ const ProductDetail = ({ product }: Props) => {
                     {product.quantity} pieces available
                   </Text>
                 </HStack>
-                <Button mt="4" onClick={handleAddToCartClick}>
-                  Add to Cart
-                </Button>
+                <Box display="flex" alignItems="center">
+                  <Button mt="4" onClick={handleAddToCartClick} mr="60px">
+                    Add to Cart
+                  </Button>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    position="relative"
+                    top="10px"
+                  >
+                    <IconButton
+                      aria-label="Search"
+                      icon={
+                        addToFavorite ? (
+                          <FaHeart color="red" size="30px" />
+                        ) : (
+                          <FaRegHeart size="30px" />
+                        )
+                      }
+                      type="button"
+                      bg="transparent"
+                      _hover={{ bg: "transparent" }}
+                      onClick={handleAddToFavoritesClick}
+                    />
+                    <Text pl="10px" fontSize="lg" fontWeight="semibold">
+                      Favorite
+                    </Text>
+                  </Box>
+                </Box>
               </Box>
             </VStack>
           </Flex>
