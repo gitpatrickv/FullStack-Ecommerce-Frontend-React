@@ -9,7 +9,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaRegEdit, FaRegFileAlt, FaRegUser } from "react-icons/fa";
+import { FaRegEdit, FaRegFileAlt, FaRegUser, FaHeart } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useGetUser from "../hooks/useGetUser";
 import { useAuthQueryStore } from "../store/auth-store";
@@ -125,23 +125,29 @@ const UserPage = () => {
                       Change password
                     </Text>
                   </Link>
-                  <Link to="/user/account/favorite">
-                    <Text
-                      pl="15px"
-                      fontSize={fontSize}
-                      color={
-                        location.pathname === "/user/account/favorite"
-                          ? "orange.400"
-                          : "gray.600"
-                      }
-                      cursor="pointer"
-                    >
-                      My Favorites
-                    </Text>
-                  </Link>
                 </>
               )}
             </Box>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="start"
+            alignItems="center"
+            pt="15px"
+            ml="15px"
+            cursor="pointer"
+          >
+            <FaHeart color="red" size="20px" />
+            <Link to="/user/favorites">
+              <Text
+                fontSize={fontSize}
+                pl="15px"
+                _hover={{ color: "orange.400" }}
+                fontWeight="semibold"
+              >
+                My Favorites
+              </Text>
+            </Link>
           </Box>
           <Box
             display="flex"
@@ -163,11 +169,10 @@ const UserPage = () => {
               </Text>
             </Link>
           </Box>
-          <Text></Text>
         </Box>
       </GridItem>
       <GridItem area="main">
-        {location.pathname === "/user/account/favorite" ? (
+        {location.pathname === "/user/favorites" ? (
           <Box>
             <Outlet />
           </Box>

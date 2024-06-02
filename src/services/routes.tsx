@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         children: [
           { path: "account/profile", element: <AccountProfilePage /> },
           { path: "account/password", element: <ChangePasswordPage /> },
-          { path: "account/favorite", element: <FavoritePage /> },
+          { path: "favorites", element: <FavoritePage /> },
           { path: "purchase", element: <MyPurchasePage /> },
         ],
       },

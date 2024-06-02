@@ -78,6 +78,9 @@ const Header = () => {
                         <Link to="/user/account/profile">
                           <MenuItem>My Account</MenuItem>
                         </Link>
+                        <Link to="/user/favorites">
+                          <MenuItem>My Favorites</MenuItem>
+                        </Link>
                         <Link to="/user/purchase">
                           <MenuItem>My Purchase</MenuItem>
                         </Link>

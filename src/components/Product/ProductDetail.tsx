@@ -141,7 +141,12 @@ const ProductDetail = ({ product }: Props) => {
                   </Text>
                 </HStack>
                 <Box display="flex" alignItems="center">
-                  <Button mt="4" onClick={handleAddToCartClick} mr="60px">
+                  <Button
+                    mt="4"
+                    onClick={handleAddToCartClick}
+                    mr="60px"
+                    _hover={{ color: "orange.400" }}
+                  >
                     Add to Cart
                   </Button>
                   <Box
@@ -166,7 +171,7 @@ const ProductDetail = ({ product }: Props) => {
                       onClick={handleAddToFavoritesClick}
                     />
                     <Text pl="10px" fontSize="lg" fontWeight="semibold">
-                      Favorite
+                      Add to Favorites
                     </Text>
                   </Box>
                 </Box>
