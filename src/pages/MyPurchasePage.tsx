@@ -1,5 +1,7 @@
 import {
   Box,
+  Card,
+  CardBody,
   Tab,
   TabIndicator,
   TabList,
@@ -28,7 +30,9 @@ const MyPurchasePage = () => {
         />
         <TabPanels>
           <TabPanel>
-            <p>All</p>
+            <Card bg="blue">
+              <CardBody></CardBody>
+            </Card>
           </TabPanel>
           <TabPanel>
             <p>To Pay</p>

@@ -15,6 +15,7 @@ import { SearchPage } from "../pages/SearchPage";
 import SellerPage from "../pages/SellerPage";
 import UserPage from "../pages/UserPage";
 import ChangePasswordPage from "../pages/ChangePasswordPage";
+import FavoritePage from "../pages/FavoritePage";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         children: [
           { path: "account/profile", element: <AccountProfilePage /> },
           { path: "account/password", element: <ChangePasswordPage /> },
+          { path: "favorites", element: <FavoritePage /> },
           { path: "purchase", element: <MyPurchasePage /> },
         ],
       },
