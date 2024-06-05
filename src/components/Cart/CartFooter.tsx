@@ -90,6 +90,9 @@ const CartFooter = ({
                 fontWeight="semibold"
                 pr="3px"
                 whiteSpace="nowrap"
+                onClick={handleAllFilterChange}
+                cursor="pointer"
+                _hover={{ color: "orange.400" }}
               >
                 Select All
               </Text>

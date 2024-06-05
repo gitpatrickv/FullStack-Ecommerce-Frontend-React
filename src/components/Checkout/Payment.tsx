@@ -85,7 +85,7 @@ const Payment = ({ cartTotal }: Props) => {
               textAlign="end"
               color="orange.400"
             >
-              ₱1234.00
+              ₱40.00
             </Text>
 
             <Text
@@ -95,7 +95,7 @@ const Payment = ({ cartTotal }: Props) => {
               textAlign="end"
               pl="5px"
             >
-              {formatCurrency(cartTotal)}
+              {formatCurrency(cartTotal + 40)}
             </Text>
             <Box
               display="flex"
