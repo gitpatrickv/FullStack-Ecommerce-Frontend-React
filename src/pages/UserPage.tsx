@@ -86,6 +86,11 @@ const UserPage = () => {
                 pl="15px"
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
+                color={
+                  location.pathname.startsWith("/user/account")
+                    ? "orange.400"
+                    : "white"
+                }
               >
                 My Account
               </Text>
@@ -144,6 +149,11 @@ const UserPage = () => {
                 pl="15px"
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
+                color={
+                  location.pathname === "/user/favorites"
+                    ? "orange.400"
+                    : "white"
+                }
               >
                 My Favorites
               </Text>
@@ -164,6 +174,11 @@ const UserPage = () => {
                 pl="15px"
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
+                color={
+                  location.pathname === "/user/purchase"
+                    ? "orange.400"
+                    : "white"
+                }
               >
                 My Purchase
               </Text>
@@ -172,7 +187,8 @@ const UserPage = () => {
         </Box>
       </GridItem>
       <GridItem area="main">
-        {location.pathname === "/user/favorites" ? (
+        {location.pathname === "/user/favorites" ||
+        location.pathname === "/user/purchase" ? (
           <Box>
             <Outlet />
           </Box>
