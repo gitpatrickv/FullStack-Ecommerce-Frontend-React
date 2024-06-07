@@ -12,9 +12,10 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   cartTotal: number;
+  onPlaceOrder: () => void;
 }
 
-const Payment = ({ cartTotal }: Props) => {
+const Payment = ({ cartTotal, onPlaceOrder }: Props) => {
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
@@ -103,7 +104,7 @@ const Payment = ({ cartTotal }: Props) => {
               mt="20px"
               _hover={{ color: "orange.400" }}
             >
-              <Button>Place Order</Button>
+              <Button onClick={onPlaceOrder}>Place Order</Button>
             </Box>
           </GridItem>
         </Grid>

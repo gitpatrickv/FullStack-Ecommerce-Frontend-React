@@ -17,13 +17,18 @@ import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
 import useCheckout from "../hooks/useCheckout";
 import { useAuthQueryStore } from "../store/auth-store";
+import useCarts from "../hooks/useCarts";
+import usePlaceOrder from "../hooks/usePlaceOrder";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: carts, isLoading, error } = useCheckout(jwtToken);
-  const { data: cartTotal } = useCartTotal(jwtToken);
-
+  const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
+  const { refetch: refetchCarts } = useCarts(jwtToken);
+  const { mutate: placeOrder } = usePlaceOrder();
+  const navigate = useNavigate();
   if (isLoading) return <Spinner />;
   if (error || !carts) throw error;
 
@@ -37,6 +42,16 @@ const CheckoutPage = () => {
     },
     {}
   );
+
+  const handlePlaceOrder = () => {
+    placeOrder(jwtToken, {
+      onSuccess: () => {
+        refetchCarts();
+        refetchTotal();
+        navigate("/user/purchase");
+      },
+    });
+  };
 
   return (
     <Grid
@@ -88,7 +103,12 @@ const CheckoutPage = () => {
             qty={cartTotal?.qty ?? 0}
           />
         )}
-        {cartTotal && <Payment cartTotal={cartTotal?.cartTotal ?? 0} />}
+        {cartTotal && (
+          <Payment
+            cartTotal={cartTotal?.cartTotal ?? 0}
+            onPlaceOrder={handlePlaceOrder}
+          />
+        )}
       </GridItem>
     </Grid>
   );

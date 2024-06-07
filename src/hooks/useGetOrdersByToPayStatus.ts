@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import OrderItem from "../entities/Order";
 import { axiosInstance } from "../services/api-client";
 import { useAuthQueryStore } from "../store/auth-store";
-import Order from "../entities/Order";
 
 const apiClient = axiosInstance;
 
@@ -12,7 +12,7 @@ const useGetOrdersByToPayStatus = () => {
     return useQuery ({
         queryKey: ['orders'],
         queryFn: async () => {
-            const {data} = await apiClient.get<Order[]>('/order/get/to-pay', 
+            const {data} = await apiClient.get<OrderItem[]>('/order/get/to-pay', 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,

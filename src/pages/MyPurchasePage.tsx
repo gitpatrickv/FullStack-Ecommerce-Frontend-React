@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Divider,
@@ -13,17 +14,17 @@ import {
 } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
 import OrderCard from "../components/Order/OrderCard";
-import Order from "../entities/Order";
+import OrderItem from "../entities/Order";
 import useGetOrdersByToPayStatus from "../hooks/useGetOrdersByToPayStatus";
 const MyPurchasePage = () => {
   const { data: orders } = useGetOrdersByToPayStatus();
 
   const groupedOrders = orders?.reduce(
-    (acc: Record<string, Order[]>, order: Order) => {
-      if (!acc[order.storeName]) {
-        acc[order.storeName] = [];
+    (acc: Record<string, OrderItem[]>, order: OrderItem) => {
+      if (!acc[order.orderId]) {
+        acc[order.orderId] = [];
       }
-      acc[order.storeName].push(order);
+      acc[order.orderId].push(order);
       return acc;
     },
     {}
@@ -56,9 +57,9 @@ const MyPurchasePage = () => {
           <TabPanel>
             {groupedOrders &&
               Object.entries(groupedOrders).map(([storeName, storeOrders]) => {
-                const orderStatus = storeOrders[0].orderStatus;
                 return (
-                  <Box key={storeName} mt="5px">
+                  <Box key={storeOrders[0].orderId} mt="10px">
+                    {/* <Box key={storeName} mt="5px"> */}
                     <Card>
                       <CardBody>
                         <Box display="flex" alignItems="center">
@@ -74,7 +75,8 @@ const MyPurchasePage = () => {
                               xl: "xl",
                             }}
                           >
-                            {storeName}
+                            {storeOrders[0].storeName}
+                            {/* {storeName} */}
                           </Text>
                           <Box
                             cursor="pointer"
@@ -101,14 +103,26 @@ const MyPurchasePage = () => {
                               fontWeight="semibold"
                               color="orange.400"
                             >
-                              {orderStatus}
+                              {storeOrders[0].orderStatus}
                             </Text>
                           </Box>
                         </Box>
                         <Divider mt={2} mb={2} />
                         {storeOrders.map((order) => (
-                          <OrderCard key={order.orderId} order={order} />
+                          <OrderCard key={order.id} order={order} />
                         ))}
+                        <Divider mt={2} mb={2} />
+                        <Box
+                          display="flex"
+                          justifyContent="end"
+                          alignItems="end"
+                          flexDirection="column"
+                        >
+                          <Text fontSize="xl" mb="15px">
+                            Order Total: P10000.00
+                          </Text>
+                          <Button>Cancel Order</Button>
+                        </Box>
                       </CardBody>
                     </Card>
                   </Box>

@@ -1,9 +1,10 @@
 import { Box, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
-import Order from "../../entities/Order";
+import OrderItem from "../../entities/Order";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
-  order: Order;
+  order: OrderItem;
 }
 
 const OrderCard = ({ order }: Props) => {
@@ -18,7 +19,7 @@ const OrderCard = ({ order }: Props) => {
       p={1}
     >
       <GridItem area="content1" mt="3px">
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" pb="10px">
           <Image
             src={order.photoUrl}
             w={{ base: "50px", md: "90px", lg: "120px" }}
@@ -34,7 +35,7 @@ const OrderCard = ({ order }: Props) => {
       </GridItem>
       <GridItem area="content2">
         <Box display="flex" justifyContent="end">
-          <Text>{order.price}</Text>
+          <Text>{formatCurrency(order.price)}</Text>
         </Box>
       </GridItem>
     </Grid>
