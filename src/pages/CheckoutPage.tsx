@@ -20,12 +20,14 @@ import { useAuthQueryStore } from "../store/auth-store";
 import useCarts from "../hooks/useCarts";
 import usePlaceOrder from "../hooks/usePlaceOrder";
 import { useNavigate } from "react-router-dom";
+import useGetOrdersByToPayStatus from "../hooks/useGetOrdersByToPayStatus";
 
 const CheckoutPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: carts, isLoading, error } = useCheckout(jwtToken);
   const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
+  const { refetch: refetchOrderByToPayStatus } = useGetOrdersByToPayStatus();
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: placeOrder } = usePlaceOrder();
   const navigate = useNavigate();
@@ -48,6 +50,7 @@ const CheckoutPage = () => {
       onSuccess: () => {
         refetchCarts();
         refetchTotal();
+        refetchOrderByToPayStatus();
         navigate("/user/purchase");
       },
     });

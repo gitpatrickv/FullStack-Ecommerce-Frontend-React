@@ -114,7 +114,11 @@ const CartPage = () => {
     >
       <GridItem area="main">
         <Box>
-          <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
+          <CartHeader
+            isChecked={isChecked}
+            onFilterAll={handleFilterAll}
+            cartItem={cartTotal?.cartItems ?? 0}
+          />
           {groupedCarts &&
             Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
               return (
