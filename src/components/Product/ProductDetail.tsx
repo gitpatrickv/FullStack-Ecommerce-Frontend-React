@@ -133,9 +133,19 @@ const ProductDetail = ({ product }: Props) => {
               <Box position="relative" bottom="-100px">
                 <HStack mt="4">
                   <Text>Quantity</Text>
-                  <Button onClick={() => decrement(product.quantity)}>-</Button>
+                  <Button
+                    onClick={() => decrement(product.quantity)}
+                    _hover={{ color: "orange.400" }}
+                  >
+                    -
+                  </Button>
                   <Text>{count}</Text>
-                  <Button onClick={() => increment(product.quantity)}>+</Button>
+                  <Button
+                    onClick={() => increment(product.quantity)}
+                    _hover={{ color: "orange.400" }}
+                  >
+                    +
+                  </Button>
                   <Text color="gray.500">
                     {product.quantity} pieces available
                   </Text>

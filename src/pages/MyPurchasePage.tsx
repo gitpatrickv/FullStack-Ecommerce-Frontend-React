@@ -59,7 +59,6 @@ const MyPurchasePage = () => {
               Object.entries(groupedOrders).map(([storeName, storeOrders]) => {
                 return (
                   <Box key={storeOrders[0].orderId} mt="10px">
-                    {/* <Box key={storeName} mt="5px"> */}
                     <Card>
                       <CardBody>
                         <Box display="flex" alignItems="center">
@@ -76,7 +75,6 @@ const MyPurchasePage = () => {
                             }}
                           >
                             {storeOrders[0].storeName}
-                            {/* {storeName} */}
                           </Text>
                           <Box
                             cursor="pointer"
@@ -111,7 +109,10 @@ const MyPurchasePage = () => {
                         {storeOrders.map((order) => (
                           <OrderCard key={order.id} order={order} />
                         ))}
-                        <Divider mt={2} mb={2} />
+                      </CardBody>
+                    </Card>
+                    <Card>
+                      <CardBody>
                         <Box
                           display="flex"
                           justifyContent="end"

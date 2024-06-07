@@ -38,10 +38,10 @@ const UserPage = () => {
       `}
       pt="25px"
     >
-      <GridItem area="user">
+      <GridItem area="user" position="fixed" left="13rem">
         <Box>
           <Link to="/user/account/profile">
-            <Box display="flex" justifyContent="start" pt="26px" pl="20px">
+            <Box display="flex" justifyContent="start" pt="26px" pl="15px">
               <Avatar
                 src={
                   user?.photoUrl
@@ -51,7 +51,7 @@ const UserPage = () => {
                 size="md"
               />
               <Box display="flex" flexDirection="column" alignItems="start">
-                <Text fontSize={fontSize} pl="20px">
+                <Text fontSize={fontSize} pl="20px" textTransform="capitalize">
                   {user?.name}
                 </Text>
 
@@ -69,7 +69,7 @@ const UserPage = () => {
               </Box>
             </Box>
           </Link>
-          <Divider mt="15px" maxWidth="90%" />
+          <Divider mt="15px" ml="5px" maxWidth="100%" />
           <Box
             display="flex"
             justifyContent="start"
