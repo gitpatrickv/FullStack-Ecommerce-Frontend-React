@@ -8,6 +8,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import Checkout from "../components/Checkout/Checkout";
 import OrderTotal from "../components/Checkout/OrderTotal";
 import Payment from "../components/Checkout/Payment";
@@ -15,12 +16,11 @@ import ProductOrderedHeader from "../components/Checkout/ProductOrderedHeader";
 import UserInfo from "../components/Checkout/UserInfo";
 import Cart from "../entities/Cart";
 import useCartTotal from "../hooks/useCartTotal";
-import useCheckout from "../hooks/useCheckout";
-import { useAuthQueryStore } from "../store/auth-store";
 import useCarts from "../hooks/useCarts";
-import usePlaceOrder from "../hooks/usePlaceOrder";
-import { useNavigate } from "react-router-dom";
+import useCheckout from "../hooks/useCheckout";
 import useGetOrdersByToPayStatus from "../hooks/useGetOrdersByToPayStatus";
+import usePlaceOrder from "../hooks/usePlaceOrder";
+import { useAuthQueryStore } from "../store/auth-store";
 
 const CheckoutPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -51,7 +51,7 @@ const CheckoutPage = () => {
         refetchCarts();
         refetchTotal();
         refetchOrderByToPayStatus();
-        navigate("/user/purchase");
+        navigate("/user/purchase/order/to-pay");
       },
     });
   };

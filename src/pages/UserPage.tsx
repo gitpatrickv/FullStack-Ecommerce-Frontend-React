@@ -9,7 +9,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaRegEdit, FaRegFileAlt, FaRegUser, FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegEdit, FaRegFileAlt, FaRegUser } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useGetUser from "../hooks/useGetUser";
 import { useAuthQueryStore } from "../store/auth-store";
@@ -78,7 +78,14 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaRegUser size="20px" />
+            <FaRegUser
+              size="20px"
+              color={
+                location.pathname.startsWith("/user/account")
+                  ? "orange"
+                  : "white"
+              }
+            />
 
             <Link to="/user/account/profile">
               <Text
@@ -142,7 +149,10 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaHeart color="red" size="20px" />
+            <FaHeart
+              size="20px"
+              color={location.pathname === "/user/favorites" ? "red" : "white"}
+            />
             <Link to="/user/favorites">
               <Text
                 fontSize={fontSize}
@@ -167,7 +177,14 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaRegFileAlt size="20px" />
+            <FaRegFileAlt
+              size="20px"
+              color={
+                location.pathname.startsWith("/user/purchase")
+                  ? "orange"
+                  : "white"
+              }
+            />
             <Link to="/user/purchase">
               <Text
                 fontSize={fontSize}
@@ -175,7 +192,7 @@ const UserPage = () => {
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
                 color={
-                  location.pathname === "/user/purchase"
+                  location.pathname.startsWith("/user/purchase")
                     ? "orange.400"
                     : "white"
                 }
@@ -188,7 +205,7 @@ const UserPage = () => {
       </GridItem>
       <GridItem area="main">
         {location.pathname === "/user/favorites" ||
-        location.pathname === "/user/purchase" ? (
+        location.pathname.startsWith("/user/purchase") ? (
           <Box>
             <Outlet />
           </Box>

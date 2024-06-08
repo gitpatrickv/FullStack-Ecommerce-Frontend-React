@@ -166,23 +166,29 @@ const ProductDetail = ({ product }: Props) => {
                     position="relative"
                     top="10px"
                   >
-                    <IconButton
-                      aria-label="Search"
-                      icon={
-                        addToFavorite ? (
-                          <FaHeart color="red" size="30px" />
-                        ) : (
-                          <FaRegHeart size="30px" />
-                        )
-                      }
-                      type="button"
-                      bg="transparent"
-                      _hover={{ bg: "transparent" }}
-                      onClick={handleAddToFavoritesClick}
-                    />
-                    <Text pl="10px" fontSize="lg" fontWeight="semibold">
-                      Add to Favorites
-                    </Text>
+                    {user ? (
+                      <>
+                        <IconButton
+                          aria-label="Search"
+                          icon={
+                            addToFavorite ? (
+                              <FaHeart color="red" size="30px" />
+                            ) : (
+                              <FaRegHeart size="30px" />
+                            )
+                          }
+                          type="button"
+                          bg="transparent"
+                          _hover={{ bg: "transparent" }}
+                          onClick={handleAddToFavoritesClick}
+                        />
+                        <Text pl="10px" fontSize="lg" fontWeight="semibold">
+                          Add to Favorites
+                        </Text>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </Box>
                 </Box>
               </Box>
