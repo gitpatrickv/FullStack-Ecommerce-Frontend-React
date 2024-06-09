@@ -108,7 +108,8 @@ const CheckoutPage = () => {
         )}
         {cartTotal && (
           <Payment
-            cartTotal={cartTotal?.cartTotal ?? 0}
+            shippingFee={cartTotal.totalShippingFee ?? 0}
+            totalPayment={cartTotal.totalPayment ?? 0}
             onPlaceOrder={handlePlaceOrder}
           />
         )}
