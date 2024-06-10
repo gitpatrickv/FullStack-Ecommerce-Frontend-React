@@ -30,7 +30,7 @@ interface Props {
 const ProductDetail = ({ product }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { count, increment, decrement, reset } = useProductQueryStore(
     (state) => ({
       count: state.productQuery.count,
@@ -139,26 +139,47 @@ const ProductDetail = ({ product }: Props) => {
                   >
                     -
                   </Button>
-                  <Text>{count}</Text>
+                  {product.quantity === 0 ? (
+                    <Text>0</Text>
+                  ) : (
+                    <Text>{count}</Text>
+                  )}
+
                   <Button
                     onClick={() => increment(product.quantity)}
                     _hover={{ color: "orange.400" }}
                   >
                     +
                   </Button>
-                  <Text color="gray.500">
-                    {product.quantity} pieces available
-                  </Text>
+                  {product.quantity === 0 ? (
+                    <Text color="red">Out Of Stock</Text>
+                  ) : (
+                    <Text color="gray.500">
+                      {product.quantity} pieces available
+                    </Text>
+                  )}
                 </HStack>
                 <Box display="flex" alignItems="center">
-                  <Button
-                    mt="4"
-                    onClick={handleAddToCartClick}
-                    mr="60px"
-                    _hover={{ color: "orange.400" }}
-                  >
-                    Add to Cart
-                  </Button>
+                  {product.quantity === 0 ? (
+                    <Button
+                      mt="4"
+                      mr="60px"
+                      _hover={{ color: "orange.400" }}
+                      isDisabled={isButtonDisabled}
+                    >
+                      Add to Cart
+                    </Button>
+                  ) : (
+                    <Button
+                      mt="4"
+                      onClick={handleAddToCartClick}
+                      mr="60px"
+                      _hover={{ color: "orange.400" }}
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
+
                   <Box
                     display="flex"
                     justifyContent="center"

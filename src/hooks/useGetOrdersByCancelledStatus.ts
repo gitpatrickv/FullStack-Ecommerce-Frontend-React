@@ -5,14 +5,14 @@ import { useAuthQueryStore } from "../store/auth-store";
 
 const apiClient = axiosInstance;
 
-const useGetOrdersByToPayStatus = () => {
+const useGetOrdersByCancelledStatus = () => {
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
 
     return useQuery ({
-        queryKey: ['toPayOrders'],
+        queryKey: ['cancelledOrders'],
         queryFn: async () => {
-            const {data} = await apiClient.get<OrderItem[]>('/order/get/to-pay', 
+            const {data} = await apiClient.get<OrderItem[]>('/order/get/cancelled', 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,
@@ -24,4 +24,4 @@ const useGetOrdersByToPayStatus = () => {
     })
 }
 
-export default useGetOrdersByToPayStatus
+export default useGetOrdersByCancelledStatus

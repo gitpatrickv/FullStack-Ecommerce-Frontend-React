@@ -10,6 +10,7 @@ export default interface OrderItem{
     totalAmount: number;
     orderId: string;
     orderTotalAmount: number;
+    active:boolean;
 }
 
 export default interface Order{
