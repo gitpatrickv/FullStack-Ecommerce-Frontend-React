@@ -14,7 +14,8 @@ const ToPayPage = () => {
   const { data: orders, refetch: refetchToPayOrders } =
     useGetOrdersByToPayStatus(jwtToken);
 
-  const { refetch: refetchCancelledOrders } = useGetOrdersByCancelledStatus();
+  const { refetch: refetchCancelledOrders } =
+    useGetOrdersByCancelledStatus(jwtToken);
   const { mutate: cancelOrder } = useCancelOrder();
 
   const groupedOrders = orders?.reduce(

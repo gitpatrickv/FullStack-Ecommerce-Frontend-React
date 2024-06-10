@@ -4,9 +4,33 @@ import OrderCard from "../components/Order/OrderCard";
 import OrderItem from "../entities/Order";
 import useGetOrdersByCancelledStatus from "../hooks/useGetOrdersByCancelledStatus";
 import { formatCurrency } from "../utilities/formatCurrency";
+import { useAuthQueryStore } from "../store/auth-store";
+import useBuyAgain from "../hooks/useBuyAgain";
+import useCarts from "../hooks/useCarts";
+import { useNavigate } from "react-router-dom";
+import useCartTotal from "../hooks/useCartTotal";
 
 const CancelledPage = () => {
-  const { data: orders } = useGetOrdersByCancelledStatus();
+  const navigate = useNavigate();
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: orders } = useGetOrdersByCancelledStatus(jwtToken);
+  const { mutate: buyAgain } = useBuyAgain();
+  const { refetch: refetchCarts } = useCarts(jwtToken);
+  const { refetch: refetchTotal } = useCartTotal(jwtToken);
+
+  const handleBuyAgainClick = (orderId: string) => {
+    buyAgain(
+      { orderId, jwtToken: jwtToken },
+      {
+        onSuccess: () => {
+          refetchCarts();
+          refetchTotal();
+          navigate("/cart");
+        },
+      }
+    );
+  };
 
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
@@ -80,7 +104,14 @@ const CancelledPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button _hover={{ color: "orange.400" }}>Buy Again</Button>
+                    <Button
+                      onClick={() =>
+                        handleBuyAgainClick(storeOrders[0].orderId)
+                      }
+                      _hover={{ color: "orange.400" }}
+                    >
+                      Buy Again
+                    </Button>
                   </Box>
                 </CardBody>
               </Card>
