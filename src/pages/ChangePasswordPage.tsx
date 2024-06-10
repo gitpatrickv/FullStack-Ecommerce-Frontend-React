@@ -43,7 +43,7 @@ const ChangePasswordPage = () => {
   return (
     <Grid
       templateRows="0.3fr 1fr"
-      templateColumns=" 0.5fr 1fr 0.5fr"
+      templateColumns=" 0.5fr 500px 0.5fr"
       templateAreas={`
       "header header header"
     "content1 content2 content3"

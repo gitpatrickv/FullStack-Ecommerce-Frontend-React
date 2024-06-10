@@ -22,6 +22,7 @@ import ToShipPage from "../pages/ToShipPage";
 import ToReceivePage from "../pages/ToReceivePage";
 import CompletedPage from "../pages/CompletedPage";
 import CancelledPage from "../pages/CancelledPage";
+import StorePage from "../pages/StorePage";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       { path: "/checkout", element: <CheckoutPage /> },
       { path: "/search", element: <SearchPage /> },
       { path: "/daily_discover", element: <DailyDiscoverPage /> },
+      { path: "/store", element: <StorePage /> },
       {
         path: "user",
         element: <UserPage />,

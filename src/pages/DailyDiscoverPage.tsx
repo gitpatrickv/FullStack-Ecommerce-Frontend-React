@@ -10,7 +10,7 @@ const DailyDiscoverPage = () => {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px 1fr 200px",
+        lg: "0.2fr 1fr 0.2fr",
       }}
     >
       <GridItem area="main">

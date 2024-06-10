@@ -1,23 +1,15 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  Grid,
-  GridItem,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 
-const SellerPage = () => {
+const StorePage = () => {
   return (
     <Grid
       height="100vh"
-      templateColumns="0.5fr 0.5fr 0.5fr"
+      templateColumns="0.2fr 0.5fr 0.5fr 0.5fr 0.2fr"
       templateRows="0.3fr 1fr"
       templateAreas={`
-        " header1 header2 header3 "
+        " asideLeft header1 header2 header3 asideRight"
         
-        "content1 content2 content3"
+        "asideLeft content1 content2 content3 asideRight"
         
       `}
     >
@@ -55,36 +47,4 @@ const SellerPage = () => {
   );
 };
 
-export default SellerPage;
-
-{
-  /* <GridItem area="header">
-<Box bg="maroon" height="100%">
-  header
-</Box>
-</GridItem>
-
-<GridItem area="content1">
-<Box bg="red" height="100%">
-  Content 1
-</Box>
-</GridItem>
-<GridItem area="content2">
-<Box bg="green" height="100%">
-  Content 2
-</Box>
-</GridItem>
-<GridItem area="content3">
-<Box bg="yellow" height="100%">
-  Content 3
-</Box>
-</GridItem> */
-}
-
-{
-  /* <GridItem area="content7" background="black">
-            <Text fontSize={["sm", "md", "lg", "xl"]} fontWeight="semibold">
-              Spacer
-            </Text>
-          </GridItem> */
-}
+export default StorePage;

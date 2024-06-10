@@ -70,18 +70,37 @@ const ToPayPage = () => {
                       </Text>
                     </Box>
                     <Box position="absolute" right="25px" alignItems="center">
-                      <Text
-                        fontSize={{
-                          base: "sm",
-                          md: "md",
-                          lg: "lg",
-                          xl: "xl",
-                        }}
-                        fontWeight="semibold"
-                        color="orange.400"
+                      <Box
+                        display="flex"
+                        textAlign="center"
+                        alignItems="center"
                       >
-                        {storeOrders[0].orderStatus}
-                      </Text>
+                        <Text
+                          fontSize={{
+                            base: "sm",
+                            md: "md",
+                          }}
+                          mr="10px"
+                          color="skyblue"
+                        >
+                          Seller is preparing your orders.
+                        </Text>
+                        <Text fontWeight="" mr="10px" color="gray.500">
+                          |
+                        </Text>
+                        <Text
+                          fontSize={{
+                            base: "sm",
+                            md: "md",
+                            lg: "lg",
+                            xl: "xl",
+                          }}
+                          fontWeight="semibold"
+                          color="orange.400"
+                        >
+                          {storeOrders[0].orderStatus}
+                        </Text>
+                      </Box>
                     </Box>
                   </Box>
                   <Divider mt={2} mb={2} />
