@@ -11,10 +11,12 @@ import {
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
-  cartTotal: number;
+  shippingFee: number;
+  totalPayment: number;
+  onPlaceOrder: () => void;
 }
 
-const Payment = ({ cartTotal }: Props) => {
+const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
@@ -85,7 +87,7 @@ const Payment = ({ cartTotal }: Props) => {
               textAlign="end"
               color="orange.400"
             >
-              ₱1234.00
+              {formatCurrency(shippingFee)}
             </Text>
 
             <Text
@@ -95,7 +97,7 @@ const Payment = ({ cartTotal }: Props) => {
               textAlign="end"
               pl="5px"
             >
-              {formatCurrency(cartTotal)}
+              {formatCurrency(totalPayment)}
             </Text>
             <Box
               display="flex"
@@ -103,7 +105,7 @@ const Payment = ({ cartTotal }: Props) => {
               mt="20px"
               _hover={{ color: "orange.400" }}
             >
-              <Button>Place Order</Button>
+              <Button onClick={onPlaceOrder}>Place Order</Button>
             </Box>
           </GridItem>
         </Grid>

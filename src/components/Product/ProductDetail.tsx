@@ -30,7 +30,7 @@ interface Props {
 const ProductDetail = ({ product }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { count, increment, decrement, reset } = useProductQueryStore(
     (state) => ({
       count: state.productQuery.count,
@@ -133,22 +133,53 @@ const ProductDetail = ({ product }: Props) => {
               <Box position="relative" bottom="-100px">
                 <HStack mt="4">
                   <Text>Quantity</Text>
-                  <Button onClick={() => decrement(product.quantity)}>-</Button>
-                  <Text>{count}</Text>
-                  <Button onClick={() => increment(product.quantity)}>+</Button>
-                  <Text color="gray.500">
-                    {product.quantity} pieces available
-                  </Text>
-                </HStack>
-                <Box display="flex" alignItems="center">
                   <Button
-                    mt="4"
-                    onClick={handleAddToCartClick}
-                    mr="60px"
+                    onClick={() => decrement(product.quantity)}
                     _hover={{ color: "orange.400" }}
                   >
-                    Add to Cart
+                    -
                   </Button>
+                  {product.quantity === 0 ? (
+                    <Text>0</Text>
+                  ) : (
+                    <Text>{count}</Text>
+                  )}
+
+                  <Button
+                    onClick={() => increment(product.quantity)}
+                    _hover={{ color: "orange.400" }}
+                  >
+                    +
+                  </Button>
+                  {product.quantity === 0 ? (
+                    <Text color="red">Out Of Stock</Text>
+                  ) : (
+                    <Text color="gray.500">
+                      {product.quantity} pieces available
+                    </Text>
+                  )}
+                </HStack>
+                <Box display="flex" alignItems="center">
+                  {product.quantity === 0 ? (
+                    <Button
+                      mt="4"
+                      mr="60px"
+                      _hover={{ color: "orange.400" }}
+                      isDisabled={isButtonDisabled}
+                    >
+                      Add to Cart
+                    </Button>
+                  ) : (
+                    <Button
+                      mt="4"
+                      onClick={handleAddToCartClick}
+                      mr="60px"
+                      _hover={{ color: "orange.400" }}
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
+
                   <Box
                     display="flex"
                     justifyContent="center"
@@ -156,23 +187,29 @@ const ProductDetail = ({ product }: Props) => {
                     position="relative"
                     top="10px"
                   >
-                    <IconButton
-                      aria-label="Search"
-                      icon={
-                        addToFavorite ? (
-                          <FaHeart color="red" size="30px" />
-                        ) : (
-                          <FaRegHeart size="30px" />
-                        )
-                      }
-                      type="button"
-                      bg="transparent"
-                      _hover={{ bg: "transparent" }}
-                      onClick={handleAddToFavoritesClick}
-                    />
-                    <Text pl="10px" fontSize="lg" fontWeight="semibold">
-                      Add to Favorites
-                    </Text>
+                    {user ? (
+                      <>
+                        <IconButton
+                          aria-label="Search"
+                          icon={
+                            addToFavorite ? (
+                              <FaHeart color="red" size="30px" />
+                            ) : (
+                              <FaRegHeart size="30px" />
+                            )
+                          }
+                          type="button"
+                          bg="transparent"
+                          _hover={{ bg: "transparent" }}
+                          onClick={handleAddToFavoritesClick}
+                        />
+                        <Text pl="10px" fontSize="lg" fontWeight="semibold">
+                          Add to Favorites
+                        </Text>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </Box>
                 </Box>
               </Box>

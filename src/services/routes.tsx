@@ -16,6 +16,12 @@ import SellerPage from "../pages/SellerPage";
 import UserPage from "../pages/UserPage";
 import ChangePasswordPage from "../pages/ChangePasswordPage";
 import FavoritePage from "../pages/FavoritePage";
+import AllOrderPage from "../pages/AllOrderPage";
+import ToPayPage from "../pages/ToPayPage";
+import ToShipPage from "../pages/ToShipPage";
+import ToReceivePage from "../pages/ToReceivePage";
+import CompletedPage from "../pages/CompletedPage";
+import CancelledPage from "../pages/CancelledPage";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +44,18 @@ const router = createBrowserRouter([
           { path: "account/profile", element: <AccountProfilePage /> },
           { path: "account/password", element: <ChangePasswordPage /> },
           { path: "favorites", element: <FavoritePage /> },
-          { path: "purchase", element: <MyPurchasePage /> },
+          {
+            path: "purchase",
+            element: <MyPurchasePage />,
+            children: [
+              { path: "order/all", element: <AllOrderPage /> },
+              { path: "order/to-pay", element: <ToPayPage /> },
+              { path: "order/to-ship", element: <ToShipPage /> },
+              { path: "order/to-receive", element: <ToReceivePage /> },
+              { path: "order/completed", element: <CompletedPage /> },
+              { path: "order/cancelled", element: <CancelledPage /> },
+            ],
+          },
         ],
       },
     ],

@@ -31,6 +31,7 @@ const useLogin = () => {
       queryClient.invalidateQueries(['cartTotal']);
       queryClient.invalidateQueries(['product']);
       queryClient.invalidateQueries(['favorites']);
+      queryClient.invalidateQueries(['orders']);
       const role = response.role;
       if(role==="ADMIN"){
         navigate("/admin");

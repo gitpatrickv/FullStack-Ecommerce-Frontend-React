@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import AllProductModels from "../../entities/AllProductResponse";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useProductDetail from "../../hooks/useProductDetail";
 
 interface Props {
   product: AllProductModels;
@@ -19,9 +20,11 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const reset = useProductQueryStore((state) => state.reset);
+  const { refetch: refetchProducts } = useProductDetail(product.productId);
   const navigate = useNavigate();
   const handleNavigateClick = () => {
     navigate(`/api/product/` + product?.productId);
+    refetchProducts();
     reset();
   };
   const isTruncated = useBreakpointValue({ base: true });

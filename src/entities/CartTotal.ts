@@ -3,4 +3,6 @@ export default interface Cart{
     cartTotal: number;
     cartItems: number;
     qty: number
+    totalShippingFee: number;
+    totalPayment: number;
 }

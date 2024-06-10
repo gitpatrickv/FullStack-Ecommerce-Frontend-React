@@ -9,7 +9,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaRegEdit, FaRegFileAlt, FaRegUser, FaHeart } from "react-icons/fa";
+import { FaHeart, FaRegEdit, FaRegFileAlt, FaRegUser } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useGetUser from "../hooks/useGetUser";
 import { useAuthQueryStore } from "../store/auth-store";
@@ -38,10 +38,10 @@ const UserPage = () => {
       `}
       pt="25px"
     >
-      <GridItem area="user">
+      <GridItem area="user" position="fixed" left="13rem">
         <Box>
           <Link to="/user/account/profile">
-            <Box display="flex" justifyContent="start" pt="26px" pl="20px">
+            <Box display="flex" justifyContent="start" pt="26px" pl="15px">
               <Avatar
                 src={
                   user?.photoUrl
@@ -51,7 +51,7 @@ const UserPage = () => {
                 size="md"
               />
               <Box display="flex" flexDirection="column" alignItems="start">
-                <Text fontSize={fontSize} pl="20px">
+                <Text fontSize={fontSize} pl="20px" textTransform="capitalize">
                   {user?.name}
                 </Text>
 
@@ -69,7 +69,7 @@ const UserPage = () => {
               </Box>
             </Box>
           </Link>
-          <Divider mt="15px" maxWidth="90%" />
+          <Divider mt="15px" ml="5px" maxWidth="100%" />
           <Box
             display="flex"
             justifyContent="start"
@@ -78,7 +78,14 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaRegUser size="20px" />
+            <FaRegUser
+              size="20px"
+              color={
+                location.pathname.startsWith("/user/account")
+                  ? "orange"
+                  : "white"
+              }
+            />
 
             <Link to="/user/account/profile">
               <Text
@@ -86,6 +93,11 @@ const UserPage = () => {
                 pl="15px"
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
+                color={
+                  location.pathname.startsWith("/user/account")
+                    ? "orange.400"
+                    : "white"
+                }
               >
                 My Account
               </Text>
@@ -137,13 +149,21 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaHeart color="red" size="20px" />
+            <FaHeart
+              size="20px"
+              color={location.pathname === "/user/favorites" ? "red" : "white"}
+            />
             <Link to="/user/favorites">
               <Text
                 fontSize={fontSize}
                 pl="15px"
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
+                color={
+                  location.pathname === "/user/favorites"
+                    ? "orange.400"
+                    : "white"
+                }
               >
                 My Favorites
               </Text>
@@ -157,13 +177,25 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaRegFileAlt size="20px" />
+            <FaRegFileAlt
+              size="20px"
+              color={
+                location.pathname.startsWith("/user/purchase")
+                  ? "orange"
+                  : "white"
+              }
+            />
             <Link to="/user/purchase">
               <Text
                 fontSize={fontSize}
                 pl="15px"
                 _hover={{ color: "orange.400" }}
                 fontWeight="semibold"
+                color={
+                  location.pathname.startsWith("/user/purchase")
+                    ? "orange.400"
+                    : "white"
+                }
               >
                 My Purchase
               </Text>
@@ -172,7 +204,8 @@ const UserPage = () => {
         </Box>
       </GridItem>
       <GridItem area="main">
-        {location.pathname === "/user/favorites" ? (
+        {location.pathname === "/user/favorites" ||
+        location.pathname.startsWith("/user/purchase") ? (
           <Box>
             <Outlet />
           </Box>

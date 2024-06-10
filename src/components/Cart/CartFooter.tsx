@@ -41,6 +41,7 @@ const CartFooter = ({
     lg: "lg",
     xl: "xl",
   });
+
   useEffect(() => {
     setIsFiltered(isChecked);
   }, [isChecked]);
@@ -68,8 +69,8 @@ const CartFooter = ({
         <Grid
           templateColumns="1fr 0.5fr 1fr"
           templateAreas={`
-  "content1  content4  content2"
-`}
+              "content1  content4  content2"
+              `}
           alignItems="center"
           display="flex"
           justifyContent="space-between"
@@ -90,6 +91,9 @@ const CartFooter = ({
                 fontWeight="semibold"
                 pr="3px"
                 whiteSpace="nowrap"
+                onClick={handleAllFilterChange}
+                cursor="pointer"
+                _hover={{ color: "orange.400" }}
               >
                 Select All
               </Text>

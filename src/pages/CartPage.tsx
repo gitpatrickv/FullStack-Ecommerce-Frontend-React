@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Divider,
@@ -21,7 +22,7 @@ import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
 import useGetAllFavorites from "../hooks/useGetAllFavorites";
 import { useAuthQueryStore } from "../store/auth-store";
-
+import { FaCartPlus } from "react-icons/fa";
 const CartPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
@@ -88,6 +89,10 @@ const CartPage = () => {
     );
   };
 
+  const handleNavigateClick = () => {
+    navigate("/daily_discover");
+  };
+
   const groupedCarts = carts?.data.reduce(
     (acc: Record<string, Cart[]>, cart: Cart) => {
       if (!acc[cart.storeName]) {
@@ -102,67 +107,104 @@ const CartPage = () => {
   const isChecked = carts?.data.every((cart) => cart.filter);
 
   return (
-    <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " asideLeft main asideRight" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "200px 1fr 200px",
-      }}
-    >
-      <GridItem area="main">
-        <Box>
-          <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
-          {groupedCarts &&
-            Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
-              return (
-                <Box pt="5px" key={storeName}>
-                  <Card maxW="100%" margin="auto">
-                    <CardBody>
-                      <Text
-                        fontSize={{
-                          base: "sm",
-                          md: "md",
-                          lg: "lg",
-                          xl: "xl",
-                        }}
-                        fontWeight="bold"
-                        textTransform="uppercase"
-                        position="relative"
-                        left="52px"
-                        top="-5px"
-                      >
-                        {storeName}
-                      </Text>
-                      <Divider mt={2} mb={2} />
-                      {storeCarts.map((cart) => (
-                        <CartItem
-                          key={cart.cartId}
-                          cart={cart}
-                          refetchCarts={refetchCarts}
-                          isChecked={isChecked}
-                        />
-                      ))}
-                    </CardBody>
-                  </Card>
-                </Box>
-              );
-            })}
-          <CartFooter
-            cartTotal={cartTotal?.cartTotal ?? 0}
-            cartItem={cartTotal?.cartItems ?? 0}
-            qty={cartTotal?.qty ?? 0}
-            isChecked={isChecked}
-            onDeleteAll={handleDeleteAllCart}
-            onFilterAll={handleFilterAll}
-            onCheckout={handleNavigateCheckoutClick}
-            onAddToFavorites={handleAddToFavorites}
-          />
-        </Box>
-      </GridItem>
-    </Grid>
+    <>
+      {cartTotal?.cartItems === 0 ? (
+        <Grid
+          templateAreas={{
+            base: `"main"`,
+            lg: ` " asideLeft main asideRight" `,
+          }}
+          templateColumns={{
+            base: "1fr",
+            lg: "200px 1fr 200px",
+          }}
+        >
+          <GridItem area="main">
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+              mt="150px"
+            >
+              <FaCartPlus size="100px" />
+              <Text mt="20px" fontSize="large" whiteSpace="nowrap">
+                Your shopping cart is empty
+              </Text>
+              <Button
+                mt="20px"
+                _hover={{ color: "orange.400" }}
+                onClick={handleNavigateClick}
+              >
+                Go Shopping Now
+              </Button>
+            </Box>
+          </GridItem>
+        </Grid>
+      ) : (
+        <Grid
+          templateAreas={{
+            base: `"main"`,
+            lg: ` " asideLeft main asideRight" `,
+          }}
+          templateColumns={{
+            base: "1fr",
+            lg: "200px 1fr 200px",
+          }}
+        >
+          <GridItem area="main">
+            <Box>
+              <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
+              {groupedCarts &&
+                Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
+                  return (
+                    <Box pt="5px" key={storeName}>
+                      <Card maxW="100%" margin="auto">
+                        <CardBody>
+                          <Text
+                            fontSize={{
+                              base: "sm",
+                              md: "md",
+                              lg: "lg",
+                              xl: "xl",
+                            }}
+                            fontWeight="bold"
+                            textTransform="uppercase"
+                            position="relative"
+                            left="52px"
+                            top="-5px"
+                          >
+                            {storeName}
+                          </Text>
+                          <Divider mt={2} mb={2} />
+                          {storeCarts.map((cart) => (
+                            <CartItem
+                              key={cart.cartId}
+                              cart={cart}
+                              refetchCarts={refetchCarts}
+                              isChecked={isChecked}
+                            />
+                          ))}
+                        </CardBody>
+                      </Card>
+                    </Box>
+                  );
+                })}
+              <CartFooter
+                cartTotal={cartTotal?.cartTotal ?? 0}
+                cartItem={cartTotal?.cartItems ?? 0}
+                qty={cartTotal?.qty ?? 0}
+                isChecked={isChecked}
+                onDeleteAll={handleDeleteAllCart}
+                onFilterAll={handleFilterAll}
+                onCheckout={handleNavigateCheckoutClick}
+                onAddToFavorites={handleAddToFavorites}
+              />
+            </Box>
+          </GridItem>
+        </Grid>
+      )}
+    </>
   );
 };
 export default CartPage;
