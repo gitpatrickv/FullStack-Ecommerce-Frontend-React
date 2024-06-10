@@ -80,7 +80,7 @@ const CancelledPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button>Buy Again</Button>
+                    <Button _hover={{ color: "orange.400" }}>Buy Again</Button>
                   </Box>
                 </CardBody>
               </Card>

@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import OrderItem from "../entities/Order";
 import { axiosInstance } from "../services/api-client";
-import { useAuthQueryStore } from "../store/auth-store";
 
 const apiClient = axiosInstance;
 
-const useGetOrdersByToPayStatus = () => {
-    const { authStore } = useAuthQueryStore();
-    const jwtToken = authStore.jwtToken;
-
+const useGetOrdersByToPayStatus = (jwtToken: string) => {
     return useQuery ({
         queryKey: ['toPayOrders'],
         queryFn: async () => {

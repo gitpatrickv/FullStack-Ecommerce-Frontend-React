@@ -27,7 +27,8 @@ const CheckoutPage = () => {
   const jwtToken = authStore.jwtToken;
   const { data: carts, isLoading, error } = useCheckout(jwtToken);
   const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
-  const { refetch: refetchOrderByToPayStatus } = useGetOrdersByToPayStatus();
+  const { refetch: refetchOrderByToPayStatus } =
+    useGetOrdersByToPayStatus(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: placeOrder } = usePlaceOrder();
   const navigate = useNavigate();

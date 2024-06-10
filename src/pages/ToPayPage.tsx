@@ -2,11 +2,20 @@ import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
 import OrderCard from "../components/Order/OrderCard";
 import OrderItem from "../entities/Order";
+import useCancelOrder from "../hooks/useCancelOrder";
+import useGetOrdersByCancelledStatus from "../hooks/useGetOrdersByCancelledStatus";
 import useGetOrdersByToPayStatus from "../hooks/useGetOrdersByToPayStatus";
+import { useAuthQueryStore } from "../store/auth-store";
 import { formatCurrency } from "../utilities/formatCurrency";
 
 const ToPayPage = () => {
-  const { data: orders } = useGetOrdersByToPayStatus();
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: orders, refetch: refetchToPayOrders } =
+    useGetOrdersByToPayStatus(jwtToken);
+
+  const { refetch: refetchCancelledOrders } = useGetOrdersByCancelledStatus();
+  const { mutate: cancelOrder } = useCancelOrder();
 
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
@@ -18,6 +27,18 @@ const ToPayPage = () => {
     },
     {}
   );
+
+  const handleCancelOrderClick = (orderId: string) => {
+    cancelOrder(
+      { orderId, jwtToken: jwtToken },
+      {
+        onSuccess: () => {
+          refetchToPayOrders();
+          refetchCancelledOrders();
+        },
+      }
+    );
+  };
   return (
     <>
       {groupedOrders &&
@@ -79,7 +100,14 @@ const ToPayPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button>Cancel Order</Button>
+                    <Button
+                      onClick={() =>
+                        handleCancelOrderClick(storeOrders[0].orderId)
+                      }
+                      _hover={{ color: "orange.400" }}
+                    >
+                      Cancel Order
+                    </Button>
                   </Box>
                 </CardBody>
               </Card>

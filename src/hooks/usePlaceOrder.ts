@@ -20,7 +20,7 @@ const usePlaceOrder = () => {
         },
         {
         onSuccess: () => {
-            queryClient.invalidateQueries(['orders', 'cart' , 'cartTotal', 'product'])
+            queryClient.invalidateQueries(['toPayOrders', 'cart' , 'cartTotal', 'product'])
             
             toast({
                 position: "top",
