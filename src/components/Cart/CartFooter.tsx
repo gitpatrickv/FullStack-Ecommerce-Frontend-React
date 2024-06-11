@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Card,
@@ -8,8 +14,9 @@ import {
   GridItem,
   Text,
   useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
@@ -41,7 +48,8 @@ const CartFooter = ({
     lg: "lg",
     xl: "xl",
   });
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     setIsFiltered(isChecked);
   }, [isChecked]);
@@ -110,11 +118,42 @@ const CartFooter = ({
                 fontSize={fontSize}
                 fontWeight="semibold"
                 pr="20px"
-                onClick={handleDeleteAllCarts}
+                onClick={onOpen}
                 _hover={{ color: "orange.400" }}
               >
                 Delete
               </Text>
+              <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+                isCentered
+              >
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                      Delete Products
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                      Do you want to remove the {cartItem} products?
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                      <Button ref={cancelRef} onClick={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        onClick={handleDeleteAllCarts}
+                        ml={3}
+                      >
+                        Delete
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialog>
               <Text
                 cursor="pointer"
                 fontSize={fontSize}
