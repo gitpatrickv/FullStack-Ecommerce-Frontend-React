@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import { FaExclamationCircle } from "react-icons/fa";
 
 interface Props {
   cartTotal: number;
@@ -132,25 +133,40 @@ const CartFooter = ({
                 <AlertDialogOverlay>
                   <AlertDialogContent>
                     <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                      Delete Products
+                      {isFiltered ? (
+                        "Delete Products"
+                      ) : (
+                        <Box display="flex" justifyContent="center">
+                          <FaExclamationCircle size="50px" />
+                        </Box>
+                      )}
                     </AlertDialogHeader>
 
                     <AlertDialogBody>
-                      Do you want to remove the {cartItem} products?
+                      {isFiltered ? (
+                        <Text>
+                          Do you want to remove the {cartItem} products?
+                        </Text>
+                      ) : (
+                        <Text textAlign="center" fontSize="lg">
+                          Please select product(s)
+                        </Text>
+                      )}
                     </AlertDialogBody>
-
-                    <AlertDialogFooter>
-                      <Button ref={cancelRef} onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={handleDeleteAllCarts}
-                        ml={3}
-                      >
-                        Delete
-                      </Button>
-                    </AlertDialogFooter>
+                    {isFiltered && (
+                      <AlertDialogFooter>
+                        <Button ref={cancelRef} onClick={onClose}>
+                          Cancel
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          onClick={handleDeleteAllCarts}
+                          ml={3}
+                        >
+                          Delete
+                        </Button>
+                      </AlertDialogFooter>
+                    )}
                   </AlertDialogContent>
                 </AlertDialogOverlay>
               </AlertDialog>
