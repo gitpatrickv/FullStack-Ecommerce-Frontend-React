@@ -28,7 +28,7 @@ const DailyDiscoverPage = () => {
   };
 
   const [page, setPage] = useState(getPageFromUrl);
-  const pageSize = 25;
+  const pageSize = 30;
 
   const { data, isLoading, error } = useProducts({ pageNo: page, pageSize });
 

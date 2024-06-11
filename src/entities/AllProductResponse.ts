@@ -6,6 +6,7 @@ export default interface AllProductModels {
     favorites: boolean;
     quantity: number;
     storeId: string;
+    storeName: string;
 }
 
 interface PageResponse {

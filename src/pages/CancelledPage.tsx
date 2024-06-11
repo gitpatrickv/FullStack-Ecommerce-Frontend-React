@@ -32,6 +32,10 @@ const CancelledPage = () => {
     );
   };
 
+  const handleNavigateStorePageClick = (storeId: string) => {
+    navigate(`/store/` + storeId);
+  };
+
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
@@ -66,7 +70,14 @@ const CancelledPage = () => {
                     >
                       {storeOrders[0].storeName}
                     </Text>
-                    <Box cursor="pointer" display="flex" alignItems="center">
+                    <Box
+                      cursor="pointer"
+                      display="flex"
+                      alignItems="center"
+                      onClick={() =>
+                        handleNavigateStorePageClick(storeOrders[0].storeId)
+                      }
+                    >
                       <FaStore size="15px" />
                       <Text pl="5px" fontSize="small">
                         View Store

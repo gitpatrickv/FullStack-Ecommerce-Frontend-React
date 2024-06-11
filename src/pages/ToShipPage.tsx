@@ -7,10 +7,12 @@ import useGetOrdersByCancelledStatus from "../hooks/useGetOrdersByCancelledStatu
 import useGetOrdersByToShipStatus from "../hooks/useGetOrdersByToShipStatus";
 import { useAuthQueryStore } from "../store/auth-store";
 import { formatCurrency } from "../utilities/formatCurrency";
+import { useNavigate } from "react-router-dom";
 
 const ToShipPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const navigate = useNavigate();
   const { data: orders, refetch: refetchToShipOrders } =
     useGetOrdersByToShipStatus(jwtToken);
   const { refetch: refetchCancelledOrders } =
@@ -40,6 +42,10 @@ const ToShipPage = () => {
     );
   };
 
+  const handleNavigateStorePageClick = (storeId: string) => {
+    navigate(`/store/` + storeId);
+  };
+
   return (
     <>
       {groupedOrders &&
@@ -63,7 +69,14 @@ const ToShipPage = () => {
                     >
                       {storeOrders[0].storeName}
                     </Text>
-                    <Box cursor="pointer" display="flex" alignItems="center">
+                    <Box
+                      cursor="pointer"
+                      display="flex"
+                      alignItems="center"
+                      onClick={() =>
+                        handleNavigateStorePageClick(storeOrders[0].storeId)
+                      }
+                    >
                       <FaStore size="15px" />
                       <Text pl="5px" fontSize="small">
                         View Store

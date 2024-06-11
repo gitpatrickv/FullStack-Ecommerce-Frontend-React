@@ -1,6 +1,85 @@
-import { Avatar, Box, Grid, GridItem, Image, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  HStack,
+  Image,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import useGetAllStoreProducts from "../hooks/useGetAllStoreProducts";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { paginationRange } from "../utilities/pagination";
+import ProductCardContainer from "../components/Product/ProductCardContainer";
+import ProductCard from "../components/Product/ProductCard";
 
 const StorePage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { storeId } = useParams();
+
+  const getPageFromUrl = () => {
+    const params = new URLSearchParams(location.search);
+    const pageFromUrl = params.get("pageNo");
+    return pageFromUrl ? parseInt(pageFromUrl, 10) : 1;
+  };
+
+  const [page, setPage] = useState(getPageFromUrl);
+  const pageSize = 30;
+
+  const { data: getAllStoreProducts } = useGetAllStoreProducts({
+    storeId: storeId!,
+    pageNo: page,
+    pageSize,
+  });
+
+  const isLastPage = getAllStoreProducts?.data.pageResponse.last ?? false;
+  const totalElements =
+    getAllStoreProducts?.data.pageResponse.totalElements ?? 0;
+  const pages = Math.ceil(totalElements / pageSize);
+
+  const paginationRangeArray = paginationRange({
+    totalPage: pages,
+    page: page,
+    limit: pageSize,
+    siblings: 1,
+  });
+
+  useEffect(() => {
+    const pageFromUrl = getPageFromUrl();
+    if (pageFromUrl !== page) {
+      setPage(pageFromUrl);
+    }
+  }, [location.search]);
+
+  const updatePage = (newPage: number) => {
+    setPage(newPage);
+    navigate(`/store/${storeId}?pageNo=${newPage}&pageSize=${pageSize}`);
+  };
+
+  function handlePageChange(value: any) {
+    if (value === "&laquo;" || value === "... ") {
+      updatePage(1);
+    } else if (value === "&lsaquo;") {
+      if (page > 1) {
+        updatePage(page - 1);
+      }
+    } else if (value === "&rsaquo;") {
+      if (!isLastPage) {
+        updatePage(page + 1);
+      }
+    } else if (value === "&raquo;" || value === " ...") {
+      updatePage(pages);
+    } else {
+      updatePage(value);
+    }
+  }
+
   return (
     <Grid
       height="100vh"
@@ -11,34 +90,74 @@ const StorePage = () => {
         "asideLeft content1 content1 content1 asideRight"
       `}
     >
-      <GridItem area="header1">
-        <Box display="flex" justifyContent="start">
-          <Box position="relative" top="20px">
-            <Avatar
-              src={
-                "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
-              }
-              size="xl"
-            />
-          </Box>
-          <Text ml="15px" fontSize="x-large" mt="15px">
-            Watsons Official Store
-          </Text>
-        </Box>
-      </GridItem>
-      <GridItem area="header2">
-        <Box bg="blue" height="100%">
-          header2
-        </Box>
-      </GridItem>
-      <GridItem area="header3">
-        <Box bg="orange" height="100%">
-          header3
-        </Box>
+      <GridItem area="header1" mb="15px">
+        <Card
+          backgroundImage="url('https://t3.ftcdn.net/jpg/05/05/62/48/360_F_505624884_d3W9poOAjT6X7w41gxdxLFtxKjJ1DrWk.jpg')"
+          backgroundSize="cover"
+          backgroundPosition="center"
+        >
+          <CardBody>
+            <Box display="flex" justifyContent="start">
+              <Avatar
+                src={
+                  "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
+                }
+                size="xl"
+              />
+              <Text ml="15px" fontSize="x-large" textTransform="capitalize">
+                {getAllStoreProducts?.data.allProductModels[0].storeName}
+              </Text>
+            </Box>
+          </CardBody>
+        </Card>
       </GridItem>
       <GridItem area="content1">
-        <Box bg="red" height="100%">
-          Content 1
+        <Box>
+          <SimpleGrid
+            columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
+            spacing={2}
+            padding="10px"
+          >
+            {getAllStoreProducts?.data.allProductModels.map((product) => (
+              <ProductCardContainer key={product.productId}>
+                <ProductCard product={product} />
+              </ProductCardContainer>
+            ))}
+          </SimpleGrid>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            pt="20px"
+          >
+            <HStack justifyContent="center">
+              <Button onClick={() => handlePageChange("&laquo;")}>
+                &laquo;
+              </Button>
+              <Button onClick={() => handlePageChange("&lsaquo;")}>
+                &lsaquo;
+              </Button>
+              {paginationRangeArray.map((number, index) => {
+                if (number === number) {
+                  return (
+                    <Button
+                      key={index}
+                      onClick={() => handlePageChange(number)}
+                      color={page === number ? "orange" : "gray.500"}
+                    >
+                      {number}
+                    </Button>
+                  );
+                }
+              })}
+              <Button onClick={() => handlePageChange("&rsaquo;")}>
+                &rsaquo;
+              </Button>
+              <Button onClick={() => handlePageChange("&raquo;")}>
+                &raquo;
+              </Button>
+            </HStack>
+          </Box>
         </Box>
       </GridItem>
     </Grid>

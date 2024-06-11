@@ -11,6 +11,7 @@ export default interface OrderItem{
     orderId: string;
     orderTotalAmount: number;
     active:boolean;
+    storeId: string;
 }
 
 export default interface Order{

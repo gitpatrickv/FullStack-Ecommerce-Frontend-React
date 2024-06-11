@@ -7,10 +7,12 @@ import useGetOrdersByCancelledStatus from "../hooks/useGetOrdersByCancelledStatu
 import useGetOrdersByToPayStatus from "../hooks/useGetOrdersByToPayStatus";
 import { useAuthQueryStore } from "../store/auth-store";
 import { formatCurrency } from "../utilities/formatCurrency";
+import { useNavigate } from "react-router-dom";
 
 const ToPayPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const navigate = useNavigate();
   const { data: orders, refetch: refetchToPayOrders } =
     useGetOrdersByToPayStatus(jwtToken);
 
@@ -40,6 +42,11 @@ const ToPayPage = () => {
       }
     );
   };
+
+  const handleNavigateStorePageClick = (storeId: string) => {
+    navigate(`/store/` + storeId);
+  };
+
   return (
     <>
       {groupedOrders &&
@@ -63,7 +70,14 @@ const ToPayPage = () => {
                     >
                       {storeOrders[0].storeName}
                     </Text>
-                    <Box cursor="pointer" display="flex" alignItems="center">
+                    <Box
+                      cursor="pointer"
+                      display="flex"
+                      alignItems="center"
+                      onClick={() =>
+                        handleNavigateStorePageClick(storeOrders[0].storeId)
+                      }
+                    >
                       <FaStore size="15px" />
                       <Text pl="5px" fontSize="small">
                         View Store

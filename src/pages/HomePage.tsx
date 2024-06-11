@@ -20,7 +20,7 @@ import useProducts from "../hooks/useProducts";
 const HomePage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const pageSize = 25;
+  const pageSize = 30;
   const { data } = useProducts({ pageNo: page, pageSize });
 
   const onClickNavigate = () => {
