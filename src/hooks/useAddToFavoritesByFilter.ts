@@ -23,7 +23,8 @@ const useAddToFavoritesByFilter = () => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart','favorites'])
+                queryClient.invalidateQueries(['cart']);
+                queryClient.invalidateQueries(['favorites']);
             }
         }
     )

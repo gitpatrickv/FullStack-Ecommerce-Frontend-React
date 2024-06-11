@@ -4,6 +4,8 @@ export default interface AllProductModels {
     price: number;
     photoUrl: string;
     favorites: boolean;
+    quantity: number;
+    storeId: string;
 }
 
 interface PageResponse {

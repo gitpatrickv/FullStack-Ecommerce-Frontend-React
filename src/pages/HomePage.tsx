@@ -41,12 +41,6 @@ const HomePage = () => {
       <Show above="lg">
         <GridItem area="asideLeft" paddingX={5}>
           <Category />
-          <Text>CATEGORY</Text>
-          <Text>CATEGORY</Text>
-          <Text>CATEGORY</Text>
-          <Text>CATEGORY</Text>
-          <Text>CATEGORY</Text>
-          <Text>CATEGORY</Text>
         </GridItem>
       </Show>
       <GridItem area="main">

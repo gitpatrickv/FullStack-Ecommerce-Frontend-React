@@ -1,21 +1,29 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Avatar, Box, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
 const StorePage = () => {
   return (
     <Grid
       height="100vh"
       templateColumns="0.2fr 0.5fr 0.5fr 0.5fr 0.2fr"
-      templateRows="0.3fr 1fr"
+      templateRows="0.2fr 1fr"
       templateAreas={`
         " asideLeft header1 header2 header3 asideRight"
-        
-        "asideLeft content1 content2 content3 asideRight"
-        
+        "asideLeft content1 content1 content1 asideRight"
       `}
     >
       <GridItem area="header1">
-        <Box bg="maroon" height="100%">
-          header1
+        <Box display="flex" justifyContent="start">
+          <Box position="relative" top="20px">
+            <Avatar
+              src={
+                "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
+              }
+              size="xl"
+            />
+          </Box>
+          <Text ml="15px" fontSize="x-large" mt="15px">
+            Watsons Official Store
+          </Text>
         </Box>
       </GridItem>
       <GridItem area="header2">
@@ -31,16 +39,6 @@ const StorePage = () => {
       <GridItem area="content1">
         <Box bg="red" height="100%">
           Content 1
-        </Box>
-      </GridItem>
-      <GridItem area="content2">
-        <Box bg="green" height="100%">
-          Content 2
-        </Box>
-      </GridItem>
-      <GridItem area="content3">
-        <Box bg="yellow" height="100%">
-          Content 3
         </Box>
       </GridItem>
     </Grid>
