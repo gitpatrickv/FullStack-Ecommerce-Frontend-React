@@ -23,6 +23,7 @@ import { FaExclamationCircle } from "react-icons/fa";
 interface Props {
   cartTotal: number;
   isChecked: boolean;
+  isSomeChecked: boolean;
   cartItem: number;
   qty: number;
   onDeleteAll: () => void;
@@ -34,6 +35,7 @@ interface Props {
 const CartFooter = ({
   cartTotal,
   isChecked,
+  isSomeChecked,
   cartItem,
   qty,
   onDeleteAll,
@@ -49,7 +51,17 @@ const CartFooter = ({
     lg: "lg",
     xl: "xl",
   });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenTrue,
+    onOpen: onOpenTrue,
+    onClose: onCloseTrue,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenFalse,
+    onOpen: onOpenFalse,
+    onClose: onCloseFalse,
+  } = useDisclosure();
+
   const cancelRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     setIsFiltered(isChecked);
@@ -57,7 +69,8 @@ const CartFooter = ({
 
   const handleDeleteAllCarts = () => {
     onDeleteAll();
-    setIsFiltered(!isFiltered);
+    setIsFiltered(false);
+    onCloseTrue();
   };
 
   const handleAllFilterChange = () => {
@@ -119,67 +132,106 @@ const CartFooter = ({
                 fontSize={fontSize}
                 fontWeight="semibold"
                 pr="20px"
-                onClick={onOpen}
+                onClick={isSomeChecked ? onOpenTrue : onOpenFalse}
                 _hover={{ color: "orange.400" }}
               >
                 Delete
               </Text>
-              <AlertDialog
-                isOpen={isOpen}
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-                isCentered
-              >
-                <AlertDialogOverlay>
-                  <AlertDialogContent>
-                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                      {isFiltered ? (
-                        "Delete Products"
-                      ) : (
-                        <Box display="flex" justifyContent="center">
-                          <FaExclamationCircle size="50px" />
-                        </Box>
-                      )}
-                    </AlertDialogHeader>
+              {isSomeChecked ? (
+                <>
+                  <AlertDialog
+                    isOpen={isOpenTrue}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onCloseTrue}
+                    isCentered
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                          <Text color="orange.400" fontSize="large">
+                            Delete Products
+                          </Text>
+                        </AlertDialogHeader>
 
-                    <AlertDialogBody>
-                      {isFiltered ? (
-                        <Text>
-                          Do you want to remove the {cartItem} products?
-                        </Text>
-                      ) : (
-                        <Text textAlign="center" fontSize="lg">
-                          Please select product(s)
-                        </Text>
-                      )}
-                    </AlertDialogBody>
-                    {isFiltered && (
-                      <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                          Cancel
-                        </Button>
-                        <Button
-                          colorScheme="red"
-                          onClick={handleDeleteAllCarts}
-                          ml={3}
-                        >
-                          Delete
-                        </Button>
-                      </AlertDialogFooter>
-                    )}
-                  </AlertDialogContent>
-                </AlertDialogOverlay>
-              </AlertDialog>
+                        <AlertDialogBody>
+                          <Text>Do you want to remove the {qty} products?</Text>
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onCloseTrue}>
+                            Cancel
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={handleDeleteAllCarts}
+                            ml={3}
+                          >
+                            Delete
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
+                </>
+              ) : (
+                <>
+                  <AlertDialog
+                    isOpen={isOpenFalse}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onCloseFalse}
+                    isCentered
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                          <Box display="flex" justifyContent="center">
+                            <FaExclamationCircle size="50px" />
+                          </Box>
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                          <Text textAlign="center" fontSize="lg">
+                            Please select product(s)
+                          </Text>
+                        </AlertDialogBody>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
+                </>
+              )}
+
               <Text
                 cursor="pointer"
                 fontSize={fontSize}
                 fontWeight="semibold"
                 color="orange.400"
                 whiteSpace="nowrap"
-                onClick={onAddToFavorites}
+                onClick={isSomeChecked ? onAddToFavorites : onOpenFalse}
               >
                 Add to Favorites
               </Text>
+              <AlertDialog
+                isOpen={isOpenFalse}
+                leastDestructiveRef={cancelRef}
+                onClose={onCloseFalse}
+                isCentered
+              >
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                      <Box display="flex" justifyContent="center">
+                        <FaExclamationCircle size="50px" />
+                      </Box>
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                      <Text textAlign="center" fontSize="lg">
+                        Please select product(s)
+                      </Text>
+                    </AlertDialogBody>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialog>
             </Box>
           </GridItem>
 
