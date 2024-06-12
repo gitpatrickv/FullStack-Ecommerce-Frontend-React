@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 
 import { IoLocation } from "react-icons/io5";
-import useGetUser from "../../hooks/useGetUser";
+import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 
 const UserInfo = () => {

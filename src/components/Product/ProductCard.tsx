@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import AllProductModels from "../../entities/AllProductResponse";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import useProductDetail from "../../hooks/useProductDetail";
+import useProductDetail from "../../hooks/user/useProductDetail";
 
 interface Props {
   product: AllProductModels;

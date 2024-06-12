@@ -19,12 +19,12 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
-import useCartTotal from "../../hooks/useCartTotal";
-import useDecrementQuantity from "../../hooks/useDecrementQuantity";
-import useDeleteCart from "../../hooks/useDeleteCart";
-import useFilterByStoreName from "../../hooks/useFilterByStoreName";
-import useFilterCart from "../../hooks/useFilterCart";
-import useIncrementQuantity from "../../hooks/useIncrementQuantity";
+import useCartTotal from "../../hooks/user/useCartTotal";
+import useDecrementQuantity from "../../hooks/user/useDecrementQuantity";
+import useDeleteCart from "../../hooks/user/useDeleteCart";
+import useFilterByStoreName from "../../hooks/user/useFilterByStoreName";
+import useFilterCart from "../../hooks/user/useFilterCart";
+import useIncrementQuantity from "../../hooks/user/useIncrementQuantity";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
