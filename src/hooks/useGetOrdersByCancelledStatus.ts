@@ -1,14 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import OrderItem from "../entities/Order";
 import { axiosInstance } from "../services/api-client";
-import { useAuthQueryStore } from "../store/auth-store";
 
 const apiClient = axiosInstance;
 
-const useGetOrdersByCancelledStatus = () => {
-    const { authStore } = useAuthQueryStore();
-    const jwtToken = authStore.jwtToken;
-
+const useGetOrdersByCancelledStatus = (jwtToken: string) => {
+    
     return useQuery ({
         queryKey: ['cancelledOrders'],
         queryFn: async () => {

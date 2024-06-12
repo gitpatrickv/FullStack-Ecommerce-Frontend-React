@@ -9,6 +9,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
+import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import CartFooter from "../components/Cart/CartFooter";
 import CartHeader from "../components/Cart/CartHeader";
@@ -22,7 +23,6 @@ import useDeleteAllCarts from "../hooks/useDeleteAllCarts";
 import useFilterAllCarts from "../hooks/useFilterAllCarts";
 import useGetAllFavorites from "../hooks/useGetAllFavorites";
 import { useAuthQueryStore } from "../store/auth-store";
-import { FaCartPlus } from "react-icons/fa";
 const CartPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
@@ -105,6 +105,7 @@ const CartPage = () => {
   );
 
   const isChecked = carts?.data.every((cart) => cart.filter);
+  const isSomeChecked = carts?.data.some((cart) => cart.filter);
 
   return (
     <>
@@ -116,7 +117,7 @@ const CartPage = () => {
           }}
           templateColumns={{
             base: "1fr",
-            lg: "200px 1fr 200px",
+            lg: "0.2fr 1fr 0.2fr",
           }}
         >
           <GridItem area="main">
@@ -195,6 +196,7 @@ const CartPage = () => {
                 cartItem={cartTotal?.cartItems ?? 0}
                 qty={cartTotal?.qty ?? 0}
                 isChecked={isChecked}
+                isSomeChecked={isSomeChecked}
                 onDeleteAll={handleDeleteAllCart}
                 onFilterAll={handleFilterAll}
                 onCheckout={handleNavigateCheckoutClick}

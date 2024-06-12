@@ -1,32 +1,32 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../services/api-client";
 
-interface Props{
-    cartId: string;
+interface Props {
+    orderId: string;
     jwtToken: string;
 }
 
 const apiClient = axiosInstance;
 
-const useFilterCart = () => {
+const useCancelOrder = () => {
     const queryClient = useQueryClient();
     return useMutation(
-        async({cartId, jwtToken} : Props) => {
-            await apiClient.put(`/cart/filter/${cartId}`, {},
+        async({orderId, jwtToken} : Props) => {
+            await apiClient.post(`order/cancel/${orderId}` , {},
                 {
-                    headers: {
+                    headers:{
                         Authorization: `Bearer ${jwtToken}`,
                     }
                 }
-            )            
+            )
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart']);
-                queryClient.invalidateQueries(['cartTotal']);
+                queryClient.invalidateQueries(['toPayOrders']);
+                queryClient.invalidateQueries(['cancelledOrders']);
             }
-        },
+        }
     )
 }
 
-export default useFilterCart
+export default useCancelOrder

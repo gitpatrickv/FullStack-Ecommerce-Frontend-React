@@ -11,7 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Product from "../../entities/Product";
 import useAddToCart from "../../hooks/useAddToCart";
@@ -102,6 +102,10 @@ const ProductDetail = ({ product }: Props) => {
     });
   };
 
+  const handleNavigateStorePageClick = (storeId: string) => {
+    navigate(`/store/` + storeId);
+  };
+
   return (
     <Center>
       <Box m="5" p="5">
@@ -113,14 +117,29 @@ const ProductDetail = ({ product }: Props) => {
           </Box>
           <Flex alignSelf="start">
             <VStack alignItems="start" m="4">
-              <Text
-                fontSize="xl"
-                fontWeight="semibold"
-                lineHeight="short"
-                textTransform="uppercase"
-              >
-                {product.storeName}
-              </Text>
+              <Box display="flex">
+                <Text
+                  fontSize="xl"
+                  fontWeight="semibold"
+                  lineHeight="short"
+                  textTransform="uppercase"
+                  mr="20px"
+                >
+                  {product.storeName}
+                </Text>
+                <Box
+                  cursor="pointer"
+                  display="flex"
+                  alignItems="center"
+                  _hover={{ color: "orange.400" }}
+                  onClick={() => handleNavigateStorePageClick(product.storeId)}
+                >
+                  <FaStore size="20px" />
+                  <Text pl="5px" fontSize="medium">
+                    View Store
+                  </Text>
+                </Box>
+              </Box>
               <Text
                 fontSize="xl"
                 fontWeight="semibold"

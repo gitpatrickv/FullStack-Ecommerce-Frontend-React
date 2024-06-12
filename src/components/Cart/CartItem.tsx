@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Checkbox,
@@ -7,9 +13,10 @@ import {
   Image,
   Text,
   useBreakpointValue,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cart from "../../entities/Cart";
 import useCartTotal from "../../hooks/useCartTotal";
@@ -42,6 +49,8 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
   const [isCheck, setIsCheck] = useState<boolean>(isChecked);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   const checkboxSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
   const buttonSize = useBreakpointValue({
@@ -203,12 +212,45 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
             <Button
               position="relative"
               right="10px"
-              onClick={handleClickDecrement}
+              onClick={cart.quantity > 1 ? handleClickDecrement : onOpen}
               size={buttonSize}
               _hover={{ color: "orange.400" }}
             >
               -
             </Button>
+            <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+              isCentered
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                    <Text color="orange.400" fontSize="large">
+                      Do you want to remove this item?
+                    </Text>
+                  </AlertDialogHeader>
+
+                  <AlertDialogBody>
+                    <Text>{cart.productName}</Text>
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={handleClickDecrement}
+                      ml={3}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
             <Text fontSize={fontSize} fontWeight="semibold">
               {cart.quantity}
             </Text>

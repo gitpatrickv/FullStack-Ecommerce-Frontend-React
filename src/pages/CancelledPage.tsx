@@ -4,9 +4,37 @@ import OrderCard from "../components/Order/OrderCard";
 import OrderItem from "../entities/Order";
 import useGetOrdersByCancelledStatus from "../hooks/useGetOrdersByCancelledStatus";
 import { formatCurrency } from "../utilities/formatCurrency";
+import { useAuthQueryStore } from "../store/auth-store";
+import useBuyAgain from "../hooks/useBuyAgain";
+import useCarts from "../hooks/useCarts";
+import { useNavigate } from "react-router-dom";
+import useCartTotal from "../hooks/useCartTotal";
 
 const CancelledPage = () => {
-  const { data: orders } = useGetOrdersByCancelledStatus();
+  const navigate = useNavigate();
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: orders } = useGetOrdersByCancelledStatus(jwtToken);
+  const { mutate: buyAgain } = useBuyAgain();
+  const { refetch: refetchCarts } = useCarts(jwtToken);
+  const { refetch: refetchTotal } = useCartTotal(jwtToken);
+
+  const handleBuyAgainClick = (orderId: string) => {
+    buyAgain(
+      { orderId, jwtToken: jwtToken },
+      {
+        onSuccess: () => {
+          refetchCarts();
+          refetchTotal();
+          navigate("/cart");
+        },
+      }
+    );
+  };
+
+  const handleNavigateStorePageClick = (storeId: string) => {
+    navigate(`/store/` + storeId);
+  };
 
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
@@ -42,7 +70,15 @@ const CancelledPage = () => {
                     >
                       {storeOrders[0].storeName}
                     </Text>
-                    <Box cursor="pointer" display="flex" alignItems="center">
+                    <Box
+                      cursor="pointer"
+                      display="flex"
+                      alignItems="center"
+                      _hover={{ color: "orange.400" }}
+                      onClick={() =>
+                        handleNavigateStorePageClick(storeOrders[0].storeId)
+                      }
+                    >
                       <FaStore size="15px" />
                       <Text pl="5px" fontSize="small">
                         View Store
@@ -80,7 +116,14 @@ const CancelledPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button>Buy Again</Button>
+                    <Button
+                      onClick={() =>
+                        handleBuyAgainClick(storeOrders[0].orderId)
+                      }
+                      _hover={{ color: "orange.400" }}
+                    >
+                      Buy Again
+                    </Button>
                   </Box>
                 </CardBody>
               </Card>

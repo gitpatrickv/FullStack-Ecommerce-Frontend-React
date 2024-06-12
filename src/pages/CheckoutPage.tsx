@@ -27,7 +27,8 @@ const CheckoutPage = () => {
   const jwtToken = authStore.jwtToken;
   const { data: carts, isLoading, error } = useCheckout(jwtToken);
   const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
-  const { refetch: refetchOrderByToPayStatus } = useGetOrdersByToPayStatus();
+  const { refetch: refetchOrderByToPayStatus } =
+    useGetOrdersByToPayStatus(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: placeOrder } = usePlaceOrder();
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const CheckoutPage = () => {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px 1fr 200px",
+        lg: "0.2fr 1fr 0.2fr",
       }}
     >
       <GridItem area="main">

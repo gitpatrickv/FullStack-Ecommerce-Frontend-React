@@ -7,4 +7,5 @@ export default interface Product {
     productImage: string[];
     price: number;
     quantity: number;
+    storeId: string;
 }

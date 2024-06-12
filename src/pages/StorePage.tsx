@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Card,
@@ -6,20 +7,22 @@ import {
   Grid,
   GridItem,
   HStack,
+  Image,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
+import useGetAllStoreProducts from "../hooks/useGetAllStoreProducts";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import ProductCard from "../components/Product/ProductCard.tsx";
-import ProductCardContainer from "../components/Product/ProductCardContainer.tsx";
-import ProductCardSkeleton from "../components/Product/ProductCardSkeleton.tsx";
-import useProducts from "../hooks/useProducts.ts";
-import { paginationRange } from "../utilities/pagination.ts";
+import { paginationRange } from "../utilities/pagination";
+import ProductCardContainer from "../components/Product/ProductCardContainer";
+import ProductCard from "../components/Product/ProductCard";
+import ProductCardSkeleton from "../components/Product/ProductCardSkeleton";
 
-const DailyDiscoverPage = () => {
+const StorePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { storeId } = useParams();
 
   const getPageFromUrl = () => {
     const params = new URLSearchParams(location.search);
@@ -30,10 +33,15 @@ const DailyDiscoverPage = () => {
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 30;
 
-  const { data, isLoading } = useProducts({ pageNo: page, pageSize });
+  const { data: getAllStoreProducts, isLoading } = useGetAllStoreProducts({
+    storeId: storeId!,
+    pageNo: page,
+    pageSize,
+  });
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  const isLastPage = data?.data.pageResponse.last ?? false;
-  const totalElements = data?.data.pageResponse.totalElements ?? 0;
+  const isLastPage = getAllStoreProducts?.data.pageResponse.last ?? false;
+  const totalElements =
+    getAllStoreProducts?.data.pageResponse.totalElements ?? 0;
   const pages = Math.ceil(totalElements / pageSize);
 
   const paginationRangeArray = paginationRange({
@@ -52,7 +60,7 @@ const DailyDiscoverPage = () => {
 
   const updatePage = (newPage: number) => {
     setPage(newPage);
-    navigate(`/daily_discover?pageNo=${newPage}&pageSize=${pageSize}`);
+    navigate(`/store/${storeId}?pageNo=${newPage}&pageSize=${pageSize}`);
   };
 
   function handlePageChange(value: any) {
@@ -72,26 +80,40 @@ const DailyDiscoverPage = () => {
       updatePage(value);
     }
   }
+
   return (
     <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " asideLeft main asideRight" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "0.2fr 1fr 0.2fr",
-      }}
+      templateColumns="0.2fr 0.5fr 0.5fr 0.5fr 0.2fr"
+      templateRows="0fr 1fr"
+      templateAreas={`
+        "asideLeft header1 header1 header1 asideRight"
+        "asideLeft content1 content1 content1 asideRight"
+      `}
     >
-      <GridItem area="main">
-        <>
-          <Card mt="20px" mb="20px">
-            <CardBody>
-              <Text textAlign="center" fontSize="larger" color="orange">
-                DAILY DISCOVER
+      <GridItem area="header1" mb="15px">
+        <Card
+          backgroundImage="url('https://t3.ftcdn.net/jpg/02/93/94/22/360_F_293942282_dCV0T2E0411M2J1AHsCzCiKWEx3zYrM2.jpg')"
+          backgroundSize="cover"
+          backgroundPosition="center"
+        >
+          <CardBody>
+            <Box display="flex" justifyContent="start">
+              <Avatar
+                src={
+                  "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
+                }
+                size="xl"
+              />
+              <Text ml="15px" fontSize="x-large" textTransform="capitalize">
+                {getAllStoreProducts?.data.allProductModels[0].storeName}
               </Text>
-            </CardBody>
-          </Card>
+            </Box>
+          </CardBody>
+        </Card>
+      </GridItem>
+
+      <GridItem area="content1">
+        <Box>
           <SimpleGrid
             columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
             spacing={2}
@@ -103,9 +125,9 @@ const DailyDiscoverPage = () => {
                   <ProductCardSkeleton />
                 </ProductCardContainer>
               ))}
-            {data?.data.allProductModels.map((prod) => (
-              <ProductCardContainer key={prod.productId}>
-                <ProductCard product={prod} />
+            {getAllStoreProducts?.data.allProductModels.map((product) => (
+              <ProductCardContainer key={product.productId}>
+                <ProductCard product={product} />
               </ProductCardContainer>
             ))}
           </SimpleGrid>
@@ -143,10 +165,10 @@ const DailyDiscoverPage = () => {
               </Button>
             </HStack>
           </Box>
-        </>
+        </Box>
       </GridItem>
     </Grid>
   );
 };
 
-export default DailyDiscoverPage;
+export default StorePage;

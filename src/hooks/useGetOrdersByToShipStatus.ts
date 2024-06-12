@@ -4,11 +4,11 @@ import { axiosInstance } from "../services/api-client";
 
 const apiClient = axiosInstance;
 
-const useGetOrdersByToPayStatus = (jwtToken: string) => {
+const useGetOrdersByToShipStatus = (jwtToken: string) => {
     return useQuery ({
-        queryKey: ['toPayOrders'],
+        queryKey: ['toShipOrders'],
         queryFn: async () => {
-            const {data} = await apiClient.get<OrderItem[]>('/order/get/to-pay', 
+            const {data} = await apiClient.get<OrderItem[]>('/order/get/to-ship', 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,
@@ -17,7 +17,7 @@ const useGetOrdersByToPayStatus = (jwtToken: string) => {
             return data;
         },
         enabled: !!jwtToken
-    })
-}
+    })  
+}   
 
-export default useGetOrdersByToPayStatus
+export default useGetOrdersByToShipStatus

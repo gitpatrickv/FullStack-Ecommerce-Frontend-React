@@ -1,18 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../services/api-client";
 
+const apiClient = axiosInstance;
+
 interface Props {
+    orderId: string;
     jwtToken: string;
 }
 
-const apiClient = axiosInstance;
-
-const useAddToFavoritesByFilter = () => {
-
+const useBuyAgain = () => {
     const queryClient = useQueryClient();
+
     return useMutation(
-        async({jwtToken} : Props) => {
-            const { data } = await apiClient.put(`/user/favorites/cart/add`, {},
+        async({orderId, jwtToken} : Props) => {
+            const {data} = await apiClient.post(`order/buy/${orderId}`, {} ,
                 {
                     headers: {
                         Authorization: `Bearer ${jwtToken}`
@@ -23,11 +24,10 @@ const useAddToFavoritesByFilter = () => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['cart']);
-                queryClient.invalidateQueries(['favorites']);
+                queryClient.invalidateQueries(['cart'])
             }
         }
     )
 }
 
-export default useAddToFavoritesByFilter
+export default useBuyAgain
