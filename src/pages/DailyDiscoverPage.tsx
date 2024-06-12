@@ -7,13 +7,13 @@ import {
   GridItem,
   HStack,
   SimpleGrid,
-  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../components/Product/ProductCard.tsx";
 import ProductCardContainer from "../components/Product/ProductCardContainer.tsx";
+import ProductCardSkeleton from "../components/Product/ProductCardSkeleton.tsx";
 import useProducts from "../hooks/useProducts.ts";
 import { paginationRange } from "../utilities/pagination.ts";
 
@@ -30,8 +30,8 @@ const DailyDiscoverPage = () => {
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 30;
 
-  const { data, isLoading, error } = useProducts({ pageNo: page, pageSize });
-
+  const { data, isLoading } = useProducts({ pageNo: page, pageSize });
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const isLastPage = data?.data.pageResponse.last ?? false;
   const totalElements = data?.data.pageResponse.totalElements ?? 0;
   const pages = Math.ceil(totalElements / pageSize);
@@ -49,9 +49,6 @@ const DailyDiscoverPage = () => {
       setPage(pageFromUrl);
     }
   }, [location.search]);
-
-  if (isLoading) return <Spinner />;
-  if (error || !data) throw error;
 
   const updatePage = (newPage: number) => {
     setPage(newPage);
@@ -100,6 +97,12 @@ const DailyDiscoverPage = () => {
             spacing={2}
             padding="10px"
           >
+            {isLoading &&
+              skeletons.map((skeleton) => (
+                <ProductCardContainer key={skeleton}>
+                  <ProductCardSkeleton />
+                </ProductCardContainer>
+              ))}
             {data?.data.allProductModels.map((prod) => (
               <ProductCardContainer key={prod.productId}>
                 <ProductCard product={prod} />

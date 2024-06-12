@@ -185,7 +185,7 @@ const CartFooter = ({
                       <AlertDialogContent>
                         <AlertDialogHeader fontSize="lg" fontWeight="bold">
                           <Box display="flex" justifyContent="center">
-                            <FaExclamationCircle size="50px" />
+                            <FaExclamationCircle size="50px" color="orange" />
                           </Box>
                         </AlertDialogHeader>
 
@@ -220,7 +220,7 @@ const CartFooter = ({
                   <AlertDialogContent>
                     <AlertDialogHeader fontSize="lg" fontWeight="bold">
                       <Box display="flex" justifyContent="center">
-                        <FaExclamationCircle size="50px" />
+                        <FaExclamationCircle size="50px" color="orange" />
                       </Box>
                     </AlertDialogHeader>
 

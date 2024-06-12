@@ -15,13 +15,15 @@ import { useNavigate } from "react-router-dom";
 import Category from "../components/Category/Category";
 import ProductCard from "../components/Product/ProductCard";
 import ProductCardContainer from "../components/Product/ProductCardContainer";
+import ProductCardSkeleton from "../components/Product/ProductCardSkeleton";
 import useProducts from "../hooks/useProducts";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const pageSize = 30;
-  const { data } = useProducts({ pageNo: page, pageSize });
+  const { data, isLoading } = useProducts({ pageNo: page, pageSize });
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   const onClickNavigate = () => {
     navigate(`/daily_discover?pageNo=${page + 1}&pageSize=${pageSize}`);
@@ -61,6 +63,12 @@ const HomePage = () => {
           spacing={2}
           padding="10px"
         >
+          {isLoading &&
+            skeletons.map((skeleton) => (
+              <ProductCardContainer key={skeleton}>
+                <ProductCardSkeleton />
+              </ProductCardContainer>
+            ))}
           {data?.data.allProductModels.map((prod) => (
             <ProductCardContainer key={prod.productId}>
               <ProductCard product={prod} />

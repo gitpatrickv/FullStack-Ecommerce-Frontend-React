@@ -73,6 +73,7 @@ const ToShipPage = () => {
                       cursor="pointer"
                       display="flex"
                       alignItems="center"
+                      _hover={{ color: "orange.400" }}
                       onClick={() =>
                         handleNavigateStorePageClick(storeOrders[0].storeId)
                       }

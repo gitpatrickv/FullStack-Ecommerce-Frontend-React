@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { paginationRange } from "../utilities/pagination";
 import ProductCardContainer from "../components/Product/ProductCardContainer";
 import ProductCard from "../components/Product/ProductCard";
+import ProductCardSkeleton from "../components/Product/ProductCardSkeleton";
 
 const StorePage = () => {
   const location = useLocation();
@@ -32,12 +33,12 @@ const StorePage = () => {
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 30;
 
-  const { data: getAllStoreProducts } = useGetAllStoreProducts({
+  const { data: getAllStoreProducts, isLoading } = useGetAllStoreProducts({
     storeId: storeId!,
     pageNo: page,
     pageSize,
   });
-
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   const isLastPage = getAllStoreProducts?.data.pageResponse.last ?? false;
   const totalElements =
     getAllStoreProducts?.data.pageResponse.totalElements ?? 0;
@@ -82,17 +83,16 @@ const StorePage = () => {
 
   return (
     <Grid
-      height="100vh"
       templateColumns="0.2fr 0.5fr 0.5fr 0.5fr 0.2fr"
-      templateRows="0.2fr 1fr"
+      templateRows="0fr 1fr"
       templateAreas={`
-        " asideLeft header1 header2 header3 asideRight"
+        "asideLeft header1 header1 header1 asideRight"
         "asideLeft content1 content1 content1 asideRight"
       `}
     >
       <GridItem area="header1" mb="15px">
         <Card
-          backgroundImage="url('https://t3.ftcdn.net/jpg/05/05/62/48/360_F_505624884_d3W9poOAjT6X7w41gxdxLFtxKjJ1DrWk.jpg')"
+          backgroundImage="url('https://t3.ftcdn.net/jpg/02/93/94/22/360_F_293942282_dCV0T2E0411M2J1AHsCzCiKWEx3zYrM2.jpg')"
           backgroundSize="cover"
           backgroundPosition="center"
         >
@@ -111,6 +111,7 @@ const StorePage = () => {
           </CardBody>
         </Card>
       </GridItem>
+
       <GridItem area="content1">
         <Box>
           <SimpleGrid
@@ -118,6 +119,12 @@ const StorePage = () => {
             spacing={2}
             padding="10px"
           >
+            {isLoading &&
+              skeletons.map((skeleton) => (
+                <ProductCardContainer key={skeleton}>
+                  <ProductCardSkeleton />
+                </ProductCardContainer>
+              ))}
             {getAllStoreProducts?.data.allProductModels.map((product) => (
               <ProductCardContainer key={product.productId}>
                 <ProductCard product={product} />
