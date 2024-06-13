@@ -23,6 +23,8 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
+import Dashboard from "../components/Dashboard/seller/Dashboard";
+import NewProductPage from "../pages/seller/NewProductPage";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,10 @@ const router = createBrowserRouter([
     path: "/seller",
     element: <SellerPage />,
     errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "product/new", element: <NewProductPage /> },
+    ],
   },
   {
     path: "/admin",
