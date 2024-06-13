@@ -1,5 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
+import Dashboard from "../components/Dashboard/seller/Dashboard";
 import AdminPage from "../pages/admin/AdminPage";
+import NewProductPage from "../pages/seller/NewProductPage";
+import OrderPage from "../pages/seller/OrderPage";
 import SellerPage from "../pages/seller/SellerPage";
 import AccountProfilePage from "../pages/user/AccountProfilePage";
 import AllOrderPage from "../pages/user/AllOrderPage";
@@ -23,8 +26,12 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import Dashboard from "../components/Dashboard/seller/Dashboard";
-import NewProductPage from "../pages/seller/NewProductPage";
+import AllProductsOrderPage from "../pages/seller/AllProductsOrderPage";
+import UnpaidPage from "../pages/seller/UnpaidPage";
+import ToShipOrdersPage from "../pages/seller/ToShipOrdersPage";
+import ShippingPage from "../pages/seller/ShippingPage";
+import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
+import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +78,18 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <Dashboard /> },
+      {
+        path: "order",
+        element: <OrderPage />,
+        children: [
+          { path: "all", element: <AllProductsOrderPage /> },
+          { path: "unpaid", element: <UnpaidPage /> },
+          { path: "to-ship", element: <ToShipOrdersPage /> },
+          { path: "shipping", element: <ShippingPage /> },
+          { path: "completed", element: <CompletedOrdersPage /> },
+          { path: "cancellation", element: <CancelledOrdersPage /> },
+        ],
+      },
       { path: "product/new", element: <NewProductPage /> },
     ],
   },

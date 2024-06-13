@@ -8,7 +8,7 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 const SellerPage = () => {
@@ -26,7 +26,9 @@ const SellerPage = () => {
         <Card>
           <CardBody>
             <Box display="flex" justifyContent="space-between">
-              <Text>Home</Text>
+              <Link to="/seller">
+                <Text>Home</Text>
+              </Link>
               <Box display="flex">
                 <Avatar
                   src={
@@ -41,8 +43,8 @@ const SellerPage = () => {
         </Card>
       </GridItem>
 
-      <GridItem area="sidebar">
-        <Box bg="gray" height="100%">
+      <GridItem area="sidebar" bg="gray.700">
+        <Box>
           <Sidebar />
         </Box>
       </GridItem>
