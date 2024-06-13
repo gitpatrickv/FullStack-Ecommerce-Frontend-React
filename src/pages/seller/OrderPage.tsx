@@ -61,7 +61,7 @@ const OrderPage = () => {
   };
 
   return (
-    <Box mt="5px">
+    <Box mt="20px">
       <Tabs
         position="relative"
         variant="unstyled"

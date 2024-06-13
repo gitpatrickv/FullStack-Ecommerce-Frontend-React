@@ -1,18 +1,24 @@
 import {
   Box,
-  Card,
+  Button,
   Grid,
   GridItem,
   Image,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import AllProductModels from "../../../entities/AllProductResponse";
+import { formatCurrency } from "../../../utilities/formatCurrency";
 
-const ProductsList = () => {
+interface Props {
+  product: AllProductModels;
+}
+
+const ProductsList = ({ product }: Props) => {
   const fontSize = useBreakpointValue({ base: "sm", xl: "xl" });
   return (
     <Grid
-      templateColumns="1fr 0.5fr 0.5fr 0.5fr 0.5fr"
+      templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
       templateAreas={`
   "content1 content2 content3 content4 content5"
 `}
@@ -20,24 +26,22 @@ const ProductsList = () => {
       p={3}
     >
       <GridItem area="content1">
-        <Box display="flex" flexDirection="column" alignItems="flex-start">
-          <Box display="flex" alignItems="center">
-            <Image
-              w={{ base: "40px", md: "80px", lg: "100px" }}
-              h={{ base: "40px", md: "60px", lg: "80px" }}
-              cursor="pointer"
-            />
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              textTransform="capitalize"
-              // onClick={handleNavigateClick}
-              cursor="pointer"
-              pl="20px"
-            >
-              PRODUCT NAME
-            </Text>
-          </Box>
+        <Box display="flex" alignItems="center">
+          <Image
+            src={product.photoUrl}
+            w={{ base: "40px", md: "80px", lg: "100px" }}
+            h={{ base: "40px", md: "60px", lg: "80px" }}
+            cursor="pointer"
+          />
+          <Text
+            fontSize={fontSize}
+            fontWeight="semibold"
+            textTransform="capitalize"
+            cursor="pointer"
+            pl="20px"
+          >
+            {product.productName}
+          </Text>
         </Box>
       </GridItem>
       <GridItem
@@ -47,7 +51,7 @@ const ProductsList = () => {
         justifyContent="center"
       >
         <Text fontSize={fontSize} fontWeight="semibold">
-          SALES / SOLD
+          0
         </Text>
       </GridItem>
       <GridItem
@@ -57,7 +61,7 @@ const ProductsList = () => {
         justifyContent="center"
       >
         <Text fontSize={fontSize} fontWeight="semibold">
-          PRICE
+          {formatCurrency(product.price)}
         </Text>
       </GridItem>
       <GridItem
@@ -66,8 +70,8 @@ const ProductsList = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
-          STOCK
+        <Text fontSize={fontSize} fontWeight="semibold">
+          {product.quantity}
         </Text>
       </GridItem>
       <GridItem
@@ -76,7 +80,7 @@ const ProductsList = () => {
         alignItems="center"
         justifyContent="flex-end"
       >
-        <Text fontSize={fontSize}>ACTION</Text>
+        <Button fontSize={fontSize}>ACTION</Button>
       </GridItem>
     </Grid>
   );

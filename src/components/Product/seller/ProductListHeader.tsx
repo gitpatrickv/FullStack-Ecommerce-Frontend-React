@@ -17,7 +17,7 @@ const ProductListHeader = () => {
   return (
     <Card>
       <Grid
-        templateColumns="1fr 0.5fr 0.5fr 0.5fr 0.5fr"
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
 "content1 content2 content3 content4 content5"
 `}
@@ -30,9 +30,8 @@ const ProductListHeader = () => {
               <Text
                 fontSize={fontSize}
                 fontWeight="semibold"
-                // onClick={handleNavigateClick}
                 cursor="pointer"
-                pl="20px"
+                pl="5px"
               >
                 Product(s)
               </Text>
@@ -65,7 +64,7 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+          <Text fontSize={fontSize} fontWeight="semibold">
             Stock
           </Text>
         </GridItem>
@@ -74,6 +73,7 @@ const ProductListHeader = () => {
           display="flex"
           alignItems="center"
           justifyContent="flex-end"
+          mr="25px"
         >
           <Text fontSize={fontSize}>Action</Text>
         </GridItem>
