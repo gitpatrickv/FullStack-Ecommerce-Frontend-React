@@ -7,9 +7,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaRegFileAlt } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
-import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { FaShoppingBag } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 const Sidebar = () => {
   const fontSize = useBreakpointValue({
     base: "sm",
@@ -17,10 +17,12 @@ const Sidebar = () => {
   });
 
   const [isOrderPage, setIsOrderPage] = useState(false);
+  const [isProductPage, setIsProductPage] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setIsOrderPage(location.pathname.startsWith("/seller/order"));
+    setIsProductPage(location.pathname.startsWith("/seller/product"));
   }, [location.pathname]);
 
   return (
@@ -33,7 +35,7 @@ const Sidebar = () => {
 `}
     >
       <GridItem area="sidebar">
-        <Box ml="10px" mt="10px">
+        <Box ml="10px" mt="15px">
           <Box display="flex" alignItems="center">
             <FaRegFileAlt
               size="20px"
@@ -156,6 +158,82 @@ const Sidebar = () => {
                     cursor="pointer"
                   >
                     Cancellation
+                  </Text>
+                </Link>
+              </Box>
+            </>
+          )}
+        </Box>
+        <Box ml="10px" mt="15px">
+          <Box display="flex" alignItems="center">
+            <FaShoppingBag
+              size="20px"
+              color={
+                location.pathname.startsWith("/seller/product")
+                  ? "orange"
+                  : "white"
+              }
+            />
+            <Link to="/seller/product">
+              <Text
+                ml="5px"
+                mr="5px"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                _hover={{ color: "orange.400" }}
+                color={
+                  location.pathname.startsWith("/seller/product")
+                    ? "orange"
+                    : "white"
+                }
+              >
+                Product
+              </Text>
+            </Link>
+            {location.pathname.startsWith("/seller/product") ? (
+              <IoIosArrowDown
+                color={
+                  location.pathname.startsWith("/seller/product")
+                    ? "orange"
+                    : "white"
+                }
+              />
+            ) : (
+              <IoIosArrowUp />
+            )}
+          </Box>
+          {isProductPage && (
+            <>
+              <Box ml="25px">
+                <Link to="/seller/product">
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    mt="3px"
+                    color={
+                      location.pathname === "/seller/product"
+                        ? "orange.400"
+                        : "gray.600"
+                    }
+                    cursor="pointer"
+                    whiteSpace="nowrap"
+                  >
+                    My Products
+                  </Text>
+                </Link>
+                <Link to="/seller/product/new">
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    color={
+                      location.pathname === "/seller/product/new"
+                        ? "orange.400"
+                        : "gray.600"
+                    }
+                    cursor="pointer"
+                    whiteSpace="nowrap"
+                  >
+                    Add New Product
                   </Text>
                 </Link>
               </Box>

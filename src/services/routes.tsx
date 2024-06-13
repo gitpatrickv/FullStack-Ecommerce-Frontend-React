@@ -32,6 +32,7 @@ import ToShipOrdersPage from "../pages/seller/ToShipOrdersPage";
 import ShippingPage from "../pages/seller/ShippingPage";
 import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
 import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
+import MyProductPage from "../pages/seller/MyProductPage";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,7 @@ const router = createBrowserRouter([
           { path: "cancellation", element: <CancelledOrdersPage /> },
         ],
       },
+      { path: "product", element: <MyProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
     ],
   },

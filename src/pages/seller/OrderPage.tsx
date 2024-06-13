@@ -7,16 +7,15 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
 } from "@chakra-ui/react";
-import AllProductsOrderPage from "./AllProductsOrderPage";
-import UnpaidPage from "./UnpaidPage";
-import ToShipOrdersPage from "./ToShipOrdersPage";
-import ShippingPage from "./ShippingPage";
-import CompletedOrdersPage from "./CompletedOrdersPage";
-import CancelledOrdersPage from "./CancelledOrdersPage";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import AllProductsOrderPage from "./AllProductsOrderPage";
+import CancelledOrdersPage from "./CancelledOrdersPage";
+import CompletedOrdersPage from "./CompletedOrdersPage";
+import ShippingPage from "./ShippingPage";
+import ToShipOrdersPage from "./ToShipOrdersPage";
+import UnpaidPage from "./UnpaidPage";
 
 const OrderPage = () => {
   const location = useLocation();
@@ -62,7 +61,7 @@ const OrderPage = () => {
   };
 
   return (
-    <Box>
+    <Box mt="5px">
       <Tabs
         position="relative"
         variant="unstyled"

@@ -5,7 +5,6 @@ import {
   CardBody,
   Grid,
   GridItem,
-  Image,
   Text,
 } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
@@ -43,16 +42,14 @@ const SellerPage = () => {
         </Card>
       </GridItem>
 
-      <GridItem area="sidebar" bg="gray.700">
+      <GridItem area="sidebar">
         <Box>
           <Sidebar />
         </Box>
       </GridItem>
 
       <GridItem area="sidebar1">
-        <Box bg="orange" height="100%">
-          Sidebar 1
-        </Box>
+        <Box height="100%"></Box>
       </GridItem>
       <GridItem area="content1">
         <Box>
