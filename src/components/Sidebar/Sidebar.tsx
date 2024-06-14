@@ -6,11 +6,15 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaRegFileAlt } from "react-icons/fa";
+import { FaRegFileAlt, FaShoppingBag } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { FaShoppingBag } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-const Sidebar = () => {
+
+interface Props {
+  storeId: string;
+}
+
+const Sidebar = ({ storeId }: Props) => {
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
@@ -91,12 +95,26 @@ const Sidebar = () => {
                     All
                   </Text>
                 </Link>
-                <Link to="/seller/order/unpaid">
+                <Link to={`/seller/order/pending/${storeId}`}>
                   <Text
                     fontSize={fontSize}
                     mb="3px"
                     color={
-                      location.pathname === "/seller/order/unpaid"
+                      location.pathname === `/seller/order/pending/${storeId}`
+                        ? "orange.400"
+                        : "gray.600"
+                    }
+                    cursor="pointer"
+                  >
+                    Pending
+                  </Text>
+                </Link>
+                <Link to={`/seller/order/unpaid/${storeId}`}>
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    color={
+                      location.pathname === `/seller/order/unpaid/${storeId}`
                         ? "orange.400"
                         : "gray.600"
                     }

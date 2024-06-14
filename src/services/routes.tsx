@@ -33,6 +33,7 @@ import ShippingPage from "../pages/seller/ShippingPage";
 import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
 import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
 import MyProductPage from "../pages/seller/MyProductPage";
+import PendingPage from "../pages/seller/PendingPage";
 
 const router = createBrowserRouter([
   {
@@ -84,7 +85,8 @@ const router = createBrowserRouter([
         element: <OrderPage />,
         children: [
           { path: "all", element: <AllProductsOrderPage /> },
-          { path: "unpaid", element: <UnpaidPage /> },
+          { path: "pending/:storeId", element: <PendingPage /> },
+          { path: "unpaid/:storeId", element: <UnpaidPage /> },
           { path: "to-ship", element: <ToShipOrdersPage /> },
           { path: "shipping", element: <ShippingPage /> },
           { path: "completed", element: <CompletedOrdersPage /> },

@@ -25,7 +25,7 @@ interface Props {
   isChecked: boolean;
   isSomeChecked: boolean;
   qty: number;
-  productCount: number;
+  cartItem: number;
   onDeleteAll: () => void;
   onFilterAll: () => void;
   onCheckout: () => void;
@@ -37,7 +37,7 @@ const CartFooter = ({
   isChecked,
   isSomeChecked,
   qty,
-  productCount,
+  cartItem,
   onDeleteAll,
   onFilterAll,
   onCheckout,
@@ -125,7 +125,7 @@ const CartFooter = ({
                 fontWeight="semibold"
                 pr="20px"
               >
-                ({productCount})
+                ({cartItem})
               </Text>
               <Text
                 cursor="pointer"
@@ -155,7 +155,7 @@ const CartFooter = ({
 
                         <AlertDialogBody>
                           <Text>
-                            Do you want to remove the {productCount} products?
+                            Do you want to remove the {cartItem} products?
                           </Text>
                         </AlertDialogBody>
 

@@ -151,7 +151,7 @@ const Header = () => {
                       fontSize="18px"
                       fontWeight="semibold"
                     >
-                      {cartTotal?.productCount ?? 0}
+                      {cartTotal?.cartItems ?? 0}
                     </Text>
                   </Box>
                 </Box>

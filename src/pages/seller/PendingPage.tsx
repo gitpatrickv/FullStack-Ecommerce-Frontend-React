@@ -1,17 +1,16 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
-import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
+import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
-const UnpaidPage = () => {
+const PendingPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const navigate = useNavigate();
   const { storeId } = useParams();
-  const { data: orders } = useGetUnpaidOrders(jwtToken, storeId!);
+  const { data: orders } = useGetPendingOrders(jwtToken, storeId!);
 
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
@@ -23,7 +22,6 @@ const UnpaidPage = () => {
     },
     {}
   );
-
   return (
     <>
       {groupedOrders &&
@@ -62,7 +60,7 @@ const UnpaidPage = () => {
                           mr="10px"
                           color="skyblue"
                         >
-                          Seller is preparing your orders.
+                          Order Confirmation
                         </Text>
                         <Text fontWeight="" mr="10px" color="gray.500">
                           |
@@ -99,7 +97,7 @@ const UnpaidPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button>Ship Order</Button>
+                    <Button>Confirm Order</Button>
                   </Box>
                 </CardBody>
               </Card>
@@ -110,4 +108,4 @@ const UnpaidPage = () => {
   );
 };
 
-export default UnpaidPage;
+export default PendingPage;

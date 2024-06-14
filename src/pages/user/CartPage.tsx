@@ -195,7 +195,7 @@ const CartPage = () => {
               <CartFooter
                 cartTotal={cartTotal?.cartTotal ?? 0}
                 qty={cartTotal?.qty ?? 0}
-                productCount={cartTotal?.productCount ?? 0}
+                cartItem={cartTotal?.cartItems ?? 0}
                 isChecked={isChecked}
                 isSomeChecked={isSomeChecked}
                 onDeleteAll={handleDeleteAllCart}

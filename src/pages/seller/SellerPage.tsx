@@ -13,19 +13,18 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { FaHome } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import useGetUser from "../../hooks/user/useGetUser";
+import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import { useAuthQueryStore } from "../../store/auth-store";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
   const { logout, authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const { data: user } = useGetUser(jwtToken);
+  const { data: store } = useGetStoreInfo(jwtToken);
   const navigate = useNavigate();
   const handleLogout = () => {
     logout(navigate);
@@ -49,9 +48,16 @@ const SellerPage = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Box ml="20px">
+              <Box ml="20px" display="flex">
                 <Link to="/seller">
-                  <FaHome size="40" />
+                  <Text
+                    fontSize="x-large"
+                    textTransform="uppercase"
+                    fontWeight="semibold"
+                    color="orange.400"
+                  >
+                    {store?.storeName}
+                  </Text>
                 </Link>
               </Box>
               <Box display="flex" alignItems="center" mr="20px">
@@ -77,9 +83,9 @@ const SellerPage = () => {
                     icon={
                       <Avatar
                         src={
-                          user?.photoUrl
-                            ? user?.photoUrl
-                            : "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
+                          store?.photoUrl
+                            ? store?.photoUrl
+                            : "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
                         }
                         size="sm"
                       />
@@ -91,7 +97,7 @@ const SellerPage = () => {
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
-                <Text ml="10px">{user?.email}</Text>
+                <Text ml="10px">{store?.email}</Text>
               </Box>
             </Box>
           </CardBody>
@@ -100,7 +106,7 @@ const SellerPage = () => {
 
       <GridItem area="sidebar">
         <Box mt="15px" ml="10px">
-          <Sidebar />
+          <Sidebar storeId={store?.storeId || ""} />
         </Box>
       </GridItem>
 
