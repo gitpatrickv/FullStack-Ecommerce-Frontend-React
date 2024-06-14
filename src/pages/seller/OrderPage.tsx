@@ -98,7 +98,7 @@ const OrderPage = () => {
           <Tab>To Ship</Tab>
           <Tab>Shipping</Tab>
           <Tab>Completed</Tab>
-          <Tab>Cancellation</Tab>
+          <Tab>Cancelled</Tab>
         </TabList>
         <TabIndicator
           mt="-1.5px"

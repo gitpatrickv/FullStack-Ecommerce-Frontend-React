@@ -13,6 +13,7 @@ export default interface OrderItem {
     orderStatusInfo: string;
     active: boolean;
     storeId: string;
+    fullName: string;
   }
   
   export interface Order {

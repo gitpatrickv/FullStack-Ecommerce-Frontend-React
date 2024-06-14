@@ -63,7 +63,7 @@ const UnpaidPage = () => {
                         xl: "xl",
                       }}
                     >
-                      {orders?.orderModel[0].fullName}
+                      {storeOrders[0].fullName}
                     </Text>
 
                     <Box position="absolute" right="25px" alignItems="center">
@@ -80,7 +80,7 @@ const UnpaidPage = () => {
                           mr="10px"
                           color="skyblue"
                         >
-                          Seller is preparing your orders.
+                          {storeOrders[0].orderStatusInfo}
                         </Text>
                         <Text fontWeight="" mr="10px" color="gray.500">
                           |
@@ -123,7 +123,7 @@ const UnpaidPage = () => {
                         handleToShipClick(storeOrders[0].orderId);
                       }}
                     >
-                      Ship Order
+                      To Ship
                     </Button>
                   </Box>
                 </CardBody>

@@ -62,7 +62,7 @@ const PendingPage = () => {
                         xl: "xl",
                       }}
                     >
-                      {orders?.orderModel[0].fullName}
+                      {storeOrders[0].fullName}
                     </Text>
 
                     <Box position="absolute" right="25px" alignItems="center">
