@@ -17,15 +17,15 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
-import { formatCurrency } from "../../utilities/formatCurrency";
 import { FaExclamationCircle } from "react-icons/fa";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   cartTotal: number;
   isChecked: boolean;
   isSomeChecked: boolean;
-  cartItem: number;
   qty: number;
+  productCount: number;
   onDeleteAll: () => void;
   onFilterAll: () => void;
   onCheckout: () => void;
@@ -36,8 +36,8 @@ const CartFooter = ({
   cartTotal,
   isChecked,
   isSomeChecked,
-  cartItem,
   qty,
+  productCount,
   onDeleteAll,
   onFilterAll,
   onCheckout,
@@ -125,7 +125,7 @@ const CartFooter = ({
                 fontWeight="semibold"
                 pr="20px"
               >
-                ({cartItem})
+                ({productCount})
               </Text>
               <Text
                 cursor="pointer"
@@ -154,7 +154,9 @@ const CartFooter = ({
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                          <Text>Do you want to remove the {qty} products?</Text>
+                          <Text>
+                            Do you want to remove the {productCount} products?
+                          </Text>
                         </AlertDialogBody>
 
                         <AlertDialogFooter>

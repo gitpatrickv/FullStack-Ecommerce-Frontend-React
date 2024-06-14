@@ -5,4 +5,5 @@ export default interface Cart{
     qty: number
     totalShippingFee: number;
     totalPayment: number;
+    productCount: number;
 }
