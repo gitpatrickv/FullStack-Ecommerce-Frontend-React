@@ -1,19 +1,11 @@
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  Grid,
-  GridItem,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, Button, Divider, Grid, GridItem, HStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductListHeader from "../../components/Product/seller/ProductListHeader";
+import ProductsList from "../../components/Product/seller/ProductsList";
 import useGetAllSellersProduct from "../../hooks/seller/useGetAllSellersProduct";
 import { useAuthQueryStore } from "../../store/auth-store";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { paginationRange } from "../../utilities/pagination";
-import ProductsList from "../../components/Product/seller/ProductsList";
 
 const MyProductPage = () => {
   const location = useLocation();
@@ -88,10 +80,10 @@ const MyProductPage = () => {
         <Box mt="20px">
           <ProductListHeader />
           {getAllStoreProducts?.data.allProductModels.map((product) => (
-            <>
+            <Box key={product.productId}>
               <ProductsList product={product} />
               <Divider />
-            </>
+            </Box>
           ))}
         </Box>
 

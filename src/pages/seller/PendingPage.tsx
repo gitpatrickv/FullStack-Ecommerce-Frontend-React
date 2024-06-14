@@ -1,10 +1,11 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
-import OrderItem from "../../entities/Order";
+
 import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import OrderItem from "../../entities/Order";
 
 const PendingPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -12,22 +13,25 @@ const PendingPage = () => {
   const { storeId } = useParams();
   const { data: orders } = useGetPendingOrders(jwtToken, storeId!);
 
-  const groupedOrders = orders?.reduce(
-    (acc: Record<string, OrderItem[]>, order: OrderItem) => {
-      if (!acc[order.orderId]) {
-        acc[order.orderId] = [];
-      }
-      acc[order.orderId].push(order);
+  const groupedOrders = orders?.orderModel.reduce(
+    (acc: Record<string, OrderItem[]>, order) => {
+      order.orderItemModels.forEach((item) => {
+        if (!acc[item.orderId]) {
+          acc[item.orderId] = [];
+        }
+        acc[item.orderId].push(item);
+      });
       return acc;
     },
     {}
   );
+
   return (
     <>
       {groupedOrders &&
-        Object.entries(groupedOrders).map(([storeName, storeOrders]) => {
+        Object.entries(groupedOrders).map(([orderId, storeOrders]) => {
           return (
-            <Box key={storeOrders[0].orderId} mt="5px">
+            <Box key={orderId} mt="5px">
               <Card>
                 <CardBody>
                   <Box display="flex" alignItems="center">
@@ -43,7 +47,7 @@ const PendingPage = () => {
                         xl: "xl",
                       }}
                     >
-                      {storeOrders[0].orderId}
+                      {orders?.orderModel[0].fullName}
                     </Text>
 
                     <Box position="absolute" right="25px" alignItems="center">

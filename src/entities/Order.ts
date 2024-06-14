@@ -1,6 +1,6 @@
 
-export default interface OrderItem{
-    id:number;
+export default interface OrderItem {
+    id: number;
     quantity: number;
     price: number;
     storeName: string;
@@ -10,17 +10,26 @@ export default interface OrderItem{
     totalAmount: number;
     orderId: string;
     orderTotalAmount: number;
-    active:boolean;
+    orderStatusInfo: string;
+    active: boolean;
     storeId: string;
-}
-
-export default interface Order{
+  }
+  
+  export interface Order {
     orderId: string;
-    totalAmount: number;
+    orderTotalAmount: number;
     paymentMethod: string;
+    active: boolean;
+    orderStatus: string;
+    orderStatusInfo: string;
     deliveryAddress: string;
     fullName: string;
     contactNumber: string;
-    // orderItem: OrderItem[];
-}
+    orderItemModels: OrderItem[];
+  }
+  
+  export interface OrdersResponse {
+    orderModel: Order[];
+  }
+  
 

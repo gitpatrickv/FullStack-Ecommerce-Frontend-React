@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import OrderItem from "../../entities/Order";
+import { OrdersResponse } from "../../entities/Order";
 import { axiosInstance } from "../../services/api-client";
 
 const apiClient = axiosInstance;
@@ -8,7 +8,7 @@ const useGetPendingOrders = (jwtToken: string, storeId: string) => {
     return useQuery ({
         queryKey: ['pendingOrders'],
         queryFn: async () => {
-            const {data} = await apiClient.get<OrderItem[]>(`/order/seller/get/pending/${storeId}`, 
+            const {data} = await apiClient.get<OrdersResponse>(`/order/seller/get/pending/${storeId}`, 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,

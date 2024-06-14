@@ -1,24 +1,26 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
-import OrderItem from "../../entities/Order";
 import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import OrderItem from "../../entities/Order";
 
 const UnpaidPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const navigate = useNavigate();
+
   const { storeId } = useParams();
   const { data: orders } = useGetUnpaidOrders(jwtToken, storeId!);
 
-  const groupedOrders = orders?.reduce(
-    (acc: Record<string, OrderItem[]>, order: OrderItem) => {
-      if (!acc[order.orderId]) {
-        acc[order.orderId] = [];
-      }
-      acc[order.orderId].push(order);
+  const groupedOrders = orders?.orderModel.reduce(
+    (acc: Record<string, OrderItem[]>, order) => {
+      order.orderItemModels.forEach((item) => {
+        if (!acc[item.orderId]) {
+          acc[item.orderId] = [];
+        }
+        acc[item.orderId].push(item);
+      });
       return acc;
     },
     {}
@@ -27,9 +29,9 @@ const UnpaidPage = () => {
   return (
     <>
       {groupedOrders &&
-        Object.entries(groupedOrders).map(([storeName, storeOrders]) => {
+        Object.entries(groupedOrders).map(([orderId, storeOrders]) => {
           return (
-            <Box key={storeOrders[0].orderId} mt="5px">
+            <Box key={orderId} mt="5px">
               <Card>
                 <CardBody>
                   <Box display="flex" alignItems="center">
@@ -45,7 +47,7 @@ const UnpaidPage = () => {
                         xl: "xl",
                       }}
                     >
-                      {storeOrders[0].orderId}
+                      {orders?.orderModel[0].fullName}
                     </Text>
 
                     <Box position="absolute" right="25px" alignItems="center">

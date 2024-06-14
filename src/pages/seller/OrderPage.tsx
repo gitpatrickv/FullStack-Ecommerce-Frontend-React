@@ -19,6 +19,8 @@ import UnpaidPage from "./UnpaidPage";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import { useAuthQueryStore } from "../../store/auth-store";
 import PendingPage from "./PendingPage";
+import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
+import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
 
 const OrderPage = () => {
   const location = useLocation();
@@ -27,6 +29,14 @@ const OrderPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: store } = useGetStoreInfo(jwtToken);
+  const { refetch: refetchPending } = useGetPendingOrders(
+    jwtToken,
+    store?.storeId || ""
+  );
+  const { refetch: refetchUnpaid } = useGetUnpaidOrders(
+    jwtToken,
+    store?.storeId || ""
+  );
 
   const tabRoutes = [
     "/seller/order/all",
@@ -45,9 +55,11 @@ const OrderPage = () => {
         break;
       case `/seller/order/pending/${store?.storeId}`:
         setSelectedIndex(1);
+        refetchPending();
         break;
       case `/seller/order/unpaid/${store?.storeId}`:
         setSelectedIndex(2);
+        refetchUnpaid();
         break;
       case "/seller/order/to-ship":
         setSelectedIndex(3);

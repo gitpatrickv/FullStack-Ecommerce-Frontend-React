@@ -38,6 +38,7 @@ const useLogin = () => {
       queryClient.invalidateQueries(['storeProduct']);
       queryClient.invalidateQueries(['unpaidOrders']);
       queryClient.invalidateQueries(['pendingOrders']);
+      queryClient.invalidateQueries(['storeInfo']);
       const role = response.role;
       if(role==="ADMIN"){
         navigate("/admin");
