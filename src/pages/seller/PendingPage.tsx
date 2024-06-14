@@ -1,12 +1,11 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
-
+import OrderItem from "../../entities/Order";
+import useConfirmOrder from "../../hooks/seller/useConfirmOrder";
 import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import OrderItem from "../../entities/Order";
-import useConfirmOrder from "../../hooks/seller/useConfirmOrder";
 
 const PendingPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -118,6 +117,7 @@ const PendingPage = () => {
                       </Text>
                     </Text>
                     <Button
+                      _hover={{ color: "orange.400" }}
                       onClick={() => handleConfirmClick(storeOrders[0].orderId)}
                     >
                       Confirm Order

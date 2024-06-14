@@ -1,5 +1,6 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
 import useCancelOrder from "../../hooks/user/useCancelOrder";
@@ -7,7 +8,6 @@ import useGetOrdersByCancelledStatus from "../../hooks/user/useGetOrdersByCancel
 import useGetOrdersByToShipStatus from "../../hooks/user/useGetOrdersByToShipStatus";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import { useNavigate } from "react-router-dom";
 
 const ToShipPage = () => {
   const { authStore } = useAuthQueryStore();

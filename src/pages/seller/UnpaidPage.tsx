@@ -1,17 +1,33 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
+import OrderItem from "../../entities/Order";
 import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
+import useShipOrder from "../../hooks/seller/useShipOrder";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import OrderItem from "../../entities/Order";
 
 const UnpaidPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
 
   const { storeId } = useParams();
-  const { data: orders } = useGetUnpaidOrders(jwtToken, storeId!);
+  const { data: orders, refetch: refetchUnpaidOrders } = useGetUnpaidOrders(
+    jwtToken,
+    storeId!
+  );
+  const { mutate: shipOrder } = useShipOrder();
+
+  const handleToShipClick = (orderId: string) => {
+    shipOrder(
+      { jwtToken, orderId },
+      {
+        onSuccess: () => {
+          refetchUnpaidOrders();
+        },
+      }
+    );
+  };
 
   const groupedOrders = orders?.orderModel.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
@@ -101,7 +117,14 @@ const UnpaidPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button>Ship Order</Button>
+                    <Button
+                      _hover={{ color: "orange.400" }}
+                      onClick={() => {
+                        handleToShipClick(storeOrders[0].orderId);
+                      }}
+                    >
+                      Ship Order
+                    </Button>
                   </Box>
                 </CardBody>
               </Card>
