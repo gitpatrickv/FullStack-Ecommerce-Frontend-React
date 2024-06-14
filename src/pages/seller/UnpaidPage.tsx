@@ -3,23 +3,23 @@ import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
 import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
-import useShipOrder from "../../hooks/seller/useShipOrder";
+
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useHandleOrders from "../../hooks/seller/useHandleOrders";
 
 const UnpaidPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-
+  const { mutate: toShip } = useHandleOrders();
   const { storeId } = useParams();
   const { data: orders, refetch: refetchUnpaidOrders } = useGetUnpaidOrders(
     jwtToken,
     storeId!
   );
-  const { mutate: shipOrder } = useShipOrder();
 
   const handleToShipClick = (orderId: string) => {
-    shipOrder(
+    toShip(
       { jwtToken, orderId },
       {
         onSuccess: () => {

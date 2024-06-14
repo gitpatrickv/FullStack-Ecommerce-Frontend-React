@@ -5,16 +5,29 @@ import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useHandleOrders from "../../hooks/seller/useHandleOrders";
 
 const ToShipOrdersPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-
+  const { mutate: shipOrder } = useHandleOrders();
   const { storeId } = useParams();
   const { data: orders, refetch: refetchToShipOrders } = useGetToShip(
     jwtToken,
     storeId!
   );
+
+  const handleShipOrderClick = (orderId: string) => {
+    shipOrder(
+      { jwtToken, orderId },
+      {
+        onSuccess: () => {
+          refetchToShipOrders();
+        },
+      }
+    );
+  };
+
   const groupedOrders = orders?.orderModel.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
       order.orderItemModels.forEach((item) => {
@@ -103,7 +116,14 @@ const ToShipOrdersPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button _hover={{ color: "orange.400" }}>Ship Order</Button>
+                    <Button
+                      _hover={{ color: "orange.400" }}
+                      onClick={() => {
+                        handleShipOrderClick(storeOrders[0].orderId);
+                      }}
+                    >
+                      Ship Order
+                    </Button>
                   </Box>
                 </CardBody>
               </Card>

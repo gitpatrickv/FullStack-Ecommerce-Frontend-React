@@ -7,7 +7,7 @@ export interface OrderProps{
     orderId: string;
 }
 
-const useConfirmOrder = () => {
+const useHandleOrders = () => {
     const queryClient = useQueryClient();
     return useMutation(
         async ({jwtToken, orderId} : OrderProps) => {
@@ -22,9 +22,10 @@ const useConfirmOrder = () => {
             onSuccess: () => {
                 queryClient.invalidateQueries(['pendingOrders']);
                 queryClient.invalidateQueries(['unpaidOrders']);
+                queryClient.invalidateQueries(['toShipOrders'])
             }
         }
     )
 }
 
-export default useConfirmOrder
+export default useHandleOrders

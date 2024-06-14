@@ -2,8 +2,8 @@ import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
-import useConfirmOrder from "../../hooks/seller/useConfirmOrder";
 import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
+import useHandleOrders from "../../hooks/seller/useHandleOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
@@ -15,7 +15,7 @@ const PendingPage = () => {
     jwtToken,
     storeId!
   );
-  const { mutate: confirmOrder } = useConfirmOrder();
+  const { mutate: confirmOrder } = useHandleOrders();
 
   const handleConfirmClick = (orderId: string) => {
     confirmOrder(
