@@ -16,9 +16,16 @@ import CompletedPage from "./CompletedPage";
 import ToPayPage from "./ToPayPage";
 import ToReceivePage from "./ToReceivePage";
 import ToShipPage from "./ToShipPage";
+import { useAuthQueryStore } from "../../store/auth-store";
+import useGetOrdersByToPayStatus from "../../hooks/user/useGetOrdersByToPayStatus";
+import useGetOrdersByToShipStatus from "../../hooks/user/useGetOrdersByToShipStatus";
 const MyPurchasePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { refetch: refetchToPayOrders } = useGetOrdersByToPayStatus(jwtToken);
+  const { refetch: refetchToShipOrders } = useGetOrdersByToShipStatus(jwtToken);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const tabRoutes = [
@@ -37,9 +44,11 @@ const MyPurchasePage = () => {
         break;
       case "/user/purchase/order/to-pay":
         setSelectedIndex(1);
+        refetchToPayOrders();
         break;
       case "/user/purchase/order/to-ship":
         setSelectedIndex(2);
+        refetchToShipOrders();
         break;
       case "/user/purchase/order/to-receive":
         setSelectedIndex(3);

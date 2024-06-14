@@ -6,12 +6,28 @@ import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import OrderItem from "../../entities/Order";
+import useConfirmOrder from "../../hooks/seller/useConfirmOrder";
 
 const PendingPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { storeId } = useParams();
-  const { data: orders } = useGetPendingOrders(jwtToken, storeId!);
+  const { data: orders, refetch: refetchPendingOrder } = useGetPendingOrders(
+    jwtToken,
+    storeId!
+  );
+  const { mutate: confirmOrder } = useConfirmOrder();
+
+  const handleConfirmClick = (orderId: string) => {
+    confirmOrder(
+      { jwtToken, orderId },
+      {
+        onSuccess: () => {
+          refetchPendingOrder();
+        },
+      }
+    );
+  };
 
   const groupedOrders = orders?.orderModel.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
@@ -101,7 +117,11 @@ const PendingPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button>Confirm Order</Button>
+                    <Button
+                      onClick={() => handleConfirmClick(storeOrders[0].orderId)}
+                    >
+                      Confirm Order
+                    </Button>
                   </Box>
                 </CardBody>
               </Card>

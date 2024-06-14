@@ -98,7 +98,7 @@ const ToPayPage = () => {
                           mr="10px"
                           color="skyblue"
                         >
-                          Seller is preparing your orders.
+                          {storeOrders[0].orderStatusInfo}
                         </Text>
                         <Text fontWeight="" mr="10px" color="gray.500">
                           |
