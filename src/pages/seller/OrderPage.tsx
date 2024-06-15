@@ -10,17 +10,19 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
+import useGetShippingOrders from "../../hooks/seller/useGetShippingOrders";
+import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
+import useGetToShip from "../../hooks/seller/useGetToShip";
+import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
+import { useAuthQueryStore } from "../../store/auth-store";
 import AllProductsOrderPage from "./AllProductsOrderPage";
 import CancelledOrdersPage from "./CancelledOrdersPage";
 import CompletedOrdersPage from "./CompletedOrdersPage";
+import PendingPage from "./PendingPage";
 import ShippingPage from "./ShippingPage";
 import ToShipOrdersPage from "./ToShipOrdersPage";
 import UnpaidPage from "./UnpaidPage";
-import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
-import { useAuthQueryStore } from "../../store/auth-store";
-import PendingPage from "./PendingPage";
-import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
-import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
 
 const OrderPage = () => {
   const location = useLocation();
@@ -34,6 +36,14 @@ const OrderPage = () => {
     store?.storeId || ""
   );
   const { refetch: refetchUnpaid } = useGetUnpaidOrders(
+    jwtToken,
+    store?.storeId || ""
+  );
+  const { refetch: refetchToShip } = useGetToShip(
+    jwtToken,
+    store?.storeId || ""
+  );
+  const { refetch: refetchShippingOrders } = useGetShippingOrders(
     jwtToken,
     store?.storeId || ""
   );
@@ -63,9 +73,11 @@ const OrderPage = () => {
         break;
       case "/seller/order/to-ship":
         setSelectedIndex(3);
+        refetchToShip();
         break;
       case "/seller/order/shipping":
         setSelectedIndex(4);
+        refetchShippingOrders();
         break;
       case "/seller/order/completed":
         setSelectedIndex(5);

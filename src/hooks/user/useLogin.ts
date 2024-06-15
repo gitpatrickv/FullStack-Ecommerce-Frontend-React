@@ -31,13 +31,8 @@ const useLogin = () => {
       queryClient.invalidateQueries(['cartTotal']);
       queryClient.invalidateQueries(['product']);
       queryClient.invalidateQueries(['favorites']);
-      queryClient.invalidateQueries(['toPayOrders']);
-      queryClient.invalidateQueries(['cancelledOrders']);
       queryClient.invalidateQueries(['productDetail']);
-      queryClient.invalidateQueries(['toShipOrders']);
       queryClient.invalidateQueries(['storeProduct']);
-      queryClient.invalidateQueries(['unpaidOrders']);
-      queryClient.invalidateQueries(['pendingOrders']);
       queryClient.invalidateQueries(['storeInfo']);
       const role = response.role;
       if(role==="ADMIN"){

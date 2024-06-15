@@ -10,15 +10,17 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useGetOrdersByCancelledStatus from "../../hooks/user/useGetOrdersByCancelledStatus";
+import useGetOrdersByToPayStatus from "../../hooks/user/useGetOrdersByToPayStatus";
+import useGetOrdersByToReceiveStatus from "../../hooks/user/useGetOrdersByToReceiveStatus";
+import useGetOrdersByToShipStatus from "../../hooks/user/useGetOrdersByToShipStatus";
+import { useAuthQueryStore } from "../../store/auth-store";
 import AllOrderPage from "./AllOrderPage";
 import CancelledPage from "./CancelledPage";
 import CompletedPage from "./CompletedPage";
 import ToPayPage from "./ToPayPage";
 import ToReceivePage from "./ToReceivePage";
 import ToShipPage from "./ToShipPage";
-import { useAuthQueryStore } from "../../store/auth-store";
-import useGetOrdersByToPayStatus from "../../hooks/user/useGetOrdersByToPayStatus";
-import useGetOrdersByToShipStatus from "../../hooks/user/useGetOrdersByToShipStatus";
 const MyPurchasePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,6 +28,10 @@ const MyPurchasePage = () => {
   const jwtToken = authStore.jwtToken;
   const { refetch: refetchToPayOrders } = useGetOrdersByToPayStatus(jwtToken);
   const { refetch: refetchToShipOrders } = useGetOrdersByToShipStatus(jwtToken);
+  const { refetch: refetchToReceiveOrders } =
+    useGetOrdersByToReceiveStatus(jwtToken);
+  const { refetch: refetchCancelledOrders } =
+    useGetOrdersByCancelledStatus(jwtToken);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const tabRoutes = [
@@ -52,12 +58,14 @@ const MyPurchasePage = () => {
         break;
       case "/user/purchase/order/to-receive":
         setSelectedIndex(3);
+        refetchToReceiveOrders();
         break;
       case "/user/purchase/order/completed":
         setSelectedIndex(4);
         break;
       case "/user/purchase/order/cancelled":
         setSelectedIndex(5);
+        refetchCancelledOrders();
         break;
       default:
         setSelectedIndex(0);

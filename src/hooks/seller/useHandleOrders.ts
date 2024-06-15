@@ -21,8 +21,9 @@ const useHandleOrders = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['pendingOrders']);
-                queryClient.invalidateQueries(['unpaidOrders']);
+                queryClient.invalidateQueries(['toPayOrders']);
                 queryClient.invalidateQueries(['toShipOrders'])
+                queryClient.invalidateQueries(['toReceiveOrders'])
             }
         }
     )

@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import { OrdersResponse } from "../../entities/Order";
+import OrderItem from "../../entities/Order";
 import { axiosInstance } from "../../services/api-client";
 
 const apiClient = axiosInstance;
 
-const useGetUnpaidOrders = (jwtToken: string, storeId: string) => {
+const useGetOrdersByToReceiveStatus = (jwtToken: string) => {
     return useQuery ({
-        queryKey: ['toPayOrders'],
+        queryKey: ['toReceiveOrders'],
         queryFn: async () => {
-            const {data} = await apiClient.get<OrdersResponse>(`/order/seller/get/unpaid/${storeId}`, 
+            const {data} = await apiClient.get<OrderItem[]>('/order/get/to-receive', 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,
@@ -16,8 +16,8 @@ const useGetUnpaidOrders = (jwtToken: string, storeId: string) => {
             }) 
             return data;
         },
-        enabled: !!jwtToken && !!storeId
-    })
+        enabled: !!jwtToken
+    })  
 }
 
-export default useGetUnpaidOrders
+export default useGetOrdersByToReceiveStatus
