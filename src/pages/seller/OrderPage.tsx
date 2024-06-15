@@ -9,7 +9,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
 import useGetShippingOrders from "../../hooks/seller/useGetShippingOrders";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
@@ -31,36 +31,28 @@ const OrderPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: store } = useGetStoreInfo(jwtToken);
-  const { refetch: refetchPending } = useGetPendingOrders(
-    jwtToken,
-    store?.storeId || ""
-  );
-  const { refetch: refetchUnpaid } = useGetUnpaidOrders(
-    jwtToken,
-    store?.storeId || ""
-  );
-  const { refetch: refetchToShip } = useGetToShip(
-    jwtToken,
-    store?.storeId || ""
-  );
+  const { storeId } = useParams();
+  const { refetch: refetchPending } = useGetPendingOrders(jwtToken, storeId!);
+  const { refetch: refetchUnpaid } = useGetUnpaidOrders(jwtToken, storeId!);
+  const { refetch: refetchToShip } = useGetToShip(jwtToken, storeId!);
   const { refetch: refetchShippingOrders } = useGetShippingOrders(
     jwtToken,
-    store?.storeId || ""
+    storeId!
   );
 
   const tabRoutes = [
     "/seller/order/all",
     `/seller/order/pending/${store?.storeId}`,
     `/seller/order/unpaid/${store?.storeId}`,
-    "/seller/order/to-ship",
-    "/seller/order/shipping",
-    "/seller/order/completed",
-    "/seller/order/cancellation",
+    `/seller/order/to-ship/${store?.storeId}`,
+    `/seller/order/shipping/${store?.storeId}`,
+    `/seller/order/completed/${store?.storeId}`,
+    `/seller/order/cancelled/${store?.storeId}`,
   ];
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/seller/order/all":
+      case `/seller/order/all`:
         setSelectedIndex(0);
         break;
       case `/seller/order/pending/${store?.storeId}`:
@@ -71,18 +63,18 @@ const OrderPage = () => {
         setSelectedIndex(2);
         refetchUnpaid();
         break;
-      case "/seller/order/to-ship":
+      case `/seller/order/to-ship/${store?.storeId}`:
         setSelectedIndex(3);
         refetchToShip();
         break;
-      case "/seller/order/shipping":
+      case `/seller/order/shipping/${store?.storeId}`:
         setSelectedIndex(4);
         refetchShippingOrders();
         break;
-      case "/seller/order/completed":
+      case `/seller/order/completed/${store?.storeId}`:
         setSelectedIndex(5);
         break;
-      case "/seller/order/cancellation":
+      case `/seller/order/cancelled/${store?.storeId}`:
         setSelectedIndex(6);
         break;
       default:

@@ -123,12 +123,12 @@ const Sidebar = ({ storeId }: Props) => {
                     Unpaid
                   </Text>
                 </Link>
-                <Link to="/seller/order/to-ship">
+                <Link to={`/seller/order/to-ship/${storeId}`}>
                   <Text
                     fontSize={fontSize}
                     mb="3px"
                     color={
-                      location.pathname === "/seller/order/to-ship"
+                      location.pathname === `/seller/order/to-ship/${storeId}`
                         ? "orange.400"
                         : "gray.600"
                     }
@@ -137,12 +137,12 @@ const Sidebar = ({ storeId }: Props) => {
                     Mass Ship
                   </Text>
                 </Link>
-                <Link to="/seller/order/shipping">
+                <Link to={`/seller/order/shipping/${storeId}`}>
                   <Text
                     fontSize={fontSize}
                     mb="3px"
                     color={
-                      location.pathname === "/seller/order/shipping"
+                      location.pathname === `/seller/order/shipping/${storeId}`
                         ? "orange.400"
                         : "gray.600"
                     }
@@ -151,12 +151,12 @@ const Sidebar = ({ storeId }: Props) => {
                     Shipping
                   </Text>
                 </Link>
-                <Link to="/seller/order/completed">
+                <Link to={`/seller/order/completed/${storeId}`}>
                   <Text
                     fontSize={fontSize}
                     mb="3px"
                     color={
-                      location.pathname === "/seller/order/completed"
+                      location.pathname === `/seller/order/completed/${storeId}`
                         ? "orange.400"
                         : "gray.600"
                     }
@@ -165,17 +165,17 @@ const Sidebar = ({ storeId }: Props) => {
                     Completed
                   </Text>
                 </Link>
-                <Link to="/seller/order/cancellation">
+                <Link to={`/seller/order/cancelled/${storeId}`}>
                   <Text
                     fontSize={fontSize}
                     color={
-                      location.pathname === "/seller/order/cancellation"
+                      location.pathname === `/seller/order/cancelled/${storeId}`
                         ? "orange.400"
                         : "gray.600"
                     }
                     cursor="pointer"
                   >
-                    Cancellation
+                    Cancelled
                   </Text>
                 </Link>
               </Box>

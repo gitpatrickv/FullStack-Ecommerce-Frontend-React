@@ -3,30 +3,14 @@ import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
 import useGetShippingOrders from "../../hooks/seller/useGetShippingOrders";
-import useHandleOrders from "../../hooks/seller/useHandleOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 
 const ShippingPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const { mutate: shipOrder } = useHandleOrders();
   const { storeId } = useParams();
-  const { data: orders, refetch: refetchToShipOrders } = useGetShippingOrders(
-    jwtToken,
-    storeId!
-  );
-
-  const handleShipOrderClick = (orderId: string) => {
-    shipOrder(
-      { jwtToken, orderId },
-      {
-        onSuccess: () => {
-          refetchToShipOrders();
-        },
-      }
-    );
-  };
+  const { data: orders } = useGetShippingOrders(jwtToken, storeId!);
 
   const groupedOrders = orders?.orderModel.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
@@ -40,6 +24,7 @@ const ShippingPage = () => {
     },
     {}
   );
+
   return (
     <>
       {groupedOrders &&
