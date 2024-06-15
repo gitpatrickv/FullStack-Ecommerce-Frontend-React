@@ -94,7 +94,7 @@ const ShippingPage = () => {
                     alignItems="end"
                     flexDirection="column"
                   >
-                    <Text fontSize="xl" mb="15px" pt="5px">
+                    <Text fontSize="xl" pt="5px">
                       Amount Payable:
                       <Text as="span" color="orange.400" ml="10px">
                         {formatCurrency(storeOrders[0].orderTotalAmount)}

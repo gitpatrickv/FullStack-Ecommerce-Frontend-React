@@ -21,6 +21,7 @@ import CompletedPage from "./CompletedPage";
 import ToPayPage from "./ToPayPage";
 import ToReceivePage from "./ToReceivePage";
 import ToShipPage from "./ToShipPage";
+import useGetOrderByCompletedStatus from "../../hooks/user/useGetOrderByCompletedStatus";
 const MyPurchasePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ const MyPurchasePage = () => {
     useGetOrdersByToReceiveStatus(jwtToken);
   const { refetch: refetchCancelledOrders } =
     useGetOrdersByCancelledStatus(jwtToken);
+  const { refetch: refetchCompletedOrders } =
+    useGetOrderByCompletedStatus(jwtToken);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const tabRoutes = [
@@ -62,6 +65,7 @@ const MyPurchasePage = () => {
         break;
       case "/user/purchase/order/completed":
         setSelectedIndex(4);
+        refetchCompletedOrders();
         break;
       case "/user/purchase/order/cancelled":
         setSelectedIndex(5);

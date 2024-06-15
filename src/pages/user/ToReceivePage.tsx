@@ -3,6 +3,7 @@ import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
+import useHandleOrders from "../../hooks/seller/useHandleOrders";
 import useGetOrdersByToReceiveStatus from "../../hooks/user/useGetOrdersByToReceiveStatus";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
@@ -13,6 +14,7 @@ const ToReceivePage = () => {
   const navigate = useNavigate();
   const { data: orders, refetch: refetchToReceiveOrders } =
     useGetOrdersByToReceiveStatus(jwtToken);
+  const { mutate: orderReceived } = useHandleOrders();
 
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
@@ -27,6 +29,17 @@ const ToReceivePage = () => {
 
   const handleNavigateStorePageClick = (storeId: string) => {
     navigate(`/store/` + storeId);
+  };
+
+  const handleOrderReceivedClick = (orderId: string) => {
+    orderReceived(
+      { jwtToken, orderId },
+      {
+        onSuccess: () => {
+          refetchToReceiveOrders();
+        },
+      }
+    );
   };
 
   return (
@@ -117,7 +130,12 @@ const ToReceivePage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button _hover={{ color: "orange.400" }}>
+                    <Button
+                      _hover={{ color: "orange.400" }}
+                      onClick={() => {
+                        handleOrderReceivedClick(storeOrders[0].orderId);
+                      }}
+                    >
                       Order Received
                     </Button>
                   </Box>

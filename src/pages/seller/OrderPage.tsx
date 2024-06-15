@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import useGetCancelledOrders from "../../hooks/seller/useGetCancelledOrders";
+import useGetCompletedOrders from "../../hooks/seller/useGetCompletedOrders";
 import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
 import useGetShippingOrders from "../../hooks/seller/useGetShippingOrders";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
@@ -36,6 +38,14 @@ const OrderPage = () => {
   const { refetch: refetchUnpaid } = useGetUnpaidOrders(jwtToken, storeId!);
   const { refetch: refetchToShip } = useGetToShip(jwtToken, storeId!);
   const { refetch: refetchShippingOrders } = useGetShippingOrders(
+    jwtToken,
+    storeId!
+  );
+  const { refetch: refetchCancelledOrders } = useGetCancelledOrders(
+    jwtToken,
+    storeId!
+  );
+  const { refetch: refetchCompletedOrders } = useGetCompletedOrders(
     jwtToken,
     storeId!
   );
@@ -73,9 +83,11 @@ const OrderPage = () => {
         break;
       case `/seller/order/completed/${store?.storeId}`:
         setSelectedIndex(5);
+        refetchCompletedOrders();
         break;
       case `/seller/order/cancelled/${store?.storeId}`:
         setSelectedIndex(6);
+        refetchCancelledOrders();
         break;
       default:
         setSelectedIndex(0);
