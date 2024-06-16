@@ -32,9 +32,8 @@ const SellerPage = () => {
   };
   return (
     <Grid
-      height="100vh"
-      templateColumns="0.2fr 1fr 0.2fr"
-      templateRows="0.1fr 1fr"
+      templateColumns="250px 1fr 250px"
+      templateRows="100px 1fr"
       templateAreas={`
       "header header header"
       "sidebar content1 sidebar1"

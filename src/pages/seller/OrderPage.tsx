@@ -1,6 +1,8 @@
 import {
   Box,
   Divider,
+  Grid,
+  GridItem,
   Tab,
   TabIndicator,
   TabList,
@@ -105,55 +107,64 @@ const OrderPage = () => {
   };
 
   return (
-    <Box mt="20px">
-      <Tabs
-        position="relative"
-        variant="unstyled"
-        isLazy
-        index={selectedIndex}
-        onChange={handleTabsChange}
-      >
-        <TabList display="flex" justifyContent="space-between">
-          <Tab>All</Tab>
-          <Tab>Pending</Tab>
-          <Tab>Unpaid</Tab>
-          <Tab>To Ship</Tab>
-          <Tab>Shipping</Tab>
-          <Tab>Completed</Tab>
-          <Tab>Cancelled</Tab>
-        </TabList>
-        <TabIndicator
-          mt="-1.5px"
-          height="2px"
-          bg="orange.500"
-          borderRadius="1px"
-        />
-        <Divider />
-        <TabPanels>
-          <TabPanel>
-            <AllProductsOrderPage />
-          </TabPanel>
-          <TabPanel>
-            <PendingPage />
-          </TabPanel>
-          <TabPanel>
-            <UnpaidPage />
-          </TabPanel>
-          <TabPanel>
-            <ToShipOrdersPage />
-          </TabPanel>
-          <TabPanel>
-            <ShippingPage />
-          </TabPanel>
-          <TabPanel>
-            <CompletedOrdersPage />
-          </TabPanel>
-          <TabPanel>
-            <CancelledOrdersPage />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Box>
+    <Grid
+      templateColumns="1fr"
+      templateAreas={`
+  "main"
+  `}
+    >
+      <GridItem area="main">
+        <Box mt="20px">
+          <Tabs
+            position="relative"
+            variant="unstyled"
+            isLazy
+            index={selectedIndex}
+            onChange={handleTabsChange}
+          >
+            <TabList display="flex" justifyContent="space-between">
+              <Tab>All</Tab>
+              <Tab>Pending</Tab>
+              <Tab>Unpaid</Tab>
+              <Tab>To Ship</Tab>
+              <Tab>Shipping</Tab>
+              <Tab>Completed</Tab>
+              <Tab>Cancelled</Tab>
+            </TabList>
+            <TabIndicator
+              mt="-1.5px"
+              height="2px"
+              bg="orange.500"
+              borderRadius="1px"
+            />
+            <Divider />
+            <TabPanels>
+              <TabPanel>
+                <AllProductsOrderPage />
+              </TabPanel>
+              <TabPanel>
+                <PendingPage />
+              </TabPanel>
+              <TabPanel>
+                <UnpaidPage />
+              </TabPanel>
+              <TabPanel>
+                <ToShipOrdersPage />
+              </TabPanel>
+              <TabPanel>
+                <ShippingPage />
+              </TabPanel>
+              <TabPanel>
+                <CompletedOrdersPage />
+              </TabPanel>
+              <TabPanel>
+                <CancelledOrdersPage />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
+      </GridItem>
+    </Grid>
   );
 };
 
