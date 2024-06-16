@@ -1,4 +1,18 @@
-import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Divider,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
@@ -8,17 +22,20 @@ import useGetOrdersByCancelledStatus from "../../hooks/user/useGetOrdersByCancel
 import useGetOrdersByToShipStatus from "../../hooks/user/useGetOrdersByToShipStatus";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import { useRef, useState } from "react";
 
 const ToShipPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
   const { data: orders, refetch: refetchToShipOrders } =
     useGetOrdersByToShipStatus(jwtToken);
   const { refetch: refetchCancelledOrders } =
     useGetOrdersByCancelledStatus(jwtToken);
   const { mutate: cancelOrder } = useCancelOrder();
-
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const groupedOrders = orders?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
@@ -37,6 +54,7 @@ const ToShipPage = () => {
         onSuccess: () => {
           refetchToShipOrders();
           refetchCancelledOrders();
+          onClose();
         },
       }
     );
@@ -135,13 +153,51 @@ const ToShipPage = () => {
                       </Text>
                     </Text>
                     <Button
-                      onClick={() =>
-                        handleCancelOrderClick(storeOrders[0].orderId)
-                      }
+                      onClick={() => {
+                        setSelectedOrderId(storeOrders[0].orderId);
+                        onOpen();
+                      }}
                       _hover={{ color: "orange.400" }}
                     >
                       Cancel Order
                     </Button>
+                    <AlertDialog
+                      isOpen={isOpen}
+                      leastDestructiveRef={cancelRef}
+                      onClose={onClose}
+                      isCentered
+                    >
+                      <AlertDialogOverlay>
+                        <AlertDialogContent>
+                          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                            <Text color="orange.400" fontSize="large">
+                              Cancel Order
+                            </Text>
+                          </AlertDialogHeader>
+
+                          <AlertDialogBody>
+                            <Text>
+                              Are you sure you want to cancel your order?
+                            </Text>
+                          </AlertDialogBody>
+
+                          <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onClose}>
+                              Close
+                            </Button>
+                            <Button
+                              colorScheme="red"
+                              ml={3}
+                              onClick={() =>
+                                handleCancelOrderClick(selectedOrderId!)
+                              }
+                            >
+                              Cancel Order
+                            </Button>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialogOverlay>
+                    </AlertDialog>
                   </Box>
                 </CardBody>
               </Card>
