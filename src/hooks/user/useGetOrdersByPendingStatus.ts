@@ -6,7 +6,7 @@ const apiClient = axiosInstance;
 
 const useGetOrdersByPendingStatus = (jwtToken: string) => {
     return useQuery ({
-        queryKey: ['toPayOrders'],
+        queryKey: ['pendingOrders'],
         queryFn: async () => {
             const {data} = await apiClient.get<OrderItem[]>('/order/get/pending', 
             {

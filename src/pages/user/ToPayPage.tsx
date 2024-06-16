@@ -36,7 +36,8 @@ const ToPayPage = () => {
   const { refetch: refetchCancelledOrders } =
     useGetOrdersByCancelledStatus(jwtToken);
   const { mutate: cancelOrder } = useCancelOrder();
-  const groupedOrders = orders?.reduce(
+  const orderArray = Array.isArray(orders) ? orders : [];
+  const groupedOrders = orderArray?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
         acc[order.orderId] = [];

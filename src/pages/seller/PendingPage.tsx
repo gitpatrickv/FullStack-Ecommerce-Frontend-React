@@ -16,7 +16,7 @@ const PendingPage = () => {
     storeId!
   );
   const { mutate: confirmOrder } = useHandleOrders();
-
+  const orderArray = Array.isArray(orders?.orderModel) ? orders.orderModel : [];
   const handleConfirmClick = (orderId: string) => {
     confirmOrder(
       { jwtToken, orderId },
@@ -28,7 +28,7 @@ const PendingPage = () => {
     );
   };
 
-  const groupedOrders = orders?.orderModel.reduce(
+  const groupedOrders = orderArray.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
       order.orderItemModels.forEach((item) => {
         if (!acc[item.orderId]) {

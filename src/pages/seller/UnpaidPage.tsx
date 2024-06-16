@@ -17,7 +17,7 @@ const UnpaidPage = () => {
     jwtToken,
     storeId!
   );
-
+  const orderArray = Array.isArray(orders?.orderModel) ? orders.orderModel : [];
   const handleToShipClick = (orderId: string) => {
     toShip(
       { jwtToken, orderId },
@@ -29,7 +29,7 @@ const UnpaidPage = () => {
     );
   };
 
-  const groupedOrders = orders?.orderModel.reduce(
+  const groupedOrders = orderArray.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
       order.orderItemModels.forEach((item) => {
         if (!acc[item.orderId]) {

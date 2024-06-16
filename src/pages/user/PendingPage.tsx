@@ -12,8 +12,8 @@ const PendingPage = () => {
   const jwtToken = authStore.jwtToken;
   const navigate = useNavigate();
   const { data: orders } = useGetOrdersByPendingStatus(jwtToken);
-
-  const groupedOrders = orders?.reduce(
+  const orderArray = Array.isArray(orders) ? orders : [];
+  const groupedOrders = orderArray?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
         acc[order.orderId] = [];

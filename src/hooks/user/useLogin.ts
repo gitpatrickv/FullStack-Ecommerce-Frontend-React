@@ -34,6 +34,14 @@ const useLogin = () => {
       queryClient.invalidateQueries(['productDetail']);
       queryClient.invalidateQueries(['storeProduct']);
       queryClient.invalidateQueries(['storeInfo']);
+      queryClient.invalidateQueries(['pendingOrders']);
+      queryClient.invalidateQueries(['toPayOrders']);
+      queryClient.invalidateQueries(['toShipOrders'])
+      queryClient.invalidateQueries(['toReceiveOrders'])
+      queryClient.invalidateQueries(['completedOrders'])
+      queryClient.invalidateQueries(['allOrders'])
+      queryClient.invalidateQueries(['cancelledOrders'])
+      queryClient.invalidateQueries(['checkout'])
       const role = response.role;
       if(role==="ADMIN"){
         navigate("/admin");

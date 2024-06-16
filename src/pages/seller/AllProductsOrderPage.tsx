@@ -16,7 +16,7 @@ const AllProductsOrderPage = () => {
     storeId!
   );
   const status = ["PENDING", "TO PAY"];
-
+  const orderArray = Array.isArray(orders?.orderModel) ? orders.orderModel : [];
   const { mutate: handleOrder } = useHandleOrders();
 
   const handleOrderClick = (orderId: string) => {
@@ -29,7 +29,7 @@ const AllProductsOrderPage = () => {
       }
     );
   };
-  const groupedOrders = orders?.orderModel.reduce(
+  const groupedOrders = orderArray.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
       order.orderItemModels.forEach((item) => {
         if (!acc[item.orderId]) {

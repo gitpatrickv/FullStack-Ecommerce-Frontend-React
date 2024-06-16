@@ -44,7 +44,7 @@ const AllOrderPage = () => {
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { mutate: cancelOrder } = useCancelOrder();
   const { mutate: handleOrders } = useHandleOrders();
-
+  const orderArray = Array.isArray(orders) ? orders : [];
   const handleOrderClick = (orderId: string) => {
     handleOrders(
       { jwtToken, orderId },
@@ -85,7 +85,7 @@ const AllOrderPage = () => {
     navigate(`/store/` + storeId);
   };
 
-  const groupedOrders = orders?.reduce(
+  const groupedOrders = orderArray?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
         acc[order.orderId] = [];

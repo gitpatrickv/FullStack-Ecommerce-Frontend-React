@@ -18,7 +18,7 @@ const CompletedPage = () => {
   const { mutate: buyAgain } = useBuyAgain();
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
-
+  const orderArray = Array.isArray(orders) ? orders : [];
   const handleBuyAgainClick = (orderId: string) => {
     buyAgain(
       { orderId, jwtToken: jwtToken },
@@ -36,7 +36,7 @@ const CompletedPage = () => {
     navigate(`/store/` + storeId);
   };
 
-  const groupedOrders = orders?.reduce(
+  const groupedOrders = orderArray?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
         acc[order.orderId] = [];

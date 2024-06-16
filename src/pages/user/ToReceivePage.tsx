@@ -15,8 +15,8 @@ const ToReceivePage = () => {
   const { data: orders, refetch: refetchToReceiveOrders } =
     useGetOrdersByToReceiveStatus(jwtToken);
   const { mutate: orderReceived } = useHandleOrders();
-
-  const groupedOrders = orders?.reduce(
+  const orderArray = Array.isArray(orders) ? orders : [];
+  const groupedOrders = orderArray?.reduce(
     (acc: Record<string, OrderItem[]>, order: OrderItem) => {
       if (!acc[order.orderId]) {
         acc[order.orderId] = [];

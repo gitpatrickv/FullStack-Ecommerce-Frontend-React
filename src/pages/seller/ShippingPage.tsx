@@ -11,8 +11,8 @@ const ShippingPage = () => {
   const jwtToken = authStore.jwtToken;
   const { storeId } = useParams();
   const { data: orders } = useGetShippingOrders(jwtToken, storeId!);
-
-  const groupedOrders = orders?.orderModel.reduce(
+  const orderArray = Array.isArray(orders?.orderModel) ? orders.orderModel : [];
+  const groupedOrders = orderArray.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
       order.orderItemModels.forEach((item) => {
         if (!acc[item.orderId]) {
