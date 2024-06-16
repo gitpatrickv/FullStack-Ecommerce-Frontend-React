@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import useGetAllStoreOrders from "../../hooks/seller/useGetAllStoreOrders";
 import useGetCancelledOrders from "../../hooks/seller/useGetCancelledOrders";
 import useGetCompletedOrders from "../../hooks/seller/useGetCompletedOrders";
 import useGetPendingOrders from "../../hooks/seller/useGetPendingOrders";
@@ -49,9 +50,13 @@ const OrderPage = () => {
     jwtToken,
     storeId!
   );
+  const { refetch: refetchAllOrders } = useGetAllStoreOrders(
+    jwtToken,
+    storeId!
+  );
 
   const tabRoutes = [
-    "/seller/order/all",
+    `/seller/order/all/${store?.storeId}`,
     `/seller/order/pending/${store?.storeId}`,
     `/seller/order/unpaid/${store?.storeId}`,
     `/seller/order/to-ship/${store?.storeId}`,
@@ -62,8 +67,9 @@ const OrderPage = () => {
 
   useEffect(() => {
     switch (location.pathname) {
-      case `/seller/order/all`:
+      case `/seller/order/all/${store?.storeId}`:
         setSelectedIndex(0);
+        refetchAllOrders();
         break;
       case `/seller/order/pending/${store?.storeId}`:
         setSelectedIndex(1);

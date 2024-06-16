@@ -62,6 +62,7 @@ const router = createBrowserRouter([
             element: <MyPurchasePage />,
             children: [
               { path: "order/all", element: <AllOrderPage /> },
+              { path: "order/pending", element: <PendingPage /> },
               { path: "order/to-pay", element: <ToPayPage /> },
               { path: "order/to-ship", element: <ToShipPage /> },
               { path: "order/to-receive", element: <ToReceivePage /> },
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
         path: "order",
         element: <OrderPage />,
         children: [
-          { path: "all", element: <AllProductsOrderPage /> },
+          { path: "all/:storeId", element: <AllProductsOrderPage /> },
           { path: "pending/:storeId", element: <PendingPage /> },
           { path: "unpaid/:storeId", element: <UnpaidPage /> },
           { path: "to-ship/:storeId", element: <ToShipOrdersPage /> },

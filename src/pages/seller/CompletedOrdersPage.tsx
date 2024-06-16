@@ -95,7 +95,7 @@ const CompletedOrdersPage = () => {
                     flexDirection="column"
                   >
                     <Text fontSize="xl" pt="5px">
-                      Amount Payable:
+                      Order Total:
                       <Text as="span" color="orange.400" ml="10px">
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>

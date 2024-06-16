@@ -49,7 +49,7 @@ const Sidebar = ({ storeId }: Props) => {
                   : "white"
               }
             />
-            <Link to="/seller/order/all">
+            <Link to={`/seller/order/all/${storeId}`}>
               <Text
                 ml="5px"
                 mr="5px"
@@ -80,13 +80,13 @@ const Sidebar = ({ storeId }: Props) => {
           {isOrderPage && (
             <>
               <Box ml="25px">
-                <Link to="/seller/order/all">
+                <Link to={`/seller/order/all/${storeId}`}>
                   <Text
                     fontSize={fontSize}
                     mb="3px"
                     mt="3px"
                     color={
-                      location.pathname === "/seller/order/all"
+                      location.pathname === `/seller/order/all/${storeId}`
                         ? "orange.400"
                         : "gray.600"
                     }

@@ -10,7 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useGetAllCustomerOrders from "../../hooks/user/useGetAllCustomerOrders";
+import useGetOrderByCompletedStatus from "../../hooks/user/useGetOrderByCompletedStatus";
 import useGetOrdersByCancelledStatus from "../../hooks/user/useGetOrdersByCancelledStatus";
+import useGetOrdersByPendingStatus from "../../hooks/user/useGetOrdersByPendingStatus";
 import useGetOrdersByToPayStatus from "../../hooks/user/useGetOrdersByToPayStatus";
 import useGetOrdersByToReceiveStatus from "../../hooks/user/useGetOrdersByToReceiveStatus";
 import useGetOrdersByToShipStatus from "../../hooks/user/useGetOrdersByToShipStatus";
@@ -18,15 +21,18 @@ import { useAuthQueryStore } from "../../store/auth-store";
 import AllOrderPage from "./AllOrderPage";
 import CancelledPage from "./CancelledPage";
 import CompletedPage from "./CompletedPage";
+import PendingPage from "./PendingPage";
 import ToPayPage from "./ToPayPage";
 import ToReceivePage from "./ToReceivePage";
 import ToShipPage from "./ToShipPage";
-import useGetOrderByCompletedStatus from "../../hooks/user/useGetOrderByCompletedStatus";
 const MyPurchasePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const { refetch: refetchAllOrders } = useGetAllCustomerOrders(jwtToken);
+  const { refetch: refetchPendingOrders } =
+    useGetOrdersByPendingStatus(jwtToken);
   const { refetch: refetchToPayOrders } = useGetOrdersByToPayStatus(jwtToken);
   const { refetch: refetchToShipOrders } = useGetOrdersByToShipStatus(jwtToken);
   const { refetch: refetchToReceiveOrders } =
@@ -39,6 +45,7 @@ const MyPurchasePage = () => {
 
   const tabRoutes = [
     "/user/purchase/order/all",
+    "/user/purchase/order/pending",
     "/user/purchase/order/to-pay",
     "/user/purchase/order/to-ship",
     "/user/purchase/order/to-receive",
@@ -50,25 +57,30 @@ const MyPurchasePage = () => {
     switch (location.pathname) {
       case "/user/purchase/order/all":
         setSelectedIndex(0);
+        refetchAllOrders();
+        break;
+      case "/user/purchase/order/pending":
+        setSelectedIndex(1);
+        refetchPendingOrders();
         break;
       case "/user/purchase/order/to-pay":
-        setSelectedIndex(1);
+        setSelectedIndex(2);
         refetchToPayOrders();
         break;
       case "/user/purchase/order/to-ship":
-        setSelectedIndex(2);
+        setSelectedIndex(3);
         refetchToShipOrders();
         break;
       case "/user/purchase/order/to-receive":
-        setSelectedIndex(3);
+        setSelectedIndex(4);
         refetchToReceiveOrders();
         break;
       case "/user/purchase/order/completed":
-        setSelectedIndex(4);
+        setSelectedIndex(5);
         refetchCompletedOrders();
         break;
       case "/user/purchase/order/cancelled":
-        setSelectedIndex(5);
+        setSelectedIndex(6);
         refetchCancelledOrders();
         break;
       default:
@@ -91,6 +103,7 @@ const MyPurchasePage = () => {
       >
         <TabList display="flex" justifyContent="space-between">
           <Tab>All</Tab>
+          <Tab>Pending</Tab>
           <Tab>To Pay</Tab>
           <Tab>To Ship</Tab>
           <Tab>To Receive</Tab>
@@ -107,6 +120,9 @@ const MyPurchasePage = () => {
         <TabPanels>
           <TabPanel>
             <AllOrderPage />
+          </TabPanel>
+          <TabPanel>
+            <PendingPage />
           </TabPanel>
           <TabPanel>
             <ToPayPage />

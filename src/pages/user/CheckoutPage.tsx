@@ -14,8 +14,8 @@ import OrderTotal from "../../components/Checkout/OrderTotal";
 import Payment from "../../components/Checkout/Payment";
 import ProductOrderedHeader from "../../components/Checkout/ProductOrderedHeader";
 import UserInfo from "../../components/Checkout/UserInfo";
-import useCartTotal from "../../hooks/user/useCartTotal";
 import Cart from "../../entities/Cart";
+import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
 import useCheckout from "../../hooks/user/useCheckout";
 import useGetOrdersByToPayStatus from "../../hooks/user/useGetOrdersByToPayStatus";
@@ -52,7 +52,7 @@ const CheckoutPage = () => {
         refetchCarts();
         refetchTotal();
         refetchOrderByToPayStatus();
-        navigate("/user/purchase/order/to-pay");
+        navigate("/user/purchase/order/pending");
       },
     });
   };

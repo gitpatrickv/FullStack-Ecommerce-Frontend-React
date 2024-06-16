@@ -1,11 +1,11 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
-import useGetToShip from "../../hooks/seller/useGetToShip";
 import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
+import useGetToShip from "../../hooks/seller/useGetToShip";
+import useHandleOrders from "../../hooks/seller/useHandleOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import useHandleOrders from "../../hooks/seller/useHandleOrders";
 
 const ToShipOrdersPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -111,7 +111,7 @@ const ToShipOrdersPage = () => {
                     flexDirection="column"
                   >
                     <Text fontSize="xl" mb="15px" pt="5px">
-                      Amount Payable:
+                      Order Total:
                       <Text as="span" color="orange.400" ml="10px">
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>

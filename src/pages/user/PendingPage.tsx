@@ -1,35 +1,39 @@
 import { Box, Card, CardBody, Divider, Text } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { FaStore } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
-import useGetCancelledOrders from "../../hooks/seller/useGetCancelledOrders";
+import useGetOrdersByPendingStatus from "../../hooks/user/useGetOrdersByPendingStatus";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-const CancelledOrdersPage = () => {
+
+const PendingPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const { storeId } = useParams();
-  const { data: orders } = useGetCancelledOrders(jwtToken, storeId!);
+  const navigate = useNavigate();
+  const { data: orders } = useGetOrdersByPendingStatus(jwtToken);
 
-  const groupedOrders = orders?.orderModel.reduce(
-    (acc: Record<string, OrderItem[]>, order) => {
-      order.orderItemModels.forEach((item) => {
-        if (!acc[item.orderId]) {
-          acc[item.orderId] = [];
-        }
-        acc[item.orderId].push(item);
-      });
+  const groupedOrders = orders?.reduce(
+    (acc: Record<string, OrderItem[]>, order: OrderItem) => {
+      if (!acc[order.orderId]) {
+        acc[order.orderId] = [];
+      }
+      acc[order.orderId].push(order);
       return acc;
     },
     {}
   );
 
+  const handleNavigateStorePageClick = (storeId: string) => {
+    navigate(`/store/` + storeId);
+  };
+
   return (
     <>
       {groupedOrders &&
-        Object.entries(groupedOrders).map(([orderId, storeOrders]) => {
+        Object.entries(groupedOrders).map(([storeName, storeOrders]) => {
           return (
-            <Box key={orderId} mt="5px">
+            <Box key={storeOrders[0].orderId} mt="5px">
               <Card>
                 <CardBody>
                   <Box display="flex" alignItems="center">
@@ -45,9 +49,22 @@ const CancelledOrdersPage = () => {
                         xl: "xl",
                       }}
                     >
-                      {storeOrders[0].fullName}
+                      {storeOrders[0].storeName}
                     </Text>
-
+                    <Box
+                      cursor="pointer"
+                      display="flex"
+                      alignItems="center"
+                      _hover={{ color: "orange.400" }}
+                      onClick={() =>
+                        handleNavigateStorePageClick(storeOrders[0].storeId)
+                      }
+                    >
+                      <FaStore size="15px" />
+                      <Text pl="5px" fontSize="small">
+                        View Store
+                      </Text>
+                    </Box>
                     <Box position="absolute" right="25px" alignItems="center">
                       <Box
                         display="flex"
@@ -94,7 +111,7 @@ const CancelledOrdersPage = () => {
                     flexDirection="column"
                   >
                     <Text fontSize="xl" pt="5px">
-                      Order Total:
+                      Amount Payable:
                       <Text as="span" color="orange.400" ml="10px">
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
@@ -109,4 +126,4 @@ const CancelledOrdersPage = () => {
   );
 };
 
-export default CancelledOrdersPage;
+export default PendingPage;
