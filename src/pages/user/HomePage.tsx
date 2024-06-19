@@ -12,10 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Category from "../../components/Category/Category";
+import CategoryCard from "../../components/Category/CategoryCard";
 import ProductCard from "../../components/Product/ProductCard";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
+import useGetAllCategory from "../../hooks/user/useGetAllCategory";
 import useProducts from "../../hooks/user/useProducts";
 
 const HomePage = () => {
@@ -23,6 +24,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const pageSize = 30;
   const { data, isLoading } = useProducts({ pageNo: page, pageSize });
+  const { data: category } = useGetAllCategory();
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   const onClickNavigate = () => {
@@ -41,9 +43,7 @@ const HomePage = () => {
       }}
     >
       <Show above="lg">
-        <GridItem area="asideLeft" paddingX={5}>
-          <Category />
-        </GridItem>
+        <GridItem area="asideLeft" paddingX={5}></GridItem>
       </Show>
       <GridItem area="main">
         <Image
@@ -51,6 +51,23 @@ const HomePage = () => {
           w={{ base: "100%", md: "100%", lg: "100%", xl: "100%" }}
           h={{ base: "1%", md: "4%", lg: "4%", xl: "11%" }}
         />
+
+        <Show above="lg">
+          <Card mt="20px" mb="5px">
+            <CardBody>
+              <Text textAlign="center" fontSize="larger" color="orange.400">
+                Categories
+              </Text>
+            </CardBody>
+          </Card>
+          <SimpleGrid columns={{ lg: 5, xl: 10 }} spacing={2} padding="10px">
+            {category?.data.map((cat) => (
+              <ProductCardContainer key={cat.categoryId}>
+                <CategoryCard category={cat} />
+              </ProductCardContainer>
+            ))}
+          </SimpleGrid>
+        </Show>
         <Card mt="20px" mb="20px">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
