@@ -5,9 +5,11 @@ import {
   CardBody,
   Center,
   CloseButton,
+  FormControl,
   HStack,
   Heading,
   Input,
+  Select,
   Stack,
   Text,
   VStack,
@@ -104,12 +106,17 @@ const RegisterationForm = () => {
                     type="password"
                     placeholder="Confirm Password"
                   />
-                  <Input
-                    disabled={loading}
-                    {...register("role")}
-                    type="hidden"
-                    value={"USER"}
-                  />
+                  <FormControl>
+                    <Select
+                      {...register("role")}
+                      id="role"
+                      defaultValue=""
+                      disabled={loading}
+                    >
+                      <option value="USER">User</option>
+                      <option value="SELLER">Seller</option>
+                    </Select>
+                  </FormControl>
                   <Button
                     isLoading={loading}
                     type="submit"
