@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../services/api-client";
 
 interface Props {
-    productId: string;
+    inventoryId: number;
     cartId: string;
     jwtToken: string;
 }
@@ -12,9 +12,9 @@ const useIncrementQuantity = () => {
     const queryClient = useQueryClient();
 
     return useMutation(
-        async ({productId, cartId, jwtToken}: Props) => {
+        async ({inventoryId, cartId, jwtToken}: Props) => {
             await apiClient.put("/cart/increment", 
-            { productId, cartId}, 
+            { inventoryId, cartId}, 
             {
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,

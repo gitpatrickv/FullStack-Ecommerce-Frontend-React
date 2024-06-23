@@ -75,7 +75,6 @@ const CartFooter = ({
 
   const handleAllFilterChange = () => {
     onFilterAll();
-    setIsFiltered(!isFiltered);
   };
 
   return (

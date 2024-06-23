@@ -30,6 +30,20 @@ const OrderCard = ({ order }: Props) => {
               {order.productName}
             </Text>
             <Text pl="5px">x{order.quantity}</Text>
+            {order.colors || order.sizes ? (
+              <Text
+                fontSize="sm"
+                fontWeight="semibold"
+                textTransform="capitalize"
+                cursor="pointer"
+                color="gray.500"
+                pl="5px"
+              >
+                Variation: {order.colors},{order.sizes}
+              </Text>
+            ) : (
+              ""
+            )}
           </Box>
         </Box>
       </GridItem>

@@ -34,15 +34,31 @@ const Checkout = ({ cart }: Props) => {
             src={cart.photoUrl}
             w={{ base: "30px", md: "60px", lg: "80px" }}
             h={{ base: "30px", md: "40px", lg: "60px" }}
-          ></Image>
-          <Text
-            fontSize={fontSize}
-            fontWeight="semibold"
-            pl="10px"
-            textTransform="capitalize"
-          >
-            {cart.productName}
-          </Text>
+          />
+          <Box display="flex" flexDirection="column">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              pl="10px"
+              textTransform="capitalize"
+            >
+              {cart.productName}
+            </Text>
+            {cart.colors || cart.sizes ? (
+              <Text
+                fontSize="sm"
+                fontWeight="semibold"
+                textTransform="capitalize"
+                cursor="pointer"
+                pl="10px"
+                color="gray.500"
+              >
+                Variations: {cart.colors},{cart.sizes}
+              </Text>
+            ) : (
+              ""
+            )}
+          </Box>
         </Box>
       </GridItem>
       <GridItem area="content2">
