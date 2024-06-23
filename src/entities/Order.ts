@@ -14,6 +14,8 @@ export default interface OrderItem {
     active: boolean;
     storeId: string;
     fullName: string;
+    colors: string;
+    sizes: string;
   }
   
   export interface Order {

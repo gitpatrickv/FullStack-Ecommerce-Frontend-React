@@ -65,13 +65,16 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
 
   useEffect(() => {
     setIsFiltered(cart.filter);
+  }, [cart.filter]);
+
+  useEffect(() => {
     setIsCheck(isChecked);
-  }, [cart.filter, isChecked]);
+  }, [isChecked]);
 
   const handleClickDecrement = () => {
     decrementQuantity(
       {
-        productId: cart.productId,
+        inventoryId: cart.inventoryId,
         cartId: cart.cartId,
         jwtToken: jwtToken,
       },
@@ -86,7 +89,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const handleClickIncrement = () => {
     incrementQuantity(
       {
-        productId: cart.productId,
+        inventoryId: cart.inventoryId,
         cartId: cart.cartId,
         jwtToken: jwtToken,
       },
@@ -124,7 +127,6 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         onSuccess: () => {
           refetchTotal();
           refetchCarts();
-          setIsFiltered(!isFiltered);
         },
       }
     );
@@ -137,7 +139,6 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         onSuccess: () => {
           refetchTotal();
           refetchCarts();
-          setIsCheck(!isCheck);
         },
       }
     );
@@ -160,7 +161,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
             position="absolute"
             top="20px"
             left="32px"
-            isChecked={isFiltered}
+            isChecked={isCheck}
             onChange={handleStoreFilterChange}
           />
           <Box display="flex" alignItems="center">
@@ -178,16 +179,33 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
               onClick={handleNavigateClick}
               cursor="pointer"
             />
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              textTransform="capitalize"
-              onClick={handleNavigateClick}
-              cursor="pointer"
-              pl="20px"
-            >
-              {cart.productName}
-            </Text>
+            <Box display="flex" flexDirection="column">
+              <Text
+                fontSize={fontSize}
+                fontWeight="semibold"
+                textTransform="capitalize"
+                onClick={handleNavigateClick}
+                cursor="pointer"
+                pl="20px"
+              >
+                {cart.productName}
+              </Text>
+              {cart.colors || cart.sizes ? (
+                <Text
+                  fontSize="sm"
+                  fontWeight="semibold"
+                  textTransform="capitalize"
+                  onClick={handleNavigateClick}
+                  cursor="pointer"
+                  pl="20px"
+                  color="gray.500"
+                >
+                  Variation: {cart.colors},{cart.sizes}
+                </Text>
+              ) : (
+                ""
+              )}
+            </Box>
           </Box>
         </Box>
       </GridItem>

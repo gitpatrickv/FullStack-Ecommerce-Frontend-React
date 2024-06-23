@@ -1,3 +1,5 @@
+import Inventory from "./Inventory";
+
 export default interface Product {
     photoUrl: string;
     productId: string;
@@ -8,4 +10,7 @@ export default interface Product {
     price: number;
     quantity: number;
     storeId: string;
+    inventoryModels: Inventory[];
+    inventoryId: number;
+
 }

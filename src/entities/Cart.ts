@@ -8,5 +8,7 @@ export default interface Cart{
     quantity: number;
     totalAmount: number;
     filter: boolean;
-    
+    colors: string;
+    sizes: string;
+    inventoryId: number;
 }

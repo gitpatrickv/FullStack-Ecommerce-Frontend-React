@@ -2,7 +2,7 @@ import { axiosInstance } from "../../services/api-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
-    productId: string;
+    inventoryId: number;
     cartId: string;
     jwtToken: string;
 }
@@ -11,9 +11,9 @@ const apiClient = axiosInstance;
 const useDecrementQuantity = () => {
   const queryClient = useQueryClient();
   return useMutation(
-    async ({productId, cartId, jwtToken} : Props) => {
+    async ({inventoryId, cartId, jwtToken} : Props) => {
         await apiClient.put("/cart/decrement",
-            { productId, cartId }, 
+            { inventoryId, cartId }, 
             {
                 headers: {
                     Authorization: `Bearer ${jwtToken}`,

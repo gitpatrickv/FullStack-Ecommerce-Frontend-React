@@ -6,18 +6,20 @@ interface AddToCartProps {
   productId: string;
   quantity: number;
   jwtToken: string;
+  colors:string;
+  sizes: string;
 }
 
 const apiClient = axiosInstance;
 
-const useAddToCart = () => {
+const useAddToCartVariation = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
   return useMutation(
-    async ({ productId,  quantity, jwtToken }: AddToCartProps) => {
+    async ({ productId, quantity, colors, sizes, jwtToken }: AddToCartProps) => {
       const { data } = await apiClient.put(
-        "/cart/add",
-        { productId, quantity },
+        "/cart/add/variations",
+        { productId, quantity, colors,sizes },
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -30,16 +32,16 @@ const useAddToCart = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['cart']);
         toast({
-          position: "top",
-          title: "Item has been added to your cart",
-          status: "success",
-          duration: 1000,
-          isClosable: true,
-        });
+            position: "top",
+            title: "Item has been added to your cart",
+            status: "success",
+            duration: 1000,
+            isClosable: true,
+          });
       }
-    },
+    }
   );
 };
 
     
-export default useAddToCart
+export default useAddToCartVariation
