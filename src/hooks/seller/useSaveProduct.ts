@@ -15,6 +15,7 @@ export interface InventoryModel {
 export interface SaveProductProps {
   productName: string;
   productDescription: string;
+  categoryId: number;
   inventoryModels: InventoryModel[];
   file: FileList;
 }
@@ -73,6 +74,7 @@ const useSaveProduct = () => {
         new Blob([JSON.stringify({
           productName: data.productName,
           productDescription: data.productDescription,
+          categoryId: data.categoryId,
           inventoryModels: data.inventoryModels,
         })],
         { type: "application/json" })

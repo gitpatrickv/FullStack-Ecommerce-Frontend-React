@@ -8,6 +8,7 @@ import {
   HStack,
   IconButton,
   Input,
+  Select,
   Spacer,
   Text,
   VStack,
@@ -16,10 +17,12 @@ import { useState } from "react";
 import { useFieldArray } from "react-hook-form";
 import useSaveProduct from "../../hooks/seller/useSaveProduct";
 import { IoMdImages } from "react-icons/io";
+import useGetAllCategory from "../../hooks/user/useGetAllCategory";
 
 const NewProductPage = () => {
   const { onSubmit, register, handleSubmit, control } = useSaveProduct();
   const [isVariation, setIsVariation] = useState<boolean>(false);
+  const { data: category } = useGetAllCategory();
 
   const {
     fields: variationFields,
@@ -52,14 +55,27 @@ const NewProductPage = () => {
         <GridItem area="main">
           <Box p={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <VStack align="stretch">
-                <Text>Product Name</Text>
-                <Input {...register("productName", { required: true })} />
-                <Text>Product Description</Text>
-                <Input
-                  {...register("productDescription", { required: true })}
-                />
-              </VStack>
+              <Text mb="5px" fontSize="large" fontWeight="semibold">
+                Product Name
+              </Text>
+              <Input {...register("productName", { required: true })} />
+              <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
+                Product Description
+              </Text>
+              <Input {...register("productDescription", { required: true })} />
+              <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
+                Category
+              </Text>
+              <Select
+                maxWidth="30%"
+                {...register("categoryId", { required: true })}
+              >
+                {category?.data.map((cat) => (
+                  <option key={cat.categoryId} value={cat.categoryId}>
+                    {cat.categoryName}
+                  </option>
+                ))}
+              </Select>
               <Box display="flex" mt="20px" alignItems="center">
                 <Checkbox
                   size="lg"
@@ -67,7 +83,7 @@ const NewProductPage = () => {
                   isChecked={isVariation}
                   onChange={handleEnableVariationCheckBoxChange}
                 />
-                <Text fontSize="large" ml="5px">
+                <Text fontSize="large" ml="5px" color="gray.500">
                   Enable Variation
                 </Text>
               </Box>
