@@ -11,12 +11,11 @@ import {
   Select,
   Spacer,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useFieldArray } from "react-hook-form";
-import useSaveProduct from "../../hooks/seller/useSaveProduct";
 import { IoMdImages } from "react-icons/io";
+import useSaveProduct from "../../hooks/seller/useSaveProduct";
 import useGetAllCategory from "../../hooks/user/useGetAllCategory";
 
 const NewProductPage = () => {

@@ -34,6 +34,7 @@ import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
 import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
 import MyProductPage from "../pages/seller/MyProductPage";
 import PendingPage from "../pages/seller/PendingPage";
+import ProductCategoryPage from "../pages/user/ProductCategoryPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       { path: "/search", element: <SearchPage /> },
       { path: "/daily_discover", element: <DailyDiscoverPage /> },
       { path: "/store/:storeId", element: <StorePage /> },
+      {
+        path: "/category/:categoryId",
+        element: <ProductCategoryPage />,
+      },
       {
         path: "user",
         element: <UserPage />,

@@ -1,13 +1,20 @@
 import { Avatar, Box, Card, CardBody, Text } from "@chakra-ui/react";
 import Category from "../../entities/Category";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   category: Category;
 }
 
 const CategoryCard = ({ category }: Props) => {
+  const navigate = useNavigate();
+
+  const handleNavigateClick = () => {
+    navigate(`/category/` + category.categoryId);
+  };
+
   return (
-    <Card maxW="150px" cursor="pointer">
+    <Card maxW="150px" cursor="pointer" onClick={handleNavigateClick}>
       <CardBody>
         <Box
           display="flex"

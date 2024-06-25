@@ -7,7 +7,8 @@ export default interface AllProductModels {
     quantity: number;
     storeId: string;
     storeName: string;
-    categoryId: number;
+    categoryId: string;
+    categoryName: string;
 }
 
 interface PageResponse {
