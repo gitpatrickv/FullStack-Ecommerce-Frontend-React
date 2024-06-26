@@ -1,6 +1,6 @@
 import { Avatar, Box, Card, CardBody, Text } from "@chakra-ui/react";
-import Category from "../../entities/Category";
 import { useNavigate } from "react-router-dom";
+import Category from "../../entities/Category";
 
 interface Props {
   category: Category;

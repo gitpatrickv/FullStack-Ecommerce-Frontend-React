@@ -22,11 +22,12 @@ const MyProductPage = () => {
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 30;
 
-  const { data: getAllStoreProducts } = useGetAllSellersProduct({
-    jwtToken: jwtToken,
-    pageNo: page,
-    pageSize,
-  });
+  const { data: getAllStoreProducts, refetch: refetchProducts } =
+    useGetAllSellersProduct({
+      jwtToken: jwtToken,
+      pageNo: page,
+      pageSize,
+    });
   const isLastPage = getAllStoreProducts?.data.pageResponse.last ?? false;
   const totalElements =
     getAllStoreProducts?.data.pageResponse.totalElements ?? 0;
@@ -81,7 +82,10 @@ const MyProductPage = () => {
           <ProductListHeader />
           {getAllStoreProducts?.data.allProductModels.map((product) => (
             <Box key={product.productId}>
-              <ProductsList product={product} />
+              <ProductsList
+                product={product}
+                refetchProducts={refetchProducts}
+              />
               <Divider />
             </Box>
           ))}

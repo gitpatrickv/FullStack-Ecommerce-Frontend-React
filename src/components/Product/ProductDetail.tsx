@@ -206,6 +206,7 @@ const ProductDetail = ({ product }: Props) => {
                         color={
                           selectedColor === color ? "orange.400" : "gray.500"
                         }
+                        textTransform="capitalize"
                       >
                         {color}
                       </Button>
@@ -222,6 +223,7 @@ const ProductDetail = ({ product }: Props) => {
                         color={
                           selectedSize === size ? "orange.400" : "gray.500"
                         }
+                        textTransform="capitalize"
                       >
                         {size}
                       </Button>

@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -98,10 +97,12 @@ const ProductCategoryPage = () => {
         <Card mt="20px" mb="5px">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
-              {getAllProductsByCategory?.data.allProductModels[0].categoryName}
+              {getAllProductsByCategory?.data.allProductModels[0]
+                ?.categoryName || "No products found in this category."}
             </Text>
           </CardBody>
         </Card>
+
         <Box>
           <SimpleGrid
             columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
@@ -120,40 +121,44 @@ const ProductCategoryPage = () => {
               </ProductCardContainer>
             ))}
           </SimpleGrid>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            pt="20px"
-          >
-            <HStack justifyContent="center">
-              <Button onClick={() => handlePageChange("&laquo;")}>
-                &laquo;
-              </Button>
-              <Button onClick={() => handlePageChange("&lsaquo;")}>
-                &lsaquo;
-              </Button>
-              {paginationRangeArray.map((number, index) => {
-                if (number === number) {
-                  return (
-                    <Button
-                      key={index}
-                      onClick={() => handlePageChange(number)}
-                      color={page === number ? "orange" : "gray.500"}
-                    >
-                      {number}
-                    </Button>
-                  );
-                }
-              })}
-              <Button onClick={() => handlePageChange("&rsaquo;")}>
-                &rsaquo;
-              </Button>
-              <Button onClick={() => handlePageChange("&raquo;")}>
-                &raquo;
-              </Button>
-            </HStack>
-          </Box>
+          {getAllProductsByCategory?.data.allProductModels.length === 0 ? (
+            ""
+          ) : (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              pt="20px"
+            >
+              <HStack justifyContent="center">
+                <Button onClick={() => handlePageChange("&laquo;")}>
+                  &laquo;
+                </Button>
+                <Button onClick={() => handlePageChange("&lsaquo;")}>
+                  &lsaquo;
+                </Button>
+                {paginationRangeArray.map((number, index) => {
+                  if (number === number) {
+                    return (
+                      <Button
+                        key={index}
+                        onClick={() => handlePageChange(number)}
+                        color={page === number ? "orange" : "gray.500"}
+                      >
+                        {number}
+                      </Button>
+                    );
+                  }
+                })}
+                <Button onClick={() => handlePageChange("&rsaquo;")}>
+                  &rsaquo;
+                </Button>
+                <Button onClick={() => handlePageChange("&raquo;")}>
+                  &raquo;
+                </Button>
+              </HStack>
+            </Box>
+          )}
         </Box>
       </GridItem>
     </Grid>

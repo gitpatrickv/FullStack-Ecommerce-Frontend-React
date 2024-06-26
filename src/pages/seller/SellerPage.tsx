@@ -32,7 +32,7 @@ const SellerPage = () => {
   };
   return (
     <Grid
-      templateColumns="250px 1fr 250px"
+      templateColumns="0.2fr 1fr 0.2fr"
       templateRows="100px 1fr"
       templateAreas={`
       "header header header"
