@@ -6,20 +6,20 @@ import { useAuthQueryStore } from "../../store/auth-store";
 
 const apiClient = axiosInstance;
 
-interface AddStockProps {
-    quantity: number;
+interface UpdatePriceProps {
+    price: number;
     inventoryId: number
 }
 
-const useAddStock = (inventoryId: number) => {
+const useUpdatePrice = (inventoryId: number) => {
     const queryClient = useQueryClient();
-    const {register, handleSubmit} = useForm<AddStockProps>();
+    const {register, handleSubmit} = useForm<UpdatePriceProps>();
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
     const toast = useToast();
 
     const mutation = useMutation({
-        mutationFn: (data: AddStockProps) => apiClient.put(`/inventory/add`, data,
+        mutationFn: (data: UpdatePriceProps) => apiClient.put(`/inventory/update`, data,
             {
             headers: {
                     Authorization: `Bearer ${jwtToken}`
@@ -32,7 +32,7 @@ const useAddStock = (inventoryId: number) => {
             queryClient.invalidateQueries(['storeProduct']);
             toast({
                 position: "top",
-                title: "Stock Successfully Updated",
+                title: "Price Successfully Updated",
                 status: "success",
                 duration: 1000,
                 isClosable: true,
@@ -40,7 +40,7 @@ const useAddStock = (inventoryId: number) => {
         },
     })
 
-    const onSubmit: SubmitHandler<{ quantity: number }> = (data) => {
+    const onSubmit: SubmitHandler<{ price: number }> = (data) => {
         mutation.mutate({...data, inventoryId});
     }
 
@@ -49,4 +49,4 @@ const useAddStock = (inventoryId: number) => {
     }
 }
 
-export default useAddStock
+export default useUpdatePrice

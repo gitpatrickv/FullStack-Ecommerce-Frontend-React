@@ -15,8 +15,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Inventory from "../../entities/Inventory";
-import { formatCurrency } from "../../utilities/formatCurrency";
 import useAddStock from "../../hooks/seller/useAddStock";
+import useUpdatePrice from "../../hooks/seller/useUpdatePrice";
+import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   inventory: Inventory;
@@ -32,6 +33,24 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
     inventory.inventoryId
   );
 
+  const {
+    register: registerPrice,
+    handleSubmit: handlePriceSubmit,
+    onSubmit: onPriceSubmit,
+  } = useUpdatePrice(inventory.inventoryId);
+
+  const {
+    isOpen: isStockOpen,
+    onOpen: onStockOpen,
+    onClose: onStockClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isPriceOpen,
+    onOpen: onPriceOpen,
+    onClose: onPriceClose,
+  } = useDisclosure();
+
   const handleFormSubmit = async (data: { quantity: number }) => {
     try {
       await onSubmit(data);
@@ -42,11 +61,16 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
     }
   };
 
-  const {
-    isOpen: isStockOpen,
-    onOpen: onStockOpen,
-    onClose: onStockClose,
-  } = useDisclosure();
+  const handlePriceUpdateSubmit = async (data: { price: number }) => {
+    try {
+      await onPriceSubmit(data);
+      refetchProducts();
+      onPriceClose();
+    } catch (error) {
+      console.error("Error updating price:", error);
+    }
+  };
+
   return (
     <>
       <Grid
@@ -55,11 +79,11 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
   "content1 content2 content3 content4 content5 content6"
 `}
         gap={1}
-        p={3}
+        p={4}
       >
         <GridItem area="content1">
           <Box>
-            <Text fontSize={fontSize} fontWeight="semibold" ml="5px">
+            <Text fontSize={fontSize} fontWeight="semibold">
               {inventory.quantity}
             </Text>
           </Box>
@@ -89,7 +113,11 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
           </Button>
         </GridItem>
         <GridItem area="content6">
-          <Button size={buttonSize} _hover={{ color: "orange.400" }}>
+          <Button
+            size={buttonSize}
+            _hover={{ color: "orange.400" }}
+            onClick={onPriceOpen}
+          >
             Edit Price
           </Button>
         </GridItem>
@@ -131,6 +159,51 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
                   Add Stock
                 </Button>
                 <Button _hover={{ color: "orange.400" }} onClick={onStockClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </form>
+        </Modal>
+      </Box>
+
+      <Box>
+        <Modal isOpen={isPriceOpen} onClose={onPriceClose} size="xs" isCentered>
+          <ModalOverlay />
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handlePriceSubmit(handlePriceUpdateSubmit)(event);
+            }}
+          >
+            <ModalContent>
+              <ModalCloseButton />
+              <ModalBody mt="30px">
+                <Box>
+                  <Text
+                    fontSize={fontSize}
+                    fontWeight="semibold"
+                    textTransform="capitalize"
+                    mb="5px"
+                    color="orange.400"
+                  >
+                    Input Price
+                  </Text>
+
+                  <Input
+                    {...registerPrice("price", { required: true })}
+                    type="text"
+                    placeholder="Price"
+                    pattern="[0-9]*"
+                  />
+                </Box>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button _hover={{ color: "orange.400" }} mr="5px" type="submit">
+                  Update Price
+                </Button>
+                <Button _hover={{ color: "orange.400" }} onClick={onPriceClose}>
                   Close
                 </Button>
               </ModalFooter>

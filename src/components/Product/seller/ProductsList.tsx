@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
   Divider,
@@ -15,6 +21,7 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useRef } from "react";
 import AllProductModels from "../../../entities/AllProductResponse";
 import useDeleteProduct from "../../../hooks/seller/useDeleteProduct";
 import { useAuthQueryStore } from "../../../store/auth-store";
@@ -31,7 +38,19 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: updateIsOpen,
+    onOpen: updateOnOpen,
+    onClose: updateOnClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: deleteIsOpen,
+    onOpen: deleteOnOpen,
+    onClose: deleteOnClose,
+  } = useDisclosure();
+
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   const handleDeleteProductClick = () => {
     deleteProduct(
@@ -119,7 +138,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               fontWeight="semibold"
               _hover={{ color: "orange.400" }}
               mb="5px"
-              onClick={onOpen}
+              onClick={updateOnOpen}
             >
               Update
             </Button>
@@ -128,7 +147,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               fontSize={fontSize}
               fontWeight="semibold"
               _hover={{ color: "orange.400" }}
-              onClick={handleDeleteProductClick}
+              onClick={deleteOnOpen}
             >
               Delete
             </Button>
@@ -136,7 +155,12 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
         </GridItem>
       </Grid>
       <Box>
-        <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+        <Modal
+          isOpen={updateIsOpen}
+          onClose={updateOnClose}
+          size="xl"
+          isCentered
+        >
           <ModalOverlay />
           <ModalContent>
             <ModalCloseButton />
@@ -174,7 +198,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                       <Text
                         fontSize="md"
                         fontWeight="semibold"
-                        ml="5px"
+                        ml="10px"
                         color="orange.400"
                       >
                         Price
@@ -230,12 +254,51 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button _hover={{ color: "orange.400" }} mr={3} onClick={onClose}>
+              <Button
+                _hover={{ color: "orange.400" }}
+                mr={3}
+                onClick={updateOnClose}
+              >
                 Close
               </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
+      </Box>
+      <Box>
+        <AlertDialog
+          isOpen={deleteIsOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={deleteOnClose}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                <Text color="orange.400" fontSize="large">
+                  Do you want to remove this item?
+                </Text>
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                <Text textTransform="capitalize">{product.productName}</Text>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={deleteOnClose}>
+                  Cancel
+                </Button>
+                <Button
+                  colorScheme="red"
+                  onClick={handleDeleteProductClick}
+                  ml={3}
+                >
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </Box>
     </>
   );

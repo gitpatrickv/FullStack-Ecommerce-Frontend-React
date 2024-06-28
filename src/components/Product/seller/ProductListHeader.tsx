@@ -32,8 +32,9 @@ const ProductListHeader = () => {
                 fontWeight="semibold"
                 cursor="pointer"
                 pl="5px"
+                color="orange.400"
               >
-                Product(s)
+                Products
               </Text>
             </Box>
           </Box>
@@ -44,7 +45,7 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
+          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
             Sales
           </Text>
         </GridItem>
@@ -54,7 +55,7 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
+          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
             Price
           </Text>
         </GridItem>
@@ -64,7 +65,7 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
+          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
             Stock
           </Text>
         </GridItem>
@@ -75,7 +76,9 @@ const ProductListHeader = () => {
           justifyContent="flex-end"
           mr="25px"
         >
-          <Text fontSize={fontSize}>Action</Text>
+          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+            Action
+          </Text>
         </GridItem>
       </Grid>
     </Card>
