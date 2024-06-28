@@ -1,16 +1,25 @@
 import {
   Box,
   Button,
+  Divider,
   Grid,
   GridItem,
   Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
   Text,
   useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import AllProductModels from "../../../entities/AllProductResponse";
-import { formatCurrency } from "../../../utilities/formatCurrency";
 import useDeleteProduct from "../../../hooks/seller/useDeleteProduct";
 import { useAuthQueryStore } from "../../../store/auth-store";
+import { formatCurrency } from "../../../utilities/formatCurrency";
+import InventoryList from "../../Inventory/InventoryList";
 
 interface Props {
   product: AllProductModels;
@@ -22,6 +31,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleDeleteProductClick = () => {
     deleteProduct(
@@ -38,91 +48,196 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   };
 
   return (
-    <Grid
-      templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
-      templateAreas={`
+    <>
+      <Grid
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateAreas={`
   "content1 content2 content3 content4 content5"
 `}
-      gap={4}
-      p={3}
-    >
-      <GridItem area="content1">
-        <Box display="flex" alignItems="center">
-          <Image
-            src={product.photoUrl}
-            w={{ base: "40px", md: "80px", lg: "100px" }}
-            h={{ base: "40px", md: "60px", lg: "80px" }}
-            cursor="pointer"
-          />
-          <Text
-            fontSize={fontSize}
-            fontWeight="semibold"
-            textTransform="capitalize"
-            cursor="pointer"
-            pl="20px"
-          >
-            {product.productName}
+        gap={4}
+        p={3}
+      >
+        <GridItem area="content1">
+          <Box display="flex" alignItems="center">
+            <Image
+              src={product.photoUrl}
+              w={{ base: "40px", md: "80px", lg: "100px" }}
+              h={{ base: "40px", md: "60px", lg: "80px" }}
+              cursor="pointer"
+            />
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              textTransform="capitalize"
+              cursor="pointer"
+              pl="20px"
+            >
+              {product.productName}
+            </Text>
+          </Box>
+        </GridItem>
+        <GridItem
+          area="content2"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={fontSize} fontWeight="semibold">
+            0
           </Text>
-        </Box>
-      </GridItem>
-      <GridItem
-        area="content2"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Text fontSize={fontSize} fontWeight="semibold">
-          0
-        </Text>
-      </GridItem>
-      <GridItem
-        area="content3"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Text fontSize={fontSize} fontWeight="semibold">
-          {formatCurrency(product.price)}
-        </Text>
-      </GridItem>
-      <GridItem
-        area="content4"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Text fontSize={fontSize} fontWeight="semibold">
-          {product.quantity}
-        </Text>
-      </GridItem>
-      <GridItem
-        area="content5"
-        display="flex"
-        alignItems="center"
-        justifyContent="flex-end"
-      >
-        <Box display="flex" flexDirection="column" justifyContent="flex-end">
-          <Button
-            cursor="pointer"
-            fontSize={fontSize}
-            fontWeight="semibold"
-            color="orange.400"
-            mb="5px"
-          >
-            Update
-          </Button>
-          <Button
-            cursor="pointer"
-            fontSize={fontSize}
-            fontWeight="semibold"
-            color="orange.400"
-            onClick={handleDeleteProductClick}
-          >
-            Delete
-          </Button>
-        </Box>
-      </GridItem>
-    </Grid>
+        </GridItem>
+        <GridItem
+          area="content3"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={fontSize} fontWeight="semibold">
+            {formatCurrency(product.price)}
+          </Text>
+        </GridItem>
+        <GridItem
+          area="content4"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={fontSize} fontWeight="semibold">
+            {product.quantity}
+          </Text>
+        </GridItem>
+        <GridItem
+          area="content5"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <Box display="flex" flexDirection="column" justifyContent="flex-end">
+            <Button
+              cursor="pointer"
+              fontSize={fontSize}
+              fontWeight="semibold"
+              _hover={{ color: "orange.400" }}
+              mb="5px"
+              onClick={onOpen}
+            >
+              Update
+            </Button>
+            <Button
+              cursor="pointer"
+              fontSize={fontSize}
+              fontWeight="semibold"
+              _hover={{ color: "orange.400" }}
+              onClick={handleDeleteProductClick}
+            >
+              Delete
+            </Button>
+          </Box>
+        </GridItem>
+      </Grid>
+      <Box>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody mt="30px">
+              <Box>
+                <Text
+                  fontSize={fontSize}
+                  fontWeight="semibold"
+                  textTransform="capitalize"
+                  mb="5px"
+                  color="orange.400"
+                >
+                  {product.productName}
+                </Text>
+                <Box>
+                  <Grid
+                    templateColumns="0.3fr 0.3fr 0.3fr 0.3fr 0.6fr"
+                    templateAreas={`
+"content1 content2 content3 content4 content5 "
+`}
+                    p={3}
+                  >
+                    <GridItem area="content1">
+                      <Box>
+                        <Text
+                          fontSize="md"
+                          fontWeight="semibold"
+                          color="orange.400"
+                        >
+                          Qty.
+                        </Text>
+                      </Box>
+                    </GridItem>
+                    <GridItem area="content2">
+                      <Text
+                        fontSize="md"
+                        fontWeight="semibold"
+                        ml="5px"
+                        color="orange.400"
+                      >
+                        Price
+                      </Text>
+                    </GridItem>
+                    <GridItem area="content3">
+                      {product.inventoryModels[0].colors ? (
+                        <Text
+                          fontSize="md"
+                          fontWeight="semibold"
+                          color="orange.400"
+                        >
+                          Variation
+                        </Text>
+                      ) : (
+                        ""
+                      )}
+                    </GridItem>
+                    <GridItem area="content4">
+                      {product.inventoryModels[0].sizes ? (
+                        <Text
+                          fontSize="md"
+                          fontWeight="semibold"
+                          color="orange.400"
+                        >
+                          Size
+                        </Text>
+                      ) : (
+                        ""
+                      )}
+                    </GridItem>
+                    <GridItem area="content5" ml="55px">
+                      <Text
+                        fontSize="md"
+                        fontWeight="semibold"
+                        color="orange.400"
+                      >
+                        Action
+                      </Text>
+                    </GridItem>
+                  </Grid>
+                </Box>
+                {product.inventoryModels.map((inv) => (
+                  <Box alignItems="center" key={inv.inventoryId}>
+                    <InventoryList
+                      inventory={inv}
+                      refetchProducts={refetchProducts}
+                    />
+                    <Divider />
+                  </Box>
+                ))}
+              </Box>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button _hover={{ color: "orange.400" }} mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
+    </>
   );
 };
 

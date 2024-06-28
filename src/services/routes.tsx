@@ -28,6 +28,8 @@ import MyPurchasePage from "../pages/user/MyPurchasePage";
 import ProductCategoryPage from "../pages/user/ProductCategoryPage";
 import ProductDetailPage from "../pages/user/ProductDetailPage";
 
+import LoginPage from "../pages/auth/LoginPage";
+import RegisterPage from "../pages/auth/RegisterPage";
 import CreateStorePage from "../pages/seller/CreateStorePage";
 import { SearchPage } from "../pages/user/SearchPage";
 import StorePage from "../pages/user/StorePage";
@@ -35,8 +37,6 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import RegisterPage from "../pages/auth/RegisterPage";
-import LoginPage from "../pages/auth/LoginPage";
 
 const router = createBrowserRouter([
   {
