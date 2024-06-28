@@ -14,37 +14,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { User, schema } from "../../entities/User";
-import APIClient from "../../services/api-client";
-
-const apiClient = new APIClient<User>("/user/register");
+import useRegisterUser from "../../hooks/user/useRegisterUser";
 
 const RegisterationForm = () => {
-  const [loading, isLoading] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<User>({ resolver: zodResolver(schema) });
-
-  const onSubmit: SubmitHandler<User> = async (data) => {
-    try {
-      isLoading(true);
-      await apiClient.post(data);
-      console.log("registration successful");
-      reset();
-    } catch (error) {
-      console.log("registration failed");
-    } finally {
-      isLoading(false);
-    }
-  };
+  const { register, handleSubmit, loading, onSubmit, errors } =
+    useRegisterUser();
 
   return (
     <Box>
