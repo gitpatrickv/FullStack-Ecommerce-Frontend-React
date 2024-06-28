@@ -35,6 +35,7 @@ const useRegisterUser = () => {
               console.log("login successful", role)
         },
         onError: (error) => {
+            setLoading(false);
             console.error("Login failed", error);
           },
 })

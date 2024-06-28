@@ -16,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import useLogin from "../../hooks/user/useLogin";
 
-const Login = () => {
+const LoginPage = () => {
   const { register, handleSubmit, loading, onSubmit } = useLogin();
 
   return (
@@ -28,7 +28,7 @@ const Login = () => {
               {loading ? <Text>Logging In...</Text> : <Text>Log In</Text>}
             </Heading>
           </VStack>
-          <Card variant="outline" borderColor="gray" maxW="400px">
+          <Card variant="outline" borderColor="gray" w="400px">
             <Box alignSelf="flex-end">
               <Link to="/">
                 <CloseButton />
@@ -36,11 +36,11 @@ const Login = () => {
             </Box>
             <CardBody>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={3}>
+                <Stack spacing={4}>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      {...register("email")}
+                      {...register("email", { required: true })}
                       type="text"
                       placeholder="Username or Email"
                       borderColor="gray"
@@ -49,7 +49,7 @@ const Login = () => {
                   <FormControl>
                     <Input
                       disabled={loading}
-                      {...register("password")}
+                      {...register("password", { required: true })}
                       type="password"
                       placeholder="Password"
                       borderColor="gray"
@@ -58,9 +58,9 @@ const Login = () => {
                   <Button
                     isLoading={loading}
                     type="submit"
-                    bg="blue.400"
-                    _hover={{ bg: "blue.500" }}
-                    _active={{ bg: "blue.600" }}
+                    bg="orange.400"
+                    _hover={{ bg: "orange.500" }}
+                    _active={{ bg: "orange.600" }}
                   >
                     LOG IN
                   </Button>
@@ -69,13 +69,13 @@ const Login = () => {
             </CardBody>
           </Card>
 
-          <Card variant="outline" borderColor="gray" maxW="400px">
+          <Card variant="outline" borderColor="gray" w="400px">
             <CardBody>
               <HStack>
                 <Text>New User? </Text>
                 <Link to="/register">
                   <Text
-                    color="blue.400"
+                    color="orange.400"
                     _hover={{ textDecoration: "underline" }}
                   >
                     Create an account.
@@ -90,4 +90,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

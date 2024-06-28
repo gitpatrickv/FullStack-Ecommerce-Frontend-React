@@ -24,18 +24,19 @@ import ErrorPage from "../pages/user/ErrorPage";
 import FavoritePage from "../pages/user/FavoritePage";
 import HomePage from "../pages/user/HomePage";
 import Layout from "../pages/user/Layout";
-import LoginPage from "../pages/user/LoginPage";
 import MyPurchasePage from "../pages/user/MyPurchasePage";
 import ProductCategoryPage from "../pages/user/ProductCategoryPage";
 import ProductDetailPage from "../pages/user/ProductDetailPage";
-import RegisterPage from "../pages/user/RegisterPage";
+
+import CreateStorePage from "../pages/seller/CreateStorePage";
 import { SearchPage } from "../pages/user/SearchPage";
 import StorePage from "../pages/user/StorePage";
 import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import CreateStorePage from "../pages/seller/CreateStorePage";
+import RegisterPage from "../pages/auth/RegisterPage";
+import LoginPage from "../pages/auth/LoginPage";
 
 const router = createBrowserRouter([
   {
