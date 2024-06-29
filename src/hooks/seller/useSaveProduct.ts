@@ -79,7 +79,10 @@ const useSaveProduct = () => {
         })],
         { type: "application/json" })
       );
-      formData.append("file", data.file[0]);
+      // formData.append("file", data.file[0]);
+      Array.from(data.file).forEach((file) => {
+        formData.append("file", file);
+      });
 
       await mutation.mutate(formData);
       

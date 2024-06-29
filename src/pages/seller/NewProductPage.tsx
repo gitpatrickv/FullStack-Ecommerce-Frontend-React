@@ -198,6 +198,7 @@ const NewProductPage = () => {
                 <input
                   type="file"
                   accept=".jpeg, .png"
+                  multiple
                   {...register("file", { required: true })}
                 />
 

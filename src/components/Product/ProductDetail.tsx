@@ -223,8 +223,8 @@ const ProductDetail = ({ product }: Props) => {
               {hasColorsOrSizes && (
                 <>
                   <HStack mb="20px">
-                    <Text mr="40px" fontSize="xl" color="gray.600" mb="10px">
-                      Color
+                    <Text mr="10px" fontSize="xl" color="gray.600" mb="10px">
+                      Variation
                     </Text>
                     <Flex flexWrap="wrap">
                       {Array.from(
