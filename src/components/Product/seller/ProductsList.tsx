@@ -8,9 +8,11 @@ import {
   Box,
   Button,
   Divider,
+  FormLabel,
   Grid,
   GridItem,
   Image,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -18,16 +20,21 @@ import {
   ModalFooter,
   ModalOverlay,
   Text,
+  Textarea,
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
+import { useForm } from "react-hook-form";
+import { FaRegEdit } from "react-icons/fa";
 import AllProductModels from "../../../entities/AllProductResponse";
 import useDeleteProduct from "../../../hooks/seller/useDeleteProduct";
+import useUpdateProductInfo, {
+  UpdateProductInfoProps,
+} from "../../../hooks/seller/useUpdateProductInfo";
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
-
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -38,6 +45,22 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  const { onSubmit } = useUpdateProductInfo(product.productId);
+  const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
+    defaultValues: {
+      productName: product.productName,
+      productDescription: product.productDescription,
+    },
+  });
+
+  const {
+    isOpen: isProductInfoOpen,
+    onOpen: onProductInfoOpen,
+    onClose: onProductInfoClose,
+  } = useDisclosure();
+
   const {
     isOpen: updateIsOpen,
     onOpen: updateOnOpen,
@@ -50,7 +73,18 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
     onClose: deleteOnClose,
   } = useDisclosure();
 
-  const cancelRef = useRef<HTMLButtonElement>(null);
+  const handleProductInfoSubmit = async (data: {
+    productName: string;
+    productDescription: string;
+  }) => {
+    try {
+      await onSubmit(data);
+      refetchProducts();
+      onProductInfoClose();
+    } catch (error) {
+      console.error("Error updating product info: ", error);
+    }
+  };
 
   const handleDeleteProductClick = () => {
     deleteProduct(
@@ -166,15 +200,42 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
             <ModalCloseButton />
             <ModalBody mt="30px">
               <Box>
-                <Text
-                  fontSize={fontSize}
-                  fontWeight="semibold"
-                  textTransform="capitalize"
-                  mb="5px"
-                  color="orange.400"
-                >
-                  {product.productName}
-                </Text>
+                <Box display="flex" justifyContent="space-between">
+                  <Box display="flex" flexDirection="column">
+                    <Box display="flex" alignItems="center">
+                      <Text
+                        fontSize={fontSize}
+                        fontWeight="semibold"
+                        textTransform="capitalize"
+                        mb="5px"
+                        color="orange.400"
+                        mr="10px"
+                      >
+                        {product.productName}
+                      </Text>
+                      <Box pb="5px" cursor="pointer" color="gray.500">
+                        <FaRegEdit size="20" onClick={onProductInfoOpen} />
+                      </Box>
+                    </Box>
+                    <Text
+                      fontSize="small"
+                      textTransform="capitalize"
+                      mb="5px"
+                      color="gray.400"
+                    >
+                      {product.productDescription}
+                    </Text>
+                  </Box>
+                  <Box position="relative" top="-5px" pl="10px">
+                    <Image
+                      src={product.photoUrl}
+                      maxWidth="100px"
+                      maxHeight="60px"
+                      mr="40px"
+                    />
+                  </Box>
+                </Box>
+                <Divider mt="5px" />
                 <Box>
                   <Grid
                     templateColumns="0.3fr 0.3fr 0.3fr 0.3fr 0.6fr"
@@ -189,6 +250,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                           fontSize="md"
                           fontWeight="semibold"
                           color="orange.400"
+                          ml="2px"
                         >
                           Qty.
                         </Text>
@@ -299,6 +361,63 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
             </AlertDialogContent>
           </AlertDialogOverlay>
         </AlertDialog>
+      </Box>
+      <Box>
+        <Modal
+          isOpen={isProductInfoOpen}
+          onClose={onProductInfoClose}
+          size="xl"
+          isCentered
+        >
+          <ModalOverlay />
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleSubmit(handleProductInfoSubmit)(event);
+            }}
+          >
+            <ModalContent>
+              <ModalCloseButton />
+              <ModalBody mt="30px">
+                <Box>
+                  <Text
+                    fontSize={fontSize}
+                    fontWeight="semibold"
+                    textTransform="capitalize"
+                    mb="5px"
+                    color="orange.400"
+                  >
+                    Product Information
+                  </Text>
+                  <FormLabel color="gray.400">Product Name</FormLabel>
+                  <Input
+                    {...register("productName", { required: true })}
+                    type="text"
+                    placeholder="Product Name"
+                    mb="10px"
+                  />
+                  <FormLabel color="gray.400">Product Description</FormLabel>
+                  <Textarea
+                    {...register("productDescription", { required: true })}
+                    placeholder="Product Description"
+                  />
+                </Box>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button _hover={{ color: "orange.400" }} mr="5px" type="submit">
+                  Update
+                </Button>
+                <Button
+                  _hover={{ color: "orange.400" }}
+                  onClick={onProductInfoClose}
+                >
+                  Close
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </form>
+        </Modal>
       </Box>
     </>
   );

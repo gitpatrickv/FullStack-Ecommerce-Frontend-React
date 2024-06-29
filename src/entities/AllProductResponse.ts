@@ -3,6 +3,7 @@ import Inventory from "./Inventory";
 export default interface AllProductModels {
     productId: string;
     productName: string;
+    productDescription: string;
     price: number;
     photoUrl: string;
     favorites: boolean;
