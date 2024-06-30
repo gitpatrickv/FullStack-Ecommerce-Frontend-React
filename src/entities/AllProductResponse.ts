@@ -13,6 +13,7 @@ export default interface AllProductModels {
     categoryId: string;
     categoryName: string;
     inventoryModels: Inventory[];
+    productSold: number;
 }
 
 interface PageResponse {

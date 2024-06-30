@@ -8,6 +8,7 @@ import {
   Heading,
   Input,
   Stack,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 
@@ -47,10 +48,9 @@ const CreateStorePage = () => {
                       borderColor="gray.500"
                     />
 
-                    <Input
+                    <Textarea
                       disabled={loading}
                       {...register("storeDescription")}
-                      type="text"
                       placeholder="Store Description"
                       borderColor="gray.500"
                     />

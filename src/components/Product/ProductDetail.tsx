@@ -12,6 +12,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { MdStar } from "react-icons/md";
+import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Inventory from "../../entities/Inventory";
@@ -197,7 +199,28 @@ const ProductDetail = ({ product }: Props) => {
               >
                 {product.productName}
               </Text>
-              <Box mb="20px">
+              <Box display="flex" alignItems="center">
+                <Box as={MdStar} color="orange.400" mr="10px" />
+                <Text mr="10px" color="gray.600">
+                  |
+                </Text>
+                <Text mr="10px">
+                  30{" "}
+                  <Text as="span" color="gray.600">
+                    ratings
+                  </Text>
+                </Text>
+                <Text mr="10px" color="gray.600">
+                  |
+                </Text>
+                <Text>
+                  {product.productSold}{" "}
+                  <Text as="span" color="gray.600">
+                    Sold
+                  </Text>
+                </Text>
+              </Box>
+              <Box mb="15px" mt="5px">
                 {filteredInventory ? (
                   <Text
                     fontSize="xx-large"
@@ -218,11 +241,11 @@ const ProductDetail = ({ product }: Props) => {
                   </Text>
                 )}
               </Box>
-              {!hasColorsOrSizes && <Box mb="210px"></Box>}
+              {!hasColorsOrSizes && <Box mb="180px"></Box>}
 
               {hasColorsOrSizes && (
                 <>
-                  <HStack mb="20px">
+                  <HStack mb="15px">
                     <Text mr="10px" fontSize="xl" color="gray.600" mb="10px">
                       Variation
                     </Text>
@@ -253,7 +276,7 @@ const ProductDetail = ({ product }: Props) => {
                       ))}
                     </Flex>
                   </HStack>
-                  <HStack mb="20px">
+                  <HStack mb="15px">
                     <Text mr="52px" fontSize="xl" color="gray.600" mb="10px">
                       Size
                     </Text>
@@ -341,7 +364,8 @@ const ProductDetail = ({ product }: Props) => {
                     _hover={{ color: "orange.400" }}
                     isDisabled={true}
                   >
-                    Add to Cart
+                    <BsCartPlus size="20px" />
+                    <Text pl="5px">Add To Cart</Text>
                   </Button>
                 ) : (
                   <>
@@ -352,7 +376,8 @@ const ProductDetail = ({ product }: Props) => {
                         mr="60px"
                         _hover={{ color: "orange.400" }}
                       >
-                        Add to Cart
+                        <BsCartPlus size="20px" />
+                        <Text pl="5px">Add To Cart</Text>
                       </Button>
                     ) : (
                       <Button
@@ -361,7 +386,8 @@ const ProductDetail = ({ product }: Props) => {
                         mr="60px"
                         _hover={{ color: "orange.400" }}
                       >
-                        Add to Cart
+                        <BsCartPlus size="20px" />
+                        <Text pl="5px">Add To Cart</Text>
                       </Button>
                     )}
                   </>
@@ -391,7 +417,7 @@ const ProductDetail = ({ product }: Props) => {
                         onClick={handleAddToFavoritesClick}
                       />
                       <Text pl="10px" fontSize="lg" fontWeight="semibold">
-                        Add to Favorites
+                        Add To Favorites
                       </Text>
                     </>
                   ) : (

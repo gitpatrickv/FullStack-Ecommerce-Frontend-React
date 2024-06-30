@@ -11,6 +11,7 @@ import {
   Select,
   Spacer,
   Text,
+  Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useFieldArray } from "react-hook-form";
@@ -19,9 +20,26 @@ import useSaveProduct from "../../hooks/seller/useSaveProduct";
 import useGetAllCategory from "../../hooks/user/useGetAllCategory";
 
 const NewProductPage = () => {
-  const { onSubmit, register, handleSubmit, control } = useSaveProduct();
+  const { onSubmit, register, handleSubmit, control, errors } =
+    useSaveProduct();
   const [isVariation, setIsVariation] = useState<boolean>(false);
+  const [isColorsAndSizes, setIsColorsAndSizes] = useState<boolean>(false);
+
   const { data: category } = useGetAllCategory();
+  const colors = [
+    "Red",
+    "Green",
+    "Blue",
+    "Yellow",
+    "Orange",
+    "Purple",
+    "Pink",
+    "Black",
+    "White",
+    "Gray",
+    "Brown",
+  ];
+  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
   const {
     fields: variationFields,
@@ -57,11 +75,17 @@ const NewProductPage = () => {
               <Text mb="5px" fontSize="large" fontWeight="semibold">
                 Product Name
               </Text>
-              <Input {...register("productName", { required: true })} />
+              <Input
+                {...register("productName", { required: true })}
+                placeholder="Product Name"
+              />
               <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
                 Product Description
               </Text>
-              <Input {...register("productDescription", { required: true })} />
+              <Textarea
+                {...register("productDescription", { required: true })}
+                placeholder="Product Description"
+              />
               <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
                 Category
               </Text>
@@ -75,7 +99,7 @@ const NewProductPage = () => {
                   </option>
                 ))}
               </Select>
-              <Box display="flex" mt="20px" alignItems="center">
+              <Box display="flex" mt="20px" alignItems="center" mr="10px">
                 <Checkbox
                   size="lg"
                   colorScheme="green"
@@ -91,38 +115,88 @@ const NewProductPage = () => {
                   {variationFields.length === 0 ? (
                     ""
                   ) : (
-                    <Box display="flex" textAlign="center" mt="10px" mb="10px">
-                      <Text fontSize="large">Variation</Text>
-                      <Spacer />
-                      <Text fontSize="large" mr="20px">
-                        Size
-                      </Text>
-                      <Spacer />
-                      <Text fontSize="large" mr="30px" ml="15px">
-                        Price
-                      </Text>
-                      <Spacer />
-                      <Text fontSize="large" mr="35px">
-                        Quantity
-                      </Text>
-                      <Spacer />
-                    </Box>
+                    <>
+                      <Box display="flex" mt="10px" alignItems="center">
+                        <Checkbox
+                          size="lg"
+                          colorScheme="green"
+                          isChecked={isColorsAndSizes}
+                          onChange={() =>
+                            setIsColorsAndSizes(!isColorsAndSizes)
+                          }
+                        />
+                        <Text fontSize="large" ml="5px" color="gray.500">
+                          Colors and Sizes
+                        </Text>
+                      </Box>
+                      <Box
+                        display="flex"
+                        textAlign="center"
+                        mt="10px"
+                        mb="10px"
+                      >
+                        <Text fontSize="large">Variation</Text>
+                        <Spacer />
+                        <Text fontSize="large" mr="20px">
+                          Size
+                        </Text>
+                        <Spacer />
+                        <Text fontSize="large" mr="30px" ml="15px">
+                          Price
+                        </Text>
+                        <Spacer />
+                        <Text fontSize="large" mr="35px">
+                          Quantity
+                        </Text>
+                        <Spacer />
+                      </Box>
+                    </>
                   )}
 
                   {variationFields.map((field, index) => (
                     <HStack key={field.id} spacing={4} mb="10px">
-                      <Input
-                        placeholder="Variation"
-                        {...register(`inventoryModels.${index}.colors`, {
-                          required: true,
-                        })}
-                      />
-                      <Input
-                        placeholder="Size"
-                        {...register(`inventoryModels.${index}.sizes`, {
-                          required: true,
-                        })}
-                      />
+                      {isColorsAndSizes ? (
+                        <>
+                          <Select
+                            {...register(`inventoryModels.${index}.colors`, {
+                              required: true,
+                            })}
+                          >
+                            {colors.map((value, index) => (
+                              <option key={index} value={value}>
+                                {value}
+                              </option>
+                            ))}
+                          </Select>
+                          <Select
+                            {...register(`inventoryModels.${index}.sizes`, {
+                              required: true,
+                            })}
+                          >
+                            {sizes.map((value, index) => (
+                              <option key={index} value={value}>
+                                {value}
+                              </option>
+                            ))}
+                          </Select>
+                        </>
+                      ) : (
+                        <>
+                          <Input
+                            placeholder="Variation"
+                            {...register(`inventoryModels.${index}.colors`, {
+                              required: true,
+                            })}
+                          />
+                          <Input
+                            placeholder="Size"
+                            {...register(`inventoryModels.${index}.sizes`, {
+                              required: true,
+                            })}
+                          />
+                        </>
+                      )}
+
                       <Input
                         type="number"
                         placeholder="Price"
@@ -193,15 +267,22 @@ const NewProductPage = () => {
               <Box display="flex" flexDirection="column">
                 <Box display="flex" alignItems="center" mb="15px" mt="20px">
                   <IoMdImages size="30px" />
-                  <Text ml="10px">Add Product Image</Text>
+                  <Text ml="10px">Upload Product Images (Max Limit: 4)</Text>
                 </Box>
                 <input
                   type="file"
                   accept=".jpeg, .png"
                   multiple
-                  {...register("file", { required: true })}
+                  {...register("file", {
+                    required: true,
+                    validate: {
+                      maxFiles: (files) =>
+                        files.length <= 4 ||
+                        "You can only upload a maximum of 4 images.",
+                    },
+                  })}
                 />
-
+                {errors.file && <Text color="red">{errors.file.message}</Text>}
                 <Button
                   type="submit"
                   _hover={{ color: "orange.400" }}

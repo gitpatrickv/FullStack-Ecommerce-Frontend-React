@@ -28,7 +28,7 @@ const useSaveProduct = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, control, reset } = useForm<SaveProductProps>();
+  const { register, handleSubmit, control, reset, formState: { errors } } = useForm<SaveProductProps>();
 
   const mutation = useMutation(
     (formData: FormData) =>
@@ -92,7 +92,8 @@ const useSaveProduct = () => {
     onSubmit,
     register,
     handleSubmit,
-    control
+    control,
+    errors
   };
 };
 

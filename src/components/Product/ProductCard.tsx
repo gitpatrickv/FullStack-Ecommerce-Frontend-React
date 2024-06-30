@@ -45,7 +45,7 @@ const ProductCard = ({ product }: Props) => {
         <Flex mt={2} align="center">
           <Box as={MdStar} color="orange.400" />
           <Text ml={1} fontSize="sm">
-            <b>4.84</b> (190)
+            <b>4.84</b> ({product.productSold})
           </Text>
         </Flex>
       </CardBody>

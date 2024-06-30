@@ -13,4 +13,5 @@ export default interface Product {
     inventoryModels: Inventory[];
     inventoryId: number;
     categoryId: string;
+    productSold: number;
 }
