@@ -29,6 +29,8 @@ import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import ProductImages from "./ProductImages";
+import Review from "../Review/Review";
+import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
 interface Props {
   product: Product;
 }
@@ -44,7 +46,7 @@ const ProductDetail = ({ product }: Props) => {
       reset: state.reset,
     })
   );
-
+  const { data: rating } = useGetProductRatingAvg(product.productId);
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: addToCart } = useAddToCart();
@@ -204,12 +206,13 @@ const ProductDetail = ({ product }: Props) => {
                     {product.productName}
                   </Text>
                   <Box display="flex" alignItems="center">
+                    <Text mr="5px">{rating?.ratingAverage || 0}</Text>
                     <Box as={MdStar} color="orange.400" mr="10px" />
                     <Text mr="10px" color="gray.600">
                       |
                     </Text>
                     <Text mr="10px">
-                      30{" "}
+                      {rating?.totalNumberOfUserRating || 0}{" "}
                       <Text as="span" color="gray.600">
                         ratings
                       </Text>
@@ -548,6 +551,22 @@ const ProductDetail = ({ product }: Props) => {
               <Text>{product.productDescription}</Text>
             </CardBody>
           </Card>
+          <Box mt="15px">
+            <Card>
+              <CardBody>
+                <Text
+                  fontSize="x-large"
+                  fontWeight="semibold"
+                  textTransform="capitalize"
+                  mb="10px"
+                  color="orange.400"
+                >
+                  Product Ratings
+                </Text>
+                <Review />
+              </CardBody>
+            </Card>
+          </Box>
         </GridItem>
       </Grid>
     </>
