@@ -12,9 +12,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { MdStar } from "react-icons/md";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
+import { MdStar } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Inventory from "../../entities/Inventory";
 import Product from "../../entities/Product";
@@ -77,10 +77,12 @@ const ProductDetail = ({ product }: Props) => {
 
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
+    reset();
   };
 
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);
+    reset();
   };
 
   const filterInventory = (color: string, size: string) => {
@@ -94,10 +96,10 @@ const ProductDetail = ({ product }: Props) => {
     (inv) => !!inv.colors || !!inv.sizes
   );
 
-  const getAvailableColors = () => {
+  const getAvailableColors = (size: string) => {
     const uniqueColors = new Set<string>();
     product.inventoryModels.forEach((inv) => {
-      if (inv.quantity > 0) {
+      if (inv.sizes === size && inv.quantity > 0) {
         uniqueColors.add(inv.colors);
       }
     });
@@ -114,7 +116,7 @@ const ProductDetail = ({ product }: Props) => {
     return Array.from(uniqueSizes);
   };
 
-  const availableColors = getAvailableColors();
+  const availableColors = getAvailableColors(selectedSize);
   const availableSizes = getAvailableSizes(selectedColor);
 
   const handleAddToCartClick = async () => {
@@ -175,266 +177,328 @@ const ProductDetail = ({ product }: Props) => {
 
   return (
     <>
-      <Grid
-        templateColumns="200px 0.6fr 600px 200px"
-        templateAreas={`
-      "sidebar content1 content2 sidebar1"
+      <Card>
+        <CardBody>
+          <Grid
+            templateColumns="0.6fr 600px "
+            templateAreas={`
+      "content1 content2"
     `}
-      >
-        <GridItem area="content1">
-          <Box p={5} w={[600, 500, 700]}>
-            <ProductImages productImage={product.productImage} />
-          </Box>
-        </GridItem>
-
-        <GridItem area="content2">
-          <Box p={5}>
-            <Box>
-              <Text
-                fontSize="x-large"
-                fontWeight="semibold"
-                textTransform="capitalize"
-                mb="5px"
-                mr="20px"
-              >
-                {product.productName}
-              </Text>
-              <Box display="flex" alignItems="center">
-                <Box as={MdStar} color="orange.400" mr="10px" />
-                <Text mr="10px" color="gray.600">
-                  |
-                </Text>
-                <Text mr="10px">
-                  30{" "}
-                  <Text as="span" color="gray.600">
-                    ratings
-                  </Text>
-                </Text>
-                <Text mr="10px" color="gray.600">
-                  |
-                </Text>
-                <Text>
-                  {product.productSold}{" "}
-                  <Text as="span" color="gray.600">
-                    Sold
-                  </Text>
-                </Text>
+          >
+            <GridItem area="content1">
+              <Box p={5} w={[600, 500, 700]}>
+                <ProductImages productImage={product.productImage} />
               </Box>
-              <Box mb="15px" mt="5px">
-                {filteredInventory ? (
+            </GridItem>
+
+            <GridItem area="content2">
+              <Box p={3}>
+                <Box>
                   <Text
-                    fontSize="xx-large"
+                    fontSize="x-large"
                     fontWeight="semibold"
                     textTransform="capitalize"
-                    color="orange.400"
+                    mb="5px"
+                    mr="20px"
                   >
-                    {formatCurrency(filteredInventory?.price || 0)}
+                    {product.productName}
                   </Text>
-                ) : (
-                  <Text
-                    fontSize="xx-large"
-                    fontWeight="semibold"
-                    textTransform="capitalize"
-                    color="orange.400"
-                  >
-                    {formatCurrency(product.inventoryModels[0].price)}
-                  </Text>
-                )}
-              </Box>
-              {!hasColorsOrSizes && <Box mb="180px"></Box>}
+                  <Box display="flex" alignItems="center">
+                    <Box as={MdStar} color="orange.400" mr="10px" />
+                    <Text mr="10px" color="gray.600">
+                      |
+                    </Text>
+                    <Text mr="10px">
+                      30{" "}
+                      <Text as="span" color="gray.600">
+                        ratings
+                      </Text>
+                    </Text>
+                    <Text mr="10px" color="gray.600">
+                      |
+                    </Text>
+                    <Text>
+                      {product.productSold}{" "}
+                      <Text as="span" color="gray.600">
+                        Sold
+                      </Text>
+                    </Text>
+                  </Box>
+                  <Box mb="15px" mt="5px">
+                    {filteredInventory ? (
+                      <Text
+                        fontSize="xx-large"
+                        fontWeight="semibold"
+                        textTransform="capitalize"
+                        color="orange.400"
+                      >
+                        {formatCurrency(filteredInventory?.price || 0)}
+                      </Text>
+                    ) : (
+                      <Text
+                        fontSize="xx-large"
+                        fontWeight="semibold"
+                        textTransform="capitalize"
+                        color="orange.400"
+                      >
+                        {formatCurrency(product.inventoryModels[0].price)}
+                      </Text>
+                    )}
+                  </Box>
+                  {!hasColorsOrSizes && <Box mb="180px"></Box>}
 
-              {hasColorsOrSizes && (
-                <>
-                  <HStack mb="15px">
-                    <Text mr="10px" fontSize="xl" color="gray.600" mb="10px">
-                      Variation
-                    </Text>
-                    <Flex flexWrap="wrap">
-                      {Array.from(
-                        new Set(
-                          product.inventoryModels.map((inv) => inv.colors)
-                        )
-                      ).map((color) => (
-                        <Button
-                          key={color}
-                          w="100px"
-                          fontSize="md"
-                          onClick={() => handleColorChange(color)}
-                          variant={
-                            selectedColor === color ? "solid" : "outline"
-                          }
-                          color={
-                            selectedColor === color ? "orange.400" : "gray.500"
-                          }
-                          textTransform="capitalize"
-                          isDisabled={!availableColors.includes(color)}
+                  {hasColorsOrSizes && (
+                    <>
+                      <HStack mb="15px">
+                        <Text
+                          mr="17px"
+                          fontSize="xl"
+                          color="gray.600"
                           mb="10px"
-                          mr="5px"
                         >
-                          {color}
-                        </Button>
-                      ))}
-                    </Flex>
-                  </HStack>
-                  <HStack mb="15px">
-                    <Text mr="52px" fontSize="xl" color="gray.600" mb="10px">
-                      Size
-                    </Text>
-                    <Flex flexWrap="wrap">
-                      {Array.from(
-                        new Set(product.inventoryModels.map((inv) => inv.sizes))
-                      ).map((size) => (
-                        <Button
-                          key={size}
-                          w="100px"
-                          fontSize="md"
-                          onClick={() => handleSizeChange(size)}
-                          variant={selectedSize === size ? "solid" : "outline"}
-                          color={
-                            selectedSize === size ? "orange.400" : "gray.500"
-                          }
-                          textTransform="capitalize"
-                          isDisabled={!availableSizes.includes(size)}
+                          Variants
+                        </Text>
+                        <Flex flexWrap="wrap">
+                          {Array.from(
+                            new Set(
+                              product.inventoryModels.map((inv) => inv.colors)
+                            )
+                          ).map((color) => (
+                            <Button
+                              key={color}
+                              w="100px"
+                              fontSize="md"
+                              onClick={() => handleColorChange(color)}
+                              variant={
+                                selectedColor === color ? "solid" : "outline"
+                              }
+                              color={
+                                selectedColor === color
+                                  ? "orange.400"
+                                  : "gray.200"
+                              }
+                              textTransform="capitalize"
+                              isDisabled={!availableColors.includes(color)}
+                              mb="10px"
+                              mr="5px"
+                            >
+                              {color}
+                            </Button>
+                          ))}
+                        </Flex>
+                      </HStack>
+                      <HStack mb="15px">
+                        <Text
+                          mr="52px"
+                          fontSize="xl"
+                          color="gray.600"
                           mb="10px"
-                          mr="5px"
                         >
-                          {size}
-                        </Button>
-                      ))}
-                    </Flex>
-                  </HStack>
-                </>
-              )}
-              <Box>
-                <HStack mb="10px">
-                  <Text mr="12px" fontSize="xl" color="gray.600" mb="5px">
-                    Quantity
-                  </Text>
-                  <Button
-                    onClick={() => decrement(filteredInventory?.quantity || 0)}
-                    _hover={{ color: "orange.400" }}
-                  >
-                    -
-                  </Button>
-                  {filteredInventory?.quantity === 0 ? (
-                    <Text mt="5px" fontSize="lg" fontWeight="semibold">
-                      0
+                          Size
+                        </Text>
+                        <Flex flexWrap="wrap">
+                          {Array.from(
+                            new Set(
+                              product.inventoryModels.map((inv) => inv.sizes)
+                            )
+                          ).map((size) => (
+                            <Button
+                              key={size}
+                              w="100px"
+                              fontSize="md"
+                              onClick={() => handleSizeChange(size)}
+                              variant={
+                                selectedSize === size ? "solid" : "outline"
+                              }
+                              color={
+                                selectedSize === size
+                                  ? "orange.400"
+                                  : "gray.200"
+                              }
+                              textTransform="capitalize"
+                              isDisabled={!availableSizes.includes(size)}
+                              mb="10px"
+                              mr="5px"
+                            >
+                              {size}
+                            </Button>
+                          ))}
+                        </Flex>
+                      </HStack>
+                    </>
+                  )}
+                  <Box mb="10px" display="flex">
+                    <Text mr="20px" fontSize="xl" color="gray.600" mt="5px">
+                      Quantity
                     </Text>
-                  ) : (
                     <Box
-                      width="70px"
+                      width="40px"
                       height="40px"
-                      border="1px solid "
-                      borderColor="gray.700"
-                      borderRadius="md"
+                      border="1px solid"
+                      borderColor="gray.600"
                       textAlign="center"
+                      cursor="pointer"
+                      onClick={() =>
+                        decrement(filteredInventory?.quantity || 0)
+                      }
+                      _hover={{ color: "orange.400" }}
+                      userSelect="none"
                     >
-                      <Text mt="5px" fontSize="lg" fontWeight="semibold">
-                        {count}
+                      <Text fontSize="x-large" position="relative" bottom="2px">
+                        -
                       </Text>
                     </Box>
-                  )}
 
-                  <Button
-                    onClick={() => increment(filteredInventory?.quantity || 0)}
-                    _hover={{ color: "orange.400" }}
-                  >
-                    +
-                  </Button>
-                  {filteredInventory?.quantity === 0 ? (
-                    <Text color="red">Out Of Stock</Text>
-                  ) : (
-                    <>
-                      {filteredInventory ? (
-                        <Text color="gray.500">
-                          {filteredInventory?.quantity} pieces available
+                    {filteredInventory?.quantity === 0 ? (
+                      <Box
+                        width="70px"
+                        height="40px"
+                        border="1px solid "
+                        borderColor="gray.600"
+                        textAlign="center"
+                      >
+                        <Text mt="5px" fontSize="lg" fontWeight="semibold">
+                          0
+                        </Text>
+                      </Box>
+                    ) : (
+                      <Box
+                        width="70px"
+                        height="40px"
+                        border="1px solid "
+                        borderColor="gray.600"
+                        textAlign="center"
+                      >
+                        <Text mt="5px" fontSize="lg" fontWeight="semibold">
+                          {count}
+                        </Text>
+                      </Box>
+                    )}
+
+                    <Box
+                      width="40px"
+                      height="40px"
+                      border="1px solid"
+                      borderColor="gray.600"
+                      textAlign="center"
+                      cursor="pointer"
+                      onClick={() =>
+                        increment(filteredInventory?.quantity || 0)
+                      }
+                      _hover={{ color: "orange.400" }}
+                      userSelect="none"
+                    >
+                      <Text fontSize="x-large" position="relative" bottom="2px">
+                        +
+                      </Text>
+                    </Box>
+                    <Box mt="8px" ml="10px">
+                      {filteredInventory?.quantity === 0 ? (
+                        <Text color="red" fontSize="md">
+                          Out Of Stock
                         </Text>
                       ) : (
-                        <Text color="red">Not available</Text>
+                        <>
+                          {filteredInventory ? (
+                            <Text color="gray.600" fontSize="md">
+                              {filteredInventory?.quantity} pieces available
+                            </Text>
+                          ) : (
+                            <Text color="red" fontSize="md">
+                              Not available
+                            </Text>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </HStack>
-              </Box>
-              <Box display="flex" alignItems="center">
-                {filteredInventory?.quantity === 0 ? (
-                  <Button
-                    mt="4"
-                    mr="60px"
-                    _hover={{ color: "orange.400" }}
-                    isDisabled={true}
-                  >
-                    <BsCartPlus size="20px" />
-                    <Text pl="5px">Add To Cart</Text>
-                  </Button>
-                ) : (
-                  <>
-                    {hasColorsOrSizes ? (
+                    </Box>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    {filteredInventory?.quantity === 0 ? (
                       <Button
                         mt="4"
-                        onClick={handleAddToCartVariationClick}
                         mr="60px"
                         _hover={{ color: "orange.400" }}
+                        isDisabled={true}
                       >
                         <BsCartPlus size="20px" />
-                        <Text pl="5px">Add To Cart</Text>
+                        <Text pl="10px">Add To Cart</Text>
                       </Button>
                     ) : (
-                      <Button
-                        mt="4"
-                        onClick={handleAddToCartClick}
-                        mr="60px"
-                        _hover={{ color: "orange.400" }}
-                      >
-                        <BsCartPlus size="20px" />
-                        <Text pl="5px">Add To Cart</Text>
-                      </Button>
+                      <>
+                        {hasColorsOrSizes ? (
+                          <Button
+                            mt="4"
+                            onClick={handleAddToCartVariationClick}
+                            mr="60px"
+                            _hover={{ color: "orange.400" }}
+                          >
+                            <BsCartPlus size="20px" />
+                            <Text pl="10px">Add To Cart</Text>
+                          </Button>
+                        ) : (
+                          <Button
+                            mt="4"
+                            onClick={handleAddToCartClick}
+                            mr="60px"
+                            _hover={{ color: "orange.400" }}
+                          >
+                            <BsCartPlus size="20px" />
+                            <Text pl="10px">Add To Cart</Text>
+                          </Button>
+                        )}
+                      </>
                     )}
-                  </>
-                )}
 
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  position="relative"
-                  top="10px"
-                >
-                  {user ? (
-                    <>
-                      <IconButton
-                        aria-label="Search"
-                        icon={
-                          addToFavorite ? (
-                            <FaHeart color="red" size="30px" />
-                          ) : (
-                            <FaRegHeart size="30px" />
-                          )
-                        }
-                        type="button"
-                        bg="transparent"
-                        _hover={{ bg: "transparent" }}
-                        onClick={handleAddToFavoritesClick}
-                      />
-                      <Text pl="10px" fontSize="lg" fontWeight="semibold">
-                        Add To Favorites
-                      </Text>
-                    </>
-                  ) : (
-                    ""
-                  )}
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      position="relative"
+                      top="10px"
+                    >
+                      {user ? (
+                        <>
+                          <IconButton
+                            aria-label="Search"
+                            icon={
+                              addToFavorite ? (
+                                <FaHeart color="red" size="30px" />
+                              ) : (
+                                <FaRegHeart size="30px" />
+                              )
+                            }
+                            type="button"
+                            bg="transparent"
+                            _hover={{ bg: "transparent" }}
+                            onClick={handleAddToFavoritesClick}
+                          />
+                          <Text
+                            pl="5px"
+                            fontSize="lg"
+                            fontWeight="semibold"
+                            cursor="pointer"
+                            onClick={handleAddToFavoritesClick}
+                          >
+                            Add To Favorites
+                          </Text>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </Box>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          </Box>
-        </GridItem>
-      </Grid>
+            </GridItem>
+          </Grid>
+        </CardBody>
+      </Card>
       <Grid
-        templateColumns="200px 1fr 200px"
+        templateColumns="1fr"
         templateAreas={`
-      "sidebar content1 sidebar1"
+      "content1 "
     `}
-        mt="30px"
+        mt="15px"
       >
         <GridItem area="content1">
           <Card>
@@ -470,7 +534,7 @@ const ProductDetail = ({ product }: Props) => {
               </Box>
             </CardBody>
           </Card>
-          <Card mt="20px">
+          <Card mt="15px">
             <CardBody>
               <Text
                 fontSize="x-large"

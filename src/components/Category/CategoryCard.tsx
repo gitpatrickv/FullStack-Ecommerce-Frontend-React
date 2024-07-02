@@ -14,7 +14,12 @@ const CategoryCard = ({ category }: Props) => {
   };
 
   return (
-    <Card maxW="150px" cursor="pointer" onClick={handleNavigateClick}>
+    <Card
+      maxW="150px"
+      height="150px"
+      cursor="pointer"
+      onClick={handleNavigateClick}
+    >
       <CardBody>
         <Box
           display="flex"
@@ -29,7 +34,7 @@ const CategoryCard = ({ category }: Props) => {
             }
             size="lg"
           />
-          <Text fontSize="small" whiteSpace="nowrap" mt="10px">
+          <Text fontSize="small" mt="10px" textAlign="center">
             {category.categoryName}
           </Text>
         </Box>

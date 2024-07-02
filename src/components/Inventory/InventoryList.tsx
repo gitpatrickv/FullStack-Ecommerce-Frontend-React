@@ -74,7 +74,7 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
   return (
     <>
       <Grid
-        templateColumns="0.3fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateColumns="0.2fr 0.3fr 0.4fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
   "content1 content2 content3 content4 content5 content6"
 `}

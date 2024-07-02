@@ -238,7 +238,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                 <Divider mt="5px" />
                 <Box>
                   <Grid
-                    templateColumns="0.3fr 0.3fr 0.3fr 0.3fr 0.6fr"
+                    templateColumns="0.2fr 0.3fr 0.4fr 0.3fr 0.6fr"
                     templateAreas={`
 "content1 content2 content3 content4 content5 "
 `}
@@ -272,8 +272,9 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                           fontSize="md"
                           fontWeight="semibold"
                           color="orange.400"
+                          ml="12px"
                         >
-                          Variation
+                          Variants
                         </Text>
                       ) : (
                         ""
@@ -285,6 +286,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                           fontSize="md"
                           fontWeight="semibold"
                           color="orange.400"
+                          ml="4px"
                         >
                           Size
                         </Text>
