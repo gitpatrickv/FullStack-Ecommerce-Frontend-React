@@ -146,7 +146,12 @@ const AccountProfilePage = () => {
               id="file-upload"
             />
             <label htmlFor="file-upload">
-              <Button as="span" mt="20px" cursor="pointer">
+              <Button
+                as="span"
+                mt="20px"
+                cursor="pointer"
+                _hover={{ color: "orange.400" }}
+              >
                 Select Image
               </Button>
             </label>

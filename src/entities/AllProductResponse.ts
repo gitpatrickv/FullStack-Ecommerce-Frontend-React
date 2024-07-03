@@ -1,13 +1,19 @@
+import Inventory from "./Inventory";
+
 export default interface AllProductModels {
     productId: string;
     productName: string;
+    productDescription: string;
     price: number;
     photoUrl: string;
     favorites: boolean;
     quantity: number;
     storeId: string;
     storeName: string;
-    categoryId: number;
+    categoryId: string;
+    categoryName: string;
+    inventoryModels: Inventory[];
+    productSold: number;
 }
 
 interface PageResponse {

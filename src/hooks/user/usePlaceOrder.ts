@@ -24,6 +24,7 @@ const usePlaceOrder = () => {
             queryClient.invalidateQueries(['cartTotal']);
             queryClient.invalidateQueries(['toPayOrders']);
             queryClient.invalidateQueries(['productDetail']);
+            queryClient.invalidateQueries(['product']);
             toast({
                 position: "top",
                 title: "Your order has been placed successfully!",

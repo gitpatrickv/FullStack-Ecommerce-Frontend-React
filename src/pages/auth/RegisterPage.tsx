@@ -14,37 +14,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { User, schema } from "../../entities/User";
-import APIClient from "../../services/api-client";
+import useRegisterUser from "../../hooks/user/useRegisterUser";
 
-const apiClient = new APIClient<User>("/user/register");
-
-const RegisterationForm = () => {
-  const [loading, isLoading] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<User>({ resolver: zodResolver(schema) });
-
-  const onSubmit: SubmitHandler<User> = async (data) => {
-    try {
-      isLoading(true);
-      await apiClient.post(data);
-      console.log("registration successful");
-      reset();
-    } catch (error) {
-      console.log("registration failed");
-    } finally {
-      isLoading(false);
-    }
-  };
+const RegisterPage = () => {
+  const { register, handleSubmit, loading, onSubmit, errors } =
+    useRegisterUser();
 
   return (
     <Box>
@@ -53,7 +28,7 @@ const RegisterationForm = () => {
           <VStack as="header" spacing="6" mt="8">
             <Heading>Register</Heading>
           </VStack>
-          <Card variant="outline" borderColor="gray" maxW="400px">
+          <Card variant="outline" borderColor="gray" w="500px">
             <Box alignSelf="flex-end">
               <Link to="/">
                 <CloseButton />
@@ -68,47 +43,67 @@ const RegisterationForm = () => {
               >
                 <Stack spacing={3}>
                   <Input
-                    disabled={loading}
-                    {...register("email")}
+                    {...register("email", { required: true })}
                     type="text"
                     placeholder="Email"
+                    disabled={loading}
                   />
                   {errors.email && (
                     <Text color="red">{errors.email.message}</Text>
                   )}
+
                   <Input
-                    disabled={loading}
-                    {...register("name")}
+                    {...register("name", { required: true })}
                     type="text"
                     placeholder="Name"
-                  />
-                  <Input
                     disabled={loading}
-                    {...register("address")}
+                  />
+                  {errors.name && (
+                    <Text color="red">{errors.name.message}</Text>
+                  )}
+
+                  <Input
+                    {...register("address", { required: true })}
                     type="text"
                     placeholder="Address"
-                  />
-                  <Input
                     disabled={loading}
-                    {...register("contactNumber")}
+                  />
+                  {errors.address && (
+                    <Text color="red">{errors.address.message}</Text>
+                  )}
+
+                  <Input
+                    {...register("contactNumber", { required: true })}
                     type="text"
                     placeholder="Contact Number"
-                  />
-                  <Input
                     disabled={loading}
-                    {...register("password")}
+                  />
+                  {errors.contactNumber && (
+                    <Text color="red">{errors.contactNumber.message}</Text>
+                  )}
+
+                  <Input
+                    {...register("password", { required: true })}
                     type="password"
                     placeholder="Password"
-                  />
-                  <Input
                     disabled={loading}
-                    {...register("confirmPassword")}
+                  />
+                  {errors.password && (
+                    <Text color="red">{errors.password.message}</Text>
+                  )}
+
+                  <Input
+                    {...register("confirmPassword", { required: true })}
                     type="password"
                     placeholder="Confirm Password"
+                    disabled={loading}
                   />
+                  {errors.confirmPassword && (
+                    <Text color="red">{errors.confirmPassword.message}</Text>
+                  )}
                   <FormControl>
                     <Select
-                      {...register("role")}
+                      {...register("role", { required: true })}
                       id="role"
                       defaultValue=""
                       disabled={loading}
@@ -117,12 +112,13 @@ const RegisterationForm = () => {
                       <option value="SELLER">Seller</option>
                     </Select>
                   </FormControl>
+
                   <Button
                     isLoading={loading}
                     type="submit"
-                    bg="blue.400"
-                    _hover={{ bg: "blue.500" }}
-                    _active={{ bg: "blue.600" }}
+                    bg="orange.400"
+                    _hover={{ bg: "orange.500" }}
+                    _active={{ bg: "orange.600" }}
                   >
                     Register
                   </Button>
@@ -130,13 +126,13 @@ const RegisterationForm = () => {
               </form>
             </CardBody>
           </Card>
-          <Card variant="outline" borderColor="gray" maxW="400px">
+          <Card variant="outline" borderColor="gray" w="500px">
             <CardBody>
               <HStack>
                 <Text>Already have an account? </Text>
                 <Link to="/login">
                   <Text
-                    color="blue.400"
+                    color="orange.400"
                     _hover={{ textDecoration: "underline" }}
                   >
                     Log in.
@@ -151,4 +147,4 @@ const RegisterationForm = () => {
   );
 };
 
-export default RegisterationForm;
+export default RegisterPage;

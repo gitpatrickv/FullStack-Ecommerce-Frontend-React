@@ -24,6 +24,7 @@ const useCancelOrder = () => {
             onSuccess: () => {
                 queryClient.invalidateQueries(['toPayOrders']);
                 queryClient.invalidateQueries(['cancelledOrders']);
+                queryClient.invalidateQueries(['product']);
             }
         }
     )

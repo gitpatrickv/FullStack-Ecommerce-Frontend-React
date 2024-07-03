@@ -1,9 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-import Dashboard from "../components/Dashboard/seller/Dashboard";
 import AdminPage from "../pages/admin/AdminPage";
+import AllProductsOrderPage from "../pages/seller/AllProductsOrderPage";
+import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
+import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
+import DashBoardPage from "../pages/seller/DashBoardPage";
+import MyProductPage from "../pages/seller/MyProductPage";
 import NewProductPage from "../pages/seller/NewProductPage";
 import OrderPage from "../pages/seller/OrderPage";
+import PendingPage from "../pages/seller/PendingPage";
 import SellerPage from "../pages/seller/SellerPage";
+import ShippingPage from "../pages/seller/ShippingPage";
+import ToShipOrdersPage from "../pages/seller/ToShipOrdersPage";
+import UnpaidPage from "../pages/seller/UnpaidPage";
 import AccountProfilePage from "../pages/user/AccountProfilePage";
 import AllOrderPage from "../pages/user/AllOrderPage";
 import CancelledPage from "../pages/user/CancelledPage";
@@ -16,24 +24,19 @@ import ErrorPage from "../pages/user/ErrorPage";
 import FavoritePage from "../pages/user/FavoritePage";
 import HomePage from "../pages/user/HomePage";
 import Layout from "../pages/user/Layout";
-import LoginPage from "../pages/user/LoginPage";
 import MyPurchasePage from "../pages/user/MyPurchasePage";
+import ProductCategoryPage from "../pages/user/ProductCategoryPage";
 import ProductDetailPage from "../pages/user/ProductDetailPage";
-import RegisterPage from "../pages/user/RegisterPage";
+
+import LoginPage from "../pages/auth/LoginPage";
+import RegisterPage from "../pages/auth/RegisterPage";
+import CreateStorePage from "../pages/seller/CreateStorePage";
 import { SearchPage } from "../pages/user/SearchPage";
 import StorePage from "../pages/user/StorePage";
 import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import AllProductsOrderPage from "../pages/seller/AllProductsOrderPage";
-import UnpaidPage from "../pages/seller/UnpaidPage";
-import ToShipOrdersPage from "../pages/seller/ToShipOrdersPage";
-import ShippingPage from "../pages/seller/ShippingPage";
-import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
-import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
-import MyProductPage from "../pages/seller/MyProductPage";
-import PendingPage from "../pages/seller/PendingPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +53,10 @@ const router = createBrowserRouter([
       { path: "/search", element: <SearchPage /> },
       { path: "/daily_discover", element: <DailyDiscoverPage /> },
       { path: "/store/:storeId", element: <StorePage /> },
+      {
+        path: "/category/:categoryId",
+        element: <ProductCategoryPage />,
+      },
       {
         path: "user",
         element: <UserPage />,
@@ -80,7 +87,7 @@ const router = createBrowserRouter([
     element: <SellerPage />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Dashboard /> },
+      { index: true, element: <DashBoardPage /> },
       {
         path: "order",
         element: <OrderPage />,
@@ -97,6 +104,11 @@ const router = createBrowserRouter([
       { path: "product", element: <MyProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
     ],
+  },
+  {
+    path: "/seller/store/create",
+    element: <CreateStorePage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/admin",

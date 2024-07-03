@@ -1,6 +1,6 @@
 
 export default interface Category{
-    categoryId: number
+    categoryId: string
     categoryName: string;
     categoryPhotoUrl: string;
 }

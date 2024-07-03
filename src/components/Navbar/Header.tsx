@@ -92,10 +92,20 @@ const Header = () => {
               ) : (
                 <>
                   <Link to="/login">
-                    <Text _hover={{ textDecoration: "underline" }}>Login</Text>
+                    <Text
+                      _hover={{
+                        color: "orange.400",
+                      }}
+                    >
+                      Login
+                    </Text>
                   </Link>
                   <Link to="/register">
-                    <Text _hover={{ textDecoration: "underline" }}>
+                    <Text
+                      _hover={{
+                        color: "orange.400",
+                      }}
+                    >
                       Register
                     </Text>
                   </Link>
