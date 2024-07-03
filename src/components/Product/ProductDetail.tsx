@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
-import { MdStar } from "react-icons/md";
+import { IoIosStar } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import Inventory from "../../entities/Inventory";
 import Product from "../../entities/Product";
@@ -46,7 +46,9 @@ const ProductDetail = ({ product }: Props) => {
       reset: state.reset,
     })
   );
+  const ratings = [1, 2, 3, 4, 5];
   const { data: rating } = useGetProductRatingAvg(product.productId);
+  const ratingAvg = rating?.ratingAverage ?? 0;
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: addToCart } = useAddToCart();
@@ -206,26 +208,60 @@ const ProductDetail = ({ product }: Props) => {
                     {product.productName}
                   </Text>
                   <Box display="flex" alignItems="center">
-                    <Text mr="5px">{rating?.ratingAverage || 0}</Text>
-                    <Box as={MdStar} color="orange.400" mr="10px" />
+                    {rating?.ratingAverage === 0 ||
+                    rating?.totalNumberOfUserRating === 0 ? (
+                      <Box>
+                        <Text mr="10px">No Ratings Yet</Text>
+                      </Box>
+                    ) : (
+                      <>
+                        <Text
+                          mr="5px"
+                          color="orange.400"
+                          textDecoration="underline 1px"
+                          style={{ textUnderlineOffset: "5px" }}
+                          fontWeight="semibold"
+                        >
+                          {rating?.ratingAverage || 0}
+                        </Text>
+                        {ratings.map((rate) => (
+                          <Box
+                            as={IoIosStar}
+                            color={
+                              rate <= ratingAvg ? "orange.400" : "gray.600"
+                            }
+                            key={rate}
+                          />
+                        ))}
+                        <Text ml="10px" mr="10px" color="gray.600">
+                          |
+                        </Text>
+                        <Text
+                          mr="5px"
+                          textDecoration="underline 1px"
+                          style={{ textUnderlineOffset: "5px" }}
+                          fontWeight="semibold"
+                        >
+                          {rating?.totalNumberOfUserRating || 0}
+                        </Text>
+                        <Text color="gray.600" mr="10px">
+                          Ratings
+                        </Text>
+                      </>
+                    )}
+
                     <Text mr="10px" color="gray.600">
                       |
                     </Text>
-                    <Text mr="10px">
-                      {rating?.totalNumberOfUserRating || 0}{" "}
-                      <Text as="span" color="gray.600">
-                        ratings
-                      </Text>
+                    <Text
+                      textDecoration="underline 1px"
+                      style={{ textUnderlineOffset: "5px" }}
+                      mr="5px"
+                      fontWeight="semibold"
+                    >
+                      {product.productSold}
                     </Text>
-                    <Text mr="10px" color="gray.600">
-                      |
-                    </Text>
-                    <Text>
-                      {product.productSold}{" "}
-                      <Text as="span" color="gray.600">
-                        Sold
-                      </Text>
-                    </Text>
+                    <Text color="gray.600">Sold</Text>
                   </Box>
                   <Box mb="15px" mt="5px">
                     {filteredInventory ? (

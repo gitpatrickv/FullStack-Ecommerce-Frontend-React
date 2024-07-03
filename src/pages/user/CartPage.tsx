@@ -8,6 +8,7 @@ import {
   GridItem,
   Spinner,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { FaCartPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +28,7 @@ import { useAuthQueryStore } from "../../store/auth-store";
 const CartPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-
+  const toast = useToast();
   const {
     data: carts,
     isLoading,
@@ -46,7 +47,13 @@ const CartPage = () => {
 
   const handleNavigateCheckoutClick = () => {
     if (cartTotal?.cartTotal === 0) {
-      console.log("select an item");
+      toast({
+        position: "top",
+        title: "Please select an item",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
       return;
     }
     refetchCheckout();

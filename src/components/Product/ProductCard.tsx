@@ -6,22 +6,24 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { MdStar } from "react-icons/md";
+import { IoIosStar } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import AllProductModels from "../../entities/AllProductResponse";
+import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
 import useProductDetail from "../../hooks/user/useProductDetail";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
 
 interface Props {
   product: AllProductModels;
 }
 
 const ProductCard = ({ product }: Props) => {
+  const ratings = [1, 2, 3, 4, 5];
   const reset = useProductQueryStore((state) => state.reset);
   const { refetch: refetchProducts } = useProductDetail(product.productId);
   const { data: rating } = useGetProductRatingAvg(product.productId);
+  const ratingAvg = rating?.ratingAverage ?? 0;
   const navigate = useNavigate();
   const handleNavigateClick = () => {
     navigate(`/api/product/` + product?.productId);
@@ -44,12 +46,25 @@ const ProductCard = ({ product }: Props) => {
         </Text>
         <Text fontSize="md">{formatCurrency(product.price)}</Text>
         <Box display="flex" justifyContent="space-between">
-          <Box display="flex" alignItems="center">
-            <Box as={MdStar} color="orange.400" />
-            <Text ml={1} fontSize="sm">
-              {rating?.ratingAverage || 0} ({rating?.totalNumberOfUserRating})
-            </Text>
-          </Box>
+          {rating?.ratingAverage === 0 ||
+          rating?.totalNumberOfUserRating === 0 ? (
+            <Box></Box>
+          ) : (
+            <Box display="flex" alignItems="center">
+              {ratings.map((rate) => (
+                <Box
+                  as={IoIosStar}
+                  color={rate <= ratingAvg ? "orange.400" : "gray.600"}
+                  key={rate}
+                />
+              ))}
+
+              <Text ml={1} fontSize="sm">
+                {rating?.ratingAverage || 0} ({rating?.totalNumberOfUserRating})
+              </Text>
+            </Box>
+          )}
+
           <Text ml="5px">{product.productSold} sold</Text>
         </Box>
       </CardBody>
