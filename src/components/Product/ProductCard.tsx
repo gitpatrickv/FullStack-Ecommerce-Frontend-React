@@ -50,7 +50,7 @@ const ProductCard = ({ product }: Props) => {
           rating?.totalNumberOfUserRating === 0 ? (
             <Box></Box>
           ) : (
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" whiteSpace="nowrap">
               {ratings.map((rate) => (
                 <Box
                   as={IoIosStar}
@@ -65,7 +65,9 @@ const ProductCard = ({ product }: Props) => {
             </Box>
           )}
 
-          <Text ml="5px">{product.productSold} sold</Text>
+          <Text ml="5px" whiteSpace="nowrap">
+            {product.productSold} sold
+          </Text>
         </Box>
       </CardBody>
     </Card>

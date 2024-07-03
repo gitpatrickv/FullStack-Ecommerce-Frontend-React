@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   CardBody,
+  Divider,
   Flex,
   Grid,
   GridItem,
@@ -14,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
+import { TbStarOff } from "react-icons/tb";
 import { IoIosStar } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import Inventory from "../../entities/Inventory";
@@ -24,13 +26,14 @@ import useAddToFavorites from "../../hooks/user/useAddToFavorites";
 import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
 import useGetFavoritesStatus from "../../hooks/user/useGetFavoritesStatus";
+import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
+import useGetRatingAndReview from "../../hooks/user/useGetRatingAndReview";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import ProductImages from "./ProductImages";
 import Review from "../Review/Review";
-import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
+import ProductImages from "./ProductImages";
 interface Props {
   product: Product;
 }
@@ -48,6 +51,9 @@ const ProductDetail = ({ product }: Props) => {
   );
   const ratings = [1, 2, 3, 4, 5];
   const { data: rating } = useGetProductRatingAvg(product.productId);
+  const { data: getReviewsAndRating } = useGetRatingAndReview(
+    product.productId
+  );
   const ratingAvg = rating?.ratingAverage ?? 0;
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
@@ -599,7 +605,38 @@ const ProductDetail = ({ product }: Props) => {
                 >
                   Product Ratings
                 </Text>
-                <Review />
+                {rating?.ratingAverage === 0 ||
+                rating?.totalNumberOfUserRating === 0 ? (
+                  <>
+                    <Box
+                      height="250px"
+                      maxWidth="100%"
+                      display="flex"
+                      justifyContent="center"
+                    >
+                      <Box
+                        display="flex"
+                        justifyContent="center"
+                        flexDirection="column"
+                        alignItems="center"
+                      >
+                        <TbStarOff size="100px" />
+                        <Text fontSize="lg" mt="10px">
+                          No Ratings Yet
+                        </Text>
+                      </Box>
+                    </Box>
+                  </>
+                ) : (
+                  <>
+                    {getReviewsAndRating?.map((review) => (
+                      <Box key={review.reviewId}>
+                        <Review review={review} />
+                        <Divider mb="5px" />
+                      </Box>
+                    ))}
+                  </>
+                )}
               </CardBody>
             </Card>
           </Box>
