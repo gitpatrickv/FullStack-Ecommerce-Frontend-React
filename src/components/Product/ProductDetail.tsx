@@ -629,12 +629,73 @@ const ProductDetail = ({ product }: Props) => {
                   </>
                 ) : (
                   <>
-                    {getReviewsAndRating?.map((review) => (
-                      <Box key={review.reviewId}>
-                        <Review review={review} />
-                        <Divider mb="5px" />
-                      </Box>
-                    ))}
+                    <Card>
+                      <CardBody>
+                        <Box display="flex">
+                          <Box display="flex" flexDirection="column" mr="40px">
+                            <Box display="flex" alignItems="center">
+                              <Text
+                                color="orange.400"
+                                fontSize="x-large"
+                                mr="5px"
+                              >
+                                {rating?.ratingAverage || 0}
+                              </Text>
+                              <Text color="orange.400" fontSize="large">
+                                out of 5
+                              </Text>
+                            </Box>
+
+                            {rating?.ratingAverage === 0 ||
+                            rating?.totalNumberOfUserRating === 0 ? (
+                              <Box>
+                                <Text mr="10px">No Ratings Yet</Text>
+                              </Box>
+                            ) : (
+                              <Box display="flex">
+                                {ratings.map((rate) => (
+                                  <Box
+                                    as={IoIosStar}
+                                    color={
+                                      rate <= ratingAvg
+                                        ? "orange.400"
+                                        : "gray.600"
+                                    }
+                                    key={rate}
+                                  />
+                                ))}
+                              </Box>
+                            )}
+                          </Box>
+                          <Button width="120px" mr="10px">
+                            All
+                          </Button>
+                          <Button width="120px" mr="10px">
+                            5 Star (1)
+                          </Button>
+                          <Button width="120px" mr="10px">
+                            4 Star (1)
+                          </Button>
+                          <Button width="120px" mr="10px">
+                            3 Star (1)
+                          </Button>
+                          <Button width="120px" mr="10px">
+                            2 Star (1)
+                          </Button>
+                          <Button width="120px" mr="10px">
+                            1 Star (1)
+                          </Button>
+                        </Box>
+                      </CardBody>
+                    </Card>
+                    <Box mt="10px">
+                      {getReviewsAndRating?.map((review) => (
+                        <Box key={review.reviewId}>
+                          <Review review={review} />
+                          <Divider mb="5px" />
+                        </Box>
+                      ))}
+                    </Box>
                   </>
                 )}
               </CardBody>
