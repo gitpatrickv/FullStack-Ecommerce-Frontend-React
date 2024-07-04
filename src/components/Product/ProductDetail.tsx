@@ -39,6 +39,7 @@ import useGet4StarRatingAndReview from "../../hooks/user/useGet4StarRatingAndRev
 import useGet3StarRatingAndReview from "../../hooks/user/useGet3StarRatingAndReview";
 import useGet2StarRatingAndReview from "../../hooks/user/useGet2StarRatingAndReview";
 import useGet1StarRatingAndReview from "../../hooks/user/useGet1StarRatingAndReview";
+import useGetTotalUserRating from "../../hooks/user/useGetTotalUserRating";
 interface Props {
   product: Product;
 }
@@ -56,6 +57,7 @@ const ProductDetail = ({ product }: Props) => {
   );
   const ratings = [1, 2, 3, 4, 5];
   const { data: rating } = useGetProductRatingAvg(product.productId);
+  const { data: userRating } = useGetTotalUserRating(product.productId);
   const { data: getAllReviewsAndRating, refetch: refetchAllRating } =
     useGetAllRatingAndReview(product.productId);
   const { data: get5StarReviewsAndRating, refetch: refetch5Rating } =
@@ -640,181 +642,203 @@ const ProductDetail = ({ product }: Props) => {
                 >
                   Product Ratings
                 </Text>
-                {rating?.ratingAverage === 0 ||
-                rating?.totalNumberOfUserRating === 0 ? (
-                  <>
-                    <Box
-                      height="250px"
-                      maxWidth="100%"
-                      display="flex"
-                      justifyContent="center"
-                    >
+
+                <Card>
+                  <CardBody>
+                    <Box display="flex">
                       <Box
                         display="flex"
-                        justifyContent="center"
                         flexDirection="column"
-                        alignItems="center"
+                        mr="40px"
+                        position="relative"
+                        bottom="5px"
                       >
-                        <TbStarOff size="100px" />
-                        <Text fontSize="lg" mt="10px">
-                          No Ratings Yet
-                        </Text>
+                        <Box display="flex" alignItems="center">
+                          <Text color="orange.400" fontSize="x-large" mr="5px">
+                            {rating?.ratingAverage || 0}
+                          </Text>
+                          <Text color="orange.400" fontSize="large">
+                            out of 5
+                          </Text>
+                        </Box>
+
+                        {rating?.ratingAverage === 0 ||
+                        rating?.totalNumberOfUserRating === 0 ? (
+                          <Box>
+                            <Text mr="10px">No Ratings Yet</Text>
+                          </Box>
+                        ) : (
+                          <Box display="flex">
+                            {ratings.map((rate) => (
+                              <Box
+                                as={IoIosStar}
+                                color={
+                                  rate <= ratingAvg ? "orange.400" : "gray.600"
+                                }
+                                key={rate}
+                              />
+                            ))}
+                          </Box>
+                        )}
+                      </Box>
+                      <Box position="relative" top="7px">
+                        <Button
+                          width="120px"
+                          mr="10px"
+                          value="All"
+                          onClick={handleSelectedRatingClick}
+                          color={
+                            selectedRating === "All" ? "orange.400" : "gray.200"
+                          }
+                        >
+                          All ({rating?.totalNumberOfUserRating || 0})
+                        </Button>
+                        <Button
+                          width="120px"
+                          mr="10px"
+                          value="5"
+                          onClick={handleSelectedRatingClick}
+                          color={
+                            selectedRating === "5" ? "orange.400" : "gray.200"
+                          }
+                        >
+                          5 Star ({userRating?.total5StarUserRating || 0})
+                        </Button>
+                        <Button
+                          width="120px"
+                          mr="10px"
+                          value="4"
+                          onClick={handleSelectedRatingClick}
+                          color={
+                            selectedRating === "4" ? "orange.400" : "gray.200"
+                          }
+                        >
+                          4 Star ({userRating?.total4StarUserRating || 0})
+                        </Button>
+                        <Button
+                          width="120px"
+                          mr="10px"
+                          value="3"
+                          onClick={handleSelectedRatingClick}
+                          color={
+                            selectedRating === "3" ? "orange.400" : "gray.200"
+                          }
+                        >
+                          3 Star ({userRating?.total3StarUserRating || 0})
+                        </Button>
+                        <Button
+                          width="120px"
+                          mr="10px"
+                          value="2"
+                          onClick={handleSelectedRatingClick}
+                          color={
+                            selectedRating === "2" ? "orange.400" : "gray.200"
+                          }
+                        >
+                          2 Star ({userRating?.total2StarUserRating || 0})
+                        </Button>
+                        <Button
+                          width="120px"
+                          mr="10px"
+                          value="1"
+                          onClick={handleSelectedRatingClick}
+                          color={
+                            selectedRating === "1" ? "orange.400" : "gray.200"
+                          }
+                        >
+                          1 Star ({userRating?.total1StarUserRating || 0})
+                        </Button>
                       </Box>
                     </Box>
-                  </>
-                ) : (
-                  <>
-                    <Card>
-                      <CardBody>
-                        <Box display="flex">
-                          <Box display="flex" flexDirection="column" mr="40px">
-                            <Box display="flex" alignItems="center">
-                              <Text
-                                color="orange.400"
-                                fontSize="x-large"
-                                mr="5px"
-                              >
-                                {rating?.ratingAverage || 0}
-                              </Text>
-                              <Text color="orange.400" fontSize="large">
-                                out of 5
-                              </Text>
-                            </Box>
-
-                            {rating?.ratingAverage === 0 ||
-                            rating?.totalNumberOfUserRating === 0 ? (
-                              <Box>
-                                <Text mr="10px">No Ratings Yet</Text>
-                              </Box>
-                            ) : (
-                              <Box display="flex">
-                                {ratings.map((rate) => (
-                                  <Box
-                                    as={IoIosStar}
-                                    color={
-                                      rate <= ratingAvg
-                                        ? "orange.400"
-                                        : "gray.600"
-                                    }
-                                    key={rate}
-                                  />
-                                ))}
-                              </Box>
-                            )}
-                          </Box>
-                          <Button
-                            width="120px"
-                            mr="10px"
-                            value="All"
-                            onClick={handleSelectedRatingClick}
-                          >
-                            All
-                          </Button>
-                          <Button
-                            width="120px"
-                            mr="10px"
-                            value="5"
-                            onClick={handleSelectedRatingClick}
-                          >
-                            5 Star (1)
-                          </Button>
-                          <Button
-                            width="120px"
-                            mr="10px"
-                            value="4"
-                            onClick={handleSelectedRatingClick}
-                          >
-                            4 Star (1)
-                          </Button>
-                          <Button
-                            width="120px"
-                            mr="10px"
-                            value="3"
-                            onClick={handleSelectedRatingClick}
-                          >
-                            3 Star (1)
-                          </Button>
-                          <Button
-                            width="120px"
-                            mr="10px"
-                            value="2"
-                            onClick={handleSelectedRatingClick}
-                          >
-                            2 Star (1)
-                          </Button>
-                          <Button
-                            width="120px"
-                            mr="10px"
-                            value="1"
-                            onClick={handleSelectedRatingClick}
-                          >
-                            1 Star (1)
-                          </Button>
+                  </CardBody>
+                </Card>
+                <Box>
+                  {rating?.totalNumberOfUserRating === 0 ? (
+                    <Box>
+                      <Box
+                        height="250px"
+                        maxWidth="100%"
+                        display="flex"
+                        justifyContent="center"
+                      >
+                        <Box
+                          display="flex"
+                          justifyContent="center"
+                          flexDirection="column"
+                          alignItems="center"
+                        >
+                          <TbStarOff size="100px" />
+                          <Text fontSize="lg" mt="10px">
+                            No Ratings Yet
+                          </Text>
                         </Box>
-                      </CardBody>
-                    </Card>
-                    {selectedRating === "All" && (
-                      <Box mt="10px">
-                        {getAllReviewsAndRating?.map((review) => (
-                          <Box key={review.reviewId}>
-                            <Review review={review} />
-                            <Divider mb="5px" />
-                          </Box>
-                        ))}
                       </Box>
-                    )}
-                    {selectedRating === "5" && (
-                      <Box mt="10px">
-                        {get5StarReviewsAndRating?.map((review) => (
-                          <Box key={review.reviewId}>
-                            <Review review={review} />
-                            <Divider mb="5px" />
-                          </Box>
-                        ))}
-                      </Box>
-                    )}
-                    {selectedRating === "4" && (
-                      <Box mt="10px">
-                        {get4StarReviewsAndRating?.map((review) => (
-                          <Box key={review.reviewId}>
-                            <Review review={review} />
-                            <Divider mb="5px" />
-                          </Box>
-                        ))}
-                      </Box>
-                    )}
-                    {selectedRating === "3" && (
-                      <Box mt="10px">
-                        {get3StarReviewsAndRating?.map((review) => (
-                          <Box key={review.reviewId}>
-                            <Review review={review} />
-                            <Divider mb="5px" />
-                          </Box>
-                        ))}
-                      </Box>
-                    )}
-                    {selectedRating === "2" && (
-                      <Box mt="10px">
-                        {get2StarReviewsAndRating?.map((review) => (
-                          <Box key={review.reviewId}>
-                            <Review review={review} />
-                            <Divider mb="5px" />
-                          </Box>
-                        ))}
-                      </Box>
-                    )}
-                    {selectedRating === "1" && (
-                      <Box mt="10px">
-                        {get1StarReviewsAndRating?.map((review) => (
-                          <Box key={review.reviewId}>
-                            <Review review={review} />
-                            <Divider mb="5px" />
-                          </Box>
-                        ))}
-                      </Box>
-                    )}
-                  </>
-                )}
+                    </Box>
+                  ) : (
+                    <Box>
+                      {selectedRating === "All" && (
+                        <Box mt="10px">
+                          {getAllReviewsAndRating?.map((review) => (
+                            <Box key={review.reviewId}>
+                              <Review review={review} />
+                              <Divider mb="5px" />
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                      {selectedRating === "5" && (
+                        <Box mt="10px">
+                          {get5StarReviewsAndRating?.map((review) => (
+                            <Box key={review.reviewId}>
+                              <Review review={review} />
+                              <Divider mb="5px" />
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                      {selectedRating === "4" && (
+                        <Box mt="10px">
+                          {get4StarReviewsAndRating?.map((review) => (
+                            <Box key={review.reviewId}>
+                              <Review review={review} />
+                              <Divider mb="5px" />
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                      {selectedRating === "3" && (
+                        <Box mt="10px">
+                          {get3StarReviewsAndRating?.map((review) => (
+                            <Box key={review.reviewId}>
+                              <Review review={review} />
+                              <Divider mb="5px" />
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                      {selectedRating === "2" && (
+                        <Box mt="10px">
+                          {get2StarReviewsAndRating?.map((review) => (
+                            <Box key={review.reviewId}>
+                              <Review review={review} />
+                              <Divider mb="5px" />
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                      {selectedRating === "1" && (
+                        <Box mt="10px">
+                          {get1StarReviewsAndRating?.map((review) => (
+                            <Box key={review.reviewId}>
+                              <Review review={review} />
+                              <Divider mb="5px" />
+                            </Box>
+                          ))}
+                        </Box>
+                      )}
+                    </Box>
+                  )}
+                </Box>
               </CardBody>
             </Card>
           </Box>
