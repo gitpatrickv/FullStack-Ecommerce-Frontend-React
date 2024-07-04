@@ -35,6 +35,7 @@ import useUpdateProductInfo, {
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
+import useGetProductRatingAvg from "../../../hooks/user/useGetProductRatingAvg";
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -46,7 +47,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
   const cancelRef = useRef<HTMLButtonElement>(null);
-
+  const { data: rating } = useGetProductRatingAvg(product.productId);
   const { onSubmit } = useUpdateProductInfo(product.productId);
   const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
     defaultValues: {
@@ -103,9 +104,9 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   return (
     <>
       <Grid
-        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
-  "content1 content2 content3 content4 content5"
+  "content1 rating content2 content3 content4 content5"
 `}
         gap={4}
         p={3}
@@ -130,13 +131,23 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           </Box>
         </GridItem>
         <GridItem
+          area="rating"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={fontSize} fontWeight="semibold">
+            {rating?.ratingAverage || 0}
+          </Text>
+        </GridItem>
+        <GridItem
           area="content2"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <Text fontSize={fontSize} fontWeight="semibold">
-            0
+            {product.productSold}
           </Text>
         </GridItem>
         <GridItem

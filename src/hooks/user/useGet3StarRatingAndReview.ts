@@ -4,15 +4,15 @@ import RatingAndReview from "../../entities/RatingAndReview";
 
 const apiClient = axiosInstance;
 
-const useGetRatingAndReview = (productId: string) => {
+const useGet3StarRatingAndReview = (productId: string) => {
     return useQuery({
         queryKey: ['ratingAndReview', productId],
         queryFn: async () => {
-            const {data} = await apiClient.get<RatingAndReview[]>(`/product/review/get/${productId}`);
+            const {data} = await apiClient.get<RatingAndReview[]>(`/product/review/get/3/${productId}`);
             return data;
         },
         enabled: !!productId,
     });
 }
 
-export default useGetRatingAndReview
+export default useGet3StarRatingAndReview

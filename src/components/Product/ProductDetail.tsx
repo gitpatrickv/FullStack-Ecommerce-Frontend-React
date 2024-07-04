@@ -15,8 +15,8 @@ import {
 import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
-import { TbStarOff } from "react-icons/tb";
 import { IoIosStar } from "react-icons/io";
+import { TbStarOff } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import Inventory from "../../entities/Inventory";
 import Product from "../../entities/Product";
@@ -27,13 +27,18 @@ import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
 import useGetFavoritesStatus from "../../hooks/user/useGetFavoritesStatus";
 import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
-import useGetRatingAndReview from "../../hooks/user/useGetRatingAndReview";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import Review from "../Review/Review";
 import ProductImages from "./ProductImages";
+import useGetAllRatingAndReview from "../../hooks/user/useGetAllRatingAndReview";
+import useGet5StarRatingAndReview from "../../hooks/user/useGet5StarRatingAndReview";
+import useGet4StarRatingAndReview from "../../hooks/user/useGet4StarRatingAndReview";
+import useGet3StarRatingAndReview from "../../hooks/user/useGet3StarRatingAndReview";
+import useGet2StarRatingAndReview from "../../hooks/user/useGet2StarRatingAndReview";
+import useGet1StarRatingAndReview from "../../hooks/user/useGet1StarRatingAndReview";
 interface Props {
   product: Product;
 }
@@ -51,9 +56,18 @@ const ProductDetail = ({ product }: Props) => {
   );
   const ratings = [1, 2, 3, 4, 5];
   const { data: rating } = useGetProductRatingAvg(product.productId);
-  const { data: getReviewsAndRating } = useGetRatingAndReview(
-    product.productId
-  );
+  const { data: getAllReviewsAndRating, refetch: refetchAllRating } =
+    useGetAllRatingAndReview(product.productId);
+  const { data: get5StarReviewsAndRating, refetch: refetch5Rating } =
+    useGet5StarRatingAndReview(product.productId);
+  const { data: get4StarReviewsAndRating, refetch: refetch4Rating } =
+    useGet4StarRatingAndReview(product.productId);
+  const { data: get3StarReviewsAndRating, refetch: refetch3Rating } =
+    useGet3StarRatingAndReview(product.productId);
+  const { data: get2StarReviewsAndRating, refetch: refetch2Rating } =
+    useGet2StarRatingAndReview(product.productId);
+  const { data: get1StarReviewsAndRating, refetch: refetch1Rating } =
+    useGet1StarRatingAndReview(product.productId);
   const ratingAvg = rating?.ratingAverage ?? 0;
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
@@ -66,6 +80,27 @@ const ProductDetail = ({ product }: Props) => {
     status?.favorites || false
   );
   const navigate = useNavigate();
+
+  const [selectedRating, setSelectedRating] = useState("All");
+
+  const handleSelectedRatingClick = async (event: any) => {
+    const newSelectedRating = event.target.value;
+    setSelectedRating(newSelectedRating);
+
+    if (newSelectedRating === "All") {
+      await refetchAllRating();
+    } else if (newSelectedRating === "5") {
+      await refetch5Rating();
+    } else if (newSelectedRating === "4") {
+      await refetch4Rating();
+    } else if (newSelectedRating === "3") {
+      await refetch3Rating();
+    } else if (newSelectedRating === "2") {
+      await refetch2Rating();
+    } else if (newSelectedRating === "1") {
+      await refetch1Rating();
+    }
+  };
 
   const [selectedColor, setSelectedColor] = useState<string>(
     product.inventoryModels.length > 0 ? product.inventoryModels[0].colors : ""
@@ -667,35 +702,117 @@ const ProductDetail = ({ product }: Props) => {
                               </Box>
                             )}
                           </Box>
-                          <Button width="120px" mr="10px">
+                          <Button
+                            width="120px"
+                            mr="10px"
+                            value="All"
+                            onClick={handleSelectedRatingClick}
+                          >
                             All
                           </Button>
-                          <Button width="120px" mr="10px">
+                          <Button
+                            width="120px"
+                            mr="10px"
+                            value="5"
+                            onClick={handleSelectedRatingClick}
+                          >
                             5 Star (1)
                           </Button>
-                          <Button width="120px" mr="10px">
+                          <Button
+                            width="120px"
+                            mr="10px"
+                            value="4"
+                            onClick={handleSelectedRatingClick}
+                          >
                             4 Star (1)
                           </Button>
-                          <Button width="120px" mr="10px">
+                          <Button
+                            width="120px"
+                            mr="10px"
+                            value="3"
+                            onClick={handleSelectedRatingClick}
+                          >
                             3 Star (1)
                           </Button>
-                          <Button width="120px" mr="10px">
+                          <Button
+                            width="120px"
+                            mr="10px"
+                            value="2"
+                            onClick={handleSelectedRatingClick}
+                          >
                             2 Star (1)
                           </Button>
-                          <Button width="120px" mr="10px">
+                          <Button
+                            width="120px"
+                            mr="10px"
+                            value="1"
+                            onClick={handleSelectedRatingClick}
+                          >
                             1 Star (1)
                           </Button>
                         </Box>
                       </CardBody>
                     </Card>
-                    <Box mt="10px">
-                      {getReviewsAndRating?.map((review) => (
-                        <Box key={review.reviewId}>
-                          <Review review={review} />
-                          <Divider mb="5px" />
-                        </Box>
-                      ))}
-                    </Box>
+                    {selectedRating === "All" && (
+                      <Box mt="10px">
+                        {getAllReviewsAndRating?.map((review) => (
+                          <Box key={review.reviewId}>
+                            <Review review={review} />
+                            <Divider mb="5px" />
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                    {selectedRating === "5" && (
+                      <Box mt="10px">
+                        {get5StarReviewsAndRating?.map((review) => (
+                          <Box key={review.reviewId}>
+                            <Review review={review} />
+                            <Divider mb="5px" />
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                    {selectedRating === "4" && (
+                      <Box mt="10px">
+                        {get4StarReviewsAndRating?.map((review) => (
+                          <Box key={review.reviewId}>
+                            <Review review={review} />
+                            <Divider mb="5px" />
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                    {selectedRating === "3" && (
+                      <Box mt="10px">
+                        {get3StarReviewsAndRating?.map((review) => (
+                          <Box key={review.reviewId}>
+                            <Review review={review} />
+                            <Divider mb="5px" />
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                    {selectedRating === "2" && (
+                      <Box mt="10px">
+                        {get2StarReviewsAndRating?.map((review) => (
+                          <Box key={review.reviewId}>
+                            <Review review={review} />
+                            <Divider mb="5px" />
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                    {selectedRating === "1" && (
+                      <Box mt="10px">
+                        {get1StarReviewsAndRating?.map((review) => (
+                          <Box key={review.reviewId}>
+                            <Review review={review} />
+                            <Divider mb="5px" />
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
                   </>
                 )}
               </CardBody>

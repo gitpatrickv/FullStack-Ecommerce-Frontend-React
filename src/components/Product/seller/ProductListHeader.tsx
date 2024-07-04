@@ -17,9 +17,9 @@ const ProductListHeader = () => {
   return (
     <Card>
       <Grid
-        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
-"content1 content2 content3 content4 content5"
+"content1 rating content2 content3 content4 content5"
 `}
         gap={4}
         p={3}
@@ -40,13 +40,23 @@ const ProductListHeader = () => {
           </Box>
         </GridItem>
         <GridItem
+          area="rating"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+            Rating
+          </Text>
+        </GridItem>
+        <GridItem
           area="content2"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
-            Sales
+            Sold
           </Text>
         </GridItem>
         <GridItem
