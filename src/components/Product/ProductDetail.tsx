@@ -12,7 +12,7 @@ import {
   IconButton,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
@@ -25,21 +25,21 @@ import useAddToCartVariation from "../../hooks/user/useAddToCartVariation";
 import useAddToFavorites from "../../hooks/user/useAddToFavorites";
 import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
+import useGet1StarRatingAndReview from "../../hooks/user/useGet1StarRatingAndReview";
+import useGet2StarRatingAndReview from "../../hooks/user/useGet2StarRatingAndReview";
+import useGet3StarRatingAndReview from "../../hooks/user/useGet3StarRatingAndReview";
+import useGet4StarRatingAndReview from "../../hooks/user/useGet4StarRatingAndReview";
+import useGet5StarRatingAndReview from "../../hooks/user/useGet5StarRatingAndReview";
+import useGetAllRatingAndReview from "../../hooks/user/useGetAllRatingAndReview";
 import useGetFavoritesStatus from "../../hooks/user/useGetFavoritesStatus";
 import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
+import useGetTotalUserRating from "../../hooks/user/useGetTotalUserRating";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import Review from "../Review/Review";
 import ProductImages from "./ProductImages";
-import useGetAllRatingAndReview from "../../hooks/user/useGetAllRatingAndReview";
-import useGet5StarRatingAndReview from "../../hooks/user/useGet5StarRatingAndReview";
-import useGet4StarRatingAndReview from "../../hooks/user/useGet4StarRatingAndReview";
-import useGet3StarRatingAndReview from "../../hooks/user/useGet3StarRatingAndReview";
-import useGet2StarRatingAndReview from "../../hooks/user/useGet2StarRatingAndReview";
-import useGet1StarRatingAndReview from "../../hooks/user/useGet1StarRatingAndReview";
-import useGetTotalUserRating from "../../hooks/user/useGetTotalUserRating";
 interface Props {
   product: Product;
 }
@@ -82,12 +82,16 @@ const ProductDetail = ({ product }: Props) => {
     status?.favorites || false
   );
   const navigate = useNavigate();
-
+  const productRatingsRef = useRef<HTMLDivElement>(null);
   const [selectedRating, setSelectedRating] = useState("All");
 
   const handleSelectedRatingClick = async (event: any) => {
     const newSelectedRating = event.target.value;
     setSelectedRating(newSelectedRating);
+
+    if (productRatingsRef.current) {
+      productRatingsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
 
     if (newSelectedRating === "All") {
       await refetchAllRating();
@@ -630,7 +634,7 @@ const ProductDetail = ({ product }: Props) => {
               <Text>{product.productDescription}</Text>
             </CardBody>
           </Card>
-          <Box mt="15px">
+          <Box mt="15px" ref={productRatingsRef}>
             <Card>
               <CardBody>
                 <Text
@@ -786,7 +790,34 @@ const ProductDetail = ({ product }: Props) => {
                           ))}
                         </Box>
                       )}
-                      {selectedRating === "5" && (
+                    </Box>
+                  )}
+                </Box>
+                <Box>
+                  {selectedRating === "5" && (
+                    <>
+                      {userRating?.total5StarUserRating === 0 ? (
+                        <Box>
+                          <Box
+                            height="250px"
+                            maxWidth="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              flexDirection="column"
+                              alignItems="center"
+                            >
+                              <TbStarOff size="100px" />
+                              <Text fontSize="lg" mt="10px">
+                                No Ratings Yet
+                              </Text>
+                            </Box>
+                          </Box>
+                        </Box>
+                      ) : (
                         <Box mt="10px">
                           {get5StarReviewsAndRating?.map((review) => (
                             <Box key={review.reviewId}>
@@ -796,7 +827,34 @@ const ProductDetail = ({ product }: Props) => {
                           ))}
                         </Box>
                       )}
-                      {selectedRating === "4" && (
+                    </>
+                  )}
+                </Box>
+                <Box>
+                  {selectedRating === "4" && (
+                    <>
+                      {userRating?.total4StarUserRating === 0 ? (
+                        <Box>
+                          <Box
+                            height="250px"
+                            maxWidth="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              flexDirection="column"
+                              alignItems="center"
+                            >
+                              <TbStarOff size="100px" />
+                              <Text fontSize="lg" mt="10px">
+                                No Ratings Yet
+                              </Text>
+                            </Box>
+                          </Box>
+                        </Box>
+                      ) : (
                         <Box mt="10px">
                           {get4StarReviewsAndRating?.map((review) => (
                             <Box key={review.reviewId}>
@@ -806,7 +864,34 @@ const ProductDetail = ({ product }: Props) => {
                           ))}
                         </Box>
                       )}
-                      {selectedRating === "3" && (
+                    </>
+                  )}
+                </Box>
+                <Box>
+                  {selectedRating === "3" && (
+                    <>
+                      {userRating?.total3StarUserRating === 0 ? (
+                        <Box>
+                          <Box
+                            height="250px"
+                            maxWidth="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              flexDirection="column"
+                              alignItems="center"
+                            >
+                              <TbStarOff size="100px" />
+                              <Text fontSize="lg" mt="10px">
+                                No Ratings Yet
+                              </Text>
+                            </Box>
+                          </Box>
+                        </Box>
+                      ) : (
                         <Box mt="10px">
                           {get3StarReviewsAndRating?.map((review) => (
                             <Box key={review.reviewId}>
@@ -816,7 +901,34 @@ const ProductDetail = ({ product }: Props) => {
                           ))}
                         </Box>
                       )}
-                      {selectedRating === "2" && (
+                    </>
+                  )}
+                </Box>
+                <Box>
+                  {selectedRating === "2" && (
+                    <>
+                      {userRating?.total2StarUserRating === 0 ? (
+                        <Box>
+                          <Box
+                            height="250px"
+                            maxWidth="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              flexDirection="column"
+                              alignItems="center"
+                            >
+                              <TbStarOff size="100px" />
+                              <Text fontSize="lg" mt="10px">
+                                No Ratings Yet
+                              </Text>
+                            </Box>
+                          </Box>
+                        </Box>
+                      ) : (
                         <Box mt="10px">
                           {get2StarReviewsAndRating?.map((review) => (
                             <Box key={review.reviewId}>
@@ -826,7 +938,34 @@ const ProductDetail = ({ product }: Props) => {
                           ))}
                         </Box>
                       )}
-                      {selectedRating === "1" && (
+                    </>
+                  )}
+                </Box>
+                <Box>
+                  {selectedRating === "1" && (
+                    <>
+                      {userRating?.total1StarUserRating === 0 ? (
+                        <Box>
+                          <Box
+                            height="250px"
+                            maxWidth="100%"
+                            display="flex"
+                            justifyContent="center"
+                          >
+                            <Box
+                              display="flex"
+                              justifyContent="center"
+                              flexDirection="column"
+                              alignItems="center"
+                            >
+                              <TbStarOff size="100px" />
+                              <Text fontSize="lg" mt="10px">
+                                No Ratings Yet
+                              </Text>
+                            </Box>
+                          </Box>
+                        </Box>
+                      ) : (
                         <Box mt="10px">
                           {get1StarReviewsAndRating?.map((review) => (
                             <Box key={review.reviewId}>
@@ -836,7 +975,7 @@ const ProductDetail = ({ product }: Props) => {
                           ))}
                         </Box>
                       )}
-                    </Box>
+                    </>
                   )}
                 </Box>
               </CardBody>
