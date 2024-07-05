@@ -93,7 +93,7 @@ const DailyDiscoverPage = () => {
             </CardBody>
           </Card>
           <SimpleGrid
-            columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
+            columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
             spacing={2}
             padding="10px"
           >

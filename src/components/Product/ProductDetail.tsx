@@ -11,7 +11,7 @@ import {
   IconButton,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
@@ -30,12 +30,13 @@ import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
 import AllStarRating from "./AllStarRating";
+import FromTheSameStore from "./FromTheSameStore";
 import ProductImages from "./ProductImages";
-import Star5Rating from "./Star5Rating";
-import Star4Rating from "./Star4Rating";
-import Star3Rating from "./Star3Rating";
-import Star2Rating from "./Star2Rating";
 import Star1Rating from "./Star1Rating";
+import Star2Rating from "./Star2Rating";
+import Star3Rating from "./Star3Rating";
+import Star4Rating from "./Star4Rating";
+import Star5Rating from "./Star5Rating";
 interface Props {
   product: Product;
 }
@@ -185,16 +186,10 @@ const ProductDetail = ({ product }: Props) => {
     navigate(`/store/` + storeId);
   };
 
-  const [selectedRating, setSelectedRating] = useState<string | null>(null);
-
-  const productRatingsRef = useRef<HTMLDivElement>(null);
+  const [selectedRating, setSelectedRating] = useState<string | null>("All");
 
   const handleSelectedRatingClick = (rating: string) => {
     setSelectedRating(rating === selectedRating ? null : rating);
-
-    if (productRatingsRef.current) {
-      productRatingsRef.current.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   return (
@@ -606,7 +601,7 @@ const ProductDetail = ({ product }: Props) => {
             </CardBody>
           </Card>
 
-          <Card ref={productRatingsRef} mt="15px">
+          <Card>
             <CardBody>
               <Text
                 fontSize="x-large"
@@ -748,6 +743,19 @@ const ProductDetail = ({ product }: Props) => {
               </Card>
             </CardBody>
           </Card>
+
+          <Box padding={5}>
+            <Text
+              fontWeight="semibold"
+              fontSize="x-large"
+              color="gray.500"
+              mb="5px"
+              mt="10px"
+            >
+              FROM THE SAME SHOP
+            </Text>
+            <FromTheSameStore storeId={product.storeId} />
+          </Box>
         </GridItem>
       </Grid>
     </>

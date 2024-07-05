@@ -191,7 +191,6 @@ const CartPage = () => {
                               key={cart.cartId}
                               cart={cart}
                               refetchCarts={refetchCarts}
-                              isChecked={isChecked}
                             />
                           ))}
                         </CardBody>
