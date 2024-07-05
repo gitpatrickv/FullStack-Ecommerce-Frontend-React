@@ -24,7 +24,6 @@ import useAddToFavorites from "../../hooks/user/useAddToFavorites";
 import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
 import useGetFavoritesStatus from "../../hooks/user/useGetFavoritesStatus";
-import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
 import useGetTotalUserRating from "../../hooks/user/useGetTotalUserRating";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
@@ -53,10 +52,9 @@ const ProductDetail = ({ product }: Props) => {
     })
   );
   const ratings = [1, 2, 3, 4, 5];
-  const { data: rating } = useGetProductRatingAvg(product.productId);
   const { data: userRating } = useGetTotalUserRating(product.productId);
 
-  const ratingAvg = rating?.ratingAverage ?? 0;
+  const ratingAvg = userRating?.ratingAverage ?? 0;
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: addToCart } = useAddToCart();
@@ -228,8 +226,8 @@ const ProductDetail = ({ product }: Props) => {
                     {product.productName}
                   </Text>
                   <Box display="flex" alignItems="center">
-                    {rating?.ratingAverage === 0 ||
-                    rating?.totalNumberOfUserRating === 0 ? (
+                    {userRating?.ratingAverage === 0 ||
+                    userRating?.overallTotalUserRating === 0 ? (
                       <Box>
                         <Text mr="10px">No Ratings Yet</Text>
                       </Box>
@@ -242,7 +240,7 @@ const ProductDetail = ({ product }: Props) => {
                           style={{ textUnderlineOffset: "5px" }}
                           fontWeight="semibold"
                         >
-                          {rating?.ratingAverage || 0}
+                          {userRating?.ratingAverage || 0}
                         </Text>
                         {ratings.map((rate) => (
                           <Box
@@ -262,7 +260,7 @@ const ProductDetail = ({ product }: Props) => {
                           style={{ textUnderlineOffset: "5px" }}
                           fontWeight="semibold"
                         >
-                          {rating?.totalNumberOfUserRating || 0}
+                          {userRating?.overallTotalUserRating || 0}
                         </Text>
                         <Text color="gray.600" mr="10px">
                           Ratings
@@ -632,14 +630,14 @@ const ProductDetail = ({ product }: Props) => {
                     >
                       <Box display="flex" alignItems="center">
                         <Text color="orange.400" fontSize="x-large" mr="5px">
-                          {rating?.ratingAverage || 0}
+                          {userRating?.ratingAverage || 0}
                         </Text>
                         <Text color="orange.400" fontSize="large">
                           out of 5
                         </Text>
                       </Box>
-                      {rating?.ratingAverage === 0 ||
-                      rating?.totalNumberOfUserRating === 0 ? (
+                      {userRating?.ratingAverage === 0 ||
+                      userRating?.overallTotalUserRating === 0 ? (
                         <Box>
                           <Text mr="10px">No Ratings Yet</Text>
                         </Box>

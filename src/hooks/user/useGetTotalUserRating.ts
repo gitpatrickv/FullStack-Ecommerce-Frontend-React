@@ -4,6 +4,7 @@ import { axiosInstance } from "../../services/api-client";
 const apiClient = axiosInstance;
 
 export interface RatingProps{
+    ratingAverage: number;
     overallTotalUserRating: number;
     total1StarUserRating: number;
     total2StarUserRating: number;

@@ -35,7 +35,7 @@ import useUpdateProductInfo, {
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
-import useGetProductRatingAvg from "../../../hooks/user/useGetProductRatingAvg";
+import useGetTotalUserRating from "../../../hooks/user/useGetTotalUserRating";
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -47,7 +47,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const { data: rating } = useGetProductRatingAvg(product.productId);
+  const { data: rating } = useGetTotalUserRating(product.productId);
   const { onSubmit } = useUpdateProductInfo(product.productId);
   const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
     defaultValues: {
