@@ -1,9 +1,9 @@
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import { IoIosStar } from "react-icons/io";
-import RatingAndReview from "../../entities/RatingAndReview";
+import { RatingAndReviews } from "../../entities/RatingAndReview";
 
 interface Props {
-  review: RatingAndReview;
+  review: RatingAndReviews;
 }
 const Review = ({ review }: Props) => {
   const ratings = [1, 2, 3, 4, 5];

@@ -11,7 +11,7 @@ import {
   IconButton,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
@@ -25,12 +25,18 @@ import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
 import useGetFavoritesStatus from "../../hooks/user/useGetFavoritesStatus";
 import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
+import useGetTotalUserRating from "../../hooks/user/useGetTotalUserRating";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import AllStarRating from "./AllStarRating";
 import ProductImages from "./ProductImages";
-import ProductRating from "./ProductRating";
+import Star5Rating from "./Star5Rating";
+import Star4Rating from "./Star4Rating";
+import Star3Rating from "./Star3Rating";
+import Star2Rating from "./Star2Rating";
+import Star1Rating from "./Star1Rating";
 interface Props {
   product: Product;
 }
@@ -48,6 +54,7 @@ const ProductDetail = ({ product }: Props) => {
   );
   const ratings = [1, 2, 3, 4, 5];
   const { data: rating } = useGetProductRatingAvg(product.productId);
+  const { data: userRating } = useGetTotalUserRating(product.productId);
 
   const ratingAvg = rating?.ratingAverage ?? 0;
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
@@ -178,6 +185,18 @@ const ProductDetail = ({ product }: Props) => {
 
   const handleNavigateStorePageClick = (storeId: string) => {
     navigate(`/store/` + storeId);
+  };
+
+  const [selectedRating, setSelectedRating] = useState<string | null>(null);
+
+  const productRatingsRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectedRatingClick = (rating: string) => {
+    setSelectedRating(rating === selectedRating ? null : rating);
+
+    if (productRatingsRef.current) {
+      productRatingsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -588,9 +607,149 @@ const ProductDetail = ({ product }: Props) => {
               <Text>{product.productDescription}</Text>
             </CardBody>
           </Card>
-          <Box>
-            <ProductRating productId={product.productId} />
-          </Box>
+
+          <Card ref={productRatingsRef} mt="15px">
+            <CardBody>
+              <Text
+                fontSize="x-large"
+                fontWeight="semibold"
+                textTransform="capitalize"
+                mb="10px"
+                color="orange.400"
+              >
+                Product Ratings
+              </Text>
+
+              <Card>
+                <CardBody>
+                  <Box display="flex">
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      mr="40px"
+                      position="relative"
+                      bottom="5px"
+                    >
+                      <Box display="flex" alignItems="center">
+                        <Text color="orange.400" fontSize="x-large" mr="5px">
+                          {rating?.ratingAverage || 0}
+                        </Text>
+                        <Text color="orange.400" fontSize="large">
+                          out of 5
+                        </Text>
+                      </Box>
+                      {rating?.ratingAverage === 0 ||
+                      rating?.totalNumberOfUserRating === 0 ? (
+                        <Box>
+                          <Text mr="10px">No Ratings Yet</Text>
+                        </Box>
+                      ) : (
+                        <Box display="flex">
+                          {ratings.map((rate) => (
+                            <Box
+                              as={IoIosStar}
+                              color={
+                                rate <= ratingAvg ? "orange.400" : "gray.600"
+                              }
+                              key={rate}
+                            />
+                          ))}
+                        </Box>
+                      )}
+                    </Box>
+                    <Box position="relative" top="7px">
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="All"
+                        onClick={() => handleSelectedRatingClick("All")}
+                        color={
+                          selectedRating === "All" ? "orange.400" : "gray.200"
+                        }
+                      >
+                        All ({userRating?.overallTotalUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="5"
+                        onClick={() => handleSelectedRatingClick("5")}
+                        color={
+                          selectedRating === "5" ? "orange.400" : "gray.200"
+                        }
+                      >
+                        5 Star ({userRating?.total5StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="4"
+                        onClick={() => handleSelectedRatingClick("4")}
+                        color={
+                          selectedRating === "4" ? "orange.400" : "gray.200"
+                        }
+                      >
+                        4 Star ({userRating?.total4StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="3"
+                        onClick={() => handleSelectedRatingClick("3")}
+                        color={
+                          selectedRating === "3" ? "orange.400" : "gray.200"
+                        }
+                      >
+                        3 Star ({userRating?.total3StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="2"
+                        onClick={() => handleSelectedRatingClick("2")}
+                        color={
+                          selectedRating === "2" ? "orange.400" : "gray.200"
+                        }
+                      >
+                        2 Star ({userRating?.total2StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="1"
+                        onClick={() => handleSelectedRatingClick("1")}
+                        color={
+                          selectedRating === "1" ? "orange.400" : "gray.200"
+                        }
+                      >
+                        1 Star ({userRating?.total1StarUserRating || 0})
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Box>
+                    {selectedRating === "All" && (
+                      <AllStarRating productId={product.productId} />
+                    )}
+                    {selectedRating === "5" && (
+                      <Star5Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "4" && (
+                      <Star4Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "3" && (
+                      <Star3Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "2" && (
+                      <Star2Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "1" && (
+                      <Star1Rating productId={product.productId} />
+                    )}
+                  </Box>
+                </CardBody>
+              </Card>
+            </CardBody>
+          </Card>
         </GridItem>
       </Grid>
     </>
