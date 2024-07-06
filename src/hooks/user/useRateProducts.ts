@@ -14,7 +14,7 @@ const apiClient = axiosInstance;
 
 const useRateProducts = (productId: string) => {
     const queryClient = useQueryClient();
-    const {register, handleSubmit} = useForm<RateProps>();
+    const {register, handleSubmit, reset} = useForm<RateProps>();
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
     const toast = useToast();
@@ -31,13 +31,14 @@ const useRateProducts = (productId: string) => {
 
         onSuccess: () => {
             queryClient.invalidateQueries(['ratingAndReview']);
+            reset();
             toast({
                 position: "top",
                 title: "Thank You for Your Feedback!",
                 status: "success",
                 duration: 1000,
                 isClosable: true,
-              });
+              });             
         },
     })
 

@@ -1,24 +1,6 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardBody,
-  Divider,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
-import { IoIosStar } from "react-icons/io";
+
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
@@ -28,11 +10,11 @@ import useCarts from "../../hooks/user/useCarts";
 import useGetOrderByCompletedStatus from "../../hooks/user/useGetOrderByCompletedStatus";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import RateButton from "../../components/Order/RateButton";
 
 const CompletedPage = () => {
-  const ratings = [1, 2, 3, 4, 5];
   const navigate = useNavigate();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: orders } = useGetOrderByCompletedStatus(jwtToken);
@@ -157,15 +139,10 @@ const CompletedPage = () => {
                       </Text>
                     </Text>
                     <Box display="flex">
-                      <Button
-                        bg="orange.500"
-                        _hover={{ bg: "orange.600" }}
-                        mr="10px"
-                        width="120px"
-                        onClick={onOpen}
-                      >
-                        Rate
-                      </Button>
+                      <RateButton
+                        key={storeName}
+                        productId={storeOrders[0].productId}
+                      />
                       <Button
                         onClick={() =>
                           handleBuyAgainClick(storeOrders[0].orderId)
@@ -182,55 +159,6 @@ const CompletedPage = () => {
             </Box>
           );
         })}
-      <Box>
-        <Modal isOpen={isOpen} onClose={onClose} isCentered>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Rate Product</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>Product Quality</FormLabel>
-                <Input></Input>
-                <Box display="flex">
-                  {ratings.map((rate) => (
-                    <Box
-                      as={IoIosStar}
-                      // color={
-                      //   rate <= ratingAvg ? "orange.400" : "gray.600"
-                      // }
-                      key={rate}
-                    />
-                  ))}
-                </Box>
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>Review</FormLabel>
-                <Input placeholder="Last name" />
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button
-                onClick={onClose}
-                width="100px"
-                _hover={{ color: "orange.400" }}
-              >
-                Cancel
-              </Button>
-              <Button
-                bg="orange.500"
-                _hover={{ bg: "orange.600" }}
-                ml="10px"
-                width="100px"
-              >
-                Submit
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Box>
     </>
   );
 };
