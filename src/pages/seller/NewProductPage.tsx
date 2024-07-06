@@ -106,7 +106,7 @@ const NewProductPage = () => {
                   isChecked={isVariation}
                   onChange={handleEnableVariationCheckBoxChange}
                 />
-                <Text fontSize="large" ml="5px" color="gray.500">
+                <Text fontSize="large" ml="5px" color="white.500">
                   Enable Variation
                 </Text>
               </Box>
@@ -125,7 +125,7 @@ const NewProductPage = () => {
                             setIsColorsAndSizes(!isColorsAndSizes)
                           }
                         />
-                        <Text fontSize="large" ml="5px" color="gray.500">
+                        <Text fontSize="large" ml="5px" color="white.500">
                           Colors and Sizes
                         </Text>
                       </Box>
@@ -285,8 +285,10 @@ const NewProductPage = () => {
                 {errors.file && <Text color="red">{errors.file.message}</Text>}
                 <Button
                   type="submit"
-                  _hover={{ color: "orange.400" }}
                   mt="20px"
+                  bg="orange.400"
+                  _hover={{ bg: "orange.500" }}
+                  _active={{ bg: "orange.600" }}
                 >
                   Save Product
                 </Button>

@@ -233,7 +233,8 @@ const AllOrderPage = () => {
                                   Close
                                 </Button>
                                 <Button
-                                  colorScheme="red"
+                                  bg="red.500"
+                                  _hover={{ bg: "red.600" }}
                                   ml={3}
                                   onClick={() =>
                                     handleCancelOrderClick(selectedOrderId!)

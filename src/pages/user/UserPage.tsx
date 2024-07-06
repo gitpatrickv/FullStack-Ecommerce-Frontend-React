@@ -83,7 +83,7 @@ const UserPage = () => {
               color={
                 location.pathname.startsWith("/user/account")
                   ? "orange"
-                  : "white"
+                  : "gray"
               }
             />
 
@@ -96,7 +96,7 @@ const UserPage = () => {
                 color={
                   location.pathname.startsWith("/user/account")
                     ? "orange.400"
-                    : "white"
+                    : "gray.600"
                 }
               >
                 My Account
@@ -151,7 +151,7 @@ const UserPage = () => {
           >
             <FaHeart
               size="20px"
-              color={location.pathname === "/user/favorites" ? "red" : "white"}
+              color={location.pathname === "/user/favorites" ? "red" : "gray"}
             />
             <Link to="/user/favorites">
               <Text
@@ -162,7 +162,7 @@ const UserPage = () => {
                 color={
                   location.pathname === "/user/favorites"
                     ? "orange.400"
-                    : "white"
+                    : "gray.600"
                 }
               >
                 My Favorites
@@ -182,7 +182,7 @@ const UserPage = () => {
               color={
                 location.pathname.startsWith("/user/purchase")
                   ? "orange"
-                  : "white"
+                  : "gray"
               }
             />
             <Link to="/user/purchase">
@@ -194,7 +194,7 @@ const UserPage = () => {
                 color={
                   location.pathname.startsWith("/user/purchase")
                     ? "orange.400"
-                    : "white"
+                    : "gray.600"
                 }
               >
                 My Purchase

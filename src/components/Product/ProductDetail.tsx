@@ -327,7 +327,7 @@ const ProductDetail = ({ product }: Props) => {
                               color={
                                 selectedColor === color
                                   ? "orange.400"
-                                  : "gray.200"
+                                  : "white.500"
                               }
                               textTransform="capitalize"
                               isDisabled={!availableColors.includes(color)}
@@ -343,7 +343,7 @@ const ProductDetail = ({ product }: Props) => {
                         <Text
                           mr="52px"
                           fontSize="xl"
-                          color="gray.600"
+                          color="gray.500"
                           mb="10px"
                         >
                           Size
@@ -365,7 +365,7 @@ const ProductDetail = ({ product }: Props) => {
                               color={
                                 selectedSize === size
                                   ? "orange.400"
-                                  : "gray.200"
+                                  : "white.500"
                               }
                               textTransform="capitalize"
                               isDisabled={!availableSizes.includes(size)}
@@ -601,7 +601,7 @@ const ProductDetail = ({ product }: Props) => {
             </CardBody>
           </Card>
 
-          <Card>
+          <Card mt="15px">
             <CardBody>
               <Text
                 fontSize="x-large"
@@ -657,7 +657,7 @@ const ProductDetail = ({ product }: Props) => {
                         value="All"
                         onClick={() => handleSelectedRatingClick("All")}
                         color={
-                          selectedRating === "All" ? "orange.400" : "gray.200"
+                          selectedRating === "All" ? "orange.400" : "white.500"
                         }
                       >
                         All ({userRating?.overallTotalUserRating || 0})
@@ -668,7 +668,7 @@ const ProductDetail = ({ product }: Props) => {
                         value="5"
                         onClick={() => handleSelectedRatingClick("5")}
                         color={
-                          selectedRating === "5" ? "orange.400" : "gray.200"
+                          selectedRating === "5" ? "orange.400" : "white.500"
                         }
                       >
                         5 Star ({userRating?.total5StarUserRating || 0})
@@ -679,7 +679,7 @@ const ProductDetail = ({ product }: Props) => {
                         value="4"
                         onClick={() => handleSelectedRatingClick("4")}
                         color={
-                          selectedRating === "4" ? "orange.400" : "gray.200"
+                          selectedRating === "4" ? "orange.400" : "white.500"
                         }
                       >
                         4 Star ({userRating?.total4StarUserRating || 0})
@@ -690,7 +690,7 @@ const ProductDetail = ({ product }: Props) => {
                         value="3"
                         onClick={() => handleSelectedRatingClick("3")}
                         color={
-                          selectedRating === "3" ? "orange.400" : "gray.200"
+                          selectedRating === "3" ? "orange.400" : "white.500"
                         }
                       >
                         3 Star ({userRating?.total3StarUserRating || 0})
@@ -701,7 +701,7 @@ const ProductDetail = ({ product }: Props) => {
                         value="2"
                         onClick={() => handleSelectedRatingClick("2")}
                         color={
-                          selectedRating === "2" ? "orange.400" : "gray.200"
+                          selectedRating === "2" ? "orange.400" : "white.500"
                         }
                       >
                         2 Star ({userRating?.total2StarUserRating || 0})
@@ -712,7 +712,7 @@ const ProductDetail = ({ product }: Props) => {
                         value="1"
                         onClick={() => handleSelectedRatingClick("1")}
                         color={
-                          selectedRating === "1" ? "orange.400" : "gray.200"
+                          selectedRating === "1" ? "orange.400" : "white.500"
                         }
                       >
                         1 Star ({userRating?.total1StarUserRating || 0})
@@ -748,7 +748,7 @@ const ProductDetail = ({ product }: Props) => {
             <Text
               fontWeight="semibold"
               fontSize="x-large"
-              color="gray.500"
+              color="white.500"
               mb="5px"
               mt="10px"
             >

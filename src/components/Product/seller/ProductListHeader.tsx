@@ -25,18 +25,20 @@ const ProductListHeader = () => {
         p={3}
       >
         <GridItem area="content1">
-          <Box display="flex" flexDirection="column" alignItems="flex-start">
-            <Box display="flex" alignItems="center">
-              <Text
-                fontSize={fontSize}
-                fontWeight="semibold"
-                cursor="pointer"
-                pl="5px"
-                color="orange.400"
-              >
-                Products
-              </Text>
-            </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            w={{ base: "140px", md: "250px", lg: "350px" }}
+          >
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              cursor="pointer"
+              pl="5px"
+              color="orange.400"
+            >
+              Products
+            </Text>
           </Box>
         </GridItem>
         <GridItem

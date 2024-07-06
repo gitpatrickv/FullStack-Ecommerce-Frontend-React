@@ -128,7 +128,7 @@ const Star1Rating = ({ productId }: Props) => {
                         <Button
                           key={index}
                           onClick={() => handlePageChange(number)}
-                          color={page === number ? "orange" : "gray.500"}
+                          color={page === number ? "orange.500" : "white.500"}
                         >
                           {number}
                         </Button>

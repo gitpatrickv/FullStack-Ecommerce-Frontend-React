@@ -11,4 +11,5 @@ export default interface Cart{
     colors: string;
     sizes: string;
     inventoryId: number;
+    stockRemaining: number;
 }

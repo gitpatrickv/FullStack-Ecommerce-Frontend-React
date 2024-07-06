@@ -11,7 +11,7 @@ const OrderCard = ({ order }: Props) => {
   return (
     <Grid
       templateRows="1fr "
-      templateColumns="1fr 0.5fr "
+      templateColumns="0.7fr 0.3fr "
       templateAreas={`
 "content1 content2"
 `}

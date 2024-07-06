@@ -112,7 +112,11 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
         p={3}
       >
         <GridItem area="content1">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            w={{ base: "150px", md: "250px", lg: "350px" }}
+          >
             <Image
               src={product.photoUrl}
               w={{ base: "40px", md: "80px", lg: "100px" }}
@@ -177,25 +181,45 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           justifyContent="flex-end"
         >
           <Box display="flex" flexDirection="column" justifyContent="flex-end">
-            <Button
-              cursor="pointer"
-              fontSize={fontSize}
-              fontWeight="semibold"
-              _hover={{ color: "orange.400" }}
+            <Box
               mb="5px"
+              height="35px"
+              width="100px"
+              border="1px solid"
+              borderColor="gray.600"
+              textAlign="center"
+              cursor="pointer"
+              userSelect="none"
+              _hover={{
+                borderColor: "orange.500",
+                transform: "scale(1.03)",
+                transition: "transform .15s ease-in",
+              }}
               onClick={updateOnOpen}
             >
-              Update
-            </Button>
-            <Button
+              <Text position="relative" top="4px">
+                Update
+              </Text>
+            </Box>
+            <Box
+              height="35px"
+              width="100px"
+              border="1px solid"
+              borderColor="gray.600"
+              textAlign="center"
               cursor="pointer"
-              fontSize={fontSize}
-              fontWeight="semibold"
-              _hover={{ color: "orange.400" }}
+              userSelect="none"
+              _hover={{
+                borderColor: "orange.500",
+                transform: "scale(1.03)",
+                transition: "transform .15s ease-in",
+              }}
               onClick={deleteOnOpen}
             >
-              Delete
-            </Button>
+              <Text position="relative" top="4px">
+                Delete
+              </Text>
+            </Box>
           </Box>
         </GridItem>
       </Grid>
@@ -364,7 +388,8 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                   Cancel
                 </Button>
                 <Button
-                  colorScheme="red"
+                  bg="red.500"
+                  _hover={{ bg: "red.600" }}
                   onClick={handleDeleteProductClick}
                   ml={3}
                 >
