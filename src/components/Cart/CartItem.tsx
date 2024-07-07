@@ -301,7 +301,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
           </Box>
           {cart.stockRemaining === cart.quantity ? (
             <Text color="red" userSelect="none">
-              {cart.stockRemaining} items left
+              {cart.stockRemaining} item(s) left
             </Text>
           ) : (
             ""
