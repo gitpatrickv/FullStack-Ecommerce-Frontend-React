@@ -15,32 +15,30 @@ import {
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosStar } from "react-icons/io";
 import useRateProducts from "../../hooks/user/useRateProducts";
+import OrderItem from "../../entities/Order";
 
 interface Props {
-  productId: string;
-  rateStatus: boolean;
-  id: number;
+  order: OrderItem;
   refetchCompletedOrder: () => void;
 }
 
-const RateButton = ({
-  productId,
-  rateStatus,
-  refetchCompletedOrder,
-  id,
-}: Props) => {
+const RateButton = ({ order, refetchCompletedOrder }: Props) => {
   const ratings = [1, 2, 3, 4, 5];
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [ratingStatus, setRatingStatus] = useState<boolean>(rateStatus);
+  const [ratingStatus, setRatingStatus] = useState<boolean>(order.rated);
+
+  useEffect(() => {
+    setRatingStatus(order.rated);
+  }, [order.rated]);
 
   const {
     register,
     handleSubmit,
     onSubmit: onRatingSubmit,
-  } = useRateProducts(productId, id);
+  } = useRateProducts(order.productId, order.id);
   const [rating, setRating] = useState<number>(0);
 
   const handleRatingClick = (rate: number) => {

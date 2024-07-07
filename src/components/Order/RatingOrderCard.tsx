@@ -55,10 +55,8 @@ const RatingOrderCard = ({ order, refetchCompletedOrder }: Props) => {
             <Text>{formatCurrency(order.price)}</Text>
             <Box position="absolute" right="40px">
               <RateButton
-                productId={order.productId}
-                rateStatus={order.rated}
+                order={order}
                 refetchCompletedOrder={refetchCompletedOrder}
-                id={order.id}
               />
             </Box>
           </Box>
