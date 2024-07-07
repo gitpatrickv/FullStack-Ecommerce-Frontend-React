@@ -6,13 +6,14 @@ import { axiosInstance } from "../../services/api-client";
 
 interface RateProps{
     productId: string;
+    id: number;
     rating: number;
     review: string;
 }
 
 const apiClient = axiosInstance;
 
-const useRateProducts = (productId: string) => {
+const useRateProducts = (productId: string, id: number) => {
     const queryClient = useQueryClient();
     const {register, handleSubmit, reset} = useForm<RateProps>();
     const { authStore } = useAuthQueryStore();
@@ -31,6 +32,7 @@ const useRateProducts = (productId: string) => {
 
         onSuccess: () => {
             queryClient.invalidateQueries(['ratingAndReview']);
+            queryClient.invalidateQueries(['completedOrders']);
             reset();
             toast({
                 position: "top",
@@ -43,7 +45,7 @@ const useRateProducts = (productId: string) => {
     })
 
     const onSubmit: SubmitHandler<{rating: number, review: string}> = (data) => {
-        mutation.mutate({...data, productId});
+        mutation.mutate({...data, productId, id});
     }
 
     return {

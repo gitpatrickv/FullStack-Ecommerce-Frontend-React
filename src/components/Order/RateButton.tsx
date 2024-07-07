@@ -21,16 +21,26 @@ import useRateProducts from "../../hooks/user/useRateProducts";
 
 interface Props {
   productId: string;
+  rateStatus: boolean;
+  id: number;
+  refetchCompletedOrder: () => void;
 }
 
-const RateButton = ({ productId }: Props) => {
+const RateButton = ({
+  productId,
+  rateStatus,
+  refetchCompletedOrder,
+  id,
+}: Props) => {
   const ratings = [1, 2, 3, 4, 5];
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [ratingStatus, setRatingStatus] = useState<boolean>(rateStatus);
+
   const {
     register,
     handleSubmit,
     onSubmit: onRatingSubmit,
-  } = useRateProducts(productId);
+  } = useRateProducts(productId, id);
   const [rating, setRating] = useState<number>(0);
 
   const handleRatingClick = (rate: number) => {
@@ -44,6 +54,8 @@ const RateButton = ({ productId }: Props) => {
     const formData = { ...data, rating };
     try {
       await onRatingSubmit(formData);
+      setRatingStatus(true);
+      refetchCompletedOrder();
       onClose();
     } catch (error) {
       console.error("Error Rating Product: ", error);
@@ -52,15 +64,21 @@ const RateButton = ({ productId }: Props) => {
 
   return (
     <>
-      <Button
-        bg="orange.500"
-        _hover={{ bg: "orange.600" }}
-        mr="10px"
-        width="120px"
-        onClick={onOpen}
-      >
-        Rate
-      </Button>
+      {ratingStatus ? (
+        ""
+      ) : (
+        <Text
+          cursor="pointer"
+          color="orange.400"
+          fontWeight="semibold"
+          textDecoration="underline 2px"
+          style={{ textUnderlineOffset: "5px" }}
+          onClick={onOpen}
+        >
+          Rate
+        </Text>
+      )}
+
       <Box>
         <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
           <ModalOverlay />

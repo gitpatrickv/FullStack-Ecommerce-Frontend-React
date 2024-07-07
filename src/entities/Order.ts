@@ -17,6 +17,7 @@ export default interface OrderItem {
     colors: string;
     sizes: string;
     productId: string;
+    rated: boolean;
   }
   
   export interface Order {

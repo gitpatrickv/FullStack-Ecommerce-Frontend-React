@@ -2,7 +2,7 @@ import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
-import OrderCard from "../../components/Order/OrderCard";
+import RatingOrderCard from "../../components/Order/RatingOrderCard";
 import OrderItem from "../../entities/Order";
 import useBuyAgain from "../../hooks/user/useBuyAgain";
 import useCartTotal from "../../hooks/user/useCartTotal";
@@ -10,17 +10,18 @@ import useCarts from "../../hooks/user/useCarts";
 import useGetOrderByCompletedStatus from "../../hooks/user/useGetOrderByCompletedStatus";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import RateButton from "../../components/Order/RateButton";
 
 const CompletedPage = () => {
   const navigate = useNavigate();
 
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const { data: orders } = useGetOrderByCompletedStatus(jwtToken);
+  const { data: orders, refetch: refetchCompletedOrder } =
+    useGetOrderByCompletedStatus(jwtToken);
   const { mutate: buyAgain } = useBuyAgain();
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
+
   const orderArray = Array.isArray(orders) ? orders : [];
   const handleBuyAgainClick = (orderId: string) => {
     buyAgain(
@@ -123,7 +124,11 @@ const CompletedPage = () => {
                   </Box>
                   <Divider mt={2} mb={2} />
                   {storeOrders.map((order) => (
-                    <OrderCard key={order.id} order={order} />
+                    <RatingOrderCard
+                      key={order.id}
+                      order={order}
+                      refetchCompletedOrder={refetchCompletedOrder}
+                    />
                   ))}
                   <Divider mt={2} mb={2} />
                   <Box
@@ -139,10 +144,6 @@ const CompletedPage = () => {
                       </Text>
                     </Text>
                     <Box display="flex">
-                      <RateButton
-                        key={storeName}
-                        productId={storeOrders[0].productId}
-                      />
                       <Button
                         onClick={() =>
                           handleBuyAgainClick(storeOrders[0].orderId)
