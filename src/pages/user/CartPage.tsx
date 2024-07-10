@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardBody,
   Divider,
@@ -140,13 +139,27 @@ const CartPage = () => {
               <Text mt="20px" fontSize="large" whiteSpace="nowrap">
                 Your shopping cart is empty
               </Text>
-              <Button
+
+              <Box
                 mt="20px"
-                _hover={{ color: "orange.400" }}
+                height="50px"
+                width="300px"
+                border="1px solid"
+                borderColor="gray.600"
+                textAlign="center"
+                cursor="pointer"
+                userSelect="none"
+                _hover={{
+                  borderColor: "orange.500",
+                  transform: "scale(1.03)",
+                  transition: "transform .15s ease-in",
+                }}
                 onClick={handleNavigateClick}
               >
-                Go Shopping Now
-              </Button>
+                <Text fontSize="xl" position="relative" top="8px">
+                  Go Shopping Now
+                </Text>
+              </Box>
             </Box>
           </GridItem>
         </Grid>

@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -91,6 +92,21 @@ const RateButton = ({ order, refetchCompletedOrder }: Props) => {
               <ModalCloseButton />
               <ModalBody mb="10px">
                 <FormControl>
+                  <Box display="flex" mb="20px">
+                    <Image
+                      src={order.photoUrl}
+                      w={{ base: "40px", md: "80px", lg: "100px" }}
+                      h={{ base: "40px", md: "60px", lg: "80px" }}
+                    />
+                    <Text
+                      fontWeight="semibold"
+                      textTransform="capitalize"
+                      pl="20px"
+                    >
+                      {order.productName}
+                    </Text>
+                  </Box>
+
                   <FormLabel>Product Quality</FormLabel>
                   <Box display="flex">
                     {ratings.map((rate) => (

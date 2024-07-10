@@ -1,6 +1,7 @@
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import { IoIosStar } from "react-icons/io";
 import { RatingAndReviews } from "../../entities/RatingAndReview";
+import { MdVerified } from "react-icons/md";
 
 interface Props {
   review: RatingAndReviews;
@@ -33,6 +34,19 @@ const Review = ({ review }: Props) => {
                 key={rate}
               />
             ))}
+
+            <Box ml="10px" color="blue.500">
+              <MdVerified />
+            </Box>
+            <Text
+              fontSize="x-small"
+              ml="2px"
+              position="relative"
+              top="1px"
+              color="gray.500"
+            >
+              Verified Purchase
+            </Text>
           </Box>
           <Text>{review.createdDate}</Text>
         </Box>
