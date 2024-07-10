@@ -31,11 +31,13 @@ export const SearchPage = () => {
   const pageSize = 25;
   const [searchParams] = useSearchParams();
   const query = searchParams.get("keyword") || "";
+  const [sortBy, setSortBy] = useState("productName");
 
   const { data: results } = useSearchProducts({
     keyword: query,
     pageNo: page,
     pageSize: pageSize,
+    sortBy: sortBy,
   });
   const cPage = results?.pageResponse.pageNo ?? 0;
   const currentPage = cPage + 1;
@@ -66,7 +68,9 @@ export const SearchPage = () => {
 
   const updatePage = (newPage: number) => {
     setPage(newPage);
-    navigate(`/search?keyword=${query}&pageNo=${newPage}&pageSize=${pageSize}`);
+    navigate(
+      `/search?keyword=${query}&pageNo=${newPage}&pageSize=${pageSize}&sortBy=${sortBy}`
+    );
   };
 
   function handlePageChange(value: any) {
@@ -86,6 +90,14 @@ export const SearchPage = () => {
       updatePage(value);
     }
   }
+
+  const handleSortClick = (event: any) => {
+    setSortBy(event.target.value);
+    setPage(1);
+    navigate(
+      `/search?keyword=${query}&pageNo=1&pageSize=${pageSize}&sortBy=${event.target.value}`
+    );
+  };
 
   return (
     <Grid
@@ -108,13 +120,36 @@ export const SearchPage = () => {
             "
           </Text>
           <Card p="13px" mb="20px">
-            <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center" textAlign="center">
               <Text fontSize="medium" pr="10px">
                 Sort By
               </Text>
-              <Text pr="10px">Latest</Text>
-              <Text pr="10px">Top Sales</Text>
-              <Text>Price</Text>
+              <Button
+                value="productName"
+                onClick={handleSortClick}
+                mr="5px"
+                width="120px"
+                _hover={{ color: "orange.400" }}
+              >
+                Relevance
+              </Button>
+              <Button
+                value="createdDate"
+                onClick={handleSortClick}
+                mr="5px"
+                width="120px"
+                _hover={{ color: "orange.400" }}
+              >
+                Latest
+              </Button>
+              <Button
+                value="productSold"
+                onClick={handleSortClick}
+                width="120px"
+                _hover={{ color: "orange.400" }}
+              >
+                Top Sales
+              </Button>
               <Spacer />
               <Text pr="15px" fontSize="medium">
                 <Text as="span" color="orange">
