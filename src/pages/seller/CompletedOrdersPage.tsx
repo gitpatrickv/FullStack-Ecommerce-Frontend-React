@@ -7,6 +7,7 @@ import {
   GridItem,
   Text,
 } from "@chakra-ui/react";
+import { TbTruckDelivery } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
@@ -69,6 +70,9 @@ const CompletedOrdersPage = () => {
                           textAlign="center"
                           alignItems="center"
                         >
+                          <Box mr="5px">
+                            <TbTruckDelivery color="skyblue" size="20px" />
+                          </Box>
                           <Text
                             fontSize={{
                               base: "sm",

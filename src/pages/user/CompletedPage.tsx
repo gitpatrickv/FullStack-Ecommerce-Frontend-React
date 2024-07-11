@@ -1,7 +1,10 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
+import { TbTruckDelivery } from "react-icons/tb";
+
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
+import ProductToRate from "../../components/Order/ProductToRate";
 import OrderItem from "../../entities/Order";
 import useBuyAgain from "../../hooks/user/useBuyAgain";
 import useCartTotal from "../../hooks/user/useCartTotal";
@@ -12,12 +15,14 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 
 const CompletedPage = () => {
   const navigate = useNavigate();
+
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: orders } = useGetOrderByCompletedStatus(jwtToken);
   const { mutate: buyAgain } = useBuyAgain();
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
+
   const orderArray = Array.isArray(orders) ? orders : [];
   const handleBuyAgainClick = (orderId: string) => {
     buyAgain(
@@ -90,6 +95,9 @@ const CompletedPage = () => {
                         textAlign="center"
                         alignItems="center"
                       >
+                        <Box mr="5px">
+                          <TbTruckDelivery color="skyblue" size="20px" />
+                        </Box>
                         <Text
                           fontSize={{
                             base: "sm",
@@ -135,14 +143,18 @@ const CompletedPage = () => {
                         {formatCurrency(storeOrders[0].orderTotalAmount)}
                       </Text>
                     </Text>
-                    <Button
-                      onClick={() =>
-                        handleBuyAgainClick(storeOrders[0].orderId)
-                      }
-                      _hover={{ color: "orange.400" }}
-                    >
-                      Buy Again
-                    </Button>
+                    <Box display="flex">
+                      <ProductToRate orderId={storeOrders[0].orderId} />
+                      <Button
+                        onClick={() =>
+                          handleBuyAgainClick(storeOrders[0].orderId)
+                        }
+                        _hover={{ color: "orange.400" }}
+                        width="120px"
+                      >
+                        Buy Again
+                      </Button>
+                    </Box>
                   </Box>
                 </CardBody>
               </Card>

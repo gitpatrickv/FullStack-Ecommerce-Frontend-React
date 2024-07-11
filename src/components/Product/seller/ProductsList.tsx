@@ -35,6 +35,7 @@ import useUpdateProductInfo, {
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
+import useGetTotalUserRating from "../../../hooks/user/useGetTotalUserRating";
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -46,7 +47,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
   const cancelRef = useRef<HTMLButtonElement>(null);
-
+  const { data: rating } = useGetTotalUserRating(product.productId);
   const { onSubmit } = useUpdateProductInfo(product.productId);
   const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
     defaultValues: {
@@ -103,15 +104,19 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   return (
     <>
       <Grid
-        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
-  "content1 content2 content3 content4 content5"
+  "content1 rating content2 content3 content4 content5"
 `}
         gap={4}
         p={3}
       >
         <GridItem area="content1">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            w={{ base: "150px", md: "250px", lg: "350px" }}
+          >
             <Image
               src={product.photoUrl}
               w={{ base: "40px", md: "80px", lg: "100px" }}
@@ -130,13 +135,23 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           </Box>
         </GridItem>
         <GridItem
+          area="rating"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Text fontSize={fontSize} fontWeight="semibold">
+            {rating?.ratingAverage || 0}
+          </Text>
+        </GridItem>
+        <GridItem
           area="content2"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
           <Text fontSize={fontSize} fontWeight="semibold">
-            0
+            {product.productSold}
           </Text>
         </GridItem>
         <GridItem
@@ -166,25 +181,45 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           justifyContent="flex-end"
         >
           <Box display="flex" flexDirection="column" justifyContent="flex-end">
-            <Button
-              cursor="pointer"
-              fontSize={fontSize}
-              fontWeight="semibold"
-              _hover={{ color: "orange.400" }}
+            <Box
               mb="5px"
+              height="35px"
+              width="100px"
+              border="1px solid"
+              borderColor="gray.600"
+              textAlign="center"
+              cursor="pointer"
+              userSelect="none"
+              _hover={{
+                borderColor: "orange.500",
+                transform: "scale(1.03)",
+                transition: "transform .15s ease-in",
+              }}
               onClick={updateOnOpen}
             >
-              Update
-            </Button>
-            <Button
+              <Text position="relative" top="4px">
+                Update
+              </Text>
+            </Box>
+            <Box
+              height="35px"
+              width="100px"
+              border="1px solid"
+              borderColor="gray.600"
+              textAlign="center"
               cursor="pointer"
-              fontSize={fontSize}
-              fontWeight="semibold"
-              _hover={{ color: "orange.400" }}
+              userSelect="none"
+              _hover={{
+                borderColor: "orange.500",
+                transform: "scale(1.03)",
+                transition: "transform .15s ease-in",
+              }}
               onClick={deleteOnOpen}
             >
-              Delete
-            </Button>
+              <Text position="relative" top="4px">
+                Delete
+              </Text>
+            </Box>
           </Box>
         </GridItem>
       </Grid>
@@ -353,7 +388,8 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                   Cancel
                 </Button>
                 <Button
-                  colorScheme="red"
+                  bg="red.500"
+                  _hover={{ bg: "red.600" }}
                   onClick={handleDeleteProductClick}
                   ml={3}
                 >

@@ -155,11 +155,16 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
               </ModalBody>
 
               <ModalFooter>
-                <Button _hover={{ color: "orange.400" }} mr="5px" type="submit">
-                  Add Stock
-                </Button>
                 <Button _hover={{ color: "orange.400" }} onClick={onStockClose}>
                   Close
+                </Button>
+                <Button
+                  ml="5px"
+                  type="submit"
+                  bg="orange.500"
+                  _hover={{ bg: "orange.600" }}
+                >
+                  Add Stock
                 </Button>
               </ModalFooter>
             </ModalContent>
@@ -200,11 +205,16 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
               </ModalBody>
 
               <ModalFooter>
-                <Button _hover={{ color: "orange.400" }} mr="5px" type="submit">
-                  Update Price
-                </Button>
                 <Button _hover={{ color: "orange.400" }} onClick={onPriceClose}>
                   Close
+                </Button>
+                <Button
+                  bg="orange.500"
+                  _hover={{ bg: "orange.600" }}
+                  ml="5px"
+                  type="submit"
+                >
+                  Update Price
                 </Button>
               </ModalFooter>
             </ModalContent>

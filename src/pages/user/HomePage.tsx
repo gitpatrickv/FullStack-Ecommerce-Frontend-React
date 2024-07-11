@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   CardBody,
   Grid,
@@ -76,7 +75,7 @@ const HomePage = () => {
           </CardBody>
         </Card>
         <SimpleGrid
-          columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
+          columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
           spacing={2}
           padding="10px"
         >
@@ -92,10 +91,27 @@ const HomePage = () => {
             </ProductCardContainer>
           ))}
         </SimpleGrid>
-        <Box display="flex" justifyContent="center" pt="20px">
-          <Button onClick={onClickNavigate} _hover={{ color: "orange.400" }}>
-            See More
-          </Button>
+        <Box display="flex" justifyContent="center">
+          <Box
+            mt="20px"
+            height="50px"
+            width="300px"
+            border="1px solid"
+            borderColor="gray.600"
+            textAlign="center"
+            cursor="pointer"
+            userSelect="none"
+            _hover={{
+              borderColor: "orange.500",
+              transform: "scale(1.03)",
+              transition: "transform .15s ease-in",
+            }}
+            onClick={onClickNavigate}
+          >
+            <Text fontSize="xl" position="relative" top="8px">
+              See More
+            </Text>
+          </Box>
         </Box>
       </GridItem>
     </Grid>

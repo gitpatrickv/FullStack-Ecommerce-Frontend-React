@@ -11,7 +11,7 @@ const OrderCard = ({ order }: Props) => {
   return (
     <Grid
       templateRows="1fr "
-      templateColumns="1fr 0.5fr "
+      templateColumns="0.7fr 0.3fr "
       templateAreas={`
 "content1 content2"
 `}
@@ -20,11 +20,13 @@ const OrderCard = ({ order }: Props) => {
     >
       <GridItem area="content1" mt="3px">
         <Box display="flex" alignItems="center" pb="10px">
-          <Image
-            src={order.photoUrl}
-            w={{ base: "50px", md: "90px", lg: "120px" }}
-            h={{ base: "40px", md: "60px", lg: "80px" }}
-          />
+          <Box border="solid 1px">
+            <Image
+              src={order.photoUrl}
+              w={{ base: "50px", md: "90px", lg: "120px" }}
+              h={{ base: "40px", md: "60px", lg: "80px" }}
+            />
+          </Box>
           <Box display="flex" flexDirection="column" pl="10px">
             <Text pl="5px" textTransform="capitalize">
               {order.productName}

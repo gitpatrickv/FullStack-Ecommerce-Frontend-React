@@ -46,7 +46,7 @@ const Sidebar = ({ storeId }: Props) => {
               color={
                 location.pathname.startsWith("/seller/order")
                   ? "orange"
-                  : "white"
+                  : "gray"
               }
             />
             <Link to={`/seller/order/all/${storeId}`}>
@@ -58,8 +58,8 @@ const Sidebar = ({ storeId }: Props) => {
                 _hover={{ color: "orange.400" }}
                 color={
                   location.pathname.startsWith("/seller/order")
-                    ? "orange"
-                    : "white"
+                    ? "orange.400"
+                    : "white.500"
                 }
               >
                 Orders
@@ -88,7 +88,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/all/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -102,7 +102,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/pending/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -116,7 +116,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/unpaid/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -130,7 +130,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/to-ship/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -144,7 +144,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/shipping/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -158,7 +158,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/completed/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -171,7 +171,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === `/seller/order/cancelled/${storeId}`
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                   >
@@ -189,7 +189,7 @@ const Sidebar = ({ storeId }: Props) => {
               color={
                 location.pathname.startsWith("/seller/product")
                   ? "orange"
-                  : "white"
+                  : "gray"
               }
             />
             <Link to="/seller/product">
@@ -201,8 +201,8 @@ const Sidebar = ({ storeId }: Props) => {
                 _hover={{ color: "orange.400" }}
                 color={
                   location.pathname.startsWith("/seller/product")
-                    ? "orange"
-                    : "white"
+                    ? "orange.400"
+                    : "white.500"
                 }
               >
                 Product
@@ -231,7 +231,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === "/seller/product"
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                     whiteSpace="nowrap"
@@ -246,7 +246,7 @@ const Sidebar = ({ storeId }: Props) => {
                     color={
                       location.pathname === "/seller/product/new"
                         ? "orange.400"
-                        : "gray.600"
+                        : "white.500"
                     }
                     cursor="pointer"
                     whiteSpace="nowrap"

@@ -32,10 +32,9 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 export interface Props {
   cart: Cart;
   refetchCarts: () => void;
-  isChecked: boolean;
 }
 
-const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
+const CartItem = ({ cart, refetchCarts }: Props) => {
   const reset = useProductQueryStore((state) => state.reset);
   const navigate = useNavigate();
   const { authStore } = useAuthQueryStore();
@@ -48,7 +47,7 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
   const { mutate: filterStoreCart } = useFilterByStoreName();
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const [isFiltered, setIsFiltered] = useState<boolean>(cart.filter);
-  const [isCheck, setIsCheck] = useState<boolean>(isChecked);
+  const [isCheck, setIsCheck] = useState<boolean>(cart.filter);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
 
@@ -65,11 +64,8 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
 
   useEffect(() => {
     setIsFiltered(cart.filter);
+    setIsCheck(cart.filter);
   }, [cart.filter]);
-
-  useEffect(() => {
-    setIsCheck(isChecked);
-  }, [isChecked]);
 
   const handleClickDecrement = () => {
     decrementQuantity(
@@ -225,17 +221,23 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
         alignItems="center"
         justifyContent="center"
       >
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" flexDirection="column">
           <Box display="flex" justifyContent="center" alignItems="center">
-            <Button
-              position="relative"
-              right="10px"
+            <Box
+              width="40px"
+              height="40px"
+              border="1px solid"
+              borderColor="gray.600"
+              textAlign="center"
+              cursor="pointer"
               onClick={cart.quantity > 1 ? handleClickDecrement : onOpen}
-              size={buttonSize}
               _hover={{ color: "orange.400" }}
+              userSelect="none"
             >
-              -
-            </Button>
+              <Text fontSize="x-large" position="relative" bottom="2px">
+                -
+              </Text>
+            </Box>
             <AlertDialog
               isOpen={isOpen}
               leastDestructiveRef={cancelRef}
@@ -259,7 +261,8 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
                       Cancel
                     </Button>
                     <Button
-                      colorScheme="red"
+                      bg="red.500"
+                      _hover={{ bg: "red.600" }}
                       onClick={handleClickDecrement}
                       ml={3}
                     >
@@ -269,19 +272,40 @@ const CartItem = ({ cart, refetchCarts, isChecked }: Props) => {
                 </AlertDialogContent>
               </AlertDialogOverlay>
             </AlertDialog>
-            <Text fontSize={fontSize} fontWeight="semibold">
-              {cart.quantity}
-            </Text>
-            <Button
-              position="relative"
-              left="10px"
-              onClick={handleClickIncrement}
-              size={buttonSize}
-              _hover={{ color: "orange.400" }}
+            <Box
+              width="50px"
+              height="40px"
+              border="1px solid "
+              borderColor="gray.600"
+              textAlign="center"
             >
-              +
-            </Button>
+              <Text mt="5px" fontSize="lg" fontWeight="semibold">
+                {cart.quantity}
+              </Text>
+            </Box>
+            <Box
+              width="40px"
+              height="40px"
+              border="1px solid"
+              borderColor="gray.600"
+              textAlign="center"
+              cursor="pointer"
+              onClick={handleClickIncrement}
+              _hover={{ color: "orange.400" }}
+              userSelect="none"
+            >
+              <Text fontSize="x-large" position="relative" bottom="2px">
+                +
+              </Text>
+            </Box>
           </Box>
+          {cart.stockRemaining === cart.quantity ? (
+            <Text color="red" userSelect="none">
+              {cart.stockRemaining} item(s) left
+            </Text>
+          ) : (
+            ""
+          )}
         </Box>
       </GridItem>
       <GridItem

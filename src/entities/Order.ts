@@ -16,6 +16,8 @@ export default interface OrderItem {
     fullName: string;
     colors: string;
     sizes: string;
+    productId: string;
+    rated: boolean;
   }
   
   export interface Order {

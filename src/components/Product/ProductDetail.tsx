@@ -24,13 +24,19 @@ import useAddToFavorites from "../../hooks/user/useAddToFavorites";
 import useCartTotal from "../../hooks/user/useCartTotal";
 import useCarts from "../../hooks/user/useCarts";
 import useGetFavoritesStatus from "../../hooks/user/useGetFavoritesStatus";
+import useGetTotalUserRating from "../../hooks/user/useGetTotalUserRating";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import useProductQueryStore from "../../store/product-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import AllStarRating from "./AllStarRating";
+import FromTheSameStore from "./FromTheSameStore";
 import ProductImages from "./ProductImages";
-import Review from "../Review/Review";
-import useGetProductRatingAvg from "../../hooks/user/useGetProductRatingAvg";
+import Star1Rating from "./Star1Rating";
+import Star2Rating from "./Star2Rating";
+import Star3Rating from "./Star3Rating";
+import Star4Rating from "./Star4Rating";
+import Star5Rating from "./Star5Rating";
 interface Props {
   product: Product;
 }
@@ -47,8 +53,9 @@ const ProductDetail = ({ product }: Props) => {
     })
   );
   const ratings = [1, 2, 3, 4, 5];
-  const { data: rating } = useGetProductRatingAvg(product.productId);
-  const ratingAvg = rating?.ratingAverage ?? 0;
+  const { data: userRating } = useGetTotalUserRating(product.productId);
+
+  const ratingAvg = userRating?.ratingAverage ?? 0;
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { mutate: addToCart } = useAddToCart();
@@ -179,6 +186,12 @@ const ProductDetail = ({ product }: Props) => {
     navigate(`/store/` + storeId);
   };
 
+  const [selectedRating, setSelectedRating] = useState<string | null>("All");
+
+  const handleSelectedRatingClick = (rating: string) => {
+    setSelectedRating(rating === selectedRating ? null : rating);
+  };
+
   return (
     <>
       <Card>
@@ -208,8 +221,8 @@ const ProductDetail = ({ product }: Props) => {
                     {product.productName}
                   </Text>
                   <Box display="flex" alignItems="center">
-                    {rating?.ratingAverage === 0 ||
-                    rating?.totalNumberOfUserRating === 0 ? (
+                    {userRating?.ratingAverage === 0 ||
+                    userRating?.overallTotalUserRating === 0 ? (
                       <Box>
                         <Text mr="10px">No Ratings Yet</Text>
                       </Box>
@@ -222,7 +235,7 @@ const ProductDetail = ({ product }: Props) => {
                           style={{ textUnderlineOffset: "5px" }}
                           fontWeight="semibold"
                         >
-                          {rating?.ratingAverage || 0}
+                          {userRating?.ratingAverage || 0}
                         </Text>
                         {ratings.map((rate) => (
                           <Box
@@ -242,7 +255,7 @@ const ProductDetail = ({ product }: Props) => {
                           style={{ textUnderlineOffset: "5px" }}
                           fontWeight="semibold"
                         >
-                          {rating?.totalNumberOfUserRating || 0}
+                          {userRating?.overallTotalUserRating || 0}
                         </Text>
                         <Text color="gray.600" mr="10px">
                           Ratings
@@ -314,7 +327,7 @@ const ProductDetail = ({ product }: Props) => {
                               color={
                                 selectedColor === color
                                   ? "orange.400"
-                                  : "gray.200"
+                                  : "white.500"
                               }
                               textTransform="capitalize"
                               isDisabled={!availableColors.includes(color)}
@@ -330,7 +343,7 @@ const ProductDetail = ({ product }: Props) => {
                         <Text
                           mr="52px"
                           fontSize="xl"
-                          color="gray.600"
+                          color="gray.500"
                           mb="10px"
                         >
                           Size
@@ -352,7 +365,7 @@ const ProductDetail = ({ product }: Props) => {
                               color={
                                 selectedSize === size
                                   ? "orange.400"
-                                  : "gray.200"
+                                  : "white.500"
                               }
                               textTransform="capitalize"
                               isDisabled={!availableSizes.includes(size)}
@@ -587,21 +600,161 @@ const ProductDetail = ({ product }: Props) => {
               <Text>{product.productDescription}</Text>
             </CardBody>
           </Card>
-          <Box mt="15px">
-            <Card>
-              <CardBody>
-                <Text
-                  fontSize="x-large"
-                  fontWeight="semibold"
-                  textTransform="capitalize"
-                  mb="10px"
-                  color="orange.400"
-                >
-                  Product Ratings
-                </Text>
-                <Review />
-              </CardBody>
-            </Card>
+
+          <Card mt="15px">
+            <CardBody>
+              <Text
+                fontSize="x-large"
+                fontWeight="semibold"
+                textTransform="capitalize"
+                mb="10px"
+                color="orange.400"
+              >
+                Product Ratings
+              </Text>
+
+              <Card>
+                <CardBody>
+                  <Box display="flex">
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      mr="40px"
+                      position="relative"
+                      bottom="5px"
+                    >
+                      <Box display="flex" alignItems="center">
+                        <Text color="orange.400" fontSize="x-large" mr="5px">
+                          {userRating?.ratingAverage || 0}
+                        </Text>
+                        <Text color="orange.400" fontSize="large">
+                          out of 5
+                        </Text>
+                      </Box>
+                      {userRating?.ratingAverage === 0 ||
+                      userRating?.overallTotalUserRating === 0 ? (
+                        <Box>
+                          <Text mr="10px">No Ratings Yet</Text>
+                        </Box>
+                      ) : (
+                        <Box display="flex">
+                          {ratings.map((rate) => (
+                            <Box
+                              as={IoIosStar}
+                              color={
+                                rate <= ratingAvg ? "orange.400" : "gray.600"
+                              }
+                              key={rate}
+                            />
+                          ))}
+                        </Box>
+                      )}
+                    </Box>
+                    <Box position="relative" top="7px">
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="All"
+                        onClick={() => handleSelectedRatingClick("All")}
+                        color={
+                          selectedRating === "All" ? "orange.400" : "white.500"
+                        }
+                      >
+                        All ({userRating?.overallTotalUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="5"
+                        onClick={() => handleSelectedRatingClick("5")}
+                        color={
+                          selectedRating === "5" ? "orange.400" : "white.500"
+                        }
+                      >
+                        5 Star ({userRating?.total5StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="4"
+                        onClick={() => handleSelectedRatingClick("4")}
+                        color={
+                          selectedRating === "4" ? "orange.400" : "white.500"
+                        }
+                      >
+                        4 Star ({userRating?.total4StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="3"
+                        onClick={() => handleSelectedRatingClick("3")}
+                        color={
+                          selectedRating === "3" ? "orange.400" : "white.500"
+                        }
+                      >
+                        3 Star ({userRating?.total3StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="2"
+                        onClick={() => handleSelectedRatingClick("2")}
+                        color={
+                          selectedRating === "2" ? "orange.400" : "white.500"
+                        }
+                      >
+                        2 Star ({userRating?.total2StarUserRating || 0})
+                      </Button>
+                      <Button
+                        width="120px"
+                        mr="10px"
+                        value="1"
+                        onClick={() => handleSelectedRatingClick("1")}
+                        color={
+                          selectedRating === "1" ? "orange.400" : "white.500"
+                        }
+                      >
+                        1 Star ({userRating?.total1StarUserRating || 0})
+                      </Button>
+                    </Box>
+                  </Box>
+                  <Box>
+                    {selectedRating === "All" && (
+                      <AllStarRating productId={product.productId} />
+                    )}
+                    {selectedRating === "5" && (
+                      <Star5Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "4" && (
+                      <Star4Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "3" && (
+                      <Star3Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "2" && (
+                      <Star2Rating productId={product.productId} />
+                    )}
+                    {selectedRating === "1" && (
+                      <Star1Rating productId={product.productId} />
+                    )}
+                  </Box>
+                </CardBody>
+              </Card>
+            </CardBody>
+          </Card>
+
+          <Box padding={5}>
+            <Text
+              fontWeight="semibold"
+              fontSize="x-large"
+              color="white.500"
+              mb="5px"
+              mt="10px"
+            >
+              FROM THE SAME SHOP
+            </Text>
+            <FromTheSameStore storeId={product.storeId} />
           </Box>
         </GridItem>
       </Grid>

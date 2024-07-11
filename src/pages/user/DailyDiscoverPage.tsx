@@ -93,7 +93,7 @@ const DailyDiscoverPage = () => {
             </CardBody>
           </Card>
           <SimpleGrid
-            columns={{ sm: 1, md: 3, lg: 3, xl: 5 }}
+            columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
             spacing={2}
             padding="10px"
           >
@@ -128,7 +128,7 @@ const DailyDiscoverPage = () => {
                     <Button
                       key={index}
                       onClick={() => handlePageChange(number)}
-                      color={page === number ? "orange" : "gray.500"}
+                      color={page === number ? "orange.500" : "white.500"}
                     >
                       {number}
                     </Button>

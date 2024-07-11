@@ -26,11 +26,12 @@ import useCarts from "../../hooks/user/useCarts";
 import useGetAllCustomerOrders from "../../hooks/user/useGetAllCustomerOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import ProductToRate from "../../components/Order/ProductToRate";
 
 const AllOrderPage = () => {
   const status = ["PENDING", "TO PAY"];
   const cancelOrderStatus = ["TO PAY", "TO SHIP"];
-  const buyAgainClick = ["COMPLETED", "CANCELLED"];
+  const buyAgainClick = ["COMPLETED", "RATED", "CANCELLED"];
   const navigate = useNavigate();
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
@@ -233,7 +234,8 @@ const AllOrderPage = () => {
                                   Close
                                 </Button>
                                 <Button
-                                  colorScheme="red"
+                                  bg="red.500"
+                                  _hover={{ bg: "red.600" }}
                                   ml={3}
                                   onClick={() =>
                                     handleCancelOrderClick(selectedOrderId!)
@@ -270,6 +272,13 @@ const AllOrderPage = () => {
                       >
                         Buy Again
                       </Button>
+                    ) : (
+                      ""
+                    )}
+                    {storeOrders[0].orderStatus === "COMPLETED" ? (
+                      <Box position="absolute" bottom="20px" right="125px">
+                        <ProductToRate orderId={storeOrders[0].orderId} />
+                      </Box>
                     ) : (
                       ""
                     )}

@@ -3,20 +3,22 @@ import AllProductsResponse from "../../entities/AllProductResponse";
 import { axiosInstance } from "../../services/api-client";
 
 interface Props{
-  keyword: string
+  keyword: string;
   pageNo: number;
   pageSize: number;
+  sortBy: string;
 }
 
 const apiClient = axiosInstance;
-const useSearchProducts = ({ keyword, pageNo, pageSize }: Props) => useQuery({
-    queryKey: ['product', keyword, pageNo, pageSize],
+const useSearchProducts = ({ keyword, pageNo, pageSize,sortBy }: Props) => useQuery({
+    queryKey: ['product', keyword, pageNo, pageSize,sortBy],
     queryFn: async () => {
         const {data} = await apiClient.get<AllProductsResponse>('/product/search', {
           params: { 
             keyword: keyword,
             pageNo: pageNo - 1,
-            pageSize: pageSize
+            pageSize: pageSize,
+            sortBy: sortBy
           },
         });
         return data;
