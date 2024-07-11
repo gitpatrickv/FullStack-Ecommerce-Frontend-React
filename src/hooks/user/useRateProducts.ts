@@ -33,12 +33,14 @@ const useRateProducts = (productId: string, id: number) => {
         onSuccess: () => {
             queryClient.invalidateQueries(['ratingAndReview']);
             queryClient.invalidateQueries(['completedOrders']);
+            queryClient.invalidateQueries(['rateProducts']);
+
             reset();
             toast({
                 position: "top",
                 title: "Thank You for Your Feedback!",
                 status: "success",
-                duration: 1000,
+                duration: 2000,
                 isClosable: true,
               });             
         },

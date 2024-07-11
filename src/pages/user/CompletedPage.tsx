@@ -1,8 +1,8 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
-
 import { useNavigate } from "react-router-dom";
-import RatingOrderCard from "../../components/Order/RatingOrderCard";
+import OrderCard from "../../components/Order/OrderCard";
+import ProductToRate from "../../components/Order/ProductToRate";
 import OrderItem from "../../entities/Order";
 import useBuyAgain from "../../hooks/user/useBuyAgain";
 import useCartTotal from "../../hooks/user/useCartTotal";
@@ -16,8 +16,7 @@ const CompletedPage = () => {
 
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
-  const { data: orders, refetch: refetchCompletedOrder } =
-    useGetOrderByCompletedStatus(jwtToken);
+  const { data: orders } = useGetOrderByCompletedStatus(jwtToken);
   const { mutate: buyAgain } = useBuyAgain();
   const { refetch: refetchCarts } = useCarts(jwtToken);
   const { refetch: refetchTotal } = useCartTotal(jwtToken);
@@ -124,11 +123,7 @@ const CompletedPage = () => {
                   </Box>
                   <Divider mt={2} mb={2} />
                   {storeOrders.map((order) => (
-                    <RatingOrderCard
-                      key={order.id}
-                      order={order}
-                      refetchCompletedOrder={refetchCompletedOrder}
-                    />
+                    <OrderCard key={order.id} order={order} />
                   ))}
                   <Divider mt={2} mb={2} />
                   <Box
@@ -144,6 +139,7 @@ const CompletedPage = () => {
                       </Text>
                     </Text>
                     <Box display="flex">
+                      <ProductToRate orderId={storeOrders[0].orderId} />
                       <Button
                         onClick={() =>
                           handleBuyAgainClick(storeOrders[0].orderId)
