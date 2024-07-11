@@ -1,4 +1,6 @@
 import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
+import { TbTruckDelivery } from "react-icons/tb";
+
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
@@ -93,6 +95,9 @@ const CompletedPage = () => {
                         textAlign="center"
                         alignItems="center"
                       >
+                        <Box mr="5px">
+                          <TbTruckDelivery color="skyblue" size="20px" />
+                        </Box>
                         <Text
                           fontSize={{
                             base: "sm",

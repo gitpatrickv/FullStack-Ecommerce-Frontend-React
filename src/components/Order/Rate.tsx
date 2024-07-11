@@ -24,7 +24,7 @@ const Rate = ({ order, onRefetch }: Props) => {
     register,
     handleSubmit,
     onSubmit: onRatingSubmit,
-  } = useRateProducts(order.productId, order.id);
+  } = useRateProducts(order.productId, order.orderId);
 
   const [rating, setRating] = useState<number>(0);
 
@@ -53,11 +53,13 @@ const Rate = ({ order, onRefetch }: Props) => {
     >
       <FormControl>
         <Box display="flex" mb="20px">
-          <Image
-            src={order.photoUrl}
-            w={{ base: "40px", md: "80px", lg: "100px" }}
-            h={{ base: "40px", md: "60px", lg: "80px" }}
-          />
+          <Box border="solid 1px">
+            <Image
+              src={order.photoUrl}
+              w={{ base: "40px", md: "80px", lg: "100px" }}
+              h={{ base: "40px", md: "60px", lg: "80px" }}
+            />
+          </Box>
           <Text fontWeight="semibold" textTransform="capitalize" pl="20px">
             {order.productName}
           </Text>
