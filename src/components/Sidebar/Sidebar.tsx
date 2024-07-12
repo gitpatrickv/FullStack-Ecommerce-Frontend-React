@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { FaRegFileAlt, FaShoppingBag } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoStorefrontSharp } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 
 interface Props {
@@ -22,11 +23,13 @@ const Sidebar = ({ storeId }: Props) => {
 
   const [isOrderPage, setIsOrderPage] = useState(false);
   const [isProductPage, setIsProductPage] = useState(false);
+  const [isShopPage, setIsShopPage] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setIsOrderPage(location.pathname.startsWith("/seller/order"));
     setIsProductPage(location.pathname.startsWith("/seller/product"));
+    setIsShopPage(location.pathname.startsWith("/seller/shop"));
   }, [location.pathname]);
 
   return (
@@ -252,6 +255,66 @@ const Sidebar = ({ storeId }: Props) => {
                     whiteSpace="nowrap"
                   >
                     Add New Product
+                  </Text>
+                </Link>
+              </Box>
+            </>
+          )}
+        </Box>
+
+        <Box ml="10px" mt="15px">
+          <Box display="flex" alignItems="center">
+            <IoStorefrontSharp
+              size="20px"
+              color={
+                location.pathname.startsWith("/seller/shop") ? "orange" : "gray"
+              }
+            />
+            <Link to="/seller/shop/info">
+              <Text
+                ml="5px"
+                mr="5px"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                _hover={{ color: "orange.400" }}
+                color={
+                  location.pathname.startsWith("/seller/shop")
+                    ? "orange.400"
+                    : "white.500"
+                }
+              >
+                Shop
+              </Text>
+            </Link>
+            {location.pathname.startsWith("/seller/shop") ? (
+              <IoIosArrowDown
+                color={
+                  location.pathname.startsWith("/seller/shop")
+                    ? "orange"
+                    : "white"
+                }
+              />
+            ) : (
+              <IoIosArrowUp />
+            )}
+          </Box>
+          {isShopPage && (
+            <>
+              <Box ml="25px">
+                <Link to="/seller/shop/info">
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    mt="3px"
+                    color={
+                      location.pathname === "/seller/shop/info"
+                        ? "orange.400"
+                        : "white.500"
+                    }
+                    cursor="pointer"
+                    whiteSpace="nowrap"
+                  >
+                    Shop Information
                   </Text>
                 </Link>
               </Box>

@@ -77,10 +77,15 @@ const AccountProfilePage = () => {
             <Text fontSize="large" mb="34px" fontWeight="semibold">
               Name
             </Text>
-            <Text fontSize="large" mb="32px" fontWeight="semibold">
+            <Text
+              fontSize="large"
+              mb="32px"
+              fontWeight="semibold"
+              whiteSpace="nowrap"
+            >
               Address
             </Text>
-            <Text fontSize="large" fontWeight="semibold">
+            <Text fontSize="large" fontWeight="semibold" whiteSpace="nowrap">
               Phone Number
             </Text>
           </Box>
@@ -155,8 +160,10 @@ const AccountProfilePage = () => {
                 Select Image
               </Button>
             </label>
-            <Text mt="10px">File size: maximum 1 MB</Text>
-            <Text>File extension: .JPEG, .PNG</Text>
+            <Text mt="10px" whiteSpace="nowrap">
+              File size: maximum 1 MB
+            </Text>
+            <Text whiteSpace="nowrap">File extension: .JPEG, .PNG</Text>
           </Box>
         </Box>
       </GridItem>

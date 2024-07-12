@@ -30,6 +30,10 @@ const SellerPage = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
   };
+
+  const handleStoreInfoNavigateClick = () => {
+    navigate("/seller/shop/info");
+  };
   return (
     <Grid
       templateColumns="0.2fr 1fr 0.2fr"
@@ -92,7 +96,9 @@ const SellerPage = () => {
                     variant="none"
                   />
                   <MenuList>
-                    <MenuItem>Store Information</MenuItem>
+                    <MenuItem onClick={handleStoreInfoNavigateClick}>
+                      Store Information
+                    </MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>

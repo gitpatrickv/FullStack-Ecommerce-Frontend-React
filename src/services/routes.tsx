@@ -37,6 +37,7 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
+import StoreInformationPage from "../pages/seller/StoreInformationPage";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,7 @@ const router = createBrowserRouter([
       },
       { path: "product", element: <MyProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
+      { path: "shop/info", element: <StoreInformationPage /> },
     ],
   },
   {

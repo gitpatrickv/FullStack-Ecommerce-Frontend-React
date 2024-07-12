@@ -433,7 +433,11 @@ const ProductDetail = ({ product }: Props) => {
                       border="1px solid"
                       borderColor="gray.600"
                       textAlign="center"
-                      cursor="pointer"
+                      cursor={
+                        count === filteredInventory?.quantity
+                          ? "not-allowed"
+                          : "pointer"
+                      }
                       onClick={() =>
                         increment(filteredInventory?.quantity || 0)
                       }
