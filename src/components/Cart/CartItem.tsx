@@ -130,7 +130,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
 
   const handleStoreFilterChange = () => {
     filterStoreCart(
-      { storeName: cart.storeName, jwtToken: jwtToken },
+      { storeId: cart.storeId, jwtToken: jwtToken },
       {
         onSuccess: () => {
           refetchTotal();
