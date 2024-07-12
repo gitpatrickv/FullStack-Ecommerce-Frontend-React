@@ -174,6 +174,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
               h={{ base: "40px", md: "60px", lg: "80px" }}
               onClick={handleNavigateClick}
               cursor="pointer"
+              border="1px solid"
             />
             <Box display="flex" flexDirection="column">
               <Text

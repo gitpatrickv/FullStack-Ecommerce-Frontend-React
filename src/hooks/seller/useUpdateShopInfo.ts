@@ -37,7 +37,9 @@ const useUpdateShopInfo = (storeId: string) => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['storeInfo']);    
+                queryClient.invalidateQueries(['storeInfo']);  
+                queryClient.invalidateQueries(['cart']);
+                queryClient.invalidateQueries(['storeProduct']);
                 toast({
                     position: "top",
                     title: "Successfully updated store info.",

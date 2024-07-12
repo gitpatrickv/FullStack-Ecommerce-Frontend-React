@@ -102,10 +102,10 @@ const CartPage = () => {
 
   const groupedCarts = carts?.data.reduce(
     (acc: Record<string, Cart[]>, cart: Cart) => {
-      if (!acc[cart.storeName]) {
-        acc[cart.storeName] = [];
+      if (!acc[cart.storeId]) {
+        acc[cart.storeId] = [];
       }
-      acc[cart.storeName].push(cart);
+      acc[cart.storeId].push(cart);
       return acc;
     },
     {}
@@ -178,9 +178,9 @@ const CartPage = () => {
             <Box>
               <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
               {groupedCarts &&
-                Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
+                Object.entries(groupedCarts).map(([storeId, storeCarts]) => {
                   return (
-                    <Box pt="5px" key={storeName}>
+                    <Box pt="5px" key={storeId}>
                       <Card maxW="100%" margin="auto">
                         <CardBody>
                           <Text
@@ -196,7 +196,7 @@ const CartPage = () => {
                             left="52px"
                             top="-5px"
                           >
-                            {storeName}
+                            {storeCarts[0].storeName}
                           </Text>
                           <Divider mt={2} mb={2} />
                           {storeCarts.map((cart) => (

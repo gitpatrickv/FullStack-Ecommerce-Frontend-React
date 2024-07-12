@@ -34,6 +34,7 @@ const Checkout = ({ cart }: Props) => {
             src={cart.photoUrl}
             w={{ base: "30px", md: "60px", lg: "80px" }}
             h={{ base: "30px", md: "40px", lg: "60px" }}
+            border="1px solid"
           />
           <Box display="flex" flexDirection="column">
             <Text
