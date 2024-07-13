@@ -58,6 +58,7 @@ const Rate = ({ order, onRefetch }: Props) => {
               src={order.photoUrl}
               w={{ base: "40px", md: "80px", lg: "100px" }}
               h={{ base: "40px", md: "60px", lg: "80px" }}
+              border="1px solid"
             />
           </Box>
           <Text fontWeight="semibold" textTransform="capitalize" pl="20px">
@@ -98,20 +99,22 @@ const Rate = ({ order, onRefetch }: Props) => {
           )}
         </Box>
       </FormControl>
-
-      <FormControl mt="10px">
-        <FormLabel>Review</FormLabel>
-        <Textarea
-          {...register("review", { required: true })}
-          placeholder="Share more thoughts on the product to help other buyers."
-        />
-      </FormControl>
+      {rating > 0 && (
+        <FormControl mt="10px">
+          <FormLabel>Review</FormLabel>
+          <Textarea
+            {...register("review", { required: true })}
+            placeholder="Share more thoughts on the product to help other buyers."
+          />
+        </FormControl>
+      )}
       <Box display="flex" justifyContent="flex-end" mt="15px" mb="20px">
         <Button
           bg="orange.500"
           _hover={{ bg: "orange.600" }}
           width="100px"
           type="submit"
+          isDisabled={rating > 0 ? false : true}
         >
           Rate
         </Button>

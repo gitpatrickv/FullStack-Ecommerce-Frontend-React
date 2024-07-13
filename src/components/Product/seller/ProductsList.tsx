@@ -268,6 +268,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                       maxWidth="100px"
                       maxHeight="60px"
                       mr="40px"
+                      border="1px solid"
                     />
                   </Box>
                 </Box>
