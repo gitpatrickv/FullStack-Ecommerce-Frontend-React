@@ -36,7 +36,12 @@ const CreateStorePage = () => {
             <VStack as="header" spacing="6" mt="8">
               <Heading>Store Information</Heading>
             </VStack>
-            <Card variant="outline" borderColor="gray" w="500px">
+            <Card
+              variant="outline"
+              borderColor="gray"
+              w="500px"
+              borderRadius="none"
+            >
               <CardBody>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <VStack spacing={4} mt="5px">

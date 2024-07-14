@@ -24,7 +24,7 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
     xl: "xl",
   });
   return (
-    <Card maxW="100%" mt="5px">
+    <Card maxW="100%" mt="5px" borderRadius="none">
       <CardBody>
         <Grid
           templateColumns="2fr  0.5fr 0.3fr"

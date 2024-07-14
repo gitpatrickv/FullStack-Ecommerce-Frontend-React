@@ -44,7 +44,7 @@ const CancelledOrdersPage = () => {
           Object.entries(groupedOrders).map(([orderId, storeOrders]) => {
             return (
               <Box key={orderId} mt="5px">
-                <Card>
+                <Card borderRadius="none">
                   <CardBody>
                     <Box display="flex" alignItems="center">
                       <Text

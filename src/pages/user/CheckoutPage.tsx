@@ -76,7 +76,7 @@ const CheckoutPage = () => {
           Object.entries(groupedCarts).map(([storeName, storeCarts]) => {
             return (
               <Box mt="5px" key={storeName}>
-                <Card maxW="100%">
+                <Card maxW="100%" borderRadius="none">
                   <CardBody>
                     <Text
                       fontSize={{

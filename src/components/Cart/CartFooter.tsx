@@ -87,6 +87,7 @@ const CartFooter = ({
       margin="auto"
       h="80px"
       mt="5px"
+      borderRadius="none"
     >
       <CardBody>
         <Grid

@@ -85,7 +85,7 @@ const DailyDiscoverPage = () => {
     >
       <GridItem area="main">
         <>
-          <Card mt="20px" mb="20px">
+          <Card mt="20px" mb="20px" borderRadius="none">
             <CardBody>
               <Text textAlign="center" fontSize="larger" color="orange">
                 DAILY DISCOVER

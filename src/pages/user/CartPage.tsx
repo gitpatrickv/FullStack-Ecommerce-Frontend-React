@@ -181,7 +181,7 @@ const CartPage = () => {
                 Object.entries(groupedCarts).map(([storeId, storeCarts]) => {
                   return (
                     <Box pt="5px" key={storeId}>
-                      <Card maxW="100%" margin="auto">
+                      <Card maxW="100%" margin="auto" borderRadius="none">
                         <CardBody>
                           <Text
                             fontSize={{

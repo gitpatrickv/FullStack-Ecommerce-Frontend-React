@@ -7,6 +7,7 @@ import {
   AlertDialogOverlay,
   Box,
   Button,
+  Card,
   Divider,
   FormLabel,
   Grid,
@@ -102,7 +103,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   };
 
   return (
-    <>
+    <Card mb="5px" padding={2} borderRadius="none">
       <Grid
         templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
@@ -141,9 +142,11 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
-            {rating?.ratingAverage || 0}
-          </Text>
+          <Box minWidth="60px" display="flex" justifyContent="center">
+            <Text fontSize={fontSize} fontWeight="semibold">
+              {rating?.ratingAverage || 0}
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content2"
@@ -151,9 +154,17 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
-            {product.productSold}
-          </Text>
+          <Box minWidth="60px">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              display="flex"
+              justifyContent="center"
+              mr="10px"
+            >
+              {product.productSold}
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content3"
@@ -161,9 +172,11 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
-            {formatCurrency(product.price)}
-          </Text>
+          <Box minWidth="60px" display="flex" justifyContent="center">
+            <Text fontSize={fontSize} fontWeight="semibold">
+              {formatCurrency(product.price)}
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content4"
@@ -171,9 +184,11 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold">
-            {product.quantity}
-          </Text>
+          <Box minWidth="60px" display="flex" justifyContent="center">
+            <Text fontSize={fontSize} fontWeight="semibold">
+              {product.quantity}
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content5"
@@ -459,7 +474,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           </form>
         </Modal>
       </Box>
-    </>
+    </Card>
   );
 };
 

@@ -44,7 +44,7 @@ const SellerPage = () => {
     `}
     >
       <GridItem area="header">
-        <Card>
+        <Card borderRadius="none">
           <CardBody>
             <Box
               display="flex"

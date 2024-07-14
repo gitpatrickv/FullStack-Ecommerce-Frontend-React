@@ -86,7 +86,6 @@ const MyProductPage = () => {
                 product={product}
                 refetchProducts={refetchProducts}
               />
-              <Divider />
             </Box>
           ))}
         </Box>

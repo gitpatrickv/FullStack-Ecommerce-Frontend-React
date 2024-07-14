@@ -18,14 +18,7 @@ const ProductImages = ({ productImage }: Props) => {
     >
       <GridItem area="content1">
         <Box>
-          <Image
-            src={activeImage}
-            maxWidth="100%"
-            // maxHeight="70%"
-            // w="350"
-            h="400"
-            objectFit="cover"
-          />
+          <Image src={activeImage} maxWidth="100%" h="400" objectFit="cover" />
           <Box display="flex" mt="10px">
             {images.map((image, index) => (
               <Image
@@ -33,7 +26,6 @@ const ProductImages = ({ productImage }: Props) => {
                 src={image}
                 w="24"
                 h="24"
-                borderRadius="md"
                 cursor="pointer"
                 _hover={{
                   transform: "scale(1.03)",

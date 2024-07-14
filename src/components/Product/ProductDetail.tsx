@@ -194,7 +194,7 @@ const ProductDetail = ({ product }: Props) => {
 
   return (
     <>
-      <Card>
+      <Card borderRadius="none">
         <CardBody>
           <Grid
             templateColumns="0.6fr 600px "
@@ -557,7 +557,7 @@ const ProductDetail = ({ product }: Props) => {
         mt="15px"
       >
         <GridItem area="content1">
-          <Card>
+          <Card borderRadius="none">
             <CardBody>
               <Box display="flex">
                 <Avatar
@@ -590,7 +590,7 @@ const ProductDetail = ({ product }: Props) => {
               </Box>
             </CardBody>
           </Card>
-          <Card mt="15px">
+          <Card mt="15px" borderRadius="none">
             <CardBody>
               <Text
                 fontSize="x-large"
@@ -605,7 +605,7 @@ const ProductDetail = ({ product }: Props) => {
             </CardBody>
           </Card>
 
-          <Card mt="15px">
+          <Card mt="15px" borderRadius="none">
             <CardBody>
               <Text
                 fontSize="x-large"
@@ -617,7 +617,7 @@ const ProductDetail = ({ product }: Props) => {
                 Product Ratings
               </Text>
 
-              <Card>
+              <Card borderRadius="none">
                 <CardBody>
                   <Box display="flex">
                     <Box

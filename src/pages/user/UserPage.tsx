@@ -211,7 +211,7 @@ const UserPage = () => {
           </Box>
         ) : (
           <Box>
-            <Card>
+            <Card borderRadius="none">
               <Outlet />
             </Card>
           </Box>

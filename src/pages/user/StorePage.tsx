@@ -95,6 +95,7 @@ const StorePage = () => {
           backgroundImage="url('https://t3.ftcdn.net/jpg/02/93/94/22/360_F_293942282_dCV0T2E0411M2J1AHsCzCiKWEx3zYrM2.jpg')"
           backgroundSize="cover"
           backgroundPosition="center"
+          borderRadius="none"
         >
           <CardBody>
             <Box display="flex" justifyContent="start">

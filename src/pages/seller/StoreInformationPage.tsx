@@ -45,7 +45,7 @@ const StoreInformationPage = () => {
   }, [shop, setValue]);
 
   return (
-    <Card mt="30px">
+    <Card mt="30px" borderRadius="none">
       <Grid
         templateRows="0.3fr 0.7fr"
         templateColumns=" 0.2fr 0.4fr 0.4fr "

@@ -94,7 +94,7 @@ const ProductCategoryPage = () => {
       }}
     >
       <GridItem area="main">
-        <Card mt="20px" mb="5px">
+        <Card mt="20px" mb="5px" borderRadius="none">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
               {getAllProductsByCategory?.data.allProductModels[0]

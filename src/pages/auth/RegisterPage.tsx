@@ -28,7 +28,12 @@ const RegisterPage = () => {
           <VStack as="header" spacing="6" mt="8">
             <Heading>Register</Heading>
           </VStack>
-          <Card variant="outline" borderColor="gray" w="500px">
+          <Card
+            variant="outline"
+            borderColor="gray"
+            w="500px"
+            borderRadius="none"
+          >
             <Box alignSelf="flex-end">
               <Link to="/">
                 <CloseButton />
@@ -126,7 +131,12 @@ const RegisterPage = () => {
               </form>
             </CardBody>
           </Card>
-          <Card variant="outline" borderColor="gray" w="500px">
+          <Card
+            variant="outline"
+            borderColor="gray"
+            w="500px"
+            borderRadius="none"
+          >
             <CardBody>
               <HStack>
                 <Text>Already have an account? </Text>

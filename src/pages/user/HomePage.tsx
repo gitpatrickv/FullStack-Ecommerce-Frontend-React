@@ -52,7 +52,7 @@ const HomePage = () => {
         />
 
         <Show above="lg">
-          <Card mt="20px" mb="5px">
+          <Card mt="20px" mb="10px" borderRadius="none">
             <CardBody>
               <Text textAlign="center" fontSize="larger" color="orange.400">
                 Categories
@@ -67,7 +67,7 @@ const HomePage = () => {
             ))}
           </SimpleGrid>
         </Show>
-        <Card mt="20px" mb="20px">
+        <Card mt="10px" mb="10px" borderRadius="none">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
               DAILY DISCOVER
