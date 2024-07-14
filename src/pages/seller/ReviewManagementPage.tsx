@@ -1,10 +1,10 @@
 import { Box, Button, Grid, GridItem, HStack } from "@chakra-ui/react";
-import ReviewManagement from "../../components/Review/seller/ReviewManagement";
-import useManageAllProductReview from "../../hooks/seller/useManageAllProductReview";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { paginationRange } from "../../utilities/pagination";
+import ReviewManagement from "../../components/Review/seller/ReviewManagement";
 import ReviewManagementHeader from "../../components/Review/seller/ReviewManagementHeader";
+import useManageAllProductReview from "../../hooks/seller/useManageAllProductReview";
+import { paginationRange } from "../../utilities/pagination";
 
 const ReviewManagementPage = () => {
   const location = useLocation();
@@ -18,13 +18,14 @@ const ReviewManagementPage = () => {
   };
 
   const [page, setPage] = useState(getPageFromUrl);
-  const pageSize = 2;
+  const pageSize = 4;
 
-  const { data: manageReview } = useManageAllProductReview({
-    storeId: storeId!,
-    pageNo: page,
-    pageSize,
-  });
+  const { data: manageReview, refetch: refetchReviews } =
+    useManageAllProductReview({
+      storeId: storeId!,
+      pageNo: page,
+      pageSize,
+    });
 
   const isLastPage = manageReview?.pageResponse.last ?? false;
   const totalElements = manageReview?.pageResponse.totalElements ?? 0;
@@ -76,11 +77,16 @@ const ReviewManagementPage = () => {
 "main"
 `}
       mt="20px"
+      ml="15px"
     >
       <GridItem area="main">
         <ReviewManagementHeader />
         {manageReview?.ratingAndReviewModels.map((review) => (
-          <ReviewManagement key={review.reviewId} ratingAndReviews={review} />
+          <ReviewManagement
+            key={review.reviewId}
+            ratingAndReviews={review}
+            onRefetchReviews={refetchReviews}
+          />
         ))}
 
         <Box

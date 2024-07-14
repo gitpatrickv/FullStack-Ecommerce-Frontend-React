@@ -1,27 +1,25 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useAuthQueryStore } from "../../store/auth-store";
 import { useToast } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { axiosInstance } from "../../services/api-client";
+import { useAuthQueryStore } from "../../store/auth-store";
 
-interface RateProps{
-    productId: string;
-    orderId: string;
-    rating: number;
-    review: string;
+interface ReplyProps {
+    reviewId: number;
+    storeId: string;
+    sellersReply: string;
 }
 
 const apiClient = axiosInstance;
-
-const useRateProducts = (productId: string, orderId: string) => {
+const useReplyToReviews = (reviewId: number, storeId: string ) => {
     const queryClient = useQueryClient();
-    const {register, handleSubmit, reset} = useForm<RateProps>();
+    const {register, handleSubmit} = useForm<ReplyProps>();
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
     const toast = useToast();
 
     const mutation = useMutation({
-        mutationFn: (data: RateProps) => apiClient.post(`/product/review`, data,
+        mutationFn: (data: ReplyProps) => apiClient.post(`/product/review/reply`, data,
             {
             headers: {
                     Authorization: `Bearer ${jwtToken}`
@@ -31,28 +29,26 @@ const useRateProducts = (productId: string, orderId: string) => {
         .then((res) => res.data),
 
         onSuccess: () => {
-            queryClient.invalidateQueries(['ratingAndReview']);
-            queryClient.invalidateQueries(['completedOrders']);
-            queryClient.invalidateQueries(['rateProducts']);
             queryClient.invalidateQueries(['manageProductReview']);
-            reset();
+            queryClient.invalidateQueries(['ratingAndReview']);
             toast({
                 position: "top",
-                title: "Thank You for Your Feedback!",
+                title: "Reply sent successfully!",
                 status: "success",
                 duration: 2000,
                 isClosable: true,
-              });             
+              });
         },
     })
 
-    const onSubmit: SubmitHandler<{rating: number, review: string}> = (data) => {
-        mutation.mutate({...data, productId, orderId});
+    const onSubmit: SubmitHandler<{ sellersReply: string }> = (data) => {
+        mutation.mutate({...data, reviewId, storeId});
     }
 
     return {
         register, handleSubmit, onSubmit
     }
+ 
 }
 
-export default useRateProducts
+export default useReplyToReviews

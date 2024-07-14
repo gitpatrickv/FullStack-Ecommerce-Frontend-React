@@ -115,6 +115,10 @@ const SellerPage = () => {
         </Box>
       </GridItem>
 
+      <GridItem area="sidebar1">
+        <Box mt="15px" ml="10px" width="200px"></Box>
+      </GridItem>
+
       <GridItem area="content1">
         <Box>
           <Outlet />

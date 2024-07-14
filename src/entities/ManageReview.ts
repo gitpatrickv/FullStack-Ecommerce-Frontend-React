@@ -8,6 +8,8 @@ export interface ManageRatingAndReviews {
     createdDate: string;
     productName: string;
     productPhotoUrl: string;
+    storeId: string;
+    replied: boolean;
 }
 
 interface PageResponse {

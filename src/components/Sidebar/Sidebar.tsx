@@ -6,7 +6,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaRegFileAlt, FaShoppingBag } from "react-icons/fa";
+import { FaRegFileAlt, FaShoppingBag, FaHandsHelping } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
@@ -268,7 +268,7 @@ const Sidebar = ({ storeId }: Props) => {
 
         <Box ml="10px" mt="15px">
           <Box display="flex" alignItems="center">
-            <IoStorefrontSharp
+            <FaHandsHelping
               size="20px"
               color={
                 location.pathname.startsWith("/seller/customer/service")
