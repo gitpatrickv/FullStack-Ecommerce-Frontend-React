@@ -1,4 +1,12 @@
-import { Box, Button, Grid, GridItem, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  Grid,
+  GridItem,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewManagement from "../../components/Review/seller/ReviewManagement";
@@ -19,12 +27,14 @@ const ReviewManagementPage = () => {
 
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 4;
+  const [sortBy, setSortBy] = useState("createdDate");
 
   const { data: manageReview, refetch: refetchReviews } =
     useManageAllProductReview({
       storeId: storeId!,
       pageNo: page,
       pageSize,
+      sortBy: sortBy,
     });
 
   const isLastPage = manageReview?.pageResponse.last ?? false;
@@ -48,7 +58,7 @@ const ReviewManagementPage = () => {
   const updatePage = (newPage: number) => {
     setPage(newPage);
     navigate(
-      `/seller/customer/service/review/${storeId}?pageNo=${newPage}&pageSize=${pageSize}`
+      `/seller/customer/service/review/${storeId}?pageNo=${newPage}&pageSize=${pageSize}&sortBy=${sortBy}`
     );
   };
 
@@ -70,6 +80,14 @@ const ReviewManagementPage = () => {
     }
   }
 
+  const handleSortClick = (event: any) => {
+    setSortBy(event.target.value);
+    setPage(1);
+    navigate(
+      `/seller/customer/service/review/${storeId}?pageNo=1&pageSize=${pageSize}&sortBy=${event.target.value}`
+    );
+  };
+
   return (
     <Grid
       templateColumns="1fr"
@@ -80,6 +98,47 @@ const ReviewManagementPage = () => {
       ml="15px"
     >
       <GridItem area="main">
+        <Card mb="5px">
+          <Box border="1px solid" padding={5} borderColor="gray.500">
+            <Text fontSize="xl" fontWeight="semibold">
+              Shop Rating List
+            </Text>
+            <Box display="flex" alignItems="center" mt="10px">
+              <Text fontSize="lg" fontWeight="semibold" pr="20px">
+                Status
+              </Text>
+              <Button
+                value="createdDate"
+                onClick={handleSortClick}
+                mr="5px"
+                width="120px"
+                _hover={{ color: "orange.400" }}
+                borderRadius="20px"
+              >
+                All
+              </Button>
+              <Button
+                value="true"
+                onClick={handleSortClick}
+                mr="5px"
+                width="120px"
+                _hover={{ color: "orange.400" }}
+                borderRadius="20px"
+              >
+                To Reply
+              </Button>
+              <Button
+                value="false"
+                onClick={handleSortClick}
+                width="120px"
+                _hover={{ color: "orange.400" }}
+                borderRadius="20px"
+              >
+                Replied
+              </Button>
+            </Box>
+          </Box>
+        </Card>
         <ReviewManagementHeader />
         {manageReview?.ratingAndReviewModels.map((review) => (
           <ReviewManagement
