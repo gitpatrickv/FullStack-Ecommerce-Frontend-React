@@ -38,6 +38,7 @@ import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
 import StoreInformationPage from "../pages/seller/StoreInformationPage";
+import ReviewManagementPage from "../pages/seller/ReviewManagementPage";
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       { path: "product", element: <MyProductPage /> },
       { path: "product/new", element: <NewProductPage /> },
       { path: "shop/info", element: <StoreInformationPage /> },
+      {
+        path: "customer/service/review/:storeId",
+        element: <ReviewManagementPage />,
+      },
     ],
   },
   {

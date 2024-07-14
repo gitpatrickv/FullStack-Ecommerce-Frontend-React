@@ -1,4 +1,4 @@
-export interface RatingAndReviews {
+export interface ManageRatingAndReviews {
     reviewId: number;
     rating: number;
     review: string;
@@ -6,6 +6,8 @@ export interface RatingAndReviews {
     name: string;
     photoUrl: string;
     createdDate: string;
+    productName: string;
+    productPhotoUrl: string;
 }
 
 interface PageResponse {
@@ -16,7 +18,7 @@ interface PageResponse {
     last: boolean;
 }
 
-export default interface RatingAndReviewResponse {
-    ratingAndReviewModels: RatingAndReviews[];
+export default interface ManageReviewResponse {
+    ratingAndReviewModels: ManageRatingAndReviews[];
     pageResponse: PageResponse;
 }

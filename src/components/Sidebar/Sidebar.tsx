@@ -24,12 +24,16 @@ const Sidebar = ({ storeId }: Props) => {
   const [isOrderPage, setIsOrderPage] = useState(false);
   const [isProductPage, setIsProductPage] = useState(false);
   const [isShopPage, setIsShopPage] = useState(false);
+  const [isCustomerServicePage, setIsCustomerServicePage] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setIsOrderPage(location.pathname.startsWith("/seller/order"));
     setIsProductPage(location.pathname.startsWith("/seller/product"));
     setIsShopPage(location.pathname.startsWith("/seller/shop"));
+    setIsCustomerServicePage(
+      location.pathname.startsWith("/seller/customer/service")
+    );
   }, [location.pathname]);
 
   return (
@@ -267,6 +271,71 @@ const Sidebar = ({ storeId }: Props) => {
             <IoStorefrontSharp
               size="20px"
               color={
+                location.pathname.startsWith("/seller/customer/service")
+                  ? "orange"
+                  : "gray"
+              }
+            />
+
+            <Link to={`/seller/customer/service/review/${storeId}`}>
+              <Text
+                ml="5px"
+                mr="5px"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                _hover={{ color: "orange.400" }}
+                color={
+                  location.pathname.startsWith("/seller/customer/service")
+                    ? "orange.400"
+                    : "white.500"
+                }
+                whiteSpace="nowrap"
+              >
+                Customer Service
+              </Text>
+            </Link>
+            {location.pathname.startsWith("/seller/customer/service") ? (
+              <IoIosArrowDown
+                color={
+                  location.pathname.startsWith("/seller/customer/service")
+                    ? "orange"
+                    : "white"
+                }
+              />
+            ) : (
+              <IoIosArrowUp />
+            )}
+          </Box>
+          {isCustomerServicePage && (
+            <>
+              <Box ml="25px">
+                <Link to={`/seller/customer/service/review/${storeId}`}>
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    mt="3px"
+                    color={
+                      location.pathname ===
+                      `/seller/customer/service/review/${storeId}`
+                        ? "orange.400"
+                        : "white.500"
+                    }
+                    cursor="pointer"
+                    whiteSpace="nowrap"
+                  >
+                    Review Management
+                  </Text>
+                </Link>
+              </Box>
+            </>
+          )}
+        </Box>
+
+        <Box ml="10px" mt="15px">
+          <Box display="flex" alignItems="center">
+            <IoStorefrontSharp
+              size="20px"
+              color={
                 location.pathname.startsWith("/seller/shop") ? "orange" : "gray"
               }
             />
@@ -314,7 +383,7 @@ const Sidebar = ({ storeId }: Props) => {
                     cursor="pointer"
                     whiteSpace="nowrap"
                   >
-                    Shop Information
+                    Shop Profile
                   </Text>
                 </Link>
               </Box>

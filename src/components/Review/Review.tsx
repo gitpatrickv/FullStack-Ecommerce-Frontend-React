@@ -1,7 +1,7 @@
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import { IoIosStar } from "react-icons/io";
-import { RatingAndReviews } from "../../entities/RatingAndReview";
 import { MdVerified } from "react-icons/md";
+import { RatingAndReviews } from "../../entities/RatingAndReview";
 
 interface Props {
   review: RatingAndReviews;
@@ -53,6 +53,12 @@ const Review = ({ review }: Props) => {
       </Box>
 
       <Text ml="42px">{review.review}</Text>
+      {review.sellersReply !== null && (
+        <Box ml="42px" padding={2} mt="10px" border="1px solid gray">
+          <Text fontWeight="semibold">Seller's Response:</Text>
+          <Text mt="10px">{review.sellersReply}</Text>
+        </Box>
+      )}
     </Box>
   );
 };
