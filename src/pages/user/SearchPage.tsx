@@ -31,7 +31,7 @@ export const SearchPage = () => {
   const pageSize = 25;
   const [searchParams] = useSearchParams();
   const query = searchParams.get("keyword") || "";
-  const [sortBy, setSortBy] = useState("productName");
+  const [sortBy, setSortBy] = useState("");
 
   const { data: results } = useSearchProducts({
     keyword: query,
@@ -120,7 +120,7 @@ export const SearchPage = () => {
             "
           </Text>
           <Card p="13px" mb="10px" borderRadius="none">
-            <Box display="flex" alignItems="center" textAlign="center">
+            <Box display="flex" alignItems="center">
               <Text fontSize="medium" pr="10px">
                 Sort By
               </Text>

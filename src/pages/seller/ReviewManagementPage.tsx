@@ -27,7 +27,7 @@ const ReviewManagementPage = () => {
 
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 4;
-  const [sortBy, setSortBy] = useState("createdDate");
+  const [sortBy, setSortBy] = useState("");
 
   const { data: manageReview, refetch: refetchReviews } =
     useManageAllProductReview({
