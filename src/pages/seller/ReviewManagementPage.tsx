@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { TbStarOff } from "react-icons/tb";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewManagement from "../../components/Review/seller/ReviewManagement";
 import ReviewManagementHeader from "../../components/Review/seller/ReviewManagementHeader";
@@ -140,44 +141,74 @@ const ReviewManagementPage = () => {
           </Box>
         </Card>
         <ReviewManagementHeader />
-        {manageReview?.ratingAndReviewModels.map((review) => (
-          <ReviewManagement
-            key={review.reviewId}
-            ratingAndReviews={review}
-            onRefetchReviews={refetchReviews}
-          />
-        ))}
-
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          pt="20px"
-        >
-          <HStack justifyContent="center">
-            <Button onClick={() => handlePageChange("&laquo;")}>&laquo;</Button>
-            <Button onClick={() => handlePageChange("&lsaquo;")}>
-              &lsaquo;
-            </Button>
-            {paginationRangeArray.map((number, index) => {
-              if (number === number) {
-                return (
-                  <Button
-                    key={index}
-                    onClick={() => handlePageChange(number)}
-                    color={page === number ? "orange.500" : "white.500"}
-                  >
-                    {number}
-                  </Button>
-                );
-              }
-            })}
-            <Button onClick={() => handlePageChange("&rsaquo;")}>
-              &rsaquo;
-            </Button>
-            <Button onClick={() => handlePageChange("&raquo;")}>&raquo;</Button>
-          </HStack>
-        </Box>
+        {manageReview?.ratingAndReviewModels.length === 0 ? (
+          <Box>
+            <Box
+              height="250px"
+              maxWidth="100%"
+              display="flex"
+              justifyContent="center"
+            >
+              <Box
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+                alignItems="center"
+              >
+                <TbStarOff size="100px" />
+                <Text fontSize="lg" mt="10px">
+                  You have not received any ratings from buyers.
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+        ) : (
+          <>
+            <Box>
+              {manageReview?.ratingAndReviewModels.map((review) => (
+                <ReviewManagement
+                  key={review.reviewId}
+                  ratingAndReviews={review}
+                  onRefetchReviews={refetchReviews}
+                />
+              ))}
+            </Box>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              pt="20px"
+            >
+              <HStack justifyContent="center">
+                <Button onClick={() => handlePageChange("&laquo;")}>
+                  &laquo;
+                </Button>
+                <Button onClick={() => handlePageChange("&lsaquo;")}>
+                  &lsaquo;
+                </Button>
+                {paginationRangeArray.map((number, index) => {
+                  if (number === number) {
+                    return (
+                      <Button
+                        key={index}
+                        onClick={() => handlePageChange(number)}
+                        color={page === number ? "orange.500" : "white.500"}
+                      >
+                        {number}
+                      </Button>
+                    );
+                  }
+                })}
+                <Button onClick={() => handlePageChange("&rsaquo;")}>
+                  &rsaquo;
+                </Button>
+                <Button onClick={() => handlePageChange("&raquo;")}>
+                  &raquo;
+                </Button>
+              </HStack>
+            </Box>
+          </>
+        )}
       </GridItem>
     </Grid>
   );

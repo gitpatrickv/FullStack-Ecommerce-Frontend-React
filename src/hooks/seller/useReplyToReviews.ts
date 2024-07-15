@@ -31,6 +31,7 @@ const useReplyToReviews = (reviewId: number, storeId: string ) => {
         onSuccess: () => {
             queryClient.invalidateQueries(['manageProductReview']);
             queryClient.invalidateQueries(['ratingAndReview']);
+            queryClient.invalidateQueries(['productDetail']);
             toast({
                 position: "top",
                 title: "Reply sent successfully!",
