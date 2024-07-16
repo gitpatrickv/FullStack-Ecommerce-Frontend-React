@@ -5,8 +5,8 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { FaRegFileAlt, FaShoppingBag, FaHandsHelping } from "react-icons/fa";
+import { useState } from "react";
+import { FaHandsHelping, FaRegFileAlt, FaShoppingBag } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
@@ -21,20 +21,27 @@ const Sidebar = ({ storeId }: Props) => {
     md: "md",
   });
 
-  const [isOrderPage, setIsOrderPage] = useState(false);
-  const [isProductPage, setIsProductPage] = useState(false);
-  const [isShopPage, setIsShopPage] = useState(false);
-  const [isCustomerServicePage, setIsCustomerServicePage] = useState(false);
+  const [isOrderPage, setIsOrderPage] = useState(true);
+  const [isProductPage, setIsProductPage] = useState(true);
+  const [isShopPage, setIsShopPage] = useState(true);
+  const [isCustomerServicePage, setIsCustomerServicePage] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    setIsOrderPage(location.pathname.startsWith("/seller/order"));
-    setIsProductPage(location.pathname.startsWith("/seller/product"));
-    setIsShopPage(location.pathname.startsWith("/seller/shop"));
-    setIsCustomerServicePage(
-      location.pathname.startsWith("/seller/customer/service")
-    );
-  }, [location.pathname]);
+  const toggleOrderSection = () => {
+    setIsOrderPage((prev) => !prev);
+  };
+
+  const toggleProductSection = () => {
+    setIsProductPage((prev) => !prev);
+  };
+
+  const toggleCustomerServiceSection = () => {
+    setIsCustomerServicePage((prev) => !prev);
+  };
+
+  const toggleShopSection = () => {
+    setIsShopPage((prev) => !prev);
+  };
 
   return (
     <Grid
@@ -47,7 +54,13 @@ const Sidebar = ({ storeId }: Props) => {
     >
       <GridItem area="sidebar">
         <Box ml="10px" mt="15px">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleOrderSection}
+            cursor="pointer"
+            userSelect="none"
+          >
             <FaRegFileAlt
               size="20px"
               color={
@@ -190,7 +203,13 @@ const Sidebar = ({ storeId }: Props) => {
           )}
         </Box>
         <Box ml="10px" mt="15px">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleProductSection}
+            cursor="pointer"
+            userSelect="none"
+          >
             <FaShoppingBag
               size="20px"
               color={
@@ -267,7 +286,13 @@ const Sidebar = ({ storeId }: Props) => {
         </Box>
 
         <Box ml="10px" mt="15px">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleCustomerServiceSection}
+            cursor="pointer"
+            userSelect="none"
+          >
             <FaHandsHelping
               size="20px"
               color={
@@ -332,7 +357,13 @@ const Sidebar = ({ storeId }: Props) => {
         </Box>
 
         <Box ml="10px" mt="15px">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleShopSection}
+            cursor="pointer"
+            userSelect="none"
+          >
             <IoStorefrontSharp
               size="20px"
               color={

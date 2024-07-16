@@ -14,8 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
+import ToDoList from "../../components/Dashboard/seller/ToDoList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import { useAuthQueryStore } from "../../store/auth-store";
@@ -26,6 +27,8 @@ const SellerPage = () => {
   const jwtToken = authStore.jwtToken;
   const { data: store } = useGetStoreInfo(jwtToken);
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleLogout = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
@@ -120,9 +123,24 @@ const SellerPage = () => {
       </GridItem>
 
       <GridItem area="content1">
-        <Box>
-          <Outlet />
-        </Box>
+        {location.pathname === "/seller" ? (
+          <Grid
+            templateColumns="1fr"
+            templateAreas={`
+            "content1"
+            `}
+            gap={4}
+            p={3}
+          >
+            <GridItem area="content1">
+              <ToDoList storeId={store?.storeId || ""} />
+            </GridItem>
+          </Grid>
+        ) : (
+          <Box>
+            <Outlet />
+          </Box>
+        )}
       </GridItem>
     </Grid>
   );

@@ -3,7 +3,6 @@ import AdminPage from "../pages/admin/AdminPage";
 import AllProductsOrderPage from "../pages/seller/AllProductsOrderPage";
 import CancelledOrdersPage from "../pages/seller/CancelledOrdersPage";
 import CompletedOrdersPage from "../pages/seller/CompletedOrdersPage";
-import DashBoardPage from "../pages/seller/DashBoardPage";
 import MyProductPage from "../pages/seller/MyProductPage";
 import NewProductPage from "../pages/seller/NewProductPage";
 import OrderPage from "../pages/seller/OrderPage";
@@ -89,7 +88,6 @@ const router = createBrowserRouter([
     element: <SellerPage />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <DashBoardPage /> },
       {
         path: "order",
         element: <OrderPage />,
