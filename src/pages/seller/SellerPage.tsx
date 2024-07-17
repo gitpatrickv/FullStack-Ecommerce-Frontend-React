@@ -20,6 +20,7 @@ import ToDoList from "../../components/Dashboard/seller/ToDoList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import { useAuthQueryStore } from "../../store/auth-store";
+import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
@@ -134,6 +135,10 @@ const SellerPage = () => {
           >
             <GridItem area="content1">
               <ToDoList storeId={store?.storeId || ""} />
+              <BusinessInsights
+                orderCount={store?.orderCount ?? 0}
+                productCount={store?.productCount ?? 0}
+              />
             </GridItem>
           </Grid>
         ) : (

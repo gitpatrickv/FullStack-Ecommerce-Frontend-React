@@ -185,7 +185,11 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           justifyContent="center"
         >
           <Box minWidth="60px" display="flex" justifyContent="center">
-            <Text fontSize={fontSize} fontWeight="semibold">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              color={product.quantity > 0 ? "white.500" : "red"}
+            >
               {product.quantity}
             </Text>
           </Box>

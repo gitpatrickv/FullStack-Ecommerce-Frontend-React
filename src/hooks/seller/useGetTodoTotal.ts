@@ -8,6 +8,7 @@ interface TodoProps{
     toProcessShipmentTotal: number;
     processedShipmentTotal: number;
     pendingCancelledOrders: number;
+    outOfStock: number;
 }
 
 

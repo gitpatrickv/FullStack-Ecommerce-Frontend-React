@@ -150,27 +150,28 @@ const ToDoList = ({ storeId }: Props) => {
             </Link>
           </GridItem>
           <GridItem area="content5">
-            <Box
-              display="flex"
-              justifyContent="center"
-              cursor="pointer"
-              _hover={{ border: "1px solid", borderColor: "gray.500" }}
-              userSelect="none"
-            >
-              <Box display="flex" flexDirection="column" textAlign="center">
-                <Text color="blue.500" fontSize="lg" fontWeight="semibold">
-                  0
-                </Text>
-                <Text
-                  fontSize={fontSize}
-                  fontWeight="semibold"
-                  whiteSpace="nowrap"
-                >
-                  Sold Out Products
-                </Text>
+            <Link to="/seller/product">
+              <Box
+                display="flex"
+                justifyContent="center"
+                cursor="pointer"
+                _hover={{ border: "1px solid", borderColor: "gray.500" }}
+                userSelect="none"
+              >
+                <Box display="flex" flexDirection="column" textAlign="center">
+                  <Text color="blue.500" fontSize="lg" fontWeight="semibold">
+                    {getTodoTotal?.outOfStock ?? 0}
+                  </Text>
+                  <Text
+                    fontSize={fontSize}
+                    fontWeight="semibold"
+                    whiteSpace="nowrap"
+                  >
+                    Sold Out Products
+                  </Text>
+                </Box>
               </Box>
-            </Box>
-            <Box></Box>
+            </Link>
           </GridItem>
         </Grid>
       </CardBody>
