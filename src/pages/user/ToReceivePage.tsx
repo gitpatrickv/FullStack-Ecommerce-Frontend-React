@@ -1,4 +1,18 @@
-import { Box, Button, Card, CardBody, Divider, Text } from "@chakra-ui/react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogOverlay,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Divider,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import OrderCard from "../../components/Order/OrderCard";
@@ -12,6 +26,9 @@ const ToReceivePage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const { data: orders, refetch: refetchToReceiveOrders } =
     useGetOrdersByToReceiveStatus(jwtToken);
   const { mutate: orderReceived } = useHandleOrders();
@@ -37,6 +54,7 @@ const ToReceivePage = () => {
       {
         onSuccess: () => {
           refetchToReceiveOrders();
+          onClose();
         },
       }
     );
@@ -133,11 +151,54 @@ const ToReceivePage = () => {
                     <Button
                       _hover={{ color: "orange.400" }}
                       onClick={() => {
-                        handleOrderReceivedClick(storeOrders[0].orderId);
+                        setSelectedOrderId(storeOrders[0].orderId);
+                        onOpen();
                       }}
                     >
                       Order Received
                     </Button>
+                    <AlertDialog
+                      isOpen={isOpen}
+                      leastDestructiveRef={cancelRef}
+                      onClose={onClose}
+                      isCentered
+                      size="lg"
+                    >
+                      <AlertDialogOverlay>
+                        <AlertDialogContent>
+                          <AlertDialogBody mt="20px">
+                            <Text>
+                              Check that you received all items in satisfactory
+                              condition before confirming receipt. Once you
+                              confirm, the order is completed and we will
+                              release the payment to seller
+                            </Text>
+                          </AlertDialogBody>
+
+                          <AlertDialogFooter mb="10px">
+                            <Button
+                              ref={cancelRef}
+                              onClick={onClose}
+                              _hover={{ color: "orange.500" }}
+                              width="120px"
+                            >
+                              NOT NOW
+                            </Button>
+                            <Button
+                              bg="orange.500"
+                              _hover={{ bg: "orange.600" }}
+                              ml={3}
+                              onClick={() =>
+                                handleOrderReceivedClick(selectedOrderId!)
+                              }
+                              width="120px"
+                            >
+                              Confirm
+                            </Button>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialogOverlay>
+                    </AlertDialog>
                   </Box>
                 </CardBody>
               </Card>

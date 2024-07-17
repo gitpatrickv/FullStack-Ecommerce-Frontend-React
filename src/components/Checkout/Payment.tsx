@@ -1,4 +1,9 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogOverlay,
   Box,
   Button,
   Card,
@@ -7,8 +12,10 @@ import {
   GridItem,
   Text,
   useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import { useRef } from "react";
 
 interface Props {
   shippingFee: number;
@@ -23,6 +30,9 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
     lg: "lg",
     xl: "xl",
   });
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
   return (
     <Card maxW="100%" mt="5px" borderRadius="none">
       <CardBody>
@@ -77,6 +87,7 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
               fontWeight="semibold"
               cursor="pointer"
               textAlign="end"
+              onClick={() => onOpen()}
             >
               Change
             </Text>
@@ -107,6 +118,34 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
             >
               <Button onClick={onPlaceOrder}>Place Order</Button>
             </Box>
+            <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+              isCentered
+              size="lg"
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogBody mt="20px">
+                    <Box display="flex" justifyContent="center">
+                      <Text fontSize="x-large">NOT YET IMPLEMENTED</Text>
+                    </Box>
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter mb="10px">
+                    <Button
+                      ref={cancelRef}
+                      onClick={onClose}
+                      _hover={{ color: "orange.500" }}
+                      width="120px"
+                    >
+                      CLOSE
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
           </GridItem>
         </Grid>
       </CardBody>

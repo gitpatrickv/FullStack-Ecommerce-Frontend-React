@@ -44,6 +44,7 @@ const useLogin = () => {
       queryClient.invalidateQueries(['checkout'])
       queryClient.invalidateQueries(['categoryProduct'])
       queryClient.invalidateQueries(['manageProductReview'])
+      queryClient.invalidateQueries(['todoTotal'])
       const role = response.role;
       if(role==="ADMIN"){
         navigate("/admin");
