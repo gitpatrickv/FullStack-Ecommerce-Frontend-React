@@ -7,8 +7,7 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useGetTodoTotal from "../../../hooks/seller/useGetTodoTotal";
 
 interface Props {
@@ -16,21 +15,13 @@ interface Props {
 }
 
 const ToDoList = ({ storeId }: Props) => {
-  const location = useLocation();
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
     lg: "lg",
   });
 
-  const { data: getTodoTotal, refetch: refetchTodoTotal } =
-    useGetTodoTotal(storeId);
-
-  useEffect(() => {
-    if (location.pathname === "/seller") {
-      refetchTodoTotal();
-    }
-  }, [location.pathname]);
+  const { data: getTodoTotal } = useGetTodoTotal(storeId);
 
   return (
     <Card>

@@ -7,18 +7,23 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import useGetTotalSales from "../../../hooks/seller/useGetTotalSales";
+import { formatCurrency } from "../../../utilities/formatCurrency";
 
 interface Props {
   orderCount: number;
   productCount: number;
+  storeId: string;
 }
 
-const BusinessInsights = ({ orderCount, productCount }: Props) => {
+const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
     lg: "lg",
   });
+
+  const { data: totalSales } = useGetTotalSales(storeId);
   return (
     <Card mt="5px">
       <CardBody>
@@ -42,7 +47,7 @@ const BusinessInsights = ({ orderCount, productCount }: Props) => {
             <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
-                  0
+                  {formatCurrency(totalSales?.totalSales ?? 0)}
                 </Text>
                 <Text fontSize={fontSize} fontWeight="semibold">
                   Total Sales

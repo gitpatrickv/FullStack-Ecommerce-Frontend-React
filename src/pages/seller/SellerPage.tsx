@@ -14,25 +14,35 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
+import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 import ToDoList from "../../components/Dashboard/seller/ToDoList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
+import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
+import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
 import { useAuthQueryStore } from "../../store/auth-store";
-import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
   const { logout, authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: store } = useGetStoreInfo(jwtToken);
+  const { refetch: refetchTotalSales } = useGetTotalSales(store?.storeId || "");
+  const { refetch: refetchTodoTotal } = useGetTodoTotal(store?.storeId || "");
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleLogout = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
+  };
+
+  const handleNavigateSellerPage = () => {
+    navigate("/seller");
+    refetchTotalSales();
+    refetchTodoTotal();
   };
 
   const handleStoreInfoNavigateClick = () => {
@@ -56,16 +66,17 @@ const SellerPage = () => {
               alignItems="center"
             >
               <Box ml="20px" display="flex">
-                <Link to="/seller">
-                  <Text
-                    fontSize="x-large"
-                    textTransform="uppercase"
-                    fontWeight="semibold"
-                    color="orange.400"
-                  >
-                    {store?.storeName}
-                  </Text>
-                </Link>
+                <Text
+                  fontSize="x-large"
+                  textTransform="uppercase"
+                  fontWeight="semibold"
+                  color="orange.400"
+                  onClick={handleNavigateSellerPage}
+                  cursor="pointer"
+                  userSelect="none"
+                >
+                  {store?.storeName}
+                </Text>
               </Box>
               <Box display="flex" alignItems="center" mr="20px">
                 <Menu>
@@ -138,6 +149,7 @@ const SellerPage = () => {
               <BusinessInsights
                 orderCount={store?.orderCount ?? 0}
                 productCount={store?.productCount ?? 0}
+                storeId={store?.storeId || ""}
               />
             </GridItem>
           </Grid>
