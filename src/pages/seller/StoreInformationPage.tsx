@@ -18,12 +18,14 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import useUploadStorePhoto from "../../hooks/seller/useUploadStorePhoto";
 
 const StoreInformationPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: shop } = useGetStoreInfo(jwtToken);
   const { onSubmit, loading } = useUpdateShopInfo(shop?.storeId || "");
+  const uploadPhoto = useUploadStorePhoto(shop?.storeId || "");
   const { register, handleSubmit, setValue } = useForm<UpdateShopProps>({
     defaultValues: {
       storeName: shop?.storeName,
@@ -43,6 +45,13 @@ const StoreInformationPage = () => {
       setValue("shippingFee", shop.shippingFee);
     }
   }, [shop, setValue]);
+
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      uploadPhoto.mutate({ jwtToken: jwtToken, file: file });
+    }
+  };
 
   return (
     <Card mt="30px" borderRadius="none">
@@ -174,7 +183,7 @@ const StoreInformationPage = () => {
               <input
                 type="file"
                 accept=".jpeg, .png"
-                //   onChange={handleUploadImage}
+                onChange={handleUploadImage}
                 style={{ display: "none" }}
                 id="file-upload"
               />
