@@ -4,9 +4,9 @@ import "slick-carousel/slick/slick.css";
 
 import { Box } from "@chakra-ui/react";
 import useGetAllCategory from "../../hooks/user/useGetAllCategory";
-import CategoryCard from "../Category/CategoryCard";
+import CategoryCard from "./CategoryCard";
 
-const Carousel = () => {
+const CategoryCarousel = () => {
   const { data: category } = useGetAllCategory();
   const settings = {
     dots: true,
@@ -21,7 +21,7 @@ const Carousel = () => {
   };
 
   return (
-    <Box maxWidth="1300px" padding={5} ml="10px">
+    <Box maxWidth="1300px" padding={5} ml="15px">
       <Slider {...settings}>
         {category?.data.map((cat) => (
           <CategoryCard key={cat.categoryId} category={cat} />
@@ -31,4 +31,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default CategoryCarousel;

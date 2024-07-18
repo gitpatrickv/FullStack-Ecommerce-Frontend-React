@@ -4,13 +4,13 @@ import {
   CardBody,
   Grid,
   GridItem,
-  Image,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Carousel from "../../components/Home/Carousel";
+import CategoryCarousel from "../../components/Home/CategoryCarousel";
+import ImageCarousel from "../../components/Home/ImageCarousel";
 import ProductCard from "../../components/Product/ProductCard";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
@@ -36,12 +36,7 @@ const HomePage = () => {
     `}
     >
       <GridItem area="main">
-        <Image
-          src="https://miro.medium.com/v2/resize:fit:1024/0*el52j7p-1MrKjgrN.png"
-          w={{ base: "100%", md: "100%", lg: "100%", xl: "100%" }}
-          h={{ base: "1%", md: "4%", lg: "4%", xl: "11%" }}
-        />
-
+        <ImageCarousel />
         <Card mt="20px" mb="10px" borderRadius="none">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
@@ -49,9 +44,8 @@ const HomePage = () => {
             </Text>
           </CardBody>
         </Card>
-        <Carousel />
-
-        <Card mt="10px" mb="10px" borderRadius="none">
+        <CategoryCarousel />
+        <Card mt="20px" mb="10px" borderRadius="none">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
               DAILY DISCOVER
