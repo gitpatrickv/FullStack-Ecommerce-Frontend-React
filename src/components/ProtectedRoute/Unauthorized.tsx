@@ -1,12 +1,9 @@
 import { Box, Button, Center, Heading, Text } from "@chakra-ui/react";
-import {
-  isRouteErrorResponse,
-  useNavigate,
-  useRouteError,
-} from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { useAuthQueryStore } from "../../store/auth-store";
 
-const ErrorPage = () => {
+const Unauthorized = () => {
   const navigate = useNavigate();
   const { authStore } = useAuthQueryStore();
   const role = authStore.role;
@@ -20,7 +17,6 @@ const ErrorPage = () => {
       navigate("/");
     }
   };
-  const error = useRouteError();
 
   return (
     <>
@@ -28,9 +24,8 @@ const ErrorPage = () => {
         <Box display="flex" flexDirection="column">
           <Heading>Oops...</Heading>
           <Text>
-            {isRouteErrorResponse(error)
-              ? "This page does not exist."
-              : "An unexpected error occurred."}
+            You are not authorized to access this resource. Please provide valid
+            authentication credentials.
           </Text>
           <Center>
             <Button
@@ -50,4 +45,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default Unauthorized;
