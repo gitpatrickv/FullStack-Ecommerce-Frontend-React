@@ -21,7 +21,7 @@ const CategoryCarousel = () => {
   };
 
   return (
-    <Box maxWidth="1300px" padding={5} ml="15px">
+    <Box maxWidth="1300px" padding={5} ml="30px">
       <Slider {...settings}>
         {category?.data.map((cat) => (
           <CategoryCard key={cat.categoryId} category={cat} />

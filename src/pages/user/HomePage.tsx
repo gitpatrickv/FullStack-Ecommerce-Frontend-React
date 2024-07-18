@@ -30,7 +30,7 @@ const HomePage = () => {
 
   return (
     <Grid
-      templateColumns="0.2fr 1fr 0.2fr"
+      templateColumns="250px 1fr 250px"
       templateAreas={`
       " asideLeft main asideRight"
     `}
@@ -95,10 +95,10 @@ const HomePage = () => {
       </GridItem>
 
       <GridItem area="asideLeft">
-        <Box minWidth="200px" maxWidth="250px"></Box>
+        <Box minWidth="250px"></Box>
       </GridItem>
       <GridItem area="asideRight">
-        <Box minWidth="200px" maxWidth="250px"></Box>
+        <Box minWidth="250px"></Box>
       </GridItem>
     </Grid>
   );
