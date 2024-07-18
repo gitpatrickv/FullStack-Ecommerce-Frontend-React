@@ -562,6 +562,7 @@ const ProductDetail = ({ product }: Props) => {
               <Box display="flex">
                 <Avatar
                   src={
+                    product.storePhotoUrl ||
                     "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
                   }
                   size="xl"

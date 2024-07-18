@@ -110,13 +110,14 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
             >
               {formatCurrency(totalPayment)}
             </Text>
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              mt="20px"
-              _hover={{ color: "orange.400" }}
-            >
-              <Button onClick={onPlaceOrder}>Place Order</Button>
+            <Box display="flex" justifyContent="flex-end" mt="20px">
+              <Button
+                onClick={onPlaceOrder}
+                bg="orange.500"
+                _hover={{ bg: "orange.600" }}
+              >
+                Place Order
+              </Button>
             </Box>
             <AlertDialog
               isOpen={isOpen}

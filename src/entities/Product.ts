@@ -14,4 +14,5 @@ export default interface Product {
     inventoryId: number;
     categoryId: string;
     productSold: number;
+    storePhotoUrl: string;
 }

@@ -15,6 +15,7 @@ import useGetAllStoreOrders from "../../hooks/seller/useGetAllStoreOrders";
 import useHandleOrders from "../../hooks/seller/useHandleOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useConfirmCancelOrder from "../../hooks/seller/useConfirmCancelOrder";
 
 const AllProductsOrderPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -27,7 +28,7 @@ const AllProductsOrderPage = () => {
   const status = ["PENDING", "TO PAY"];
   const orderArray = Array.isArray(orders?.orderModel) ? orders.orderModel : [];
   const { mutate: handleOrder } = useHandleOrders();
-
+  const { mutate: confirmCancelOrder } = useConfirmCancelOrder();
   const handleOrderClick = (orderId: string) => {
     handleOrder(
       { jwtToken, orderId },
@@ -38,6 +39,18 @@ const AllProductsOrderPage = () => {
       }
     );
   };
+
+  const handleCancelOrderClick = (orderId: string) => {
+    confirmCancelOrder(
+      { orderId, jwtToken: jwtToken },
+      {
+        onSuccess: () => {
+          refetchAllOrders();
+        },
+      }
+    );
+  };
+
   const groupedOrders = orderArray.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
       order.orderItemModels.forEach((item) => {
@@ -174,6 +187,21 @@ const AllProductsOrderPage = () => {
                           }
                         >
                           Ship Order
+                        </Button>
+                      ) : (
+                        ""
+                      )}
+                      {storeOrders[0].active === true &&
+                      storeOrders[0].orderStatus === "CANCELLED" ? (
+                        <Button
+                          _hover={{ color: "orange.400" }}
+                          width="120px"
+                          mt="10px"
+                          onClick={() =>
+                            handleCancelOrderClick(storeOrders[0].orderId)
+                          }
+                        >
+                          Confirm
                         </Button>
                       ) : (
                         ""

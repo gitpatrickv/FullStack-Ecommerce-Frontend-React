@@ -121,7 +121,7 @@ const ReviewManagement = ({ ratingAndReviews, onRefetchReviews }: Props) => {
               mb="10px"
               maxWidth="100%"
             >
-              <Text fontWeight="semibold">Seller's Response:</Text>
+              <Text fontWeight="semibold">Your Response:</Text>
               <Text mt="10px">{ratingAndReviews.sellersReply}</Text>
             </Box>
           )}
