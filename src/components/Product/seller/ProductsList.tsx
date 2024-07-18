@@ -36,7 +36,6 @@ import useUpdateProductInfo, {
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
-import useGetTotalUserRating from "../../../hooks/user/useGetTotalUserRating";
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -48,7 +47,6 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const { data: rating } = useGetTotalUserRating(product.productId);
   const { onSubmit } = useUpdateProductInfo(product.productId);
   const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
     defaultValues: {
@@ -105,9 +103,9 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   return (
     <Card mb="5px" padding={2} borderRadius="none">
       <Grid
-        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
-  "content1 rating content2 content3 content4 content5"
+  "content1 content2 content3 content4 content5"
 `}
         gap={4}
         p={3}
@@ -133,18 +131,6 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               pl="20px"
             >
               {product.productName}
-            </Text>
-          </Box>
-        </GridItem>
-        <GridItem
-          area="rating"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Box minWidth="60px" display="flex" justifyContent="center">
-            <Text fontSize={fontSize} fontWeight="semibold">
-              {rating?.ratingAverage || 0}
             </Text>
           </Box>
         </GridItem>
