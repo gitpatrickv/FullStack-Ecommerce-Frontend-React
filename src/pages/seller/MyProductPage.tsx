@@ -1,5 +1,15 @@
-import { Box, Button, Divider, Grid, GridItem, HStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProductListHeader from "../../components/Product/seller/ProductListHeader";
 import ProductsList from "../../components/Product/seller/ProductsList";
@@ -80,46 +90,69 @@ const MyProductPage = () => {
       <GridItem area="main">
         <Box mt="20px">
           <ProductListHeader />
-          {getAllStoreProducts?.data.allProductModels.map((product) => (
-            <Box key={product.productId}>
-              <ProductsList
-                product={product}
-                refetchProducts={refetchProducts}
-              />
-              <Divider />
-            </Box>
-          ))}
-        </Box>
 
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          pt="20px"
-        >
-          <HStack justifyContent="center">
-            <Button onClick={() => handlePageChange("&laquo;")}>&laquo;</Button>
-            <Button onClick={() => handlePageChange("&lsaquo;")}>
-              &lsaquo;
-            </Button>
-            {paginationRangeArray.map((number, index) => {
-              if (number === number) {
-                return (
-                  <Button
-                    key={index}
-                    onClick={() => handlePageChange(number)}
-                    color={page === number ? "orange.500" : "white.500"}
-                  >
-                    {number}
+          {getAllStoreProducts?.data.allProductModels.length === 0 ? (
+            <Card borderRadius="none">
+              <CardBody>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  flexDirection="column"
+                  height="250px"
+                  color="gray.500"
+                >
+                  <HiOutlineDocumentSearch size="120px" />
+                  <Text fontSize="lg">No Product Found</Text>
+                </Box>
+              </CardBody>
+            </Card>
+          ) : (
+            <>
+              {getAllStoreProducts?.data.allProductModels.map((product) => (
+                <Box key={product.productId}>
+                  <ProductsList
+                    product={product}
+                    refetchProducts={refetchProducts}
+                  />
+                </Box>
+              ))}
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                pt="20px"
+              >
+                <HStack justifyContent="center">
+                  <Button onClick={() => handlePageChange("&laquo;")}>
+                    &laquo;
                   </Button>
-                );
-              }
-            })}
-            <Button onClick={() => handlePageChange("&rsaquo;")}>
-              &rsaquo;
-            </Button>
-            <Button onClick={() => handlePageChange("&raquo;")}>&raquo;</Button>
-          </HStack>
+                  <Button onClick={() => handlePageChange("&lsaquo;")}>
+                    &lsaquo;
+                  </Button>
+                  {paginationRangeArray.map((number, index) => {
+                    if (number === number) {
+                      return (
+                        <Button
+                          key={index}
+                          onClick={() => handlePageChange(number)}
+                          color={page === number ? "orange.500" : "white.500"}
+                        >
+                          {number}
+                        </Button>
+                      );
+                    }
+                  })}
+                  <Button onClick={() => handlePageChange("&rsaquo;")}>
+                    &rsaquo;
+                  </Button>
+                  <Button onClick={() => handlePageChange("&raquo;")}>
+                    &raquo;
+                  </Button>
+                </HStack>
+              </Box>
+            </>
+          )}
         </Box>
       </GridItem>
     </Grid>

@@ -83,7 +83,11 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
       >
         <GridItem area="content1">
           <Box>
-            <Text fontSize={fontSize} fontWeight="semibold">
+            <Text
+              fontSize={fontSize}
+              fontWeight="semibold"
+              color={inventory.quantity > 0 ? "white.500" : "red"}
+            >
               {inventory.quantity}
             </Text>
           </Box>

@@ -4,18 +4,16 @@ import {
   CardBody,
   Grid,
   GridItem,
-  Image,
-  Show,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CategoryCard from "../../components/Category/CategoryCard";
+import CategoryCarousel from "../../components/Home/CategoryCarousel";
+import ImageCarousel from "../../components/Home/ImageCarousel";
 import ProductCard from "../../components/Product/ProductCard";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
-import useGetAllCategory from "../../hooks/user/useGetAllCategory";
 import useProducts from "../../hooks/user/useProducts";
 
 const HomePage = () => {
@@ -23,7 +21,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const pageSize = 30;
   const { data, isLoading } = useProducts({ pageNo: page, pageSize });
-  const { data: category } = useGetAllCategory();
+
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   const onClickNavigate = () => {
@@ -32,42 +30,22 @@ const HomePage = () => {
 
   return (
     <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " asideLeft main asideRight" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "0.2fr 1fr 0.2fr",
-      }}
+      templateColumns="0.2fr 1fr 0.2fr"
+      templateAreas={`
+      " asideLeft main asideRight"
+    `}
     >
-      <Show above="lg">
-        <GridItem area="asideLeft" paddingX={5}></GridItem>
-      </Show>
       <GridItem area="main">
-        <Image
-          src="https://miro.medium.com/v2/resize:fit:1024/0*el52j7p-1MrKjgrN.png"
-          w={{ base: "100%", md: "100%", lg: "100%", xl: "100%" }}
-          h={{ base: "1%", md: "4%", lg: "4%", xl: "11%" }}
-        />
-
-        <Show above="lg">
-          <Card mt="20px" mb="5px">
-            <CardBody>
-              <Text textAlign="center" fontSize="larger" color="orange.400">
-                Categories
-              </Text>
-            </CardBody>
-          </Card>
-          <SimpleGrid columns={{ lg: 5, xl: 10 }} spacing={2} padding="10px">
-            {category?.data.map((cat) => (
-              <ProductCardContainer key={cat.categoryId}>
-                <CategoryCard category={cat} />
-              </ProductCardContainer>
-            ))}
-          </SimpleGrid>
-        </Show>
-        <Card mt="20px" mb="20px">
+        <ImageCarousel />
+        <Card mt="20px" mb="10px" borderRadius="none">
+          <CardBody>
+            <Text textAlign="center" fontSize="larger" color="orange.400">
+              Categories
+            </Text>
+          </CardBody>
+        </Card>
+        <CategoryCarousel />
+        <Card mt="20px" mb="10px" borderRadius="none">
           <CardBody>
             <Text textAlign="center" fontSize="larger" color="orange.400">
               DAILY DISCOVER
@@ -75,9 +53,10 @@ const HomePage = () => {
           </CardBody>
         </Card>
         <SimpleGrid
-          columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
+          columns={{ base: 5 }}
           spacing={2}
           padding="10px"
+          minW="1000px"
         >
           {isLoading &&
             skeletons.map((skeleton) => (
@@ -113,6 +92,13 @@ const HomePage = () => {
             </Text>
           </Box>
         </Box>
+      </GridItem>
+
+      <GridItem area="asideLeft">
+        <Box minWidth="200px" maxWidth="250px"></Box>
+      </GridItem>
+      <GridItem area="asideRight">
+        <Box minWidth="200px" maxWidth="250px"></Box>
       </GridItem>
     </Grid>
   );

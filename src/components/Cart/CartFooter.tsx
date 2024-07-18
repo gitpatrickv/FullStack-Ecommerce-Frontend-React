@@ -87,6 +87,7 @@ const CartFooter = ({
       margin="auto"
       h="80px"
       mt="5px"
+      borderRadius="none"
     >
       <CardBody>
         <Grid
@@ -263,7 +264,13 @@ const CartFooter = ({
                 {formatCurrency(cartTotal)}
               </Text>
 
-              <Button onClick={onCheckout} _hover={{ color: "orange.400" }}>
+              <Button
+                onClick={onCheckout}
+                bg="orange.500"
+                _hover={{ bg: "orange.600" }}
+                isDisabled={cartTotal > 0 ? false : true}
+                width="150px"
+              >
                 <Text fontSize={fontSize}>Check Out</Text>
               </Button>
             </Box>

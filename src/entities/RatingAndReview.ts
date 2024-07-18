@@ -2,6 +2,7 @@ export interface RatingAndReviews {
     reviewId: number;
     rating: number;
     review: string;
+    sellersReply: string;
     name: string;
     photoUrl: string;
     createdDate: string;

@@ -34,7 +34,7 @@ const useRateProducts = (productId: string, orderId: string) => {
             queryClient.invalidateQueries(['ratingAndReview']);
             queryClient.invalidateQueries(['completedOrders']);
             queryClient.invalidateQueries(['rateProducts']);
-
+            queryClient.invalidateQueries(['manageProductReview']);
             reset();
             toast({
                 position: "top",

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
   Divider,
@@ -13,11 +14,14 @@ import OrderItem from "../../entities/Order";
 import useGetCancelledOrders from "../../hooks/seller/useGetCancelledOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
+import useConfirmCancelOrder from "../../hooks/seller/useConfirmCancelOrder";
 const CancelledOrdersPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { storeId } = useParams();
-  const { data: orders } = useGetCancelledOrders(jwtToken, storeId!);
+  const { data: orders, refetch: refetchCancelledOrders } =
+    useGetCancelledOrders(jwtToken, storeId!);
+  const { mutate: confirmCancelOrder } = useConfirmCancelOrder();
   const orderArray = Array.isArray(orders?.orderModel) ? orders.orderModel : [];
   const groupedOrders = orderArray.reduce(
     (acc: Record<string, OrderItem[]>, order) => {
@@ -32,6 +36,17 @@ const CancelledOrdersPage = () => {
     {}
   );
 
+  const handleCancelOrderClick = (orderId: string) => {
+    confirmCancelOrder(
+      { orderId, jwtToken: jwtToken },
+      {
+        onSuccess: () => {
+          refetchCancelledOrders();
+        },
+      }
+    );
+  };
+
   return (
     <Grid
       templateColumns="1fr"
@@ -44,7 +59,7 @@ const CancelledOrdersPage = () => {
           Object.entries(groupedOrders).map(([orderId, storeOrders]) => {
             return (
               <Box key={orderId} mt="5px">
-                <Card>
+                <Card borderRadius="none">
                   <CardBody>
                     <Box display="flex" alignItems="center">
                       <Text
@@ -113,6 +128,18 @@ const CancelledOrdersPage = () => {
                           {formatCurrency(storeOrders[0].orderTotalAmount)}
                         </Text>
                       </Text>
+                      {storeOrders[0].active === true && (
+                        <Button
+                          _hover={{ color: "orange.400" }}
+                          width="120px"
+                          mt="10px"
+                          onClick={() =>
+                            handleCancelOrderClick(storeOrders[0].orderId)
+                          }
+                        >
+                          Confirm
+                        </Button>
+                      )}
                     </Box>
                   </CardBody>
                 </Card>

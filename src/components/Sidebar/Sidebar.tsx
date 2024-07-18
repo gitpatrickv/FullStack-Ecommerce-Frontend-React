@@ -5,9 +5,10 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { FaRegFileAlt, FaShoppingBag } from "react-icons/fa";
+import { useState } from "react";
+import { FaHandsHelping, FaRegFileAlt, FaShoppingBag } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoStorefrontSharp } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 
 interface Props {
@@ -20,14 +21,27 @@ const Sidebar = ({ storeId }: Props) => {
     md: "md",
   });
 
-  const [isOrderPage, setIsOrderPage] = useState(false);
-  const [isProductPage, setIsProductPage] = useState(false);
+  const [isOrderPage, setIsOrderPage] = useState(true);
+  const [isProductPage, setIsProductPage] = useState(true);
+  const [isShopPage, setIsShopPage] = useState(true);
+  const [isCustomerServicePage, setIsCustomerServicePage] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    setIsOrderPage(location.pathname.startsWith("/seller/order"));
-    setIsProductPage(location.pathname.startsWith("/seller/product"));
-  }, [location.pathname]);
+  const toggleOrderSection = () => {
+    setIsOrderPage((prev) => !prev);
+  };
+
+  const toggleProductSection = () => {
+    setIsProductPage((prev) => !prev);
+  };
+
+  const toggleCustomerServiceSection = () => {
+    setIsCustomerServicePage((prev) => !prev);
+  };
+
+  const toggleShopSection = () => {
+    setIsShopPage((prev) => !prev);
+  };
 
   return (
     <Grid
@@ -40,7 +54,13 @@ const Sidebar = ({ storeId }: Props) => {
     >
       <GridItem area="sidebar">
         <Box ml="10px" mt="15px">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleOrderSection}
+            cursor="pointer"
+            userSelect="none"
+          >
             <FaRegFileAlt
               size="20px"
               color={
@@ -183,7 +203,13 @@ const Sidebar = ({ storeId }: Props) => {
           )}
         </Box>
         <Box ml="10px" mt="15px">
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleProductSection}
+            cursor="pointer"
+            userSelect="none"
+          >
             <FaShoppingBag
               size="20px"
               color={
@@ -252,6 +278,143 @@ const Sidebar = ({ storeId }: Props) => {
                     whiteSpace="nowrap"
                   >
                     Add New Product
+                  </Text>
+                </Link>
+              </Box>
+            </>
+          )}
+        </Box>
+
+        <Box ml="10px" mt="15px">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleCustomerServiceSection}
+            cursor="pointer"
+            userSelect="none"
+          >
+            <FaHandsHelping
+              size="20px"
+              color={
+                location.pathname.startsWith("/seller/customer/service")
+                  ? "orange"
+                  : "gray"
+              }
+            />
+
+            <Link to={`/seller/customer/service/review/${storeId}`}>
+              <Text
+                ml="5px"
+                mr="5px"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                _hover={{ color: "orange.400" }}
+                color={
+                  location.pathname.startsWith("/seller/customer/service")
+                    ? "orange.400"
+                    : "white.500"
+                }
+                whiteSpace="nowrap"
+              >
+                Customer Service
+              </Text>
+            </Link>
+            {location.pathname.startsWith("/seller/customer/service") ? (
+              <IoIosArrowDown
+                color={
+                  location.pathname.startsWith("/seller/customer/service")
+                    ? "orange"
+                    : "white"
+                }
+              />
+            ) : (
+              <IoIosArrowUp />
+            )}
+          </Box>
+          {isCustomerServicePage && (
+            <>
+              <Box ml="25px">
+                <Link to={`/seller/customer/service/review/${storeId}`}>
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    mt="3px"
+                    color={
+                      location.pathname ===
+                      `/seller/customer/service/review/${storeId}`
+                        ? "orange.400"
+                        : "white.500"
+                    }
+                    cursor="pointer"
+                    whiteSpace="nowrap"
+                  >
+                    Review Management
+                  </Text>
+                </Link>
+              </Box>
+            </>
+          )}
+        </Box>
+
+        <Box ml="10px" mt="15px">
+          <Box
+            display="flex"
+            alignItems="center"
+            onClick={toggleShopSection}
+            cursor="pointer"
+            userSelect="none"
+          >
+            <IoStorefrontSharp
+              size="20px"
+              color={
+                location.pathname.startsWith("/seller/shop") ? "orange" : "gray"
+              }
+            />
+            <Link to="/seller/shop/info">
+              <Text
+                ml="5px"
+                mr="5px"
+                fontSize={fontSize}
+                fontWeight="semibold"
+                _hover={{ color: "orange.400" }}
+                color={
+                  location.pathname.startsWith("/seller/shop")
+                    ? "orange.400"
+                    : "white.500"
+                }
+              >
+                Shop
+              </Text>
+            </Link>
+            {location.pathname.startsWith("/seller/shop") ? (
+              <IoIosArrowDown
+                color={
+                  location.pathname.startsWith("/seller/shop")
+                    ? "orange"
+                    : "white"
+                }
+              />
+            ) : (
+              <IoIosArrowUp />
+            )}
+          </Box>
+          {isShopPage && (
+            <>
+              <Box ml="25px">
+                <Link to="/seller/shop/info">
+                  <Text
+                    fontSize={fontSize}
+                    mb="3px"
+                    mt="3px"
+                    color={
+                      location.pathname === "/seller/shop/info"
+                        ? "orange.400"
+                        : "white.500"
+                    }
+                    cursor="pointer"
+                    whiteSpace="nowrap"
+                  >
+                    Shop Profile
                   </Text>
                 </Link>
               </Box>

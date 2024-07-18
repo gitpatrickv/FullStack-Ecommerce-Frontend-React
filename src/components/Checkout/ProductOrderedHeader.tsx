@@ -15,7 +15,7 @@ const ProductOrderedHeader = () => {
     xl: "xl",
   });
   return (
-    <Card maxW="100%" mt="5px">
+    <Card maxW="100%" mt="5px" borderRadius="none">
       <CardBody>
         <Grid
           templateColumns="1.3fr 0.7fr 0.7fr 0.7fr"

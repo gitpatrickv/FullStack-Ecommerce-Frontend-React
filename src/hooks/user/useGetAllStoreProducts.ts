@@ -7,16 +7,18 @@ interface Props {
     storeId: string;
     pageNo: number;
     pageSize: number;
+    sortBy: string;
 }
 
 const apiClient = axiosInstance;
 
-const useGetAllStoreProducts = ({storeId, pageNo, pageSize}: Props) => useQuery ({
-    queryKey: ['storeProduct', storeId, pageNo, pageSize],
+const useGetAllStoreProducts = ({storeId, pageNo, pageSize, sortBy}: Props) => useQuery ({
+    queryKey: ['storeProduct', storeId, pageNo, pageSize, sortBy],
     queryFn: () => apiClient.get<AllProductsResponse>(`product/store/${storeId}`, {
       params: {
         pageNo: pageNo - 1,
-        pageSize: pageSize
+        pageSize: pageSize,
+        sortBy: sortBy
       }
     }),
   });

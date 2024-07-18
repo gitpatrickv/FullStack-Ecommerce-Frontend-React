@@ -7,23 +7,23 @@ import {
   Grid,
   GridItem,
   HStack,
-  Image,
   SimpleGrid,
+  Spacer,
   Text,
 } from "@chakra-ui/react";
-import useGetAllStoreProducts from "../../hooks/user/useGetAllStoreProducts";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { paginationRange } from "../../utilities/pagination";
-import ProductCardContainer from "../../components/Product/ProductCardContainer";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ProductCard from "../../components/Product/ProductCard";
+import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
+import useGetAllStoreProducts from "../../hooks/user/useGetAllStoreProducts";
+import { paginationRange } from "../../utilities/pagination";
 
 const StorePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { storeId } = useParams();
-
+  const [sortBy, setSortBy] = useState("");
   const getPageFromUrl = () => {
     const params = new URLSearchParams(location.search);
     const pageFromUrl = params.get("pageNo");
@@ -37,8 +37,12 @@ const StorePage = () => {
     storeId: storeId!,
     pageNo: page,
     pageSize,
+    sortBy: sortBy,
   });
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  const cPage = getAllStoreProducts?.data.pageResponse.pageNo ?? 0;
+  const currentPage = cPage + 1;
+  const totalPages = getAllStoreProducts?.data.pageResponse.totalPages ?? 0;
   const isLastPage = getAllStoreProducts?.data.pageResponse.last ?? false;
   const totalElements =
     getAllStoreProducts?.data.pageResponse.totalElements ?? 0;
@@ -60,7 +64,9 @@ const StorePage = () => {
 
   const updatePage = (newPage: number) => {
     setPage(newPage);
-    navigate(`/store/${storeId}?pageNo=${newPage}&pageSize=${pageSize}`);
+    navigate(
+      `/store/${storeId}?pageNo=${newPage}&pageSize=${pageSize}&sortBy=${sortBy}`
+    );
   };
 
   function handlePageChange(value: any) {
@@ -81,6 +87,14 @@ const StorePage = () => {
     }
   }
 
+  const handleSortClick = (event: any) => {
+    setSortBy(event.target.value);
+    setPage(1);
+    navigate(
+      `/store/${storeId}?pageNo=1&pageSize=${pageSize}&sortBy=${event.target.value}`
+    );
+  };
+
   return (
     <Grid
       templateColumns="0.2fr 0.5fr 0.5fr 0.5fr 0.2fr"
@@ -90,16 +104,18 @@ const StorePage = () => {
         "asideLeft content1 content1 content1 asideRight"
       `}
     >
-      <GridItem area="header1" mb="15px">
+      <GridItem area="header1" mb="10px">
         <Card
           backgroundImage="url('https://t3.ftcdn.net/jpg/02/93/94/22/360_F_293942282_dCV0T2E0411M2J1AHsCzCiKWEx3zYrM2.jpg')"
           backgroundSize="cover"
           backgroundPosition="center"
+          borderRadius="none"
         >
           <CardBody>
             <Box display="flex" justifyContent="start">
               <Avatar
                 src={
+                  getAllStoreProducts?.data.allProductModels[0].storePhotoUrl ||
                   "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
                 }
                 size="xl"
@@ -109,6 +125,52 @@ const StorePage = () => {
               </Text>
             </Box>
           </CardBody>
+        </Card>
+        <Card p="13px" mb="10px" borderRadius="none">
+          <Box display="flex" alignItems="center">
+            <Text fontSize="medium" pr="10px">
+              Sort By
+            </Text>
+            <Button
+              value="productName"
+              onClick={handleSortClick}
+              mr="5px"
+              width="120px"
+              _hover={{ color: "orange.400" }}
+            >
+              Relevance
+            </Button>
+            <Button
+              value="createdDate"
+              onClick={handleSortClick}
+              mr="5px"
+              width="120px"
+              _hover={{ color: "orange.400" }}
+            >
+              Latest
+            </Button>
+            <Button
+              value="productSold"
+              onClick={handleSortClick}
+              width="120px"
+              _hover={{ color: "orange.400" }}
+            >
+              Top Sales
+            </Button>
+            <Spacer />
+            <Text pr="15px" fontSize="medium">
+              <Text as="span" color="orange">
+                {currentPage}
+              </Text>
+              /{totalPages}
+            </Text>
+            <Button mr="2px" onClick={() => handlePageChange("&lsaquo;")}>
+              &lsaquo;
+            </Button>
+            <Button onClick={() => handlePageChange("&rsaquo;")}>
+              &rsaquo;
+            </Button>
+          </Box>
         </Card>
       </GridItem>
 

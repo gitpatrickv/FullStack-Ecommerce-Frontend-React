@@ -14,6 +14,7 @@ export default interface AllProductModels {
     categoryName: string;
     inventoryModels: Inventory[];
     productSold: number;
+    storePhotoUrl: string;
 }
 
 interface PageResponse {

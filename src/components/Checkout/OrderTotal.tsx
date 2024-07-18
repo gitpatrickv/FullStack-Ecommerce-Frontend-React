@@ -21,7 +21,7 @@ const OrderTotal = ({ cartTotal, qty }: Props) => {
     xl: "xl",
   });
   return (
-    <Card maxW="100%">
+    <Card maxW="100%" borderRadius="none">
       <CardBody>
         <Grid
           templateColumns="2fr  0.5fr 0.3fr"

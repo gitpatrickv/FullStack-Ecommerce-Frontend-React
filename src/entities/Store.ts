@@ -8,4 +8,6 @@ export default interface Store{
     shippingFee: number;
     email: string;
     photoUrl: string;
+    productCount: number;
+    orderCount: number;
 }

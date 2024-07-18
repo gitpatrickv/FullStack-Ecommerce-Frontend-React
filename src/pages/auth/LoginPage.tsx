@@ -28,7 +28,12 @@ const LoginPage = () => {
               {loading ? <Text>Logging In...</Text> : <Text>Log In</Text>}
             </Heading>
           </VStack>
-          <Card variant="outline" borderColor="gray" w="400px">
+          <Card
+            variant="outline"
+            borderColor="gray"
+            w="400px"
+            borderRadius="none"
+          >
             <Box alignSelf="flex-end">
               <Link to="/">
                 <CloseButton />
@@ -69,7 +74,12 @@ const LoginPage = () => {
             </CardBody>
           </Card>
 
-          <Card variant="outline" borderColor="gray" w="400px">
+          <Card
+            variant="outline"
+            borderColor="gray"
+            w="400px"
+            borderRadius="none"
+          >
             <CardBody>
               <HStack>
                 <Text>New User? </Text>

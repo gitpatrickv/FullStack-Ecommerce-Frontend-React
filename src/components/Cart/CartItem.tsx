@@ -130,7 +130,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
 
   const handleStoreFilterChange = () => {
     filterStoreCart(
-      { storeName: cart.storeName, jwtToken: jwtToken },
+      { storeId: cart.storeId, jwtToken: jwtToken },
       {
         onSuccess: () => {
           refetchTotal();
@@ -174,6 +174,7 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
               h={{ base: "40px", md: "60px", lg: "80px" }}
               onClick={handleNavigateClick}
               cursor="pointer"
+              border="1px solid"
             />
             <Box display="flex" flexDirection="column">
               <Text
@@ -289,7 +290,11 @@ const CartItem = ({ cart, refetchCarts }: Props) => {
               border="1px solid"
               borderColor="gray.600"
               textAlign="center"
-              cursor="pointer"
+              cursor={
+                cart.stockRemaining === cart.quantity
+                  ? "not-allowed"
+                  : "pointer"
+              }
               onClick={handleClickIncrement}
               _hover={{ color: "orange.400" }}
               userSelect="none"

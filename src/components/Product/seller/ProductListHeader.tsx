@@ -15,7 +15,7 @@ const ProductListHeader = () => {
     xl: "xl",
   });
   return (
-    <Card>
+    <Card mb="5px" padding={2} borderRadius="none">
       <Grid
         templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
@@ -28,7 +28,7 @@ const ProductListHeader = () => {
           <Box
             display="flex"
             alignItems="center"
-            w={{ base: "140px", md: "250px", lg: "350px" }}
+            w={{ base: "150px", md: "250px", lg: "350px" }}
           >
             <Text
               fontSize={fontSize}
@@ -47,9 +47,11 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
-            Rating
-          </Text>
+          <Box minWidth="60px">
+            <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+              Rating
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content2"
@@ -57,9 +59,11 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
-            Sold
-          </Text>
+          <Box minWidth="60px">
+            <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+              Sold
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content3"
@@ -67,9 +71,11 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
-            Price
-          </Text>
+          <Box minWidth="60px">
+            <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+              Price
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content4"
@@ -77,9 +83,11 @@ const ProductListHeader = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
-            Stock
-          </Text>
+          <Box minWidth="60px">
+            <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
+              Stock
+            </Text>
+          </Box>
         </GridItem>
         <GridItem
           area="content5"

@@ -14,10 +14,14 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
+import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
+import ToDoList from "../../components/Dashboard/seller/ToDoList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
+import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
+import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
 import { useAuthQueryStore } from "../../store/auth-store";
 
 const SellerPage = () => {
@@ -25,10 +29,24 @@ const SellerPage = () => {
   const { logout, authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { data: store } = useGetStoreInfo(jwtToken);
+  const { refetch: refetchTotalSales } = useGetTotalSales(store?.storeId || "");
+  const { refetch: refetchTodoTotal } = useGetTodoTotal(store?.storeId || "");
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleLogout = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
+  };
+
+  const handleNavigateSellerPage = () => {
+    navigate("/seller");
+    refetchTotalSales();
+    refetchTodoTotal();
+  };
+
+  const handleStoreInfoNavigateClick = () => {
+    navigate("/seller/shop/info");
   };
   return (
     <Grid
@@ -40,7 +58,7 @@ const SellerPage = () => {
     `}
     >
       <GridItem area="header">
-        <Card>
+        <Card borderRadius="none">
           <CardBody>
             <Box
               display="flex"
@@ -48,16 +66,17 @@ const SellerPage = () => {
               alignItems="center"
             >
               <Box ml="20px" display="flex">
-                <Link to="/seller">
-                  <Text
-                    fontSize="x-large"
-                    textTransform="uppercase"
-                    fontWeight="semibold"
-                    color="orange.400"
-                  >
-                    {store?.storeName}
-                  </Text>
-                </Link>
+                <Text
+                  fontSize="x-large"
+                  textTransform="uppercase"
+                  fontWeight="semibold"
+                  color="orange.400"
+                  onClick={handleNavigateSellerPage}
+                  cursor="pointer"
+                  userSelect="none"
+                >
+                  {store?.storeName}
+                </Text>
               </Box>
               <Box display="flex" alignItems="center" mr="20px">
                 <Menu>
@@ -92,7 +111,9 @@ const SellerPage = () => {
                     variant="none"
                   />
                   <MenuList>
-                    <MenuItem>Store Information</MenuItem>
+                    <MenuItem onClick={handleStoreInfoNavigateClick}>
+                      Store Information
+                    </MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
@@ -109,10 +130,34 @@ const SellerPage = () => {
         </Box>
       </GridItem>
 
+      <GridItem area="sidebar1">
+        <Box mt="15px" ml="10px" width="200px"></Box>
+      </GridItem>
+
       <GridItem area="content1">
-        <Box>
-          <Outlet />
-        </Box>
+        {location.pathname === "/seller" ? (
+          <Grid
+            templateColumns="1fr"
+            templateAreas={`
+            "content1"
+            `}
+            gap={4}
+            p={3}
+          >
+            <GridItem area="content1">
+              <ToDoList storeId={store?.storeId || ""} />
+              <BusinessInsights
+                orderCount={store?.orderCount ?? 0}
+                productCount={store?.productCount ?? 0}
+                storeId={store?.storeId || ""}
+              />
+            </GridItem>
+          </Grid>
+        ) : (
+          <Box>
+            <Outlet />
+          </Box>
+        )}
       </GridItem>
     </Grid>
   );

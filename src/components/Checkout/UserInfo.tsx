@@ -23,7 +23,7 @@ const UserInfo = () => {
 
   return (
     <Box>
-      <Card maxW="100%">
+      <Card maxW="100%" borderRadius="none">
         <CardBody>
           <Box
             display="flex"
