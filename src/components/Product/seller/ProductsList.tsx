@@ -309,7 +309,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                       </Text>
                     </GridItem>
                     <GridItem area="content3">
-                      {product.inventoryModels[0].colors ? (
+                      {product.inventoryModels[0].colors && (
                         <Text
                           fontSize="md"
                           fontWeight="semibold"
@@ -318,12 +318,10 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                         >
                           Variants
                         </Text>
-                      ) : (
-                        ""
                       )}
                     </GridItem>
                     <GridItem area="content4">
-                      {product.inventoryModels[0].sizes ? (
+                      {product.inventoryModels[0].sizes && (
                         <Text
                           fontSize="md"
                           fontWeight="semibold"
@@ -332,8 +330,6 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                         >
                           Size
                         </Text>
-                      ) : (
-                        ""
                       )}
                     </GridItem>
                     <GridItem area="content5" ml="55px">

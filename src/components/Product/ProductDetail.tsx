@@ -301,82 +301,91 @@ const ProductDetail = ({ product }: Props) => {
 
                   {hasColorsOrSizes && (
                     <>
-                      <HStack mb="15px">
-                        <Text
-                          mr="17px"
-                          fontSize="xl"
-                          color="gray.600"
-                          mb="10px"
-                        >
-                          Variants
-                        </Text>
-                        <Flex flexWrap="wrap">
-                          {Array.from(
-                            new Set(
-                              product.inventoryModels.map((inv) => inv.colors)
-                            )
-                          ).map((color) => (
-                            <Button
-                              key={color}
-                              w="100px"
-                              fontSize="md"
-                              onClick={() => handleColorChange(color)}
-                              variant={
-                                selectedColor === color ? "solid" : "outline"
-                              }
-                              color={
-                                selectedColor === color
-                                  ? "orange.400"
-                                  : "white.500"
-                              }
-                              textTransform="capitalize"
-                              isDisabled={!availableColors.includes(color)}
-                              mb="10px"
-                              mr="5px"
-                            >
-                              {color}
-                            </Button>
-                          ))}
-                        </Flex>
-                      </HStack>
-                      <HStack mb="15px">
-                        <Text
-                          mr="52px"
-                          fontSize="xl"
-                          color="gray.500"
-                          mb="10px"
-                        >
-                          Size
-                        </Text>
-                        <Flex flexWrap="wrap">
-                          {Array.from(
-                            new Set(
-                              product.inventoryModels.map((inv) => inv.sizes)
-                            )
-                          ).map((size) => (
-                            <Button
-                              key={size}
-                              w="100px"
-                              fontSize="md"
-                              onClick={() => handleSizeChange(size)}
-                              variant={
-                                selectedSize === size ? "solid" : "outline"
-                              }
-                              color={
-                                selectedSize === size
-                                  ? "orange.400"
-                                  : "white.500"
-                              }
-                              textTransform="capitalize"
-                              isDisabled={!availableSizes.includes(size)}
-                              mb="10px"
-                              mr="5px"
-                            >
-                              {size}
-                            </Button>
-                          ))}
-                        </Flex>
-                      </HStack>
+                      {filteredInventory?.colors === "" ? (
+                        <Box mb="50px"></Box>
+                      ) : (
+                        <HStack mb="15px">
+                          <Text
+                            mr="17px"
+                            fontSize="xl"
+                            color="gray.600"
+                            mb="10px"
+                          >
+                            Variants
+                          </Text>
+
+                          <Flex flexWrap="wrap">
+                            {Array.from(
+                              new Set(
+                                product.inventoryModels.map((inv) => inv.colors)
+                              )
+                            ).map((color) => (
+                              <Button
+                                key={color}
+                                minWidth="100px"
+                                fontSize="md"
+                                onClick={() => handleColorChange(color)}
+                                variant={
+                                  selectedColor === color ? "solid" : "outline"
+                                }
+                                color={
+                                  selectedColor === color
+                                    ? "orange.400"
+                                    : "white.500"
+                                }
+                                textTransform="capitalize"
+                                isDisabled={!availableColors.includes(color)}
+                                mb="10px"
+                                mr="5px"
+                              >
+                                {color}
+                              </Button>
+                            ))}
+                          </Flex>
+                        </HStack>
+                      )}
+                      {filteredInventory?.sizes === "" ? (
+                        <Box mb="50px"></Box>
+                      ) : (
+                        <HStack mb="15px">
+                          <Text
+                            mr="52px"
+                            fontSize="xl"
+                            color="gray.500"
+                            mb="10px"
+                          >
+                            Size
+                          </Text>
+                          <Flex flexWrap="wrap">
+                            {Array.from(
+                              new Set(
+                                product.inventoryModels.map((inv) => inv.sizes)
+                              )
+                            ).map((size) => (
+                              <Button
+                                key={size}
+                                minWidth="100px"
+                                fontSize="md"
+                                onClick={() => handleSizeChange(size)}
+                                variant={
+                                  selectedSize === size ? "solid" : "outline"
+                                }
+                                color={
+                                  selectedSize === size
+                                    ? "orange.400"
+                                    : "white.500"
+                                }
+                                textTransform="capitalize"
+                                isDisabled={!availableSizes.includes(size)}
+                                mb="10px"
+                                mr="5px"
+                              >
+                                {size}
+                              </Button>
+                            ))}
+                          </Flex>
+                        </HStack>
+                      )}
                     </>
                   )}
                   <Box mb="10px" display="flex">
