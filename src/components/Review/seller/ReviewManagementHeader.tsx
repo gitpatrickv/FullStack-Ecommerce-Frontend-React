@@ -15,7 +15,7 @@ const ReviewManagementHeader = () => {
     xl: "xl",
   });
   return (
-    <Card mb="5px">
+    <Card mb="5px" borderRadius="none">
       <Grid
         templateColumns="0.2fr 1fr 0.2fr"
         templateAreas={`
@@ -23,12 +23,7 @@ const ReviewManagementHeader = () => {
   "asideLeft content1 asideRight"
 `}
       >
-        <GridItem
-          area="asideLeft"
-          height="50px"
-          border="1px solid"
-          borderColor="gray.500"
-        >
+        <GridItem area="asideLeft" height="50px">
           <Box
             mt="10px"
             ml="10px"
@@ -41,12 +36,7 @@ const ReviewManagementHeader = () => {
             </Text>
           </Box>
         </GridItem>
-        <GridItem
-          area="content1"
-          height="50px"
-          border="1px solid"
-          borderColor="gray.500"
-        >
+        <GridItem area="content1" height="50px">
           <Box display="flex" justifyContent="center">
             <Text
               fontSize={fontSize}
@@ -58,15 +48,10 @@ const ReviewManagementHeader = () => {
             </Text>
           </Box>
         </GridItem>
-        <GridItem
-          area="asideRight"
-          height="50px"
-          border="1px solid"
-          borderColor="gray.500"
-        >
+        <GridItem area="asideRight" height="50px">
           <Box display="flex" justifyContent="center" width="250px">
             <Text fontSize={fontSize} fontWeight="semibold" mt="10px">
-              Actions
+              Action
             </Text>
           </Box>
         </GridItem>
