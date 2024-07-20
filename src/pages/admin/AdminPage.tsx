@@ -12,10 +12,11 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Outlet, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
-import { useQueryClient } from "@tanstack/react-query";
+import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
 import { useAuthQueryStore } from "../../store/auth-store";
 
 const AdminPage = () => {
@@ -99,7 +100,7 @@ const AdminPage = () => {
 
       <GridItem area="sidebar">
         <Box mt="15px" ml="10px">
-          <Text>SIDE BAR</Text>
+          <SidebarAdmin />
         </Box>
       </GridItem>
 

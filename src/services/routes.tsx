@@ -41,6 +41,7 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
+import ShopListPage from "../pages/admin/ShopListPage";
 
 const router = createBrowserRouter([
   {
@@ -155,6 +156,7 @@ const router = createBrowserRouter([
       </AdminRoute>
     ),
     errorElement: <ErrorPage />,
+    children: [{ path: "shop/list", element: <ShopListPage /> }],
   },
 ]);
 

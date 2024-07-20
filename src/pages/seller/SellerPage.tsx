@@ -18,11 +18,12 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
 import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 import ToDoList from "../../components/Dashboard/seller/ToDoList";
-import Sidebar from "../../components/Sidebar/Sidebar";
+
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
 import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
 import { useAuthQueryStore } from "../../store/auth-store";
+import Sidebar from "../../components/Sidebar/seller/Sidebar";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
