@@ -102,7 +102,7 @@ const AdminPage = () => {
       </GridItem>
 
       <GridItem area="sidebar">
-        <Box mt="15px" ml="10px">
+        <Box mt="15px" ml="10px" minWidth="200px">
           <SidebarAdmin />
         </Box>
       </GridItem>

@@ -10,6 +10,8 @@ import {
 import useGetUserCount from "../../../hooks/admin/useGetUserCount";
 import useGetProductCount from "../../../hooks/admin/useGetProductCount";
 import useGetStoreCount from "../../../hooks/admin/useGetStoreCount";
+import useGetOrderCount from "../../../hooks/admin/useGetOrderCount";
+import { formatCurrency } from "../../../utilities/formatCurrency";
 
 const Metrics = () => {
   const fontSize = useBreakpointValue({
@@ -21,6 +23,7 @@ const Metrics = () => {
   const { data: userCount } = useGetUserCount();
   const { data: productCount } = useGetProductCount();
   const { data: storeCount } = useGetStoreCount();
+  const { data: orderCount } = useGetOrderCount();
 
   return (
     <Card>
@@ -53,7 +56,7 @@ const Metrics = () => {
                   {userCount?.userCount ?? 0}
                 </Text>
                 <Text fontSize={fontSize} fontWeight="semibold">
-                  Registered Users
+                  Total Users
                 </Text>
               </Box>
             </Box>
@@ -79,7 +82,7 @@ const Metrics = () => {
                   fontWeight="semibold"
                   whiteSpace="nowrap"
                 >
-                  Registered Store
+                  Total Store
                 </Text>
               </Box>
             </Box>
@@ -118,7 +121,7 @@ const Metrics = () => {
             >
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
-                  0
+                  {formatCurrency(orderCount?.totalSales ?? 0)}
                 </Text>
                 <Text
                   fontSize={fontSize}
@@ -140,7 +143,7 @@ const Metrics = () => {
             >
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
-                  0
+                  {orderCount?.orderCount ?? 0}
                 </Text>
                 <Text
                   fontSize={fontSize}
