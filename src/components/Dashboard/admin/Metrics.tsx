@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import useGetUserCount from "../../../hooks/admin/useGetUserCount";
 import useGetProductCount from "../../../hooks/admin/useGetProductCount";
+import useGetStoreCount from "../../../hooks/admin/useGetStoreCount";
 
 const Metrics = () => {
   const fontSize = useBreakpointValue({
@@ -19,6 +20,7 @@ const Metrics = () => {
 
   const { data: userCount } = useGetUserCount();
   const { data: productCount } = useGetProductCount();
+  const { data: storeCount } = useGetStoreCount();
 
   return (
     <Card>
@@ -70,7 +72,7 @@ const Metrics = () => {
             >
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
-                  0
+                  {storeCount?.storeCount ?? 0}
                 </Text>
                 <Text
                   fontSize={fontSize}
@@ -145,7 +147,7 @@ const Metrics = () => {
                   fontWeight="semibold"
                   whiteSpace="nowrap"
                 >
-                  Page Visits
+                  Total Orders
                 </Text>
               </Box>
             </Box>
