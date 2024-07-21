@@ -45,6 +45,7 @@ const useLogin = () => {
       queryClient.invalidateQueries(['categoryProduct'])
       queryClient.invalidateQueries(['manageProductReview'])
       queryClient.invalidateQueries(['todoTotal'])
+      queryClient.invalidateQueries(['userCount'])
       const role = response.role;
       setRole(role);
       if(role==="ADMIN"){

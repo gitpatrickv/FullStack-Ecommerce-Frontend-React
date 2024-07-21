@@ -14,10 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
 import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
 import { useAuthQueryStore } from "../../store/auth-store";
+import Metrics from "../../components/Dashboard/admin/Metrics";
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -46,18 +47,20 @@ const AdminPage = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Box ml="20px" display="flex">
-                <Text
-                  fontSize="x-large"
-                  textTransform="uppercase"
-                  fontWeight="semibold"
-                  color="orange.400"
-                  cursor="pointer"
-                  userSelect="none"
-                >
-                  ADMIN DASHBOARD
-                </Text>
-              </Box>
+              <Link to="/admin">
+                <Box ml="20px" display="flex">
+                  <Text
+                    fontSize="x-large"
+                    textTransform="uppercase"
+                    fontWeight="semibold"
+                    color="orange.400"
+                    cursor="pointer"
+                    userSelect="none"
+                  >
+                    HOME
+                  </Text>
+                </Box>
+              </Link>
               <Box display="flex" alignItems="center" mr="20px">
                 <Menu>
                   <MenuButton
@@ -119,7 +122,7 @@ const AdminPage = () => {
             p={3}
           >
             <GridItem area="content1">
-              <Text>DASHBOARD HERE</Text>
+              <Metrics />
             </GridItem>
           </Grid>
         ) : (

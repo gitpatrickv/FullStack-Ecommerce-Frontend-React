@@ -43,7 +43,7 @@ const ShopList = ({ store }: Props) => {
               }
               size="xs"
             />
-            <Text ml="5px" textTransform="capitalize">
+            <Text ml="5px" textTransform="capitalize" fontWeight="semibold">
               {store.storeName}
             </Text>
             <Spacer />
@@ -70,13 +70,13 @@ const ShopList = ({ store }: Props) => {
               <Text fontWeight="semibold">Shipping Fee:</Text>
             </Box>
             <Box display="flex" flexDirection="column">
-              <Text fontWeight="semibold" ml="10px" color="blue.500">
+              <Text fontWeight="semibold" ml="10px">
                 {store.productCount}
               </Text>
-              <Text fontWeight="semibold" ml="10px" color="blue.500">
+              <Text fontWeight="semibold" ml="10px">
                 {store.orderCount}
               </Text>
-              <Text fontWeight="semibold" ml="10px" color="blue.500">
+              <Text fontWeight="semibold" ml="10px">
                 {store.shippingFee}
               </Text>
             </Box>
@@ -96,13 +96,13 @@ const ShopList = ({ store }: Props) => {
               <Text fontWeight="semibold">Address:</Text>
             </Box>
             <Box display="flex" flexDirection="column">
-              <Text fontWeight="semibold" ml="10px" color="blue.500">
+              <Text fontWeight="semibold" ml="10px">
                 {store.contactNumber}
               </Text>
-              <Text fontWeight="semibold" ml="10px" color="blue.500">
+              <Text fontWeight="semibold" ml="10px">
                 {store.email}
               </Text>
-              <Text fontWeight="semibold" ml="10px" color="blue.500">
+              <Text fontWeight="semibold" ml="10px">
                 {store.address}
               </Text>
             </Box>
