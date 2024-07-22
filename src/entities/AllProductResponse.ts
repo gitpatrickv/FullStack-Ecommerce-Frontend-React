@@ -15,6 +15,7 @@ export default interface AllProductModels {
     inventoryModels: Inventory[];
     productSold: number;
     storePhotoUrl: string;
+    listed: boolean;
 }
 
 interface PageResponse {

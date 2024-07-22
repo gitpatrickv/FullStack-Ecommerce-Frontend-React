@@ -15,4 +15,5 @@ export default interface Product {
     categoryId: string;
     productSold: number;
     storePhotoUrl: string;
+    listed: boolean;
 }

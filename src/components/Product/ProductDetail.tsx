@@ -37,6 +37,7 @@ import Star2Rating from "./Star2Rating";
 import Star3Rating from "./Star3Rating";
 import Star4Rating from "./Star4Rating";
 import Star5Rating from "./Star5Rating";
+import useSuspendProduct from "../../hooks/admin/useSuspendProduct";
 interface Props {
   product: Product;
 }
@@ -62,6 +63,7 @@ const ProductDetail = ({ product }: Props) => {
   const { mutate: addToCart } = useAddToCart();
   const { mutate: addToCartWithVariations } = useAddToCartVariation();
   const { mutate: addToFavorites } = useAddToFavorites();
+  const { mutate: suspendProduct } = useSuspendProduct();
   const { data: user } = useGetUser(jwtToken);
   const { data: status } = useGetFavoritesStatus(product.productId);
   const [addToFavorite, setAddToFavorite] = useState<boolean>(
@@ -181,6 +183,10 @@ const ProductDetail = ({ product }: Props) => {
         setAddToFavorite(!addToFavorite);
       },
     });
+  };
+
+  const handleSuspendProductClick = () => {
+    suspendProduct(product.productId);
   };
 
   const handleNavigateStorePageClick = (storeId: string) => {
@@ -483,12 +489,16 @@ const ProductDetail = ({ product }: Props) => {
                     {role === "ADMIN" ? (
                       <Button
                         mt="4"
-                        mr="60px"
-                        _hover={{ color: "orange.400" }}
-                        isDisabled={true}
+                        bg={product.listed === true ? "red.500" : "orange.500"}
+                        _hover={
+                          product.listed === true
+                            ? { bg: "red.600" }
+                            : { bg: "orange.600" }
+                        }
+                        onClick={handleSuspendProductClick}
+                        width="100px"
                       >
-                        <BsCartPlus size="20px" />
-                        <Text pl="10px">Add To Cart</Text>
+                        {product.listed === true ? "Suspend" : "Activate"}
                       </Button>
                     ) : (
                       <>

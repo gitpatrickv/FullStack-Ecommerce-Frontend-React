@@ -1,4 +1,10 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Avatar,
   Box,
   Button,
@@ -7,7 +13,9 @@ import {
   GridItem,
   Spacer,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { useRef } from "react";
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Store from "../../../entities/Store";
@@ -18,6 +26,8 @@ interface Props {
 }
 
 const ShopList = ({ store, onRefetchStore }: Props) => {
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const { mutate: toggleShopListing } = useSuspendStoreListing();
   const handleNavigateStorePageClick = () => {
@@ -28,6 +38,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
     toggleShopListing(store.storeId, {
       onSuccess: () => {
         onRefetchStore();
+        onClose();
       },
     });
   };
@@ -74,7 +85,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
           </Box>
         </GridItem>
         <GridItem area="asideLeft" border="1px solid" borderColor="gray.500">
-          <Box display="flex" ml="10px" mt="5px" mb="5px" width="150px">
+          <Box display="flex" ml="10px" mt="5px" mb="5px" minWidth="250px">
             <Box display="flex" flexDirection="column">
               <Text fontWeight="semibold">Total Products:</Text>
               <Text fontWeight="semibold">Total Orders:</Text>
@@ -123,7 +134,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
           <Box
             display="flex"
             mt="22px"
-            width="250px"
+            minWidth="250px"
             justifyContent="space-around"
           >
             <Button
@@ -135,11 +146,65 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
                 store.online === true ? { bg: "red.600" } : { bg: "orange.600" }
               }
               width="120px"
-              onClick={handleSuspendClick}
+              onClick={onOpen}
             >
-              {store.online === true ? "Suspend" : "Resume"}
+              {store.online === true ? "Suspend" : "Activate"}
             </Button>
           </Box>
+          <AlertDialog
+            isOpen={isOpen}
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            isCentered
+          >
+            <AlertDialogOverlay>
+              <AlertDialogContent>
+                <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                  <Text color="orange.400" fontSize="large">
+                    Would you like to{" "}
+                    <Text as="span">
+                      {store.online === true ? "suspend" : "activate"}
+                    </Text>{" "}
+                    this store?
+                  </Text>
+                </AlertDialogHeader>
+
+                <AlertDialogBody>
+                  <Text
+                    textTransform="capitalize"
+                    fontSize="lg"
+                    fontWeight="semibold"
+                  >
+                    {store.storeName}
+                  </Text>
+                </AlertDialogBody>
+
+                <AlertDialogFooter>
+                  <Button
+                    ref={cancelRef}
+                    onClick={onClose}
+                    width="100px"
+                    _hover={{ color: "orange.400" }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    bg={store.online === true ? "red.500" : "orange.500"}
+                    _hover={
+                      store.online === true
+                        ? { bg: "red.600" }
+                        : { bg: "orange.600" }
+                    }
+                    onClick={handleSuspendClick}
+                    ml={3}
+                    width="100px"
+                  >
+                    {store.online === true ? "Suspend" : "Activate"}
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
         </GridItem>
       </Grid>
     </Card>

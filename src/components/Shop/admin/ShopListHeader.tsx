@@ -24,13 +24,7 @@ const ShopListHeader = () => {
 `}
       >
         <GridItem area="asideLeft" height="50px">
-          <Box
-            mt="10px"
-            ml="10px"
-            display="flex"
-            justifyContent="start"
-            width="260px"
-          >
+          <Box mt="10px" display="flex" justifyContent="center" width="260px">
             <Text fontSize={fontSize} fontWeight="semibold" whiteSpace="nowrap">
               Performance Metrics
             </Text>
@@ -51,7 +45,7 @@ const ShopListHeader = () => {
         <GridItem area="asideRight" height="50px">
           <Box display="flex" justifyContent="center" width="250px">
             <Text fontSize={fontSize} fontWeight="semibold" mt="10px">
-              Actions
+              Action
             </Text>
           </Box>
         </GridItem>

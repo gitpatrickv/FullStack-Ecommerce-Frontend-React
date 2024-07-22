@@ -12,15 +12,18 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FaBan } from "react-icons/fa";
-import ProductCard from "../../components/Product/ProductCard";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
+import StoreProductCard from "../../components/Product/StoreProductCard";
 import useGetAllStoreProducts from "../../hooks/user/useGetAllStoreProducts";
+import { useAuthQueryStore } from "../../store/auth-store";
 import { paginationRange } from "../../utilities/pagination";
 
 const StorePage = () => {
+  const { authStore } = useAuthQueryStore();
+  const role = authStore.role;
   const location = useLocation();
   const navigate = useNavigate();
   const { storeId } = useParams();
@@ -208,11 +211,14 @@ const StorePage = () => {
                       <ProductCardSkeleton />
                     </ProductCardContainer>
                   ))}
-                {getAllStoreProducts?.data.allProductModels.map((product) => (
-                  <ProductCardContainer key={product.productId}>
-                    <ProductCard product={product} />
-                  </ProductCardContainer>
-                ))}
+                {getAllStoreProducts?.data.allProductModels.map(
+                  (product) =>
+                    (role === "ADMIN" || product.listed) && (
+                      <ProductCardContainer key={product.productId}>
+                        <StoreProductCard product={product} />
+                      </ProductCardContainer>
+                    )
+                )}
               </SimpleGrid>
               <Box
                 display="flex"
