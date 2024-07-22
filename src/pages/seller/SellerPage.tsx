@@ -118,7 +118,13 @@ const SellerPage = () => {
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
-                <Text ml="10px">{store?.email}</Text>
+                {store?.online === true ? (
+                  <Text ml="10px">{store?.email}</Text>
+                ) : (
+                  <Text ml="10px" color="red">
+                    Account Suspended
+                  </Text>
+                )}
               </Box>
             </Box>
           </CardBody>

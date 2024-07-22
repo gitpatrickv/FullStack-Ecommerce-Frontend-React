@@ -11,14 +11,25 @@ import {
 import Store from "../../../entities/Store";
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import useToggleStoreAndProductListing from "../../../hooks/admin/useToggleStoreAndProductListing";
 interface Props {
   store: Store;
+  onRefetchStore: () => void;
 }
 
-const ShopList = ({ store }: Props) => {
+const ShopList = ({ store, onRefetchStore }: Props) => {
   const navigate = useNavigate();
+  const { mutate: toggleShopListing } = useToggleStoreAndProductListing();
   const handleNavigateStorePageClick = () => {
     navigate(`/store/` + store.storeId);
+  };
+
+  const handleSuspendClick = () => {
+    toggleShopListing(store.storeId, {
+      onSuccess: () => {
+        onRefetchStore();
+      },
+    });
   };
   return (
     <Card mt="5px">
@@ -111,35 +122,23 @@ const ShopList = ({ store }: Props) => {
         <GridItem area="asideRight" border="1px solid" borderColor="gray.500">
           <Box
             display="flex"
-            mt="30px"
+            mt="22px"
             width="250px"
             justifyContent="space-around"
           >
-            <Text
-              _hover={{ color: "orange.400" }}
+            <Button
               cursor="pointer"
               fontWeight="semibold"
               fontSize="lg"
+              bg={store.online === true ? "red.500" : "orange.500"}
+              _hover={
+                store.online === true ? { bg: "red.600" } : { bg: "orange.600" }
+              }
+              width="120px"
+              onClick={handleSuspendClick}
             >
-              Relist
-            </Text>
-
-            <Text
-              _hover={{ color: "orange.400" }}
-              cursor="pointer"
-              fontWeight="semibold"
-              fontSize="lg"
-            >
-              Delist
-            </Text>
-            <Text
-              _hover={{ color: "orange.400" }}
-              cursor="pointer"
-              fontWeight="semibold"
-              fontSize="lg"
-            >
-              Ban
-            </Text>
+              {store.online === true ? "Suspend" : "Resume"}
+            </Button>
           </Box>
         </GridItem>
       </Grid>
