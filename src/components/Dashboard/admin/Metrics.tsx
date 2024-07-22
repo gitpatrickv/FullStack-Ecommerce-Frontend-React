@@ -44,13 +44,7 @@ const Metrics = () => {
             </Text>
           </GridItem>
           <GridItem area="content1">
-            <Box
-              display="flex"
-              justifyContent="center"
-              cursor="pointer"
-              _hover={{ border: "1px solid", borderColor: "gray.500" }}
-              userSelect="none"
-            >
+            <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
                   {userCount?.userCount ?? 0}
@@ -63,16 +57,7 @@ const Metrics = () => {
           </GridItem>
 
           <GridItem area="content2">
-            <Box
-              display="flex"
-              justifyContent="center"
-              cursor="pointer"
-              _hover={{
-                border: "1px solid",
-                borderColor: "gray.500",
-              }}
-              userSelect="none"
-            >
+            <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
                   {storeCount?.storeCount ?? 0}
@@ -82,20 +67,14 @@ const Metrics = () => {
                   fontWeight="semibold"
                   whiteSpace="nowrap"
                 >
-                  Total Store
+                  Total Shop
                 </Text>
               </Box>
             </Box>
           </GridItem>
 
           <GridItem area="content3">
-            <Box
-              display="flex"
-              justifyContent="center"
-              cursor="pointer"
-              _hover={{ border: "1px solid", borderColor: "gray.500" }}
-              userSelect="none"
-            >
+            <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
                   {productCount?.productCount ?? 0}
@@ -112,13 +91,7 @@ const Metrics = () => {
           </GridItem>
 
           <GridItem area="content4">
-            <Box
-              display="flex"
-              justifyContent="center"
-              cursor="pointer"
-              _hover={{ border: "1px solid", borderColor: "gray.500" }}
-              userSelect="none"
-            >
+            <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
                   {formatCurrency(orderCount?.totalSales ?? 0)}
@@ -134,13 +107,7 @@ const Metrics = () => {
             </Box>
           </GridItem>
           <GridItem area="content5">
-            <Box
-              display="flex"
-              justifyContent="center"
-              cursor="pointer"
-              _hover={{ border: "1px solid", borderColor: "gray.500" }}
-              userSelect="none"
-            >
+            <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
                   {orderCount?.orderCount ?? 0}

@@ -9,7 +9,11 @@ const UserRoute = ({ children }: Props) => {
   const { authStore } = useAuthQueryStore();
   const role = authStore.role;
 
-  return role === "USER" ? <>{children}</> : <Unauthorized />;
+  return role === "USER" || role === "SELLER" ? (
+    <>{children}</>
+  ) : (
+    <Unauthorized />
+  );
 };
 
 export default UserRoute;

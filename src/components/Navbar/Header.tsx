@@ -34,9 +34,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleNavigateHomeClick = () => {
-    if (role === "SELLER") {
-      navigate("/seller");
-    } else if (role === "ADMIN") {
+    if (role === "ADMIN") {
       navigate("/admin/shop/list");
     } else {
       navigate("/");
@@ -86,7 +84,7 @@ const Header = () => {
                       <MenuList>
                         <MenuItem>{user.email}</MenuItem>
                         <MenuDivider />
-                        {role === "USER" ? (
+                        {role === "USER" || role === "SELLER" ? (
                           <>
                             <Link to="/user/account/profile">
                               <MenuItem>My Account</MenuItem>
@@ -160,7 +158,7 @@ const Header = () => {
           <SearchInput />
         </GridItem>
         <GridItem area="content6">
-          {role === "USER" ? (
+          {role === "USER" || role === "SELLER" ? (
             <>
               <Link to="/cart">
                 <Box display="flex" justifyContent="center">

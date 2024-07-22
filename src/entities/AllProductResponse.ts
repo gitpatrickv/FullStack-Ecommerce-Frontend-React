@@ -25,7 +25,19 @@ interface PageResponse {
     last: boolean;
 }
 
+interface StoreInfo {
+    storeName: string;
+    storePhotoUrl: string;
+    online: boolean;
+}
+
 export default interface AllProductsResponse {
     allProductModels: AllProductModels[];
+    pageResponse: PageResponse;
+}
+
+export default interface StoreResponse {
+    allProductModels: AllProductModels[];
+    storeInfo: StoreInfo;
     pageResponse: PageResponse;
 }

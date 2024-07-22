@@ -44,6 +44,7 @@ interface Props {
 const ProductDetail = ({ product }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const role = authStore.role;
   const { count, increment, decrement, reset } = useProductQueryStore(
     (state) => ({
       count: state.productQuery.count,
@@ -477,8 +478,9 @@ const ProductDetail = ({ product }: Props) => {
                       )}
                     </Box>
                   </Box>
+
                   <Box display="flex" alignItems="center">
-                    {filteredInventory?.quantity === 0 ? (
+                    {role === "ADMIN" ? (
                       <Button
                         mt="4"
                         mr="60px"
@@ -490,26 +492,40 @@ const ProductDetail = ({ product }: Props) => {
                       </Button>
                     ) : (
                       <>
-                        {hasColorsOrSizes ? (
+                        {filteredInventory?.quantity === 0 ? (
                           <Button
                             mt="4"
-                            onClick={handleAddToCartVariationClick}
                             mr="60px"
                             _hover={{ color: "orange.400" }}
+                            isDisabled={true}
                           >
                             <BsCartPlus size="20px" />
                             <Text pl="10px">Add To Cart</Text>
                           </Button>
                         ) : (
-                          <Button
-                            mt="4"
-                            onClick={handleAddToCartClick}
-                            mr="60px"
-                            _hover={{ color: "orange.400" }}
-                          >
-                            <BsCartPlus size="20px" />
-                            <Text pl="10px">Add To Cart</Text>
-                          </Button>
+                          <>
+                            {hasColorsOrSizes ? (
+                              <Button
+                                mt="4"
+                                onClick={handleAddToCartVariationClick}
+                                mr="60px"
+                                _hover={{ color: "orange.400" }}
+                              >
+                                <BsCartPlus size="20px" />
+                                <Text pl="10px">Add To Cart</Text>
+                              </Button>
+                            ) : (
+                              <Button
+                                mt="4"
+                                onClick={handleAddToCartClick}
+                                mr="60px"
+                                _hover={{ color: "orange.400" }}
+                              >
+                                <BsCartPlus size="20px" />
+                                <Text pl="10px">Add To Cart</Text>
+                              </Button>
+                            )}
+                          </>
                         )}
                       </>
                     )}
@@ -521,7 +537,7 @@ const ProductDetail = ({ product }: Props) => {
                       position="relative"
                       top="10px"
                     >
-                      {user ? (
+                      {role === "USER" || role === "SELLER" ? (
                         <>
                           <IconButton
                             aria-label="Search"

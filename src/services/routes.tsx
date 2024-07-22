@@ -30,6 +30,7 @@ import ProductDetailPage from "../pages/user/ProductDetailPage";
 import AdminRoute from "../components/ProtectedRoute/AdminRoute";
 import SellerRoute from "../components/ProtectedRoute/SellerRoute";
 import UserRoute from "../components/ProtectedRoute/UserRoute";
+import ShopListPage from "../pages/admin/ShopListPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import CreateStorePage from "../pages/seller/CreateStorePage";
@@ -41,7 +42,6 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import ShopListPage from "../pages/admin/ShopListPage";
 
 const router = createBrowserRouter([
   {
