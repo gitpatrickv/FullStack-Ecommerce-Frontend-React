@@ -8,10 +8,10 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import Store from "../../../entities/Store";
 import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import useToggleStoreAndProductListing from "../../../hooks/admin/useToggleStoreAndProductListing";
+import Store from "../../../entities/Store";
+import useSuspendStoreListing from "../../../hooks/admin/useSuspendStoreListing";
 interface Props {
   store: Store;
   onRefetchStore: () => void;
@@ -19,7 +19,7 @@ interface Props {
 
 const ShopList = ({ store, onRefetchStore }: Props) => {
   const navigate = useNavigate();
-  const { mutate: toggleShopListing } = useToggleStoreAndProductListing();
+  const { mutate: toggleShopListing } = useSuspendStoreListing();
   const handleNavigateStorePageClick = () => {
     navigate(`/store/` + store.storeId);
   };

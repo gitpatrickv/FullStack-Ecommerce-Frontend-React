@@ -4,13 +4,13 @@ import { axiosInstance } from "../../services/api-client";
 import { useAuthQueryStore } from "../../store/auth-store";
 
 
-const useToggleStoreAndProductListing = () => {
+const useSuspendStoreListing = () => {
     const queryClient = useQueryClient();
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
     return useMutation(
         async(storeId: string) => {
-            await apiClient.put(`/store/toggle/${storeId}`, {},
+            await apiClient.put(`/store/suspend/${storeId}`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${jwtToken}`,
@@ -29,4 +29,4 @@ const useToggleStoreAndProductListing = () => {
  
 }
 
-export default useToggleStoreAndProductListing
+export default useSuspendStoreListing

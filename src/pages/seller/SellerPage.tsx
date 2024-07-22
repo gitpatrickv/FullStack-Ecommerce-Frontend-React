@@ -122,7 +122,7 @@ const SellerPage = () => {
                   <Text ml="10px">{store?.email}</Text>
                 ) : (
                   <Text ml="10px" color="red">
-                    Account Suspended
+                    Shop Suspended
                   </Text>
                 )}
               </Box>
