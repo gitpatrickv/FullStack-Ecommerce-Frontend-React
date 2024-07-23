@@ -89,7 +89,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
             <Box display="flex" flexDirection="column">
               <Text fontWeight="semibold">Total Products:</Text>
               <Text fontWeight="semibold">Total Orders:</Text>
-              <Text fontWeight="semibold">Shipping Fee:</Text>
+              <Text fontWeight="semibold">Suspended Product:</Text>
             </Box>
             <Box display="flex" flexDirection="column">
               <Text fontWeight="semibold" ml="10px">
@@ -99,7 +99,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
                 {store.orderCount}
               </Text>
               <Text fontWeight="semibold" ml="10px">
-                {store.shippingFee}
+                {store.suspendedCount}
               </Text>
             </Box>
           </Box>

@@ -42,6 +42,7 @@ const useSaveProduct = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['storeProduct']);
         queryClient.invalidateQueries(['productCount']);
+        queryClient.invalidateQueries(['storeInfo']);
         toast({
           position: "top",
           title: "Successfully saved product.",

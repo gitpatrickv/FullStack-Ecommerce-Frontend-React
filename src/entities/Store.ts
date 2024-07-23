@@ -11,4 +11,5 @@ export default interface Store{
     productCount: number;
     orderCount: number;
     online: boolean;
+    suspendedCount: number;
 }

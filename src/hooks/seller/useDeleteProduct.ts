@@ -23,6 +23,7 @@ const useDeleteProduct = () => {
                 queryClient.invalidateQueries(['product']);
                 queryClient.invalidateQueries(['storeProduct']);
                 queryClient.invalidateQueries(['favorites']);
+                queryClient.invalidateQueries(['storeInfo']);
             }
         }
     );
