@@ -160,6 +160,11 @@ const StorePage = () => {
                   onClick={handleSortClick}
                   mr="5px"
                   width="120px"
+                  color={sortBy === "productName" ? "orange.400" : "white.500"}
+                  border={
+                    sortBy === "productName" ? "1px solid orange" : "none"
+                  }
+                  borderRadius="20px"
                   _hover={{ color: "orange.400" }}
                 >
                   Relevance
@@ -169,6 +174,11 @@ const StorePage = () => {
                   onClick={handleSortClick}
                   mr="5px"
                   width="120px"
+                  color={sortBy === "createdDate" ? "orange.400" : "white.500"}
+                  border={
+                    sortBy === "createdDate" ? "1px solid orange" : "none"
+                  }
+                  borderRadius="20px"
                   _hover={{ color: "orange.400" }}
                 >
                   Latest
@@ -176,11 +186,33 @@ const StorePage = () => {
                 <Button
                   value="productSold"
                   onClick={handleSortClick}
+                  mr="5px"
                   width="120px"
+                  color={sortBy === "productSold" ? "orange.400" : "white.500"}
+                  border={
+                    sortBy === "productSold" ? "1px solid orange" : "none"
+                  }
+                  borderRadius="20px"
                   _hover={{ color: "orange.400" }}
                 >
                   Top Sales
                 </Button>
+                {role === "ADMIN" && (
+                  <Button
+                    value="suspended"
+                    onClick={handleSortClick}
+                    width="120px"
+                    color={sortBy === "suspended" ? "orange.400" : "white.500"}
+                    border={
+                      sortBy === "suspended" ? "1px solid orange" : "none"
+                    }
+                    borderRadius="20px"
+                    _hover={{ color: "orange.400" }}
+                  >
+                    Suspended
+                  </Button>
+                )}
+
                 <Spacer />
                 <Text pr="15px" fontSize="medium">
                   <Text as="span" color="orange">

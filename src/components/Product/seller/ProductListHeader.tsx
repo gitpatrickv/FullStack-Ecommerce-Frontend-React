@@ -15,7 +15,7 @@ const ProductListHeader = () => {
     xl: "xl",
   });
   return (
-    <Card padding={2} borderRadius="none">
+    <Card padding={2} borderRadius="none" mb="5px">
       <Grid
         templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`

@@ -102,8 +102,7 @@ const MyProductPage = () => {
     >
       <GridItem area="main">
         <Box mt="20px">
-          <ProductListHeader />
-          <Card mb="5px" borderRadius="none">
+          <Card borderRadius="none">
             <Box padding={5}>
               <Box display="flex" alignItems="center">
                 <Text
@@ -203,6 +202,7 @@ const MyProductPage = () => {
               </Box>
             </Box>
           </Card>
+          <ProductListHeader />
 
           {getAllStoreProducts?.data.allProductModels.length === 0 ? (
             <Card borderRadius="none">

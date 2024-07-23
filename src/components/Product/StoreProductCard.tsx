@@ -49,6 +49,7 @@ const StoreProductCard = ({ product }: Props) => {
           textTransform="capitalize"
           isTruncated={isTruncated}
           whiteSpace="nowrap"
+          color={product.suspended ? "red" : "white.500"}
         >
           {product?.productName}
         </Text>
