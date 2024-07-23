@@ -16,6 +16,7 @@ export default interface AllProductModels {
     productSold: number;
     storePhotoUrl: string;
     listed: boolean;
+    suspended: boolean;
 }
 
 interface PageResponse {

@@ -5,7 +5,7 @@ import { useAuthQueryStore } from "../../store/auth-store";
 const apiClient = axiosInstance;
 
 interface Props {
-    delistedCount: number;
+    suspendedProductCount: number;
 }
 
 const useGetSuspendedProductCount = (storeId: string) => {
@@ -13,7 +13,7 @@ const useGetSuspendedProductCount = (storeId: string) => {
     const jwtToken = authStore.jwtToken;
 
     return useQuery ({
-        queryKey: ['delistedCount'],
+        queryKey: ['suspendedProductCount'],
         queryFn: async () => {
             const {data} = await apiClient.get<Props>(`/product/count/${storeId}`, 
             {

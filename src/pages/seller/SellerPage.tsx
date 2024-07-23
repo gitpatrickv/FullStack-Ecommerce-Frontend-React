@@ -33,7 +33,7 @@ const SellerPage = () => {
   const { data: store } = useGetStoreInfo(jwtToken);
   const { refetch: refetchTotalSales } = useGetTotalSales(store?.storeId || "");
   const { refetch: refetchTodoTotal } = useGetTodoTotal(store?.storeId || "");
-  const { refetch: refetchDelistedCount } = useGetSuspendedProductCount(
+  const { refetch: refetchSuspendedCount } = useGetSuspendedProductCount(
     store?.storeId || ""
   );
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const SellerPage = () => {
     navigate("/seller");
     refetchTotalSales();
     refetchTodoTotal();
-    refetchDelistedCount();
+    refetchSuspendedCount();
   };
 
   const handleStoreInfoNavigateClick = () => {

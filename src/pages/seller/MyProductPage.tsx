@@ -159,6 +159,7 @@ const MyProductPage = () => {
                 </Button>
                 <Button
                   value="true"
+                  mr="5px"
                   onClick={handleSortClick}
                   width="120px"
                   color={sortBy === "true" ? "orange.400" : "white.500"}
@@ -167,6 +168,17 @@ const MyProductPage = () => {
                   borderRadius="20px"
                 >
                   Delisted
+                </Button>
+                <Button
+                  value="suspended"
+                  onClick={handleSortClick}
+                  width="120px"
+                  color={sortBy === "suspended" ? "orange.400" : "white.500"}
+                  border={sortBy === "suspended" ? "1px solid orange" : "none"}
+                  _hover={{ color: "orange.400" }}
+                  borderRadius="20px"
+                >
+                  Suspended
                 </Button>
                 <Spacer />
                 <Box

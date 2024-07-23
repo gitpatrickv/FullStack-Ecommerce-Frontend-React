@@ -22,7 +22,7 @@ const useSuspendProduct = () => {
                 queryClient.invalidateQueries(['storeProduct']);
                 queryClient.invalidateQueries(['product']);
                 queryClient.invalidateQueries(['productDetail']);
-                queryClient.invalidateQueries(['delistedCount']);
+                queryClient.invalidateQueries(['suspendedProductCount']);
                 queryClient.invalidateQueries(['storeInfo']);
             }
         },

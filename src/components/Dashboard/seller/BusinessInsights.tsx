@@ -25,7 +25,7 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
   });
 
   const { data: totalSales } = useGetTotalSales(storeId);
-  const { data: delistedCount } = useGetSuspendedProductCount(storeId);
+  const { data: suspendedProductCount } = useGetSuspendedProductCount(storeId);
 
   return (
     <Card mt="5px">
@@ -96,14 +96,14 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
             <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
-                  {delistedCount?.delistedCount ?? 0}
+                  {suspendedProductCount?.suspendedProductCount ?? 0}
                 </Text>
                 <Text
                   fontSize={fontSize}
                   fontWeight="semibold"
                   whiteSpace="nowrap"
                 >
-                  Delisted Products
+                  Suspended Product(s)
                 </Text>
               </Box>
             </Box>

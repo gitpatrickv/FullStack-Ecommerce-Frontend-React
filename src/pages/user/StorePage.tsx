@@ -213,7 +213,7 @@ const StorePage = () => {
                   ))}
                 {getAllStoreProducts?.data.allProductModels.map(
                   (product) =>
-                    (role === "ADMIN" || product.listed) && (
+                    (role === "ADMIN" || !product.suspended) && (
                       <ProductCardContainer key={product.productId}>
                         <StoreProductCard product={product} />
                       </ProductCardContainer>

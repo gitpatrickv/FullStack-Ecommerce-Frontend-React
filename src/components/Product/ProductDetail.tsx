@@ -489,16 +489,18 @@ const ProductDetail = ({ product }: Props) => {
                     {role === "ADMIN" ? (
                       <Button
                         mt="4"
-                        bg={product.listed === true ? "red.500" : "orange.500"}
+                        bg={
+                          product.suspended === true ? "orange.500" : "red.500"
+                        }
                         _hover={
-                          product.listed === true
-                            ? { bg: "red.600" }
-                            : { bg: "orange.600" }
+                          product.suspended === true
+                            ? { bg: "orange.600" }
+                            : { bg: "red.600" }
                         }
                         onClick={handleSuspendProductClick}
                         width="100px"
                       >
-                        {product.listed === true ? "Suspend" : "Activate"}
+                        {product.suspended === true ? "Activate" : "Suspend"}
                       </Button>
                     ) : (
                       <>

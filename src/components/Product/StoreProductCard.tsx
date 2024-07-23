@@ -35,7 +35,7 @@ const StoreProductCard = ({ product }: Props) => {
   };
   const isTruncated = useBreakpointValue({ base: true });
 
-  if (role !== "ADMIN" && !product.listed) {
+  if (role !== "ADMIN" && product.suspended) {
     return null;
   }
 
