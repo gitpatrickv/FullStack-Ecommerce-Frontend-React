@@ -19,11 +19,12 @@ import ColorModeSwitch from "../../components/ColorModeSwitch";
 import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 import ToDoList from "../../components/Dashboard/seller/ToDoList";
 
+import Sidebar from "../../components/Sidebar/seller/Sidebar";
+import useGetSuspendedProductCount from "../../hooks/admin/useGetSuspendedProductCount";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
 import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
 import { useAuthQueryStore } from "../../store/auth-store";
-import Sidebar from "../../components/Sidebar/seller/Sidebar";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
@@ -32,6 +33,9 @@ const SellerPage = () => {
   const { data: store } = useGetStoreInfo(jwtToken);
   const { refetch: refetchTotalSales } = useGetTotalSales(store?.storeId || "");
   const { refetch: refetchTodoTotal } = useGetTodoTotal(store?.storeId || "");
+  const { refetch: refetchDelistedCount } = useGetSuspendedProductCount(
+    store?.storeId || ""
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -44,6 +48,7 @@ const SellerPage = () => {
     navigate("/seller");
     refetchTotalSales();
     refetchTodoTotal();
+    refetchDelistedCount();
   };
 
   const handleStoreInfoNavigateClick = () => {

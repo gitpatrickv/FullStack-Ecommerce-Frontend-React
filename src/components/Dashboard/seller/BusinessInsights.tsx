@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import useGetTotalSales from "../../../hooks/seller/useGetTotalSales";
 import { formatCurrency } from "../../../utilities/formatCurrency";
+import useGetSuspendedProductCount from "../../../hooks/admin/useGetSuspendedProductCount";
 
 interface Props {
   orderCount: number;
@@ -24,15 +25,17 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
   });
 
   const { data: totalSales } = useGetTotalSales(storeId);
+  const { data: delistedCount } = useGetSuspendedProductCount(storeId);
+
   return (
     <Card mt="5px">
       <CardBody>
         <Grid
           templateRows="0.3fr 0.7fr"
-          templateColumns="0.350fr 0.3fr 0.3fr "
+          templateColumns="0.3fr 0.3fr 0.3fr 0.3fr"
           templateAreas={`
-      "header header header header header"
-      "content1 content2 content3 content4 content5"
+      "header header header header"
+      "content1 content2 content3 content4"
   `}
           gap={4}
           p={3}
@@ -85,6 +88,22 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
                   whiteSpace="nowrap"
                 >
                   Products
+                </Text>
+              </Box>
+            </Box>
+          </GridItem>
+          <GridItem area="content4">
+            <Box display="flex" justifyContent="center" userSelect="none">
+              <Box display="flex" flexDirection="column" textAlign="center">
+                <Text color="blue.500" fontSize="lg" fontWeight="semibold">
+                  {delistedCount?.delistedCount ?? 0}
+                </Text>
+                <Text
+                  fontSize={fontSize}
+                  fontWeight="semibold"
+                  whiteSpace="nowrap"
+                >
+                  Delisted Products
                 </Text>
               </Box>
             </Box>
