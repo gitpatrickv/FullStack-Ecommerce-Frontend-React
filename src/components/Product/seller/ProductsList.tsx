@@ -120,18 +120,23 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               src={product.photoUrl}
               w={{ base: "40px", md: "80px", lg: "100px" }}
               h={{ base: "40px", md: "60px", lg: "80px" }}
-              cursor="pointer"
               border="1px solid"
             />
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              textTransform="capitalize"
-              cursor="pointer"
-              pl="20px"
-            >
-              {product.productName}
-            </Text>
+            <Box display="flex" flexDirection="column">
+              <Text
+                fontSize={fontSize}
+                fontWeight="semibold"
+                textTransform="capitalize"
+                pl="20px"
+              >
+                {product.productName}
+              </Text>
+              {product.listed === false && (
+                <Text ml="20px" color="red">
+                  Delisted
+                </Text>
+              )}
+            </Box>
           </Box>
         </GridItem>
         <GridItem

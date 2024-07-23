@@ -6,6 +6,7 @@ import {
   Grid,
   GridItem,
   HStack,
+  Spacer,
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -28,16 +29,20 @@ const MyProductPage = () => {
     const pageFromUrl = params.get("pageNo");
     return pageFromUrl ? parseInt(pageFromUrl, 10) : 1;
   };
-
+  const [sortBy, setSortBy] = useState("");
   const [page, setPage] = useState(getPageFromUrl);
-  const pageSize = 30;
+  const pageSize = 10;
 
   const { data: getAllStoreProducts, refetch: refetchProducts } =
     useGetAllSellersProduct({
       jwtToken: jwtToken,
       pageNo: page,
       pageSize,
+      sortBy: sortBy,
     });
+  const cPage = getAllStoreProducts?.data.pageResponse.pageNo ?? 0;
+  const currentPage = cPage + 1;
+  const totalPages = getAllStoreProducts?.data.pageResponse.totalPages ?? 0;
   const isLastPage = getAllStoreProducts?.data.pageResponse.last ?? false;
   const totalElements =
     getAllStoreProducts?.data.pageResponse.totalElements ?? 0;
@@ -80,6 +85,14 @@ const MyProductPage = () => {
     }
   }
 
+  const handleSortClick = (event: any) => {
+    setSortBy(event.target.value);
+    setPage(1);
+    navigate(
+      `/seller/product?pageNo=1&pageSize=${pageSize}&sortBy=${event.target.value}`
+    );
+  };
+
   return (
     <Grid
       templateColumns="1fr"
@@ -90,6 +103,94 @@ const MyProductPage = () => {
       <GridItem area="main">
         <Box mt="20px">
           <ProductListHeader />
+          <Card mb="5px" borderRadius="none">
+            <Box padding={5}>
+              <Box display="flex" alignItems="center">
+                <Text
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  pr="20px"
+                  pl="5px"
+                  whiteSpace="nowrap"
+                >
+                  Sort By
+                </Text>
+                <Button
+                  value="productSold"
+                  onClick={handleSortClick}
+                  mr="5px"
+                  width="120px"
+                  color={sortBy === "productSold" ? "orange.400" : "white.500"}
+                  border={
+                    sortBy === "productSold" ? "1px solid orange" : "none"
+                  }
+                  _hover={{ color: "orange.400" }}
+                  borderRadius="20px"
+                >
+                  Top Sales
+                </Button>
+                <Button
+                  value="lowProductSold"
+                  onClick={handleSortClick}
+                  mr="5px"
+                  width="120px"
+                  color={
+                    sortBy === "lowProductSold" ? "orange.400" : "white.500"
+                  }
+                  border={
+                    sortBy === "lowProductSold" ? "1px solid orange" : "none"
+                  }
+                  _hover={{ color: "orange.400" }}
+                  borderRadius="20px"
+                >
+                  Low Sales
+                </Button>
+                <Button
+                  value="false"
+                  onClick={handleSortClick}
+                  mr="5px"
+                  width="120px"
+                  color={sortBy === "false" ? "orange.400" : "white.500"}
+                  border={sortBy === "false" ? "1px solid orange" : "none"}
+                  _hover={{ color: "orange.400" }}
+                  borderRadius="20px"
+                >
+                  Listed
+                </Button>
+                <Button
+                  value="true"
+                  onClick={handleSortClick}
+                  width="120px"
+                  color={sortBy === "true" ? "orange.400" : "white.500"}
+                  border={sortBy === "true" ? "1px solid orange" : "none"}
+                  _hover={{ color: "orange.400" }}
+                  borderRadius="20px"
+                >
+                  Delisted
+                </Button>
+                <Spacer />
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  ml="100px"
+                >
+                  <Text pr="15px" fontSize="medium">
+                    <Text as="span" color="orange">
+                      {currentPage}
+                    </Text>
+                    /{totalPages}
+                  </Text>
+                  <Button mr="2px" onClick={() => handlePageChange("&lsaquo;")}>
+                    &lsaquo;
+                  </Button>
+                  <Button onClick={() => handlePageChange("&rsaquo;")}>
+                    &rsaquo;
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </Card>
 
           {getAllStoreProducts?.data.allProductModels.length === 0 ? (
             <Card borderRadius="none">
