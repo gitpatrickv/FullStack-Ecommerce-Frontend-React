@@ -36,6 +36,7 @@ import useUpdateProductInfo, {
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
+import useDelistProduct from "../../../hooks/seller/useDelistProduct";
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -46,6 +47,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
+  const { mutate: delistProduct } = useDelistProduct();
   const cancelRef = useRef<HTMLButtonElement>(null);
   const { onSubmit } = useUpdateProductInfo(product.productId);
   const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
@@ -73,6 +75,12 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
     onClose: deleteOnClose,
   } = useDisclosure();
 
+  const {
+    isOpen: delistIsOpen,
+    onOpen: delistOnOpen,
+    onClose: delistOnClose,
+  } = useDisclosure();
+
   const handleProductInfoSubmit = async (data: {
     productName: string;
     productDescription: string;
@@ -98,6 +106,15 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
         },
       }
     );
+  };
+
+  const handleDelistProductClick = () => {
+    delistProduct(product.productId, {
+      onSuccess: () => {
+        refetchProducts();
+        delistOnClose();
+      },
+    });
   };
 
   return (
@@ -138,7 +155,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               )}
               {product.listed === false && (
                 <Text ml="20px" color="red">
-                  Delisted
+                  {product.suspended ? "" : "Delisted"}
                 </Text>
               )}
             </Box>
@@ -194,48 +211,44 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           area="content5"
           display="flex"
           alignItems="center"
-          justifyContent="flex-end"
+          justifyContent="center"
         >
-          <Box display="flex" flexDirection="column" justifyContent="flex-end">
-            <Box
-              mb="5px"
-              height="35px"
-              width="100px"
-              border="1px solid"
-              borderColor="gray.600"
-              textAlign="center"
-              cursor="pointer"
-              userSelect="none"
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Button
+              variant="link"
+              mb="10px"
+              fontWeight="semibold"
               _hover={{
-                borderColor: "orange.500",
-                transform: "scale(1.03)",
-                transition: "transform .15s ease-in",
+                color: "orange.400",
               }}
               onClick={updateOnOpen}
+              isDisabled={product.suspended ? true : false}
             >
-              <Text position="relative" top="4px">
-                Update
-              </Text>
-            </Box>
-            <Box
-              height="35px"
-              width="100px"
-              border="1px solid"
-              borderColor="gray.600"
-              textAlign="center"
-              cursor="pointer"
-              userSelect="none"
+              Update
+            </Button>
+            <Button
+              variant="link"
+              mb="10px"
+              fontWeight="semibold"
               _hover={{
-                borderColor: "orange.500",
-                transform: "scale(1.03)",
-                transition: "transform .15s ease-in",
+                color: "orange.400",
               }}
               onClick={deleteOnOpen}
+              isDisabled={product.suspended ? true : false}
             >
-              <Text position="relative" top="4px">
-                Delete
-              </Text>
-            </Box>
+              Delete
+            </Button>
+            <Button
+              variant="link"
+              fontWeight="semibold"
+              _hover={{
+                color: "orange.400",
+              }}
+              onClick={delistOnOpen}
+              isDisabled={product.suspended ? true : false}
+            >
+              {product.listed ? "Delist" : "Relist"}
+            </Button>
           </Box>
         </GridItem>
       </Grid>
@@ -469,6 +482,43 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
             </ModalContent>
           </form>
         </Modal>
+      </Box>
+      <Box>
+        <AlertDialog
+          isOpen={delistIsOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={delistOnClose}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                <Text color="orange.400" fontSize="large">
+                  Do you want to {product.listed ? "delist" : "relist"} this
+                  item?
+                </Text>
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                <Text textTransform="capitalize">{product.productName}</Text>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={delistOnClose}>
+                  Cancel
+                </Button>
+                <Button
+                  bg="red.500"
+                  _hover={{ bg: "red.600" }}
+                  onClick={handleDelistProductClick}
+                  ml={3}
+                >
+                  Confirm
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </Box>
     </Card>
   );

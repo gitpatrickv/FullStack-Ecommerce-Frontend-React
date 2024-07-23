@@ -81,8 +81,7 @@ const ProductListHeader = () => {
           area="content5"
           display="flex"
           alignItems="center"
-          justifyContent="flex-end"
-          mr="25px"
+          justifyContent="center"
         >
           <Text fontSize={fontSize} fontWeight="semibold" color="orange.400">
             Action

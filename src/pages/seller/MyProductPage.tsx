@@ -145,18 +145,6 @@ const MyProductPage = () => {
                   Low Sales
                 </Button>
                 <Button
-                  value="false"
-                  onClick={handleSortClick}
-                  mr="5px"
-                  width="120px"
-                  color={sortBy === "false" ? "orange.400" : "white.500"}
-                  border={sortBy === "false" ? "1px solid orange" : "none"}
-                  _hover={{ color: "orange.400" }}
-                  borderRadius="20px"
-                >
-                  Listed
-                </Button>
-                <Button
                   value="true"
                   mr="5px"
                   onClick={handleSortClick}
