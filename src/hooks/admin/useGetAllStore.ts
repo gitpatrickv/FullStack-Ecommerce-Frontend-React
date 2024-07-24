@@ -6,18 +6,21 @@ import { useAuthQueryStore } from "../../store/auth-store";
 
 const apiClient = axiosInstance;
 
-export const useGetAllStore = () => {
+export const useGetAllStore = (sortBy: string) => {
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
 
     return useQuery ({
-        queryKey: ['storeList'],
+        queryKey: ['storeList', sortBy],
         queryFn: async () => {
             const {data} = await apiClient.get<Store[]>(`/store/list`, 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,
-                }
+                },  
+                params: {
+                    sortBy: sortBy
+                },
             }) 
             return data;
         },
