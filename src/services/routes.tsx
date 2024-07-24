@@ -27,17 +27,22 @@ import MyPurchasePage from "../pages/user/MyPurchasePage";
 import ProductCategoryPage from "../pages/user/ProductCategoryPage";
 import ProductDetailPage from "../pages/user/ProductDetailPage";
 
+import AdminRoute from "../components/ProtectedRoute/AdminRoute";
+import SellerRoute from "../components/ProtectedRoute/SellerRoute";
+import UserRoute from "../components/ProtectedRoute/UserRoute";
+import ShopListPage from "../pages/admin/ShopListPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import CreateStorePage from "../pages/seller/CreateStorePage";
+import ReviewManagementPage from "../pages/seller/ReviewManagementPage";
+import StoreInformationPage from "../pages/seller/StoreInformationPage";
 import { SearchPage } from "../pages/user/SearchPage";
 import StorePage from "../pages/user/StorePage";
 import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import StoreInformationPage from "../pages/seller/StoreInformationPage";
-import ReviewManagementPage from "../pages/seller/ReviewManagementPage";
+import UserListPage from "../pages/admin/UserListPage";
 
 const router = createBrowserRouter([
   {
@@ -49,20 +54,41 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: `/api/product/:productId`, element: <ProductDetailPage /> },
-      { path: "/cart", element: <CartPage /> },
-      { path: "/checkout", element: <CheckoutPage /> },
-      { path: "/search", element: <SearchPage /> },
       { path: "/daily_discover", element: <DailyDiscoverPage /> },
-      { path: "/store/:storeId", element: <StorePage /> },
       {
         path: "/category/:categoryId",
         element: <ProductCategoryPage />,
       },
+      { path: "/store/:storeId", element: <StorePage /> },
+      { path: "/search", element: <SearchPage /> },
+      {
+        path: "/cart",
+        element: (
+          <UserRoute>
+            <CartPage />
+          </UserRoute>
+        ),
+      },
+      {
+        path: "/checkout",
+        element: (
+          <UserRoute>
+            <CheckoutPage />
+          </UserRoute>
+        ),
+      },
       {
         path: "user",
-        element: <UserPage />,
+        element: (
+          <UserRoute>
+            <UserPage />
+          </UserRoute>
+        ),
         children: [
-          { path: "account/profile", element: <AccountProfilePage /> },
+          {
+            path: "account/profile",
+            element: <AccountProfilePage />,
+          },
           { path: "account/password", element: <ChangePasswordPage /> },
           { path: "favorites", element: <FavoritePage /> },
           {
@@ -85,7 +111,11 @@ const router = createBrowserRouter([
 
   {
     path: "/seller",
-    element: <SellerPage />,
+    element: (
+      <SellerRoute>
+        <SellerPage />
+      </SellerRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -112,13 +142,25 @@ const router = createBrowserRouter([
   },
   {
     path: "/seller/store/create",
-    element: <CreateStorePage />,
+    element: (
+      <SellerRoute>
+        <CreateStorePage />
+      </SellerRoute>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/admin",
-    element: <AdminPage />,
+    element: (
+      <AdminRoute>
+        <AdminPage />
+      </AdminRoute>
+    ),
     errorElement: <ErrorPage />,
+    children: [
+      { path: "shop/list", element: <ShopListPage /> },
+      { path: "user/list", element: <UserListPage /> },
+    ],
   },
 ]);
 

@@ -10,4 +10,5 @@ export default interface Store{
     photoUrl: string;
     productCount: number;
     orderCount: number;
+    online: boolean;
 }

@@ -7,12 +7,12 @@ export default interface Product {
     productName: string;
     productDescription: string;
     productImage: string[];
-    price: number;
-    quantity: number;
     storeId: string;
     inventoryModels: Inventory[];
     inventoryId: number;
     categoryId: string;
     productSold: number;
     storePhotoUrl: string;
+    listed: boolean;
+    suspended: boolean;
 }

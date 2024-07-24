@@ -17,7 +17,7 @@ const useLogin = () => {
   const { register, handleSubmit } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {setJwtToken} = useAuthQueryStore();
+  const {setJwtToken, setRole} = useAuthQueryStore();
   
   const mutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("/user/login", data)
@@ -45,7 +45,9 @@ const useLogin = () => {
       queryClient.invalidateQueries(['categoryProduct'])
       queryClient.invalidateQueries(['manageProductReview'])
       queryClient.invalidateQueries(['todoTotal'])
+      queryClient.invalidateQueries(['userCount'])
       const role = response.role;
+      setRole(role);
       if(role==="ADMIN"){
         navigate("/admin");
       }

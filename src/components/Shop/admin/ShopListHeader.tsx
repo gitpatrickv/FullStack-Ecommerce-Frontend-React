@@ -7,7 +7,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-const ReviewManagementHeader = () => {
+const ShopListHeader = () => {
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
@@ -20,19 +20,13 @@ const ReviewManagementHeader = () => {
         templateColumns="0.2fr 1fr 0.2fr"
         templateAreas={`
 
-  "asideLeft content1 asideRight"
+"asideLeft content1 asideRight"
 `}
       >
         <GridItem area="asideLeft" height="50px">
-          <Box
-            mt="10px"
-            ml="10px"
-            display="flex"
-            justifyContent="center"
-            width="260px"
-          >
+          <Box mt="10px" display="flex" justifyContent="center" width="260px">
             <Text fontSize={fontSize} fontWeight="semibold" whiteSpace="nowrap">
-              Product Information
+              Performance Metrics
             </Text>
           </Box>
         </GridItem>
@@ -44,7 +38,7 @@ const ReviewManagementHeader = () => {
               mt="10px"
               whiteSpace="nowrap"
             >
-              Buyer's Review
+              Shop Information
             </Text>
           </Box>
         </GridItem>
@@ -60,4 +54,4 @@ const ReviewManagementHeader = () => {
   );
 };
 
-export default ReviewManagementHeader;
+export default ShopListHeader;

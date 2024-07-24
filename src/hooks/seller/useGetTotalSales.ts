@@ -13,7 +13,7 @@ const useGetTotalSales = (storeId: string) => {
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
     return useQuery ({
-        queryKey: ['totalSales'],
+        queryKey: ['totalSales', storeId],
         queryFn: async () => {
             const {data} = await apiClient.get<Props>(`/order/get/sales/total/${storeId}`, 
             {

@@ -36,7 +36,7 @@ import useUpdateProductInfo, {
 import { useAuthQueryStore } from "../../../store/auth-store";
 import { formatCurrency } from "../../../utilities/formatCurrency";
 import InventoryList from "../../Inventory/InventoryList";
-import useGetTotalUserRating from "../../../hooks/user/useGetTotalUserRating";
+import useDelistProduct from "../../../hooks/seller/useDelistProduct";
 interface Props {
   product: AllProductModels;
   refetchProducts: () => void;
@@ -47,8 +47,8 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
   const { mutate: deleteProduct } = useDeleteProduct();
+  const { mutate: delistProduct } = useDelistProduct();
   const cancelRef = useRef<HTMLButtonElement>(null);
-  const { data: rating } = useGetTotalUserRating(product.productId);
   const { onSubmit } = useUpdateProductInfo(product.productId);
   const { register, handleSubmit } = useForm<UpdateProductInfoProps>({
     defaultValues: {
@@ -73,6 +73,12 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
     isOpen: deleteIsOpen,
     onOpen: deleteOnOpen,
     onClose: deleteOnClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: delistIsOpen,
+    onOpen: delistOnOpen,
+    onClose: delistOnClose,
   } = useDisclosure();
 
   const handleProductInfoSubmit = async (data: {
@@ -102,12 +108,21 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
     );
   };
 
+  const handleDelistProductClick = () => {
+    delistProduct(product.productId, {
+      onSuccess: () => {
+        refetchProducts();
+        delistOnClose();
+      },
+    });
+  };
+
   return (
     <Card mb="5px" padding={2} borderRadius="none">
       <Grid
-        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr"
+        templateColumns="1fr 0.3fr 0.3fr 0.3fr 0.3fr"
         templateAreas={`
-  "content1 rating content2 content3 content4 content5"
+  "content1 content2 content3 content4 content5"
 `}
         gap={4}
         p={3}
@@ -122,30 +137,28 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               src={product.photoUrl}
               w={{ base: "40px", md: "80px", lg: "100px" }}
               h={{ base: "40px", md: "60px", lg: "80px" }}
-              cursor="pointer"
               border="1px solid"
             />
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              textTransform="capitalize"
-              cursor="pointer"
-              pl="20px"
-            >
-              {product.productName}
-            </Text>
-          </Box>
-        </GridItem>
-        <GridItem
-          area="rating"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Box minWidth="60px" display="flex" justifyContent="center">
-            <Text fontSize={fontSize} fontWeight="semibold">
-              {rating?.ratingAverage || 0}
-            </Text>
+            <Box display="flex" flexDirection="column">
+              <Text
+                fontSize={fontSize}
+                fontWeight="semibold"
+                textTransform="capitalize"
+                pl="20px"
+              >
+                {product.productName}
+              </Text>
+              {product.suspended === true && (
+                <Text ml="20px" color="red">
+                  Suspended
+                </Text>
+              )}
+              {product.listed === false && (
+                <Text ml="20px" color="red">
+                  {product.suspended ? "" : "Delisted"}
+                </Text>
+              )}
+            </Box>
           </Box>
         </GridItem>
         <GridItem
@@ -198,48 +211,44 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
           area="content5"
           display="flex"
           alignItems="center"
-          justifyContent="flex-end"
+          justifyContent="center"
         >
-          <Box display="flex" flexDirection="column" justifyContent="flex-end">
-            <Box
-              mb="5px"
-              height="35px"
-              width="100px"
-              border="1px solid"
-              borderColor="gray.600"
-              textAlign="center"
-              cursor="pointer"
-              userSelect="none"
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Button
+              variant="link"
+              mb="10px"
+              fontWeight="semibold"
               _hover={{
-                borderColor: "orange.500",
-                transform: "scale(1.03)",
-                transition: "transform .15s ease-in",
+                color: "orange.400",
               }}
               onClick={updateOnOpen}
+              isDisabled={product.suspended ? true : false}
             >
-              <Text position="relative" top="4px">
-                Update
-              </Text>
-            </Box>
-            <Box
-              height="35px"
-              width="100px"
-              border="1px solid"
-              borderColor="gray.600"
-              textAlign="center"
-              cursor="pointer"
-              userSelect="none"
+              Update
+            </Button>
+            <Button
+              variant="link"
+              mb="10px"
+              fontWeight="semibold"
               _hover={{
-                borderColor: "orange.500",
-                transform: "scale(1.03)",
-                transition: "transform .15s ease-in",
+                color: "orange.400",
               }}
               onClick={deleteOnOpen}
+              isDisabled={product.suspended ? true : false}
             >
-              <Text position="relative" top="4px">
-                Delete
-              </Text>
-            </Box>
+              Delete
+            </Button>
+            <Button
+              variant="link"
+              fontWeight="semibold"
+              _hover={{
+                color: "orange.400",
+              }}
+              onClick={delistOnOpen}
+              isDisabled={product.suspended ? true : false}
+            >
+              {product.listed ? "Delist" : "Relist"}
+            </Button>
           </Box>
         </GridItem>
       </Grid>
@@ -323,7 +332,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                       </Text>
                     </GridItem>
                     <GridItem area="content3">
-                      {product.inventoryModels[0].colors ? (
+                      {product.inventoryModels[0].colors && (
                         <Text
                           fontSize="md"
                           fontWeight="semibold"
@@ -332,12 +341,10 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                         >
                           Variants
                         </Text>
-                      ) : (
-                        ""
                       )}
                     </GridItem>
                     <GridItem area="content4">
-                      {product.inventoryModels[0].sizes ? (
+                      {product.inventoryModels[0].sizes && (
                         <Text
                           fontSize="md"
                           fontWeight="semibold"
@@ -346,8 +353,6 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                         >
                           Size
                         </Text>
-                      ) : (
-                        ""
                       )}
                     </GridItem>
                     <GridItem area="content5" ml="55px">
@@ -477,6 +482,43 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
             </ModalContent>
           </form>
         </Modal>
+      </Box>
+      <Box>
+        <AlertDialog
+          isOpen={delistIsOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={delistOnClose}
+          isCentered
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                <Text color="orange.400" fontSize="large">
+                  Do you want to {product.listed ? "delist" : "relist"} this
+                  item?
+                </Text>
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                <Text textTransform="capitalize">{product.productName}</Text>
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={delistOnClose}>
+                  Cancel
+                </Button>
+                <Button
+                  bg="red.500"
+                  _hover={{ bg: "red.600" }}
+                  onClick={handleDelistProductClick}
+                  ml={3}
+                >
+                  Confirm
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </Box>
     </Card>
   );

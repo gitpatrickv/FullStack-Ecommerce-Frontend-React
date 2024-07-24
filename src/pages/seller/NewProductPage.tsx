@@ -158,9 +158,7 @@ const NewProductPage = () => {
                       {isColorsAndSizes ? (
                         <>
                           <Select
-                            {...register(`inventoryModels.${index}.colors`, {
-                              required: true,
-                            })}
+                            {...register(`inventoryModels.${index}.colors`)}
                           >
                             {colors.map((value, index) => (
                               <option key={index} value={value}>
@@ -169,9 +167,7 @@ const NewProductPage = () => {
                             ))}
                           </Select>
                           <Select
-                            {...register(`inventoryModels.${index}.sizes`, {
-                              required: true,
-                            })}
+                            {...register(`inventoryModels.${index}.sizes`)}
                           >
                             {sizes.map((value, index) => (
                               <option key={index} value={value}>
@@ -184,15 +180,11 @@ const NewProductPage = () => {
                         <>
                           <Input
                             placeholder="Variation"
-                            {...register(`inventoryModels.${index}.colors`, {
-                              required: true,
-                            })}
+                            {...register(`inventoryModels.${index}.colors`)}
                           />
                           <Input
                             placeholder="Size"
-                            {...register(`inventoryModels.${index}.sizes`, {
-                              required: true,
-                            })}
+                            {...register(`inventoryModels.${index}.sizes`)}
                           />
                         </>
                       )}
@@ -267,7 +259,7 @@ const NewProductPage = () => {
               <Box display="flex" flexDirection="column">
                 <Box display="flex" alignItems="center" mb="15px" mt="20px">
                   <IoMdImages size="30px" />
-                  <Text ml="10px">Upload Product Images (Max Limit: 4)</Text>
+                  <Text ml="10px">Upload Product Images (Max Limit: 6)</Text>
                 </Box>
                 <input
                   type="file"
@@ -277,8 +269,8 @@ const NewProductPage = () => {
                     required: true,
                     validate: {
                       maxFiles: (files) =>
-                        files.length <= 4 ||
-                        "You can only upload a maximum of 4 images.",
+                        files.length <= 6 ||
+                        "You can only upload a maximum of 6 images.",
                     },
                   })}
                 />

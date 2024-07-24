@@ -18,7 +18,9 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
 import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 import ToDoList from "../../components/Dashboard/seller/ToDoList";
-import Sidebar from "../../components/Sidebar/Sidebar";
+
+import Sidebar from "../../components/Sidebar/seller/Sidebar";
+import useGetSuspendedProductCount from "../../hooks/admin/useGetSuspendedProductCount";
 import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
 import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
@@ -31,6 +33,9 @@ const SellerPage = () => {
   const { data: store } = useGetStoreInfo(jwtToken);
   const { refetch: refetchTotalSales } = useGetTotalSales(store?.storeId || "");
   const { refetch: refetchTodoTotal } = useGetTodoTotal(store?.storeId || "");
+  const { refetch: refetchSuspendedCount } = useGetSuspendedProductCount(
+    store?.storeId || ""
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,6 +48,7 @@ const SellerPage = () => {
     navigate("/seller");
     refetchTotalSales();
     refetchTodoTotal();
+    refetchSuspendedCount();
   };
 
   const handleStoreInfoNavigateClick = () => {
@@ -117,7 +123,13 @@ const SellerPage = () => {
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
-                <Text ml="10px">{store?.email}</Text>
+                {store?.online === true ? (
+                  <Text ml="10px">{store?.email}</Text>
+                ) : (
+                  <Text ml="10px" color="red">
+                    Shop Suspended
+                  </Text>
+                )}
               </Box>
             </Box>
           </CardBody>

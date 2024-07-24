@@ -15,6 +15,8 @@ export default interface AllProductModels {
     inventoryModels: Inventory[];
     productSold: number;
     storePhotoUrl: string;
+    listed: boolean;
+    suspended: boolean;
 }
 
 interface PageResponse {
@@ -25,7 +27,19 @@ interface PageResponse {
     last: boolean;
 }
 
+interface StoreInfo {
+    storeName: string;
+    storePhotoUrl: string;
+    online: boolean;
+}
+
 export default interface AllProductsResponse {
     allProductModels: AllProductModels[];
+    pageResponse: PageResponse;
+}
+
+export default interface StoreResponse {
+    allProductModels: AllProductModels[];
+    storeInfo: StoreInfo;
     pageResponse: PageResponse;
 }

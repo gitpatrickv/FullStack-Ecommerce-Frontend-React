@@ -1,106 +1,138 @@
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardBody,
+  Grid,
+  GridItem,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from "@chakra-ui/react";
+import { useQueryClient } from "@tanstack/react-query";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import ColorModeSwitch from "../../components/ColorModeSwitch";
+import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
+import { useAuthQueryStore } from "../../store/auth-store";
+import Metrics from "../../components/Dashboard/admin/Metrics";
 
 const AdminPage = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { logout, authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+
+  const handleLogout = () => {
+    logout(navigate);
+    queryClient.setQueryData(["user"], null);
+  };
   return (
     <Grid
-      height="100vh"
       templateColumns="0.2fr 1fr 0.2fr"
-      templateRows="0.1fr 1fr"
+      templateRows="100px 1fr"
       templateAreas={`
-        "header header header"
-
-        "sidebar content1 sidebar1"
-
-      `}
+    "header header header"
+    "sidebar content1 sidebar1"
+  `}
     >
-      <GridItem area="sidebar">
-        <Box bg="gray" height="100%">
-          Sidebar
-        </Box>
-      </GridItem>
       <GridItem area="header">
-        <Box bg="maroon" height="100%">
-          header
+        <Card borderRadius="none">
+          <CardBody>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Link to="/admin">
+                <Box ml="20px" display="flex">
+                  <Text
+                    fontSize="x-large"
+                    textTransform="uppercase"
+                    fontWeight="semibold"
+                    color="orange.400"
+                    cursor="pointer"
+                    userSelect="none"
+                  >
+                    HOME
+                  </Text>
+                </Box>
+              </Link>
+              <Box display="flex" alignItems="center" mr="20px">
+                <Menu>
+                  <MenuButton
+                    mr="10px"
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<RxHamburgerMenu size="22px" />}
+                    variant="outline"
+                    size="sm"
+                  />
+                  <MenuList>
+                    <MenuItem>
+                      <ColorModeSwitch />
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={
+                      <Avatar
+                        src={
+                          "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
+                        }
+                        size="sm"
+                      />
+                    }
+                    variant="none"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
+            </Box>
+          </CardBody>
+        </Card>
+      </GridItem>
+
+      <GridItem area="sidebar">
+        <Box mt="15px" ml="10px" minWidth="200px">
+          <SidebarAdmin />
         </Box>
       </GridItem>
 
       <GridItem area="sidebar1">
-        <Box bg="orange" height="100%">
-          Sidebar 1
-        </Box>
+        <Box mt="15px" ml="10px" width="200px"></Box>
       </GridItem>
+
       <GridItem area="content1">
-        <Box bg="red" height="100%">
-          Content 1
-        </Box>
+        {location.pathname === "/admin" ? (
+          <Grid
+            templateColumns="1fr"
+            templateAreas={`
+          "content1"
+          `}
+            gap={4}
+            p={3}
+          >
+            <GridItem area="content1">
+              <Metrics />
+            </GridItem>
+          </Grid>
+        ) : (
+          <Box>
+            <Outlet />
+          </Box>
+        )}
       </GridItem>
     </Grid>
   );
 };
 
 export default AdminPage;
-
-{
-  /* <Grid
-height="100vh"
-templateColumns="0.4fr 1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.4fr"
-templateRows="0.2fr 0.3fr 3fr 0.3fr"
-templateAreas={`
-  "sidebar header header header header header sidebar1"
-  "sidebar nav nav nav nav nav sidebar1"
-  "sidebar content1 content2 content3 content4 content5 sidebar1"
-  "sidebar footer footer footer footer footer sidebar1"
-`}
->
-<GridItem area="sidebar">
-  <Box bg="gray" height="100%">
-    Sidebar
-  </Box>
-</GridItem>
-<GridItem area="header">
-  <Box bg="maroon" height="100%">
-    header
-  </Box>
-</GridItem>
-<GridItem area="nav">
-  <Box bg="blue" height="100%">
-    Nav
-  </Box>
-</GridItem>
-<GridItem area="sidebar1">
-  <Box bg="orange" height="100%">
-    Sidebar 1
-  </Box>
-</GridItem>
-<GridItem area="content1">
-  <Box bg="red" height="100%">
-    Content 1
-  </Box>
-</GridItem>
-<GridItem area="content2">
-  <Box bg="green" height="100%">
-    Content 2
-  </Box>
-</GridItem>
-<GridItem area="content3">
-  <Box bg="yellow" height="100%">
-    Content 3
-  </Box>
-</GridItem>
-<GridItem area="content4">
-  <Box bg="purple" height="100%">
-    Content 4
-  </Box>
-</GridItem>
-<GridItem area="content5">
-  <Box bg="brown" height="100%">
-    Content 5
-  </Box>
-</GridItem>
-<GridItem area="footer">
-  <Box bg="skyblue" height="100%">
-    Footer
-  </Box>
-</GridItem>
-</Grid> */
-}

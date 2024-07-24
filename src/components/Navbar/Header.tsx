@@ -27,10 +27,19 @@ const Header = () => {
   const queryClient = useQueryClient();
   const { logout, authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const role = authStore.role;
   const { data: user } = useGetUser(jwtToken);
   const { data: cartTotal } = useCartTotal(jwtToken);
 
   const navigate = useNavigate();
+
+  const handleNavigateHomeClick = () => {
+    if (role === "ADMIN") {
+      navigate("/admin/shop/list");
+    } else {
+      navigate("/");
+    }
+  };
 
   const handleLogout = () => {
     logout(navigate);
@@ -75,15 +84,22 @@ const Header = () => {
                       <MenuList>
                         <MenuItem>{user.email}</MenuItem>
                         <MenuDivider />
-                        <Link to="/user/account/profile">
-                          <MenuItem>My Account</MenuItem>
-                        </Link>
-                        <Link to="/user/favorites">
-                          <MenuItem>My Favorites</MenuItem>
-                        </Link>
-                        <Link to="/user/purchase">
-                          <MenuItem>My Purchase</MenuItem>
-                        </Link>
+                        {role === "USER" || role === "SELLER" ? (
+                          <>
+                            <Link to="/user/account/profile">
+                              <MenuItem>My Account</MenuItem>
+                            </Link>
+                            <Link to="/user/favorites">
+                              <MenuItem>My Favorites</MenuItem>
+                            </Link>
+                            <Link to="/user/purchase">
+                              <MenuItem>My Purchase</MenuItem>
+                            </Link>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </MenuList>
                     </Menu>
@@ -129,17 +145,20 @@ const Header = () => {
           </Box>
         </GridItem>
         <GridItem area="content4">
-          <Link to="/">
-            <Box display="flex" justifyContent="center">
-              <FaHome size="40" />
-            </Box>
-          </Link>
+          <Box
+            display="flex"
+            justifyContent="center"
+            onClick={handleNavigateHomeClick}
+            cursor="pointer"
+          >
+            <FaHome size="40" />
+          </Box>
         </GridItem>
         <GridItem area="content5">
           <SearchInput />
         </GridItem>
         <GridItem area="content6">
-          {user ? (
+          {role === "USER" || role === "SELLER" ? (
             <>
               <Link to="/cart">
                 <Box display="flex" justifyContent="center">

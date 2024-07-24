@@ -99,8 +99,8 @@ const ReviewManagementPage = () => {
       ml="15px"
     >
       <GridItem area="main">
-        <Card mb="5px">
-          <Box border="1px solid" padding={5} borderColor="gray.500">
+        <Card mb="5px" borderRadius="none">
+          <Box padding={5}>
             <Text fontSize="xl" fontWeight="semibold">
               Shop Rating List
             </Text>
@@ -113,6 +113,8 @@ const ReviewManagementPage = () => {
                 onClick={handleSortClick}
                 mr="5px"
                 width="120px"
+                color={sortBy === "createdDate" ? "orange.400" : "white.500"}
+                border={sortBy === "createdDate" ? "1px solid orange" : "none"}
                 _hover={{ color: "orange.400" }}
                 borderRadius="20px"
               >
@@ -123,6 +125,8 @@ const ReviewManagementPage = () => {
                 onClick={handleSortClick}
                 mr="5px"
                 width="120px"
+                color={sortBy === "true" ? "orange.400" : "white.500"}
+                border={sortBy === "true" ? "1px solid orange" : "none"}
                 _hover={{ color: "orange.400" }}
                 borderRadius="20px"
               >
@@ -132,6 +136,8 @@ const ReviewManagementPage = () => {
                 value="false"
                 onClick={handleSortClick}
                 width="120px"
+                color={sortBy === "false" ? "orange.400" : "white.500"}
+                border={sortBy === "false" ? "1px solid orange" : "none"}
                 _hover={{ color: "orange.400" }}
                 borderRadius="20px"
               >

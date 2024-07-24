@@ -39,7 +39,7 @@ const ImageCarousel = () => {
       gap={2}
     >
       <GridItem area="content1">
-        <Box maxWidth="900px">
+        <Box maxWidth="900px" cursor="pointer">
           <Slider {...settings}>
             {images.map((image, index) => (
               <Box key={index}>

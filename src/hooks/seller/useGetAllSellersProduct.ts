@@ -6,12 +6,13 @@ interface Props {
     jwtToken: string;
     pageNo: number;
     pageSize: number;
+    sortBy: string;
 }
 
 const apiClient = axiosInstance;
 
-const useGetAllSellersProduct = ({jwtToken, pageNo, pageSize}: Props) => useQuery ({
-    queryKey: ['storeProduct', pageNo, pageSize],
+const useGetAllSellersProduct = ({jwtToken, pageNo, pageSize, sortBy}: Props) => useQuery ({
+    queryKey: ['storeProduct', pageNo, pageSize, sortBy],
     queryFn: () => apiClient.get<AllProductsResponse>(`product/store`, 
         {
         headers:{
@@ -19,7 +20,8 @@ const useGetAllSellersProduct = ({jwtToken, pageNo, pageSize}: Props) => useQuer
         },
       params: {
         pageNo: pageNo - 1,
-        pageSize: pageSize
+        pageSize: pageSize,
+        sortBy: sortBy
       },
     }),
     enabled: !!jwtToken

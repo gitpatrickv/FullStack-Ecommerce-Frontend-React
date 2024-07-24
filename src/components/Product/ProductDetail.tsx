@@ -37,6 +37,7 @@ import Star2Rating from "./Star2Rating";
 import Star3Rating from "./Star3Rating";
 import Star4Rating from "./Star4Rating";
 import Star5Rating from "./Star5Rating";
+import useSuspendProduct from "../../hooks/admin/useSuspendProduct";
 interface Props {
   product: Product;
 }
@@ -44,6 +45,7 @@ interface Props {
 const ProductDetail = ({ product }: Props) => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const role = authStore.role;
   const { count, increment, decrement, reset } = useProductQueryStore(
     (state) => ({
       count: state.productQuery.count,
@@ -61,6 +63,7 @@ const ProductDetail = ({ product }: Props) => {
   const { mutate: addToCart } = useAddToCart();
   const { mutate: addToCartWithVariations } = useAddToCartVariation();
   const { mutate: addToFavorites } = useAddToFavorites();
+  const { mutate: suspendProduct } = useSuspendProduct();
   const { data: user } = useGetUser(jwtToken);
   const { data: status } = useGetFavoritesStatus(product.productId);
   const [addToFavorite, setAddToFavorite] = useState<boolean>(
@@ -182,6 +185,10 @@ const ProductDetail = ({ product }: Props) => {
     });
   };
 
+  const handleSuspendProductClick = () => {
+    suspendProduct(product.productId);
+  };
+
   const handleNavigateStorePageClick = (storeId: string) => {
     navigate(`/store/` + storeId);
   };
@@ -301,82 +308,91 @@ const ProductDetail = ({ product }: Props) => {
 
                   {hasColorsOrSizes && (
                     <>
-                      <HStack mb="15px">
-                        <Text
-                          mr="17px"
-                          fontSize="xl"
-                          color="gray.600"
-                          mb="10px"
-                        >
-                          Variants
-                        </Text>
-                        <Flex flexWrap="wrap">
-                          {Array.from(
-                            new Set(
-                              product.inventoryModels.map((inv) => inv.colors)
-                            )
-                          ).map((color) => (
-                            <Button
-                              key={color}
-                              w="100px"
-                              fontSize="md"
-                              onClick={() => handleColorChange(color)}
-                              variant={
-                                selectedColor === color ? "solid" : "outline"
-                              }
-                              color={
-                                selectedColor === color
-                                  ? "orange.400"
-                                  : "white.500"
-                              }
-                              textTransform="capitalize"
-                              isDisabled={!availableColors.includes(color)}
-                              mb="10px"
-                              mr="5px"
-                            >
-                              {color}
-                            </Button>
-                          ))}
-                        </Flex>
-                      </HStack>
-                      <HStack mb="15px">
-                        <Text
-                          mr="52px"
-                          fontSize="xl"
-                          color="gray.500"
-                          mb="10px"
-                        >
-                          Size
-                        </Text>
-                        <Flex flexWrap="wrap">
-                          {Array.from(
-                            new Set(
-                              product.inventoryModels.map((inv) => inv.sizes)
-                            )
-                          ).map((size) => (
-                            <Button
-                              key={size}
-                              w="100px"
-                              fontSize="md"
-                              onClick={() => handleSizeChange(size)}
-                              variant={
-                                selectedSize === size ? "solid" : "outline"
-                              }
-                              color={
-                                selectedSize === size
-                                  ? "orange.400"
-                                  : "white.500"
-                              }
-                              textTransform="capitalize"
-                              isDisabled={!availableSizes.includes(size)}
-                              mb="10px"
-                              mr="5px"
-                            >
-                              {size}
-                            </Button>
-                          ))}
-                        </Flex>
-                      </HStack>
+                      {filteredInventory?.colors === "" ? (
+                        <Box mb="50px"></Box>
+                      ) : (
+                        <HStack mb="15px">
+                          <Text
+                            mr="17px"
+                            fontSize="xl"
+                            color="gray.600"
+                            mb="10px"
+                          >
+                            Variants
+                          </Text>
+
+                          <Flex flexWrap="wrap">
+                            {Array.from(
+                              new Set(
+                                product.inventoryModels.map((inv) => inv.colors)
+                              )
+                            ).map((color) => (
+                              <Button
+                                key={color}
+                                minWidth="100px"
+                                fontSize="md"
+                                onClick={() => handleColorChange(color)}
+                                variant={
+                                  selectedColor === color ? "solid" : "outline"
+                                }
+                                color={
+                                  selectedColor === color
+                                    ? "orange.400"
+                                    : "white.500"
+                                }
+                                textTransform="capitalize"
+                                isDisabled={!availableColors.includes(color)}
+                                mb="10px"
+                                mr="5px"
+                              >
+                                {color}
+                              </Button>
+                            ))}
+                          </Flex>
+                        </HStack>
+                      )}
+                      {filteredInventory?.sizes === "" ? (
+                        <Box mb="50px"></Box>
+                      ) : (
+                        <HStack mb="15px">
+                          <Text
+                            mr="52px"
+                            fontSize="xl"
+                            color="gray.500"
+                            mb="10px"
+                          >
+                            Size
+                          </Text>
+                          <Flex flexWrap="wrap">
+                            {Array.from(
+                              new Set(
+                                product.inventoryModels.map((inv) => inv.sizes)
+                              )
+                            ).map((size) => (
+                              <Button
+                                key={size}
+                                minWidth="100px"
+                                fontSize="md"
+                                onClick={() => handleSizeChange(size)}
+                                variant={
+                                  selectedSize === size ? "solid" : "outline"
+                                }
+                                color={
+                                  selectedSize === size
+                                    ? "orange.400"
+                                    : "white.500"
+                                }
+                                textTransform="capitalize"
+                                isDisabled={!availableSizes.includes(size)}
+                                mb="10px"
+                                mr="5px"
+                              >
+                                {size}
+                              </Button>
+                            ))}
+                          </Flex>
+                        </HStack>
+                      )}
                     </>
                   )}
                   <Box mb="10px" display="flex">
@@ -468,39 +484,60 @@ const ProductDetail = ({ product }: Props) => {
                       )}
                     </Box>
                   </Box>
+
                   <Box display="flex" alignItems="center">
-                    {filteredInventory?.quantity === 0 ? (
+                    {role === "ADMIN" ? (
                       <Button
                         mt="4"
-                        mr="60px"
-                        _hover={{ color: "orange.400" }}
-                        isDisabled={true}
+                        bg={
+                          product.suspended === true ? "orange.500" : "red.500"
+                        }
+                        _hover={
+                          product.suspended === true
+                            ? { bg: "orange.600" }
+                            : { bg: "red.600" }
+                        }
+                        onClick={handleSuspendProductClick}
+                        width="100px"
                       >
-                        <BsCartPlus size="20px" />
-                        <Text pl="10px">Add To Cart</Text>
+                        {product.suspended === true ? "Activate" : "Suspend"}
                       </Button>
                     ) : (
                       <>
-                        {hasColorsOrSizes ? (
+                        {filteredInventory?.quantity === 0 ? (
                           <Button
                             mt="4"
-                            onClick={handleAddToCartVariationClick}
                             mr="60px"
                             _hover={{ color: "orange.400" }}
+                            isDisabled={true}
                           >
                             <BsCartPlus size="20px" />
                             <Text pl="10px">Add To Cart</Text>
                           </Button>
                         ) : (
-                          <Button
-                            mt="4"
-                            onClick={handleAddToCartClick}
-                            mr="60px"
-                            _hover={{ color: "orange.400" }}
-                          >
-                            <BsCartPlus size="20px" />
-                            <Text pl="10px">Add To Cart</Text>
-                          </Button>
+                          <>
+                            {hasColorsOrSizes ? (
+                              <Button
+                                mt="4"
+                                onClick={handleAddToCartVariationClick}
+                                mr="60px"
+                                _hover={{ color: "orange.400" }}
+                              >
+                                <BsCartPlus size="20px" />
+                                <Text pl="10px">Add To Cart</Text>
+                              </Button>
+                            ) : (
+                              <Button
+                                mt="4"
+                                onClick={handleAddToCartClick}
+                                mr="60px"
+                                _hover={{ color: "orange.400" }}
+                              >
+                                <BsCartPlus size="20px" />
+                                <Text pl="10px">Add To Cart</Text>
+                              </Button>
+                            )}
+                          </>
                         )}
                       </>
                     )}
@@ -512,7 +549,7 @@ const ProductDetail = ({ product }: Props) => {
                       position="relative"
                       top="10px"
                     >
-                      {user ? (
+                      {role === "USER" || role === "SELLER" ? (
                         <>
                           <IconButton
                             aria-label="Search"

@@ -18,7 +18,13 @@ const ProductImages = ({ productImage }: Props) => {
     >
       <GridItem area="content1">
         <Box>
-          <Image src={activeImage} maxWidth="100%" h="400" objectFit="cover" />
+          <Image
+            src={activeImage}
+            maxWidth="91%"
+            minWidth="91%"
+            h="400"
+            objectFit="cover"
+          />
           <Box display="flex" mt="10px">
             {images.map((image, index) => (
               <Image
@@ -30,10 +36,10 @@ const ProductImages = ({ productImage }: Props) => {
                 _hover={{
                   transform: "scale(1.03)",
                   transition: "transform .15s ease-in",
-                  border: "1px solid orange",
+                  border: "2px solid orange",
                 }}
                 onMouseEnter={() => setActiveImage(image)}
-                mr="10px"
+                mr="5px"
               />
             ))}
           </Box>
