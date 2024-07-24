@@ -8,7 +8,8 @@ import { Card, Box, Button, Text } from "@chakra-ui/react";
 const UserListPage = () => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("");
-  const { data: getAllUsers } = useGetAllUsers(sortBy);
+  const { data: getAllUsers, refetch: refetchUserList } =
+    useGetAllUsers(sortBy);
 
   const handleSortClick = (event: any) => {
     setSortBy(event.target.value);
@@ -53,12 +54,40 @@ const UserListPage = () => {
             >
               Seller
             </Button>
+            <Button
+              value="false"
+              onClick={handleSortClick}
+              mr="5px"
+              width="120px"
+              color={sortBy === "false" ? "orange.400" : "white.500"}
+              border={sortBy === "false" ? "1px solid orange" : "none"}
+              _hover={{ color: "orange.400" }}
+              borderRadius="20px"
+            >
+              Active
+            </Button>
+            <Button
+              value="true"
+              onClick={handleSortClick}
+              mr="5px"
+              width="120px"
+              color={sortBy === "true" ? "orange.400" : "white.500"}
+              border={sortBy === "true" ? "1px solid orange" : "none"}
+              _hover={{ color: "orange.400" }}
+              borderRadius="20px"
+            >
+              Frozen
+            </Button>
           </Box>
         </Box>
       </Card>
       <UserListHeader />
       {getAllUsers?.map((user) => (
-        <UserList key={user.email} user={user} />
+        <UserList
+          key={user.email}
+          user={user}
+          onRefetchUser={refetchUserList}
+        />
       ))}
     </>
   );

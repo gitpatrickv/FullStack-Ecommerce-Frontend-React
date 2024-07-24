@@ -9,6 +9,7 @@ export interface UserProps {
     contactNumber: string;
     role: string;
     photoUrl: string;
+    frozen: boolean;
 }
 
 const apiClient = axiosInstance;
