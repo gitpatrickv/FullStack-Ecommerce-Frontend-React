@@ -20,6 +20,8 @@ import { FaStore } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Store from "../../../entities/Store";
 import useSuspendStoreListing from "../../../hooks/admin/useSuspendStoreListing";
+import useGetTotalSales from "../../../hooks/seller/useGetTotalSales";
+import { formatCurrency } from "../../../utilities/formatCurrency";
 interface Props {
   store: Store;
   onRefetchStore: () => void;
@@ -33,7 +35,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
   const handleNavigateStorePageClick = () => {
     navigate(`/store/` + store.storeId);
   };
-
+  const { data: totalSales } = useGetTotalSales(store.storeId);
   const handleSuspendClick = () => {
     toggleShopListing(store.storeId, {
       onSuccess: () => {
@@ -65,9 +67,26 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
               }
               size="xs"
             />
-            <Text ml="5px" textTransform="capitalize" fontWeight="semibold">
+            <Box
+              border="1px solid"
+              borderRadius="20px"
+              bg={store.online ? "green" : "red"}
+              borderColor={store.online ? "green" : "red"}
+              width="10px"
+              height="10px"
+              textAlign="center"
+              position="relative"
+              left="-7px"
+              bottom="-15px"
+            />
+            <Text
+              textTransform="capitalize"
+              fontWeight="semibold"
+              color={store.online ? "white.500" : "red"}
+            >
               {store.storeName}
             </Text>
+
             <Spacer />
             <Box
               cursor="pointer"
@@ -89,7 +108,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
             <Box display="flex" flexDirection="column">
               <Text fontWeight="semibold">Total Products:</Text>
               <Text fontWeight="semibold">Total Orders:</Text>
-              <Text fontWeight="semibold">Suspended Product:</Text>
+              <Text fontWeight="semibold">Total Sales:</Text>
             </Box>
             <Box display="flex" flexDirection="column">
               <Text fontWeight="semibold" ml="10px">
@@ -99,7 +118,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
                 {store.orderCount}
               </Text>
               <Text fontWeight="semibold" ml="10px">
-                {store.suspendedCount}
+                {formatCurrency(totalSales?.totalSales ?? 0)}
               </Text>
             </Box>
           </Box>

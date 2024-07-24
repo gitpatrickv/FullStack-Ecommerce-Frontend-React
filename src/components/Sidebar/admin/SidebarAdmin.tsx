@@ -1,6 +1,5 @@
 import { Box, Text, useBreakpointValue } from "@chakra-ui/react";
-import { useState } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { FaUser } from "react-icons/fa";
 import { IoStorefrontSharp } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 
@@ -9,19 +8,14 @@ const SidebarAdmin = () => {
     base: "sm",
     md: "md",
   });
-  const [isShopPage, setIsShopPage] = useState(true);
-  const location = useLocation();
 
-  const toggleShopSection = () => {
-    setIsShopPage((prev) => !prev);
-  };
+  const location = useLocation();
 
   return (
     <Box ml="10px" mt="15px">
       <Box
         display="flex"
         alignItems="center"
-        onClick={toggleShopSection}
         cursor="pointer"
         userSelect="none"
       >
@@ -44,41 +38,40 @@ const SidebarAdmin = () => {
                 : "white.500"
             }
           >
-            Shop
+            Shops
           </Text>
         </Link>
-        {location.pathname.startsWith("/admin/shop") ? (
-          <IoIosArrowDown
-            color={
-              location.pathname.startsWith("/admin/shop") ? "orange" : "white"
-            }
-          />
-        ) : (
-          <IoIosArrowUp />
-        )}
       </Box>
-      {isShopPage && (
-        <>
-          <Box ml="25px">
-            <Link to="/admin/shop/list">
-              <Text
-                fontSize={fontSize}
-                mb="3px"
-                mt="3px"
-                color={
-                  location.pathname === "/admin/shop/list"
-                    ? "orange.400"
-                    : "white.500"
-                }
-                cursor="pointer"
-                whiteSpace="nowrap"
-              >
-                Shop List
-              </Text>
-            </Link>
-          </Box>
-        </>
-      )}
+      <Box
+        display="flex"
+        alignItems="center"
+        cursor="pointer"
+        userSelect="none"
+        mt="15px"
+      >
+        <FaUser
+          size="20px"
+          color={
+            location.pathname.startsWith("/admin/user") ? "orange" : "gray"
+          }
+        />
+        <Link to="/admin/user/list">
+          <Text
+            ml="5px"
+            mr="5px"
+            fontSize={fontSize}
+            fontWeight="semibold"
+            _hover={{ color: "orange.400" }}
+            color={
+              location.pathname.startsWith("/admin/user")
+                ? "orange.400"
+                : "white.500"
+            }
+          >
+            Users
+          </Text>
+        </Link>
+      </Box>
     </Box>
   );
 };
