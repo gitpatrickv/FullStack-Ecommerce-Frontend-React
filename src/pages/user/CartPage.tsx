@@ -175,7 +175,7 @@ const CartPage = () => {
           }}
         >
           <GridItem area="main">
-            <Box>
+            <Box minWidth="800px">
               <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
               {groupedCarts &&
                 Object.entries(groupedCarts).map(([storeId, storeCarts]) => {

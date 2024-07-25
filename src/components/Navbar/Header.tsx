@@ -45,7 +45,7 @@ const Header = () => {
     queryClient.setQueryData(["user"], null);
   };
   return (
-    <Card height="125px">
+    <Card height="125px" borderRadius="none">
       <Grid
         templateColumns="0.4fr 0.5fr 2fr 0.5fr 0.4fr"
         templateRows=" 0.3fr 0.5fr"

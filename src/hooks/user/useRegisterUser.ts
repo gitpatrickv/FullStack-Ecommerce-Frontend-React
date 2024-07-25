@@ -13,7 +13,7 @@ const useRegisterUser = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<User>({ resolver: zodResolver(schema) });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const {setJwtToken} = useAuthQueryStore();
+    const {setJwtToken, setRole} = useAuthQueryStore();
 
     const mutation = useMutation({
         mutationFn: (data: User) => apiClient.post("/user/register", data)
@@ -23,6 +23,7 @@ const useRegisterUser = () => {
             const jwtToken = response.jwtToken;
             setJwtToken(jwtToken);
             const role = response.role;
+            setRole(role);
 
             if(role==="ADMIN"){
                 navigate("/admin");

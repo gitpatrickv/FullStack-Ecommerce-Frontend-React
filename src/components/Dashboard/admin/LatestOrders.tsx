@@ -123,7 +123,7 @@ const LatestOrders = ({ order }: Props) => {
             minWidth="200px"
             mt="10px"
           >
-            <Text>{order.createdDate}</Text>
+            <Text>{order.lastModified}</Text>
           </Box>
         </GridItem>
       </Grid>

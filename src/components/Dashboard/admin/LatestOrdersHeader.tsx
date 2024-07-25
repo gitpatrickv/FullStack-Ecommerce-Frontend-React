@@ -87,7 +87,7 @@ const LatestOrdersHeader = () => {
             mt="10px"
           >
             <Text fontSize="lg" fontWeight="semibold">
-              Date Ordered
+              Date
             </Text>
           </Box>
         </GridItem>

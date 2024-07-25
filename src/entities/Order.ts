@@ -32,6 +32,7 @@ export default interface OrderItem {
     contactNumber: string;
     orderItemModels: OrderItem[];
     createdDate: string;
+    lastModified: string;
     shopName: string;
   }
   
