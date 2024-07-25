@@ -148,15 +148,31 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               >
                 {product.productName}
               </Text>
-              {product.suspended === true && (
-                <Text ml="20px" color="red">
-                  Suspended
-                </Text>
+              {product.suspended && (
+                <Box
+                  border="1px solid"
+                  width="120px"
+                  textAlign="center"
+                  borderRadius="20px"
+                  bg="red.500"
+                  borderColor="red.500"
+                  ml="20px"
+                >
+                  <Text mb="2px">Suspended</Text>
+                </Box>
               )}
-              {product.listed === false && (
-                <Text ml="20px" color="red">
-                  {product.suspended ? "" : "Delisted"}
-                </Text>
+              {!product.listed && (
+                <Box
+                  border="1px solid"
+                  width="120px"
+                  textAlign="center"
+                  borderRadius="20px"
+                  bg="red.500"
+                  borderColor="red.500"
+                  ml="20px"
+                >
+                  <Text mb="2px">Delisted</Text>
+                </Box>
               )}
             </Box>
           </Box>

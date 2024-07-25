@@ -41,6 +41,21 @@ const StoreProductCard = ({ product }: Props) => {
 
   return (
     <Card onClick={handleNavigateClick} cursor="pointer">
+      {product.suspended && (
+        <Box
+          border="1px solid"
+          width="120px"
+          textAlign="center"
+          borderRadius="20px"
+          bg="red.500"
+          borderColor="red.500"
+          ml="10px"
+          position="absolute"
+          top="5px"
+        >
+          <Text mb="2px">Suspended</Text>
+        </Box>
+      )}
       <Image src={product.photoUrl} h={[150, 200]} />
       <CardBody>
         <Text
@@ -49,7 +64,6 @@ const StoreProductCard = ({ product }: Props) => {
           textTransform="capitalize"
           isTruncated={isTruncated}
           whiteSpace="nowrap"
-          color={product.suspended ? "red" : "white.500"}
         >
           {product?.productName}
         </Text>

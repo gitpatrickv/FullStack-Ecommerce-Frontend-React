@@ -8,7 +8,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   Text,
@@ -64,7 +63,10 @@ const Header = () => {
             <HStack spacing={3}>
               {user ? (
                 <>
-                  <Box>
+                  <Box display="flex">
+                    <Text mt="10px" mr="5px">
+                      {user.email}
+                    </Text>
                     <Menu>
                       <MenuButton
                         as={IconButton}
@@ -82,8 +84,8 @@ const Header = () => {
                         variant="none"
                       />
                       <MenuList>
-                        <MenuItem>{user.email}</MenuItem>
-                        <MenuDivider />
+                        {/* <MenuItem>{user.email}</MenuItem>
+                        <MenuDivider /> */}
                         {role === "USER" || role === "SELLER" ? (
                           <>
                             <Link to="/user/account/profile">

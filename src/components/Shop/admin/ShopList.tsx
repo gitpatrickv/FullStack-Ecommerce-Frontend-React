@@ -71,8 +71,8 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
             <Box
               border="1px solid"
               borderRadius="20px"
-              bg={store.online ? "green" : "red"}
-              borderColor={store.online ? "green" : "red"}
+              bg={store.online ? "orange.500" : "red"}
+              borderColor={store.online ? "orange.500" : "red"}
               width="10px"
               height="10px"
               textAlign="center"
@@ -80,13 +80,24 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
               left="-7px"
               bottom="-15px"
             />
-            <Text
-              textTransform="capitalize"
-              fontWeight="semibold"
-              color={store.online ? "white.500" : "red"}
-            >
+            <Text textTransform="capitalize" fontWeight="semibold">
               {store.storeName}
             </Text>
+            {!store.online && (
+              <Box
+                border="1px solid"
+                width="120px"
+                textAlign="center"
+                borderRadius="20px"
+                bg="red.500"
+                borderColor="red.500"
+                ml="10px"
+                position="relative"
+                bottom="2px"
+              >
+                <Text mb="2px">Suspended</Text>
+              </Box>
+            )}
 
             <Spacer />
             <Box

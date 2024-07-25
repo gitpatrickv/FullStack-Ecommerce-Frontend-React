@@ -1,24 +1,28 @@
 import { Box, Grid, GridItem, SimpleGrid, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProductCard from "../../components/Product/ProductCard";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
 import useGetAllStoreProducts from "../../hooks/user/useGetAllStoreProducts";
+import { useAuthQueryStore } from "../../store/auth-store";
+import StoreProductCard from "./StoreProductCard";
 
 interface Props {
   storeId: string;
 }
 
 const FromTheSameStore = ({ storeId }: Props) => {
+  const { authStore } = useAuthQueryStore();
+  const role = authStore.role;
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const pageSize = 30;
-
+  const [sortBy, setSortBy] = useState("");
   const { data: getAllStoreProducts, isLoading } = useGetAllStoreProducts({
     storeId: storeId,
     pageNo: page,
     pageSize,
+    sortBy: sortBy,
   });
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
@@ -57,11 +61,14 @@ const FromTheSameStore = ({ storeId }: Props) => {
                 <ProductCardSkeleton />
               </ProductCardContainer>
             ))}
-          {getAllStoreProducts?.data.allProductModels.map((product) => (
-            <ProductCardContainer key={product.productId}>
-              <ProductCard product={product} />
-            </ProductCardContainer>
-          ))}
+          {getAllStoreProducts?.data.allProductModels.map(
+            (product) =>
+              (role === "ADMIN" || !product.suspended) && (
+                <ProductCardContainer key={product.productId}>
+                  <StoreProductCard product={product} />
+                </ProductCardContainer>
+              )
+          )}
         </SimpleGrid>
       </GridItem>
     </Grid>
