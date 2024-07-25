@@ -19,12 +19,12 @@ import ColorModeSwitch from "../../components/ColorModeSwitch";
 import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
 import { useAuthQueryStore } from "../../store/auth-store";
 import Metrics from "../../components/Dashboard/admin/Metrics";
+import LatestOrders from "../../components/Dashboard/admin/LatestOrders";
 
 const AdminPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { logout, authStore } = useAuthQueryStore();
-  const jwtToken = authStore.jwtToken;
+  const { logout } = useAuthQueryStore();
 
   const handleLogout = () => {
     logout(navigate);
@@ -123,6 +123,7 @@ const AdminPage = () => {
           >
             <GridItem area="content1">
               <Metrics />
+              <LatestOrders />
             </GridItem>
           </Grid>
         ) : (
