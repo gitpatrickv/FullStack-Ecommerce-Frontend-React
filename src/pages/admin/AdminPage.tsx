@@ -20,11 +20,14 @@ import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
 import { useAuthQueryStore } from "../../store/auth-store";
 import Metrics from "../../components/Dashboard/admin/Metrics";
 import LatestOrders from "../../components/Dashboard/admin/LatestOrders";
+import useGetAllOrders from "../../hooks/admin/useGetAllOrders";
+import LatestOrdersHeader from "../../components/Dashboard/admin/LatestOrdersHeader";
 
 const AdminPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { logout } = useAuthQueryStore();
+  const { data: getAllOrders } = useGetAllOrders();
 
   const handleLogout = () => {
     logout(navigate);
@@ -123,7 +126,10 @@ const AdminPage = () => {
           >
             <GridItem area="content1">
               <Metrics />
-              <LatestOrders />
+              <LatestOrdersHeader />
+              {getAllOrders?.map((order) => (
+                <LatestOrders key={order.orderId} order={order} />
+              ))}
             </GridItem>
           </Grid>
         ) : (

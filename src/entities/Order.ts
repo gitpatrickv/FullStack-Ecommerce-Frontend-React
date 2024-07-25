@@ -31,6 +31,8 @@ export default interface OrderItem {
     fullName: string;
     contactNumber: string;
     orderItemModels: OrderItem[];
+    createdDate: string;
+    shopName: string;
   }
   
   export interface OrdersResponse {

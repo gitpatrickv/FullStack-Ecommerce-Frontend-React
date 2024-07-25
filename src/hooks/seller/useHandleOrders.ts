@@ -26,6 +26,7 @@ const useHandleOrders = () => {
                 queryClient.invalidateQueries(['toReceiveOrders'])
                 queryClient.invalidateQueries(['completedOrders'])
                 queryClient.invalidateQueries(['allOrders'])
+                queryClient.invalidateQueries(['allOrderList'])
             }
         }
     )
