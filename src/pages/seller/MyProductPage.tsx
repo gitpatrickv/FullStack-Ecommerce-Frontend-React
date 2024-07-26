@@ -101,7 +101,7 @@ const MyProductPage = () => {
     `}
     >
       <GridItem area="main">
-        <Box mt="20px">
+        <Box>
           <Card borderRadius="none">
             <Box padding={5}>
               <Box display="flex" alignItems="center">

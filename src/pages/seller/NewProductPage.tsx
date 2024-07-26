@@ -2,6 +2,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Card,
   Checkbox,
   Grid,
   GridItem,
@@ -59,7 +60,7 @@ const NewProductPage = () => {
   };
 
   return (
-    <>
+    <Card borderRadius="none">
       <Grid
         templateAreas={{
           base: `"main"`,
@@ -69,12 +70,12 @@ const NewProductPage = () => {
           lg: " 1fr",
         }}
       >
-        <GridItem area="main">
-          <Text mt="20px" fontSize="lg" fontWeight="semibold">
+        <GridItem area="main" padding={5}>
+          <Text fontSize="lg" fontWeight="semibold">
             Create New Product
           </Text>
           <Box p={4}>
-            <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
+            <Text mb="5px" fontSize="large" fontWeight="semibold">
               Category
             </Text>
             <Select
@@ -293,7 +294,7 @@ const NewProductPage = () => {
           </Box>
         </GridItem>
       </Grid>
-    </>
+    </Card>
   );
 };
 

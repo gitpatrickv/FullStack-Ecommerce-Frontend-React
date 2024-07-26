@@ -9,13 +9,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import OrderCard from "../../components/Order/OrderCard";
 import OrderItem from "../../entities/Order";
 import useGetUnpaidOrders from "../../hooks/seller/useGetUnpaidOrders";
 
+import SellersOrderCard from "../../components/Order/SellersOrderCard";
+import useHandleOrders from "../../hooks/seller/useHandleOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import useHandleOrders from "../../hooks/seller/useHandleOrders";
 
 const UnpaidPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -117,7 +117,7 @@ const UnpaidPage = () => {
                     </Box>
                     <Divider mt={2} mb={2} />
                     {storeOrders.map((order) => (
-                      <OrderCard key={order.id} order={order} />
+                      <SellersOrderCard key={order.id} order={order} />
                     ))}
                     <Divider mt={2} mb={2} />
                     <Box

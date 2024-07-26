@@ -250,7 +250,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                 color: "orange.400",
               }}
               onClick={deleteOnOpen}
-              isDisabled={product.suspended ? true : false}
+              // isDisabled={product.suspended ? true : false}
             >
               Delete
             </Button>

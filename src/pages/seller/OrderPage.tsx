@@ -114,7 +114,7 @@ const OrderPage = () => {
   `}
     >
       <GridItem area="main" minWidth="1000px">
-        <Box mt="20px">
+        <Box>
           <Tabs
             position="relative"
             variant="unstyled"

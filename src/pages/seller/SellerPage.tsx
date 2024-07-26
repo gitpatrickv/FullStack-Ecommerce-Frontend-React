@@ -184,7 +184,7 @@ const SellerPage = () => {
             </GridItem>
           </Grid>
         ) : (
-          <Box>
+          <Box mt="30px" ml="10px">
             <Outlet />
             <ScrollRestoration />
           </Box>

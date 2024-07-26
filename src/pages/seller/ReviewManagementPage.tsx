@@ -95,8 +95,6 @@ const ReviewManagementPage = () => {
       templateAreas={`
 "main"
 `}
-      mt="20px"
-      ml="15px"
     >
       <GridItem area="main">
         <Card mb="5px" borderRadius="none">
