@@ -70,9 +70,25 @@ const NewProductPage = () => {
         }}
       >
         <GridItem area="main">
+          <Text mt="20px" fontSize="lg" fontWeight="semibold">
+            Create New Product
+          </Text>
           <Box p={4}>
+            <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
+              Category
+            </Text>
+            <Select
+              maxWidth="30%"
+              {...register("categoryId", { required: true })}
+            >
+              {category?.data.map((cat) => (
+                <option key={cat.categoryId} value={cat.categoryId}>
+                  {cat.categoryName}
+                </option>
+              ))}
+            </Select>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Text mb="5px" fontSize="large" fontWeight="semibold">
+              <Text mb="5px" fontSize="large" fontWeight="semibold" mt="10px">
                 Product Name
               </Text>
               <Input
@@ -86,19 +102,7 @@ const NewProductPage = () => {
                 {...register("productDescription", { required: true })}
                 placeholder="Product Description"
               />
-              <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
-                Category
-              </Text>
-              <Select
-                maxWidth="30%"
-                {...register("categoryId", { required: true })}
-              >
-                {category?.data.map((cat) => (
-                  <option key={cat.categoryId} value={cat.categoryId}>
-                    {cat.categoryName}
-                  </option>
-                ))}
-              </Select>
+
               <Box display="flex" mt="20px" alignItems="center" mr="10px">
                 <Checkbox
                   size="lg"

@@ -14,7 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
 import BusinessInsights from "../../components/Dashboard/seller/BusinessInsights";
 import ToDoList from "../../components/Dashboard/seller/ToDoList";
@@ -57,14 +62,20 @@ const SellerPage = () => {
   return (
     <Grid
       templateColumns="0.2fr 1fr 0.2fr"
-      templateRows="100px 1fr"
+      templateRows="80px 1fr"
       templateAreas={`
       "header header header"
       "sidebar content1 sidebar1"
     `}
     >
       <GridItem area="header">
-        <Card borderRadius="none">
+        <Card
+          borderRadius="none"
+          position="fixed"
+          top="0"
+          width="100%"
+          zIndex={10}
+        >
           <CardBody>
             <Box
               display="flex"
@@ -136,10 +147,17 @@ const SellerPage = () => {
         </Card>
       </GridItem>
 
-      <GridItem area="sidebar">
-        <Box mt="15px" ml="10px">
+      <GridItem area="sidebar" minWidth="250px" mr="20px">
+        <Card
+          position="fixed"
+          minHeight="100vh"
+          borderRadius="none"
+          zIndex={10}
+          minWidth="250px"
+          height="100%"
+        >
           <Sidebar storeId={store?.storeId || ""} />
-        </Box>
+        </Card>
       </GridItem>
 
       <GridItem area="sidebar1">
@@ -168,6 +186,7 @@ const SellerPage = () => {
         ) : (
           <Box>
             <Outlet />
+            <ScrollRestoration />
           </Box>
         )}
       </GridItem>

@@ -12,7 +12,7 @@ const SidebarAdmin = () => {
   const location = useLocation();
 
   return (
-    <Box ml="10px" mt="15px">
+    <Box ml="10px" mt="30px">
       <Box
         display="flex"
         alignItems="center"
