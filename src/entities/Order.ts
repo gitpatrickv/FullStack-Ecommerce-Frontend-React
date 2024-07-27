@@ -39,5 +39,18 @@ export default interface OrderItem {
   export interface OrdersResponse {
     orderModel: Order[];
   }
+
+  interface PageResponse {
+    pageNo: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+}
+
+export interface PaginateOrdersResponse {
+    orderModels: Order[];
+    pageResponse: PageResponse;
+}
   
 

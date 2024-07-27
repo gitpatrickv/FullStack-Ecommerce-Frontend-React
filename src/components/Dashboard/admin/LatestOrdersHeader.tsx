@@ -2,10 +2,7 @@ import { Box, Card, Grid, GridItem, Text } from "@chakra-ui/react";
 
 const LatestOrdersHeader = () => {
   return (
-    <Card borderRadius="none" mb="1px" mt="10px">
-      <Text fontSize="xl" fontWeight="bold" mt="20px" ml="35px" mb="5px">
-        Latest Orders
-      </Text>
+    <Card borderRadius="none" mb="1px">
       <Grid
         templateColumns="0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr"
         templateAreas={`

@@ -38,8 +38,8 @@ const Sidebar = ({ storeId }: Props) => {
   };
 
   return (
-    <Box mr="15px">
-      <Box ml="10px" mt="15px">
+    <Box>
+      <Box ml="10px" mt="30px">
         <Box
           display="flex"
           alignItems="center"

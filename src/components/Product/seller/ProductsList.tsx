@@ -234,6 +234,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               variant="link"
               mb="10px"
               fontWeight="semibold"
+              color="white.500"
               _hover={{
                 color: "orange.400",
               }}
@@ -246,6 +247,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               variant="link"
               mb="10px"
               fontWeight="semibold"
+              color="white.500"
               _hover={{
                 color: "orange.400",
               }}
@@ -257,6 +259,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
             <Button
               variant="link"
               fontWeight="semibold"
+              color="white.500"
               _hover={{
                 color: "orange.400",
               }}

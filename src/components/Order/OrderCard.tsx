@@ -21,7 +21,15 @@ const OrderCard = ({ order }: Props) => {
     >
       <GridItem area="content1" mt="3px">
         <Link to={`/api/product/` + order?.productId}>
-          <Box display="flex" alignItems="center" pb="10px">
+          <Box
+            display="flex"
+            alignItems="center"
+            pb="10px"
+            _hover={{
+              transform: "scale(1.03)",
+              transition: "transform .15s ease-in",
+            }}
+          >
             <Image
               src={order.photoUrl}
               w={{ base: "50px", md: "90px", lg: "120px" }}
