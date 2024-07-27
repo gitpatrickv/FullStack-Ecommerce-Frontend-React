@@ -1,38 +1,101 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardBody,
   Grid,
   GridItem,
+  HStack,
   IconButton,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Spacer,
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
-import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
-import { useAuthQueryStore } from "../../store/auth-store";
-import Metrics from "../../components/Dashboard/admin/Metrics";
 import LatestOrders from "../../components/Dashboard/admin/LatestOrders";
-import useGetAllOrders from "../../hooks/admin/useGetAllOrders";
 import LatestOrdersHeader from "../../components/Dashboard/admin/LatestOrdersHeader";
+import Metrics from "../../components/Dashboard/admin/Metrics";
+import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
+import useGetAllOrders from "../../hooks/admin/useGetAllOrders";
+import { useAuthQueryStore } from "../../store/auth-store";
+import { paginationRange } from "../../utilities/pagination";
 
 const AdminPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const queryClient = useQueryClient();
   const { logout } = useAuthQueryStore();
-  const { data: getAllOrders } = useGetAllOrders();
+
+  const getPageFromUrl = () => {
+    const params = new URLSearchParams(location.search);
+    const pageFromUrl = params.get("pageNo");
+    return pageFromUrl ? parseInt(pageFromUrl, 10) : 1;
+  };
+
+  const [page, setPage] = useState(getPageFromUrl);
+  const pageSize = 20;
+
+  const { data: getAllOrders } = useGetAllOrders({
+    pageNo: page,
+    pageSize,
+  });
+
+  const cPage = getAllOrders?.pageResponse.pageNo ?? 0;
+  const currentPage = cPage + 1;
+  const totalPages = getAllOrders?.pageResponse.totalPages ?? 0;
+  const isLastPage = getAllOrders?.pageResponse.last ?? false;
+  const totalElements = getAllOrders?.pageResponse.totalElements ?? 0;
+  const pages = Math.ceil(totalElements / pageSize);
+
+  const paginationRangeArray = paginationRange({
+    totalPage: pages,
+    page: page,
+    limit: pageSize,
+    siblings: 1,
+  });
 
   const handleLogout = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
   };
+
+  useEffect(() => {
+    const pageFromUrl = getPageFromUrl();
+    if (pageFromUrl !== page) {
+      setPage(pageFromUrl);
+    }
+  }, [location.search]);
+
+  const updatePage = (newPage: number) => {
+    setPage(newPage);
+    navigate(`/admin?pageNo=${newPage}&pageSize=${pageSize}`);
+  };
+
+  function handlePageChange(value: any) {
+    if (value === "&laquo;" || value === "... ") {
+      updatePage(1);
+    } else if (value === "&lsaquo;") {
+      if (page > 1) {
+        updatePage(page - 1);
+      }
+    } else if (value === "&rsaquo;") {
+      if (!isLastPage) {
+        updatePage(page + 1);
+      }
+    } else if (value === "&raquo;" || value === " ...") {
+      updatePage(pages);
+    } else {
+      updatePage(value);
+    }
+  }
   return (
     <Grid
       templateColumns="0.2fr 1fr 0.2fr"
@@ -137,10 +200,69 @@ const AdminPage = () => {
           >
             <GridItem area="content1" mt="30px" ml="10px">
               <Metrics />
+              <Card borderRadius="none" mt="10px">
+                <CardBody>
+                  <Box display="flex">
+                    <Text fontSize="xl" fontWeight="bold" ml="15px">
+                      Latest Orders
+                    </Text>
+                    <Spacer />
+                    <Text pr="15px" fontSize="medium" mt="10px">
+                      <Text as="span" color="orange">
+                        {currentPage}
+                      </Text>
+                      /{totalPages}
+                    </Text>
+                    <Button
+                      mr="2px"
+                      onClick={() => handlePageChange("&lsaquo;")}
+                    >
+                      &lsaquo;
+                    </Button>
+                    <Button onClick={() => handlePageChange("&rsaquo;")}>
+                      &rsaquo;
+                    </Button>
+                  </Box>
+                </CardBody>
+              </Card>
               <LatestOrdersHeader />
-              {getAllOrders?.map((order) => (
+              {getAllOrders?.orderModels.map((order) => (
                 <LatestOrders key={order.orderId} order={order} />
               ))}
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                pt="20px"
+              >
+                <HStack justifyContent="center">
+                  <Button onClick={() => handlePageChange("&laquo;")}>
+                    &laquo;
+                  </Button>
+                  <Button onClick={() => handlePageChange("&lsaquo;")}>
+                    &lsaquo;
+                  </Button>
+                  {paginationRangeArray.map((number, index) => {
+                    if (number === number) {
+                      return (
+                        <Button
+                          key={index}
+                          onClick={() => handlePageChange(number)}
+                          color={page === number ? "orange.500" : "white.500"}
+                        >
+                          {number}
+                        </Button>
+                      );
+                    }
+                  })}
+                  <Button onClick={() => handlePageChange("&rsaquo;")}>
+                    &rsaquo;
+                  </Button>
+                  <Button onClick={() => handlePageChange("&raquo;")}>
+                    &raquo;
+                  </Button>
+                </HStack>
+              </Box>
             </GridItem>
           </Grid>
         ) : (
