@@ -54,7 +54,7 @@ const AdminPage = () => {
   const isLastPage = getAllOrders?.pageResponse.last ?? false;
   const totalElements = getAllOrders?.pageResponse.totalElements ?? 0;
   const pages = Math.ceil(totalElements / pageSize);
-
+  const orders = getAllOrders?.orderModels || [];
   const paginationRangeArray = paginationRange({
     totalPage: pages,
     page: page,
@@ -229,40 +229,42 @@ const AdminPage = () => {
               {getAllOrders?.orderModels.map((order) => (
                 <LatestOrders key={order.orderId} order={order} />
               ))}
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                pt="20px"
-              >
-                <HStack justifyContent="center">
-                  <Button onClick={() => handlePageChange("&laquo;")}>
-                    &laquo;
-                  </Button>
-                  <Button onClick={() => handlePageChange("&lsaquo;")}>
-                    &lsaquo;
-                  </Button>
-                  {paginationRangeArray.map((number, index) => {
-                    if (number === number) {
-                      return (
-                        <Button
-                          key={index}
-                          onClick={() => handlePageChange(number)}
-                          color={page === number ? "orange.500" : "white.500"}
-                        >
-                          {number}
-                        </Button>
-                      );
-                    }
-                  })}
-                  <Button onClick={() => handlePageChange("&rsaquo;")}>
-                    &rsaquo;
-                  </Button>
-                  <Button onClick={() => handlePageChange("&raquo;")}>
-                    &raquo;
-                  </Button>
-                </HStack>
-              </Box>
+              {orders.length > 0 && (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  pt="20px"
+                >
+                  <HStack justifyContent="center">
+                    <Button onClick={() => handlePageChange("&laquo;")}>
+                      &laquo;
+                    </Button>
+                    <Button onClick={() => handlePageChange("&lsaquo;")}>
+                      &lsaquo;
+                    </Button>
+                    {paginationRangeArray.map((number, index) => {
+                      if (number === number) {
+                        return (
+                          <Button
+                            key={index}
+                            onClick={() => handlePageChange(number)}
+                            color={page === number ? "orange.500" : "white.500"}
+                          >
+                            {number}
+                          </Button>
+                        );
+                      }
+                    })}
+                    <Button onClick={() => handlePageChange("&rsaquo;")}>
+                      &rsaquo;
+                    </Button>
+                    <Button onClick={() => handlePageChange("&raquo;")}>
+                      &raquo;
+                    </Button>
+                  </HStack>
+                </Box>
+              )}
             </GridItem>
           </Grid>
         ) : (
