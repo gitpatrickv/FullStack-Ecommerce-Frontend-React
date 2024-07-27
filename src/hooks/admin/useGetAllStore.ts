@@ -1,24 +1,26 @@
 
 import { useQuery } from "@tanstack/react-query";
-import Store from "../../entities/Store";
+import { StoreResponse } from "../../entities/Store";
 import { axiosInstance } from "../../services/api-client";
 import { useAuthQueryStore } from "../../store/auth-store";
-
+import { PaginateProps } from "./useGetAllUsers";
 const apiClient = axiosInstance;
 
-export const useGetAllStore = (sortBy: string) => {
+export const useGetAllStore = ({pageNo, pageSize, sortBy}: PaginateProps) => {
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
 
     return useQuery ({
-        queryKey: ['storeList', sortBy],
+        queryKey: ['storeList',pageNo,pageSize, sortBy],
         queryFn: async () => {
-            const {data} = await apiClient.get<Store[]>(`/store/list`, 
+            const {data} = await apiClient.get<StoreResponse>(`/store/list`, 
             {
                 headers:{
                     Authorization: `Bearer ${jwtToken}`,
                 },  
                 params: {
+                    pageNo: pageNo - 1,
+                    pageSize: pageSize,
                     sortBy: sortBy
                 },
             }) 

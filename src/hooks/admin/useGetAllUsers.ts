@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../../services/api-client";
 import { useAuthQueryStore } from "../../store/auth-store";
 
-interface PaginateProps {
+export interface PaginateProps {
     pageNo: number;
     pageSize: number;
     sortBy: string;
