@@ -50,12 +50,7 @@ const ProductOrderedHeader = () => {
             </Text>
           </GridItem>
           <GridItem area="content4" textAlign="end">
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              whiteSpace="nowrap"
-              pr="10px"
-            >
+            <Text fontSize={fontSize} fontWeight="semibold" whiteSpace="nowrap">
               Item Subtotal
             </Text>
           </GridItem>

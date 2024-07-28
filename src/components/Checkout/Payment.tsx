@@ -1,29 +1,36 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogOverlay,
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   Grid,
   GridItem,
+  Spacer,
   Text,
   useBreakpointValue,
-  useDisclosure,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useGetOrdersByToPayStatus from "../../hooks/user/useGetOrdersByToPayStatus";
+import usePlaceOrder from "../../hooks/user/usePlaceOrder";
+import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import { useRef } from "react";
 
 interface Props {
   shippingFee: number;
   totalPayment: number;
-  onPlaceOrder: () => void;
+  onRefetchCarts: () => void;
+  onRefetchTotal: () => void;
 }
 
-const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
+const Payment = ({
+  shippingFee,
+  totalPayment,
+  onRefetchCarts,
+  onRefetchTotal,
+}: Props) => {
+  const navigate = useNavigate();
   const fontSize = useBreakpointValue({
     base: "sm",
     md: "md",
@@ -31,38 +38,99 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
     xl: "xl",
   });
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const { authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { refetch: refetchOrderByToPayStatus } =
+    useGetOrdersByToPayStatus(jwtToken);
+  const { mutate: placeOrder } = usePlaceOrder();
+
+  const handlePlaceOrder = () => {
+    placeOrder(
+      { jwtToken: jwtToken, paymentMethod: paymentMethod },
+      {
+        onSuccess: () => {
+          onRefetchCarts(), onRefetchTotal(), refetchOrderByToPayStatus();
+          {
+            paymentMethod === "cash_on_delivery"
+              ? navigate("/user/purchase/order/pending")
+              : navigate("/user/purchase/order/to-ship");
+          }
+        },
+      }
+    );
+  };
+
   return (
     <Card maxW="100%" mt="5px" borderRadius="none">
       <CardBody>
         <Grid
-          templateColumns="2fr  0.5fr 0.3fr"
+          templateRows="0.3fr 0.7fr"
+          templateColumns="0.6fr 0.3fr 0.1fr"
           templateAreas={`
+  "button button button"
   "content1 content2 content3"
 `}
         >
-          <GridItem area="content1">
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              textAlign="start"
-              pr="100px"
-              whiteSpace="nowrap"
-            >
-              Payment Method
-            </Text>
+          <GridItem
+            area="button"
+            minWidth={["700px", "900px", "1100px"]}
+            mb="5px"
+          >
+            <Box display="flex" mt="5px" ml="15px" alignItems="center">
+              <Text
+                fontSize="xl"
+                fontWeight="semibold"
+                whiteSpace="nowrap"
+                mr="50px"
+              >
+                Payment Method
+              </Text>
+              <ButtonGroup isAttached>
+                <Button
+                  color={
+                    paymentMethod === "stripe" ? "orange.400" : "white.500"
+                  }
+                  border={
+                    paymentMethod === "stripe" ? "1px solid orange" : "none"
+                  }
+                  _hover={{ color: "orange.400" }}
+                  onClick={() => setPaymentMethod("stripe")}
+                  mr="10px"
+                  borderRadius="none"
+                >
+                  Stripe Payment
+                </Button>
+                <Button
+                  color={
+                    paymentMethod === "cash_on_delivery"
+                      ? "orange.400"
+                      : "white.500"
+                  }
+                  border={
+                    paymentMethod === "cash_on_delivery"
+                      ? "1px solid orange"
+                      : "none"
+                  }
+                  _hover={{ color: "orange.400" }}
+                  onClick={() => setPaymentMethod("cash_on_delivery")}
+                  borderRadius="none"
+                >
+                  Cash On Delivery
+                </Button>
+              </ButtonGroup>
+              <Spacer />
+              <Text fontSize="xl" fontWeight="semibold" whiteSpace="nowrap">
+                {paymentMethod === "stripe"
+                  ? "Stripe Payment"
+                  : paymentMethod === "cash_on_delivery"
+                  ? "Cash On Delivery"
+                  : ""}
+              </Text>
+            </Box>
           </GridItem>
 
           <GridItem area="content2">
-            <Text
-              fontSize={fontSize}
-              fontWeight="semibold"
-              whiteSpace="nowrap"
-              textAlign="end"
-            >
-              Cash On Delivery
-            </Text>
             <Text
               fontSize={fontSize}
               fontWeight="semibold"
@@ -82,17 +150,6 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
           </GridItem>
           <GridItem area="content3">
             <Text
-              color="orange.400"
-              fontSize={fontSize}
-              fontWeight="semibold"
-              cursor="pointer"
-              textAlign="end"
-              onClick={() => onOpen()}
-            >
-              Change
-            </Text>
-
-            <Text
               fontSize={fontSize}
               fontWeight="semibold"
               textAlign="end"
@@ -110,16 +167,17 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
             >
               {formatCurrency(totalPayment)}
             </Text>
+
             <Box display="flex" justifyContent="flex-end" mt="20px">
               <Button
-                onClick={onPlaceOrder}
+                onClick={handlePlaceOrder}
                 bg="orange.500"
                 _hover={{ bg: "orange.600" }}
               >
                 Place Order
               </Button>
             </Box>
-            <AlertDialog
+            {/* <AlertDialog
               isOpen={isOpen}
               leastDestructiveRef={cancelRef}
               onClose={onClose}
@@ -130,7 +188,40 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
                 <AlertDialogContent>
                   <AlertDialogBody mt="20px">
                     <Box display="flex" justifyContent="center">
-                      <Text fontSize="x-large">NOT YET IMPLEMENTED</Text>
+                      
+                      <RadioGroup
+                        onChange={setPaymentMethod}
+                        value={paymentMethod}
+                      >
+                        <Stack direction="row">
+                          <Radio value="stripe">Stripe</Radio>
+                          <Radio value="cash_on_delivery">
+                            Cash on Delivery
+                          </Radio>
+                        </Stack>
+                      </RadioGroup>
+                      <ButtonGroup isAttached>
+                        <Stack direction="row" spacing={4}>
+                          <Button
+                            colorScheme={
+                              paymentMethod === "stripe" ? "blue" : "gray"
+                            }
+                            onClick={() => setPaymentMethod("stripe")}
+                          >
+                            Stripe
+                          </Button>
+                          <Button
+                            colorScheme={
+                              paymentMethod === "cash_on_delivery"
+                                ? "blue"
+                                : "gray"
+                            }
+                            onClick={() => setPaymentMethod("cash_on_delivery")}
+                          >
+                            Cash on Delivery
+                          </Button>
+                        </Stack>
+                      </ButtonGroup>
                     </Box>
                   </AlertDialogBody>
 
@@ -146,7 +237,7 @@ const Payment = ({ shippingFee, totalPayment, onPlaceOrder }: Props) => {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialogOverlay>
-            </AlertDialog>
+            </AlertDialog> */}
           </GridItem>
         </Grid>
       </CardBody>

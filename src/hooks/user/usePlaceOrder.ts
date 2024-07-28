@@ -4,12 +4,17 @@ import { axiosInstance } from "../../services/api-client";
 
 const apiClient = axiosInstance;
 
+interface Props{
+    jwtToken: string,
+    paymentMethod: string;
+}
+
 const usePlaceOrder = () => {
     const toast = useToast();
     const queryClient = useQueryClient();
     return useMutation(
-        async (jwtToken : string) => {
-            const { data } = await apiClient.post("/order", {},
+        async ({jwtToken,paymentMethod} : Props) => {
+            const { data } = await apiClient.post(`/order/${paymentMethod}`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${jwtToken}`
@@ -18,18 +23,8 @@ const usePlaceOrder = () => {
             )
 
             if(data.payment_url){
-                console.log("Redirecting to:", data.payment_url); 
                 window.location.href = data.payment_url;
-            } else {
-                toast({
-                    position: "top",
-                    title: "Failed to redirect to payment page.",
-                    status: "error",
-                    duration: 2000,
-                    isClosable: true,
-                });
-            }
-
+            } 
             return data;
         },
         {
