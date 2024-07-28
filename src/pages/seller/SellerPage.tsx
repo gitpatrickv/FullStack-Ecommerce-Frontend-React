@@ -171,10 +171,8 @@ const SellerPage = () => {
             templateAreas={`
             "content1"
             `}
-            gap={4}
-            p={3}
           >
-            <GridItem area="content1">
+            <GridItem area="content1" mt="30px" ml="10px">
               <ToDoList storeId={store?.storeId || ""} />
               <BusinessInsights
                 orderCount={store?.orderCount ?? 0}

@@ -28,7 +28,7 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
   const { data: suspendedProductCount } = useGetSuspendedProductCount(storeId);
 
   return (
-    <Card mt="5px">
+    <Card mt="5px" borderRadius="none">
       <CardBody>
         <Grid
           templateRows="0.3fr 0.7fr"

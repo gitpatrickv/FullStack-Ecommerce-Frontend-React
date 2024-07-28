@@ -16,6 +16,20 @@ const usePlaceOrder = () => {
                     }
                 }
             )
+
+            if(data.payment_url){
+                console.log("Redirecting to:", data.payment_url); 
+                window.location.href = data.payment_url;
+            } else {
+                toast({
+                    position: "top",
+                    title: "Failed to redirect to payment page.",
+                    status: "error",
+                    duration: 2000,
+                    isClosable: true,
+                });
+            }
+
             return data;
         },
         {
@@ -31,7 +45,7 @@ const usePlaceOrder = () => {
                 status: "success",
                 duration: 2000,
                 isClosable: true,
-              });     
+              });    
         }
     }
     )
