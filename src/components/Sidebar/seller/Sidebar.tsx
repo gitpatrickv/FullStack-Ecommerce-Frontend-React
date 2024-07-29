@@ -401,6 +401,22 @@ const Sidebar = ({ storeId }: Props) => {
                   Shop Profile
                 </Text>
               </Link>
+              <Link to="/seller/store/create">
+                <Text
+                  fontSize={fontSize}
+                  mb="3px"
+                  mt="3px"
+                  color={
+                    location.pathname === "/seller/store/create"
+                      ? "orange.400"
+                      : "white.500"
+                  }
+                  cursor="pointer"
+                  whiteSpace="nowrap"
+                >
+                  Create Shop
+                </Text>
+              </Link>
             </Box>
           </>
         )}

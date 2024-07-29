@@ -34,7 +34,7 @@ const CreateStorePage = () => {
         <Center mt="100px">
           <Stack spacing="5">
             <VStack as="header" spacing="6" mt="8">
-              <Heading>Store Information</Heading>
+              <Heading>Shop Information</Heading>
             </VStack>
             <Card
               variant="outline"
@@ -49,14 +49,14 @@ const CreateStorePage = () => {
                       disabled={loading}
                       {...register("storeName")}
                       type="text"
-                      placeholder="Store Name"
+                      placeholder="Shop Name"
                       borderColor="gray.500"
                     />
 
                     <Textarea
                       disabled={loading}
                       {...register("storeDescription")}
-                      placeholder="Store Description"
+                      placeholder="Shop Description"
                       borderColor="gray.500"
                     />
 
@@ -64,7 +64,7 @@ const CreateStorePage = () => {
                       disabled={loading}
                       {...register("address")}
                       type="text"
-                      placeholder="Store Address"
+                      placeholder="Shop Address"
                       borderColor="gray.500"
                     />
 
@@ -72,7 +72,7 @@ const CreateStorePage = () => {
                       disabled={loading}
                       {...register("contactNumber")}
                       type="text"
-                      placeholder="Store Contact Number"
+                      placeholder="Shop Contact Number"
                       borderColor="gray.500"
                     />
 
@@ -80,7 +80,7 @@ const CreateStorePage = () => {
                       disabled={loading}
                       {...register("shippingFee")}
                       type="text"
-                      placeholder="Store Shipping Fee"
+                      placeholder="Shop Shipping Fee"
                       borderColor="gray.500"
                     />
 
@@ -90,7 +90,7 @@ const CreateStorePage = () => {
                       _hover={{ color: "orange.400" }}
                       mr="5px"
                     >
-                      Create Store
+                      Create Shop
                     </Button>
                   </VStack>
                 </form>

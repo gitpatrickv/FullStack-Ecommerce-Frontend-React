@@ -86,7 +86,7 @@ const Payment = ({
               >
                 Payment Method
               </Text>
-              <ButtonGroup isAttached>
+              <ButtonGroup>
                 <Button
                   color={
                     paymentMethod === "stripe" ? "orange.400" : "white.500"
@@ -173,71 +173,11 @@ const Payment = ({
                 onClick={handlePlaceOrder}
                 bg="orange.500"
                 _hover={{ bg: "orange.600" }}
+                isDisabled={paymentMethod === "" ? true : false}
               >
                 Place Order
               </Button>
             </Box>
-            {/* <AlertDialog
-              isOpen={isOpen}
-              leastDestructiveRef={cancelRef}
-              onClose={onClose}
-              isCentered
-              size="lg"
-            >
-              <AlertDialogOverlay>
-                <AlertDialogContent>
-                  <AlertDialogBody mt="20px">
-                    <Box display="flex" justifyContent="center">
-                      
-                      <RadioGroup
-                        onChange={setPaymentMethod}
-                        value={paymentMethod}
-                      >
-                        <Stack direction="row">
-                          <Radio value="stripe">Stripe</Radio>
-                          <Radio value="cash_on_delivery">
-                            Cash on Delivery
-                          </Radio>
-                        </Stack>
-                      </RadioGroup>
-                      <ButtonGroup isAttached>
-                        <Stack direction="row" spacing={4}>
-                          <Button
-                            colorScheme={
-                              paymentMethod === "stripe" ? "blue" : "gray"
-                            }
-                            onClick={() => setPaymentMethod("stripe")}
-                          >
-                            Stripe
-                          </Button>
-                          <Button
-                            colorScheme={
-                              paymentMethod === "cash_on_delivery"
-                                ? "blue"
-                                : "gray"
-                            }
-                            onClick={() => setPaymentMethod("cash_on_delivery")}
-                          >
-                            Cash on Delivery
-                          </Button>
-                        </Stack>
-                      </ButtonGroup>
-                    </Box>
-                  </AlertDialogBody>
-
-                  <AlertDialogFooter mb="10px">
-                    <Button
-                      ref={cancelRef}
-                      onClick={onClose}
-                      _hover={{ color: "orange.500" }}
-                      width="120px"
-                    >
-                      CLOSE
-                    </Button>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialogOverlay>
-            </AlertDialog> */}
           </GridItem>
         </Grid>
       </CardBody>

@@ -16,7 +16,7 @@ export const schema = z.object({
     name: z.string(),
     address: z.string(),
     contactNumber: z.string(),
-    password: z.string(),
-    confirmPassword: z.string(),
+    password: z.string().min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z.string().min(8, { message: "Password must be at least 8 characters" }),
     role: z.string(),
   });

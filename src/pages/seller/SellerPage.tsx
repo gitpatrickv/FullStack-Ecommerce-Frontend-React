@@ -56,9 +56,14 @@ const SellerPage = () => {
     refetchSuspendedCount();
   };
 
-  const handleStoreInfoNavigateClick = () => {
+  const handleShopInfoNavigateClick = () => {
     navigate("/seller/shop/info");
   };
+
+  const handleCreateShopNavigateClick = () => {
+    navigate("/seller/store/create");
+  };
+
   return (
     <Grid
       templateColumns="0.2fr 1fr 0.2fr"
@@ -128,8 +133,11 @@ const SellerPage = () => {
                     variant="none"
                   />
                   <MenuList>
-                    <MenuItem onClick={handleStoreInfoNavigateClick}>
-                      Store Information
+                    <MenuItem onClick={handleShopInfoNavigateClick}>
+                      Shop Profile
+                    </MenuItem>
+                    <MenuItem onClick={handleCreateShopNavigateClick}>
+                      Create Shop
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
