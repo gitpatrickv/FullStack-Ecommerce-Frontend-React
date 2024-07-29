@@ -3,7 +3,7 @@ import CategoryList from "../../components/Category/CategoryList";
 import useGetAllCategory from "../../hooks/user/useGetAllCategory";
 
 const CategoryPage = () => {
-  const { data: category } = useGetAllCategory();
+  const { data: category, refetch: refetchCategory } = useGetAllCategory();
 
   return (
     <Grid
@@ -15,7 +15,11 @@ const CategoryPage = () => {
       <GridItem area="content1">
         <SimpleGrid columns={{ base: 5 }} spacing={2} minW="1000px">
           {category?.data.map((category) => (
-            <CategoryList key={category.categoryId} category={category} />
+            <CategoryList
+              key={category.categoryId}
+              category={category}
+              onRefetchCategory={refetchCategory}
+            />
           ))}
         </SimpleGrid>
       </GridItem>

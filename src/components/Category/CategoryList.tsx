@@ -4,8 +4,6 @@ import {
   Card,
   CardBody,
   FormLabel,
-  Grid,
-  GridItem,
   Image,
   Input,
   Modal,
@@ -15,21 +13,49 @@ import {
   ModalFooter,
   ModalOverlay,
   Text,
-  Textarea,
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import Category from "../../entities/Category";
 import { FaRegEdit } from "react-icons/fa";
-import { register } from "module";
+import Category from "../../entities/Category";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import useEditCategoryName from "../../hooks/admin/useEditCategoryName";
 
 interface Props {
   category: Category;
+  onRefetchCategory: () => void;
 }
 
-const CategoryList = ({ category }: Props) => {
+const CategoryList = ({ category, onRefetchCategory }: Props) => {
   const fontSize = useBreakpointValue({ base: "sm", xl: "xl" });
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onSubmit } = useEditCategoryName(category.categoryId);
+
+  const { register, handleSubmit, setValue } = useForm<Category>({
+    defaultValues: {
+      categoryName: category.categoryName,
+    },
+  });
+
+  useEffect(() => {
+    if (category) {
+      setValue("categoryName", category.categoryName);
+    }
+  }, [category, setValue]);
+
+  const handleEditCategoryNameClick = async (data: {
+    categoryName: string;
+  }) => {
+    try {
+      await onSubmit(data);
+      onRefetchCategory();
+      onClose();
+    } catch (error) {
+      console.error("Error editing category name ", error);
+    }
+  };
+
   return (
     <>
       <Card borderRadius="none">
@@ -56,73 +82,67 @@ const CategoryList = ({ category }: Props) => {
         <Box>
           <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
             <ModalOverlay />
-            {/* <form
+            <form
               onSubmit={(event) => {
                 event.preventDefault();
-                handleSubmit(handleFormSubmit)(event);
+                handleSubmit(handleEditCategoryNameClick)(event);
               }}
-            > */}
-            <ModalContent>
-              <ModalCloseButton />
-              <ModalBody mt="30px">
-                <Box>
-                  <Text
-                    fontSize={fontSize}
-                    fontWeight="semibold"
-                    textTransform="capitalize"
-                    mb="5px"
-                  >
-                    Edit Category
-                  </Text>
-                  <FormLabel color="white.500" mt="10px">
-                    Category Name
-                  </FormLabel>
-                  <Input
-                    // {...register("productName", { required: true })}
-                    type="text"
-                    placeholder="Product Name"
-                    mb="10px"
-                  />
-                  {/* <FormLabel color="gray.400">Product Description</FormLabel>
-                  <Textarea
-                    {...register("productDescription", { required: true })}
-                    placeholder="Product Description"
-                  /> */}
-                  <input
-                    type="file"
-                    accept=".jpeg, .png"
-                    //   onChange={handleUploadImage}
-                    style={{ display: "none" }}
-                    id="file-upload"
-                  />
-                  <label htmlFor="file-upload">
-                    <Button
-                      as="span"
-                      mt="20px"
-                      cursor="pointer"
-                      _hover={{ color: "orange.400" }}
+            >
+              <ModalContent>
+                <ModalCloseButton />
+                <ModalBody mt="30px">
+                  <Box>
+                    <Text
+                      fontSize={fontSize}
+                      fontWeight="semibold"
+                      textTransform="capitalize"
+                      mb="5px"
                     >
-                      Select Image
-                    </Button>
-                  </label>
-                </Box>
-              </ModalBody>
+                      Edit Category
+                    </Text>
+                    <FormLabel color="white.500" mt="10px">
+                      Category Name
+                    </FormLabel>
+                    <Input
+                      {...register("categoryName", { required: true })}
+                      type="text"
+                      mb="10px"
+                    />
+                    <input
+                      type="file"
+                      accept=".jpeg, .png"
+                      //   onChange={handleUploadImage}
+                      style={{ display: "none" }}
+                      id="file-upload"
+                    />
+                    <label htmlFor="file-upload">
+                      <Button
+                        as="span"
+                        mt="20px"
+                        cursor="pointer"
+                        _hover={{ color: "orange.400" }}
+                      >
+                        Select Image
+                      </Button>
+                    </label>
+                  </Box>
+                </ModalBody>
 
-              <ModalFooter>
-                <Button _hover={{ color: "orange.400" }} onClick={onClose}>
-                  Close
-                </Button>
-                <Button
-                  ml="5px"
-                  type="submit"
-                  bg="orange.500"
-                  _hover={{ bg: "orange.600" }}
-                >
-                  Save
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-            {/* </form> */}
+                <ModalFooter>
+                  <Button _hover={{ color: "orange.400" }} onClick={onClose}>
+                    Close
+                  </Button>
+                  <Button
+                    ml="5px"
+                    type="submit"
+                    bg="orange.500"
+                    _hover={{ bg: "orange.600" }}
+                  >
+                    Save
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </form>
           </Modal>
         </Box>
       </Card>
