@@ -43,6 +43,8 @@ import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
 import UserListPage from "../pages/admin/UserListPage";
+import CategoryPage from "../pages/admin/CategoryPage";
+import CreateCategoryPage from "../pages/admin/CreateCategoryPage";
 
 const router = createBrowserRouter([
   {
@@ -160,6 +162,8 @@ const router = createBrowserRouter([
     children: [
       { path: "shop/list", element: <ShopListPage /> },
       { path: "user/list", element: <UserListPage /> },
+      { path: "category/list", element: <CategoryPage /> },
+      { path: "category/create", element: <CreateCategoryPage /> },
     ],
   },
 ]);

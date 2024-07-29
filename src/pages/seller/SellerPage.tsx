@@ -136,9 +136,11 @@ const SellerPage = () => {
                     <MenuItem onClick={handleShopInfoNavigateClick}>
                       Shop Profile
                     </MenuItem>
-                    <MenuItem onClick={handleCreateShopNavigateClick}>
-                      Create Shop
-                    </MenuItem>
+                    {!store?.storeId && (
+                      <MenuItem onClick={handleCreateShopNavigateClick}>
+                        Create Shop
+                      </MenuItem>
+                    )}
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>

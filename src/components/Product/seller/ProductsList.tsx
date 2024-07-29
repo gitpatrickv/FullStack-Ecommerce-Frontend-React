@@ -291,12 +291,12 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                         fontWeight="semibold"
                         textTransform="capitalize"
                         mb="5px"
-                        color="orange.400"
+                        color="white.500"
                         mr="10px"
                       >
                         {product.productName}
                       </Text>
-                      <Box pb="5px" cursor="pointer" color="gray.500">
+                      <Box pb="5px" cursor="pointer" color="white.500">
                         <FaRegEdit size="20" onClick={onProductInfoOpen} />
                       </Box>
                     </Box>
@@ -304,7 +304,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                       fontSize="small"
                       textTransform="capitalize"
                       mb="5px"
-                      color="gray.400"
+                      color="white.500"
                     >
                       {product.productDescription}
                     </Text>
@@ -468,18 +468,23 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                     fontWeight="semibold"
                     textTransform="capitalize"
                     mb="5px"
-                    color="orange.400"
+                    color="white.500"
+                    mt="10px"
                   >
                     Product Information
                   </Text>
-                  <FormLabel color="gray.400">Product Name</FormLabel>
+                  <FormLabel color="white.500" mt="10px">
+                    Product Name
+                  </FormLabel>
                   <Input
                     {...register("productName", { required: true })}
                     type="text"
                     placeholder="Product Name"
                     mb="10px"
                   />
-                  <FormLabel color="gray.400">Product Description</FormLabel>
+                  <FormLabel color="white.500" mt="10px">
+                    Product Description
+                  </FormLabel>
                   <Textarea
                     {...register("productDescription", { required: true })}
                     placeholder="Product Description"
