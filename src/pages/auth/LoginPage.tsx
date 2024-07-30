@@ -6,6 +6,7 @@ import {
   Center,
   CloseButton,
   FormControl,
+  FormLabel,
   HStack,
   Heading,
   Input,
@@ -23,7 +24,7 @@ const LoginPage = () => {
     <Box>
       <Center>
         <Stack spacing="5">
-          <VStack as="header" spacing="6" mt="8">
+          <VStack as="header" mt="8">
             <Heading>
               {loading ? <Text>Logging In...</Text> : <Text>Log In</Text>}
             </Heading>
@@ -31,7 +32,7 @@ const LoginPage = () => {
           <Card
             variant="outline"
             borderColor="gray"
-            w="400px"
+            w="500px"
             borderRadius="none"
           >
             <Box alignSelf="flex-end">
@@ -43,6 +44,7 @@ const LoginPage = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={4}>
                   <FormControl>
+                    <FormLabel color="white.500">Email</FormLabel>
                     <Input
                       disabled={loading}
                       {...register("email", { required: "Email is required" })}
@@ -55,6 +57,7 @@ const LoginPage = () => {
                     )}
                   </FormControl>
                   <FormControl>
+                    <FormLabel color="white.500">Password</FormLabel>
                     <Input
                       disabled={loading}
                       {...register("password", {
@@ -85,7 +88,7 @@ const LoginPage = () => {
           <Card
             variant="outline"
             borderColor="gray"
-            w="400px"
+            w="500px"
             borderRadius="none"
           >
             <CardBody>

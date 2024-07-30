@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { User, schema } from '../../entities/User';
 import { axiosInstance } from '../../services/api-client';
 import { useAuthQueryStore } from '../../store/auth-store';
+import { useToast } from '@chakra-ui/react';
 
 const apiClient = axiosInstance;
 
@@ -14,6 +15,7 @@ const useRegisterUser = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const {setJwtToken, setRole} = useAuthQueryStore();
+    const toast = useToast();
 
     const mutation = useMutation({
         mutationFn: (data: User) => apiClient.post("/user/register", data)
@@ -38,6 +40,13 @@ const useRegisterUser = () => {
         onError: (error) => {
             setLoading(false);
             console.error("Login failed", error);
+            toast({
+              position: "top",
+              title: "Registration failed.",
+              status: "error",
+              duration: 1000,
+              isClosable: true,
+            }); 
           },
 })
 

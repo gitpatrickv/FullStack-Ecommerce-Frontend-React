@@ -1,17 +1,10 @@
+import { Box, Button, Card, HStack, Spacer, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import UserList from "../../components/User/admin/UserList";
-import { useGetAllUsers } from "../../hooks/admin/useGetAllUsers";
 import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../../components/User/admin/Header";
+import UserList from "../../components/User/admin/UserList";
 import UserListHeader from "../../components/User/admin/UserListHeader";
-import {
-  Card,
-  Box,
-  Button,
-  Text,
-  HStack,
-  Spacer,
-  Divider,
-} from "@chakra-ui/react";
+import { useGetAllUsers } from "../../hooks/admin/useGetAllUsers";
 import { paginationRange } from "../../utilities/pagination";
 
 const UserListPage = () => {
@@ -85,12 +78,9 @@ const UserListPage = () => {
 
   return (
     <>
+      <Header />
       <Card borderRadius="none">
         <Box padding={4}>
-          <Text fontSize="xl" fontWeight="semibold" mb="10px">
-            User List
-          </Text>
-          <Divider mb="15px" />
           <Box display="flex" alignItems="center">
             <Text
               fontSize="lg"

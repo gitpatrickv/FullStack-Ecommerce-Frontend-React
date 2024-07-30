@@ -31,12 +31,17 @@ const CategoryListHeader = () => {
           <Text fontSize="xl" fontWeight="semibold">
             Category List
           </Text>
-          <IconButton
-            icon={<FaPlus />}
-            aria-label="Add"
-            colorScheme="orange"
-            onClick={onOpen}
-          />
+          <Box display="flex" alignItems="center">
+            <Text fontSize="xl" fontWeight="semibold" mr="10px">
+              New Category
+            </Text>
+            <IconButton
+              icon={<FaPlus />}
+              aria-label="Add"
+              colorScheme="orange"
+              onClick={onOpen}
+            />
+          </Box>
         </Box>
       </CardBody>
       <Box>
@@ -56,9 +61,9 @@ const CategoryListHeader = () => {
                     fontSize={fontSize}
                     fontWeight="semibold"
                     textTransform="capitalize"
-                    mb="5px"
+                    mb="20px"
                   >
-                    Add New Category
+                    Create a New Category
                   </Text>
                   <FormLabel color="white.500" mt="10px">
                     Category Name
