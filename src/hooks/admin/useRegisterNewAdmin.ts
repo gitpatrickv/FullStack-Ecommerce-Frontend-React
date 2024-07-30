@@ -9,7 +9,7 @@ import { axiosInstance } from '../../services/api-client';
 const apiClient = axiosInstance;
 
 const useRegisterNewAdmin = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<User>({ resolver: zodResolver(schema) });
+    const { register, handleSubmit, formState: { errors }, setError } = useForm<User>({ resolver: zodResolver(schema) });
     const [loading, setLoading] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const queryClient = useQueryClient();
@@ -23,7 +23,7 @@ const useRegisterNewAdmin = () => {
             queryClient.invalidateQueries(['userList']);
             onClose();
         },
-        onError: (error) => {
+        onError: (error: any) => {
             setLoading(false);
             console.error("Registration failed", error);
             toast({
@@ -32,7 +32,14 @@ const useRegisterNewAdmin = () => {
                 status: "error",
                 duration: 1000,
                 isClosable: true,
-              });     
+              });  
+            
+            if(error.response?.data.email) {
+                setError('email', {
+                    type: 'server',
+                    message: error.response.data.email
+                })
+            }
           },
 })
 

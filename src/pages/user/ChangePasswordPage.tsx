@@ -18,7 +18,8 @@ import { RiEyeCloseLine } from "react-icons/ri";
 import useChangePassword from "../../hooks/user/useChangePassword";
 
 const ChangePasswordPage = () => {
-  const { onSubmit, loading, register, handleSubmit } = useChangePassword();
+  const { onSubmit, loading, register, handleSubmit, errors } =
+    useChangePassword();
   const isTruncated = useBreakpointValue({ base: true });
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -111,6 +112,9 @@ const ChangePasswordPage = () => {
                   />
                 </InputRightElement>
               </InputGroup>
+              {errors.oldPassword && (
+                <Text color="red">{errors.oldPassword.message}</Text>
+              )}
             </FormControl>
 
             <FormControl pb="20px">
@@ -138,6 +142,12 @@ const ChangePasswordPage = () => {
                   />
                 </InputRightElement>
               </InputGroup>
+              {errors.newPassword && (
+                <Text color="red">{errors.newPassword.message}</Text>
+              )}
+              {errors.changePasswordRequest && (
+                <Text color="red">{errors.changePasswordRequest.message}</Text>
+              )}
             </FormControl>
 
             <FormControl pb="20px">
@@ -165,6 +175,12 @@ const ChangePasswordPage = () => {
                   />
                 </InputRightElement>
               </InputGroup>
+              {errors.confirmPassword && (
+                <Text color="red">{errors.confirmPassword.message}</Text>
+              )}
+              {errors.changePasswordRequest && (
+                <Text color="red">{errors.changePasswordRequest.message}</Text>
+              )}
             </FormControl>
             <Button
               isLoading={loading}

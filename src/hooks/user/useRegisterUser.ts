@@ -11,7 +11,7 @@ import { useToast } from '@chakra-ui/react';
 const apiClient = axiosInstance;
 
 const useRegisterUser = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<User>({ resolver: zodResolver(schema) });
+    const { register, handleSubmit, formState: { errors },  setError } = useForm<User>({ resolver: zodResolver(schema) });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const {setJwtToken, setRole} = useAuthQueryStore();
@@ -37,7 +37,7 @@ const useRegisterUser = () => {
               }
               console.log("login successful", role)
         },
-        onError: (error) => {
+        onError: (error: any) => {
             setLoading(false);
             console.error("Login failed", error);
             toast({
@@ -47,6 +47,12 @@ const useRegisterUser = () => {
               duration: 1000,
               isClosable: true,
             }); 
+            if(error.response?.data.email) {
+              setError('email', {
+                  type: 'server',
+                  message: error.response.data.email
+              })
+          }
           },
 })
 
