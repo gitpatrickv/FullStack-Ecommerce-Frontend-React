@@ -4,6 +4,7 @@ import {
   CardBody,
   Center,
   FormControl,
+  FormLabel,
   Grid,
   GridItem,
   Heading,
@@ -13,20 +14,11 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import useCreateStore, {
-  CreateStoreProps,
-} from "../../hooks/seller/useCreateStore";
+import useCreateStore from "../../hooks/seller/useCreateStore";
 
 const CreateStorePage = () => {
-  const { onSubmit } = useCreateStore();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateStoreProps>();
+  const { onSubmit, register, handleSubmit, errors } = useCreateStore();
   const [loading, setLoading] = useState(false);
 
   return (
@@ -39,7 +31,7 @@ const CreateStorePage = () => {
       <GridItem area="main">
         <Center mt="100px">
           <Stack spacing="5">
-            <VStack as="header" spacing="6" mt="8">
+            <VStack as="header">
               <Heading>Shop Information</Heading>
             </VStack>
             <Card
@@ -50,8 +42,9 @@ const CreateStorePage = () => {
             >
               <CardBody>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <VStack spacing={4} mt="5px">
+                  <VStack spacing={3} mt="5px">
                     <FormControl>
+                      <FormLabel color="white.500">Store Name</FormLabel>
                       <Input
                         disabled={loading}
                         {...register("storeName", {
@@ -66,6 +59,7 @@ const CreateStorePage = () => {
                       )}
                     </FormControl>
                     <FormControl>
+                      <FormLabel color="white.500">Store Description</FormLabel>
                       <Textarea
                         disabled={loading}
                         {...register("storeDescription", {
@@ -81,6 +75,7 @@ const CreateStorePage = () => {
                       )}
                     </FormControl>
                     <FormControl>
+                      <FormLabel color="white.500">Address</FormLabel>
                       <Input
                         disabled={loading}
                         {...register("address", {
@@ -95,6 +90,7 @@ const CreateStorePage = () => {
                       )}
                     </FormControl>
                     <FormControl>
+                      <FormLabel color="white.500">Contact Number</FormLabel>
                       <Input
                         disabled={loading}
                         {...register("contactNumber", {
@@ -110,12 +106,14 @@ const CreateStorePage = () => {
                       )}
                     </FormControl>
                     <FormControl>
+                      <FormLabel color="white.500">Shipping Fee</FormLabel>
                       <Input
                         disabled={loading}
                         {...register("shippingFee", {
                           required: "Shipping fee is required",
+                          valueAsNumber: true,
                         })}
-                        type="text"
+                        type="number"
                         placeholder="Shop Shipping Fee"
                         borderColor="gray.500"
                       />
