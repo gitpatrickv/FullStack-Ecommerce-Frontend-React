@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+  Divider,
   Grid,
   GridItem,
   HStack,
@@ -102,6 +103,7 @@ const ReviewManagementPage = () => {
             <Text fontSize="xl" fontWeight="semibold">
               Shop Rating List
             </Text>
+            <Divider mb="15px" mt="10px" />
             <Box display="flex" alignItems="center" mt="10px">
               <Text fontSize="lg" fontWeight="semibold" pr="20px">
                 Status

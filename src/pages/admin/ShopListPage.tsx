@@ -1,4 +1,12 @@
-import { Box, Button, Card, HStack, Spacer, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  HStack,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ShopList from "../../components/Shop/admin/ShopList";
@@ -78,6 +86,10 @@ const ShopListPage = () => {
     <>
       <Card borderRadius="none">
         <Box padding={4}>
+          <Text fontSize="xl" fontWeight="semibold" mb="10px">
+            Shop List
+          </Text>
+          <Divider mb="15px" />
           <Box display="flex" alignItems="center">
             <Text
               fontSize="lg"

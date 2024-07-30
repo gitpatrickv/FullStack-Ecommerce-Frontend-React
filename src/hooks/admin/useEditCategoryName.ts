@@ -31,9 +31,9 @@ const useEditCategoryName = (categoryId: string) => {
             queryClient.invalidateQueries(['category']);
             toast({
                 position: "top",
-                title: "Product Info. Successfully Updated",
+                title: "Category Successfully Updated",
                 status: "success",
-                duration: 1000,
+                duration: 2000,
                 isClosable: true,
               });
         },
@@ -46,9 +46,6 @@ const useEditCategoryName = (categoryId: string) => {
     return {
         onSubmit
     }
-
- 
- 
 }
 
 export default useEditCategoryName

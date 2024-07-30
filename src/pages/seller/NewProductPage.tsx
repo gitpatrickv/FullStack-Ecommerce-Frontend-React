@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Checkbox,
+  Divider,
   Grid,
   GridItem,
   HStack,
@@ -71,9 +72,10 @@ const NewProductPage = () => {
         }}
       >
         <GridItem area="main" padding={5}>
-          <Text fontSize="lg" fontWeight="semibold">
+          <Text fontSize="xl" fontWeight="semibold">
             Create New Product
           </Text>
+          <Divider mb="10px" mt="10px" />
           <Box p={4}>
             <Text mb="5px" fontSize="large" fontWeight="semibold">
               Category
