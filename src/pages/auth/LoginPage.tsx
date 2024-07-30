@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import useLogin from "../../hooks/user/useLogin";
 
 const LoginPage = () => {
-  const { register, handleSubmit, loading, onSubmit } = useLogin();
+  const { register, handleSubmit, loading, onSubmit, errors } = useLogin();
 
   return (
     <Box>
@@ -45,20 +45,28 @@ const LoginPage = () => {
                   <FormControl>
                     <Input
                       disabled={loading}
-                      {...register("email", { required: true })}
+                      {...register("email", { required: "Email is required" })}
                       type="text"
                       placeholder="Username or Email"
                       borderColor="gray"
                     />
+                    {errors.email && (
+                      <Text color="red"> {errors.email.message} </Text>
+                    )}
                   </FormControl>
                   <FormControl>
                     <Input
                       disabled={loading}
-                      {...register("password", { required: true })}
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
                       type="password"
                       placeholder="Password"
                       borderColor="gray"
                     />
+                    {errors.password && (
+                      <Text color="red"> {errors.password.message} </Text>
+                    )}
                   </FormControl>
                   <Button
                     isLoading={loading}

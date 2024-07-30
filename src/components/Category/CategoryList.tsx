@@ -86,8 +86,12 @@ const CategoryList = ({ category, onRefetchCategory }: Props) => {
               {category.categoryName}
             </Text>
 
-            <Box cursor="pointer" onClick={onOpen}>
-              <FaRegEdit size="22px" />
+            <Box
+              cursor="pointer"
+              onClick={onOpen}
+              _hover={{ color: "orange.400" }}
+            >
+              <FaRegEdit size="25px" />
             </Box>
           </Box>
         </CardBody>
@@ -143,7 +147,7 @@ const CategoryList = ({ category, onRefetchCategory }: Props) => {
                         </Button>
                       </label>
                     </Box>
-                    <FormLabel color="white.500" mt="10px">
+                    <FormLabel color="white.500" mt="10px" ml="2px">
                       Category Name
                     </FormLabel>
                     <Input

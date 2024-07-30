@@ -1,8 +1,8 @@
 import { Box, Text, useBreakpointValue } from "@chakra-ui/react";
-import { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoStorefrontSharp } from "react-icons/io5";
+import { MdCategory } from "react-icons/md";
+
 import { Link, useLocation } from "react-router-dom";
 
 const SidebarAdmin = () => {
@@ -12,11 +12,6 @@ const SidebarAdmin = () => {
   });
 
   const location = useLocation();
-  const [isCategoryPage, setIsCategoryPage] = useState(true);
-
-  const toggleCategorySection = () => {
-    setIsCategoryPage((prev) => !prev);
-  };
 
   return (
     <Box ml="10px" mt="30px">
@@ -85,9 +80,8 @@ const SidebarAdmin = () => {
         cursor="pointer"
         userSelect="none"
         mt="15px"
-        onClick={toggleCategorySection}
       >
-        <FaUser
+        <MdCategory
           size="20px"
           color={
             location.pathname.startsWith("/admin/category") ? "orange" : "gray"
@@ -106,59 +100,10 @@ const SidebarAdmin = () => {
                 : "white.500"
             }
           >
-            Category
+            Categories
           </Text>
         </Link>
-        {location.pathname.startsWith("/admin/category") ? (
-          <IoIosArrowDown
-            color={
-              location.pathname.startsWith("/admin/category")
-                ? "orange"
-                : "white"
-            }
-          />
-        ) : (
-          <IoIosArrowUp />
-        )}
       </Box>
-      {isCategoryPage && (
-        <>
-          <Box ml="25px">
-            <Link to="/admin/category/list">
-              <Text
-                fontSize={fontSize}
-                mb="3px"
-                mt="3px"
-                color={
-                  location.pathname === "/admin/category/list"
-                    ? "orange.400"
-                    : "white.500"
-                }
-                cursor="pointer"
-                whiteSpace="nowrap"
-              >
-                Category List
-              </Text>
-            </Link>
-            <Link to="/admin/category/create">
-              <Text
-                fontSize={fontSize}
-                mb="3px"
-                mt="3px"
-                color={
-                  location.pathname === "/admin/category/create"
-                    ? "orange.400"
-                    : "white.500"
-                }
-                cursor="pointer"
-                whiteSpace="nowrap"
-              >
-                Create Category
-              </Text>
-            </Link>
-          </Box>
-        </>
-      )}
     </Box>
   );
 };

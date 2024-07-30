@@ -14,7 +14,7 @@ const apiClient = axiosInstance;
 
 const useLogin = () => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {setJwtToken, setRole} = useAuthQueryStore();
@@ -74,6 +74,7 @@ const useLogin = () => {
     handleSubmit,
     loading,
     onSubmit,
+    errors
   };
 };
 
