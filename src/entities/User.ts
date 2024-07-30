@@ -13,10 +13,10 @@ export interface User {
 
 export const schema = z.object({
     email: z.string().email(),
-    name: z.string(),
-    address: z.string(),
-    contactNumber: z.string(),
+    name: z.string().min(1, "Name is required"),
+    address: z.string().min(1, "Address is required"),
+    contactNumber: z.string().min(1, "Contact Number is required"),
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),
     confirmPassword: z.string().min(8, { message: "Password must be at least 8 characters" }),
-    role: z.string(),
+    role: z.string().min(1, "Role is required"),
   });

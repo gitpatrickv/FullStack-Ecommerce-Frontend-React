@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   CardBody,
+  FormControl,
   FormLabel,
   Image,
   Input,
@@ -35,7 +36,12 @@ const CategoryList = ({ category, onRefetchCategory }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { onSubmit } = useEditCategoryName(category.categoryId);
   const { mutate: uploadPhoto } = useUpdateCategoryPhoto(category.categoryId);
-  const { register, handleSubmit, setValue } = useForm<Category>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Category>({
     defaultValues: {
       categoryName: category.categoryName,
     },
@@ -150,12 +156,18 @@ const CategoryList = ({ category, onRefetchCategory }: Props) => {
                     <FormLabel color="white.500" mt="10px" ml="2px">
                       Category Name
                     </FormLabel>
-                    <Input
-                      {...register("categoryName", { required: true })}
-                      type="text"
-                      mb="10px"
-                      maxWidth="70%"
-                    />
+                    <FormControl mb="10px">
+                      <Input
+                        {...register("categoryName", {
+                          required: "Category name is required",
+                        })}
+                        type="text"
+                        maxWidth="70%"
+                      />
+                      {errors.categoryName && (
+                        <Text color="red"> {errors.categoryName.message} </Text>
+                      )}
+                    </FormControl>
                   </Box>
                 </ModalBody>
 

@@ -26,7 +26,12 @@ const StoreInformationPage = () => {
   const { data: shop } = useGetStoreInfo(jwtToken);
   const { onSubmit, loading } = useUpdateShopInfo(shop?.storeId || "");
   const uploadPhoto = useUploadStorePhoto(shop?.storeId || "");
-  const { register, handleSubmit, setValue } = useForm<UpdateShopProps>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<UpdateShopProps>({
     defaultValues: {
       storeName: shop?.storeName,
       storeDescription: shop?.storeDescription,
@@ -122,41 +127,66 @@ const StoreInformationPage = () => {
               <FormControl pb="20px">
                 <Input
                   disabled={loading}
-                  {...register("storeName")}
+                  {...register("storeName", {
+                    required: "Store name is required",
+                  })}
                   type="text"
                   borderColor="gray.500"
                 />
+                {errors.storeName && (
+                  <Text color="red"> {errors.storeName.message} </Text>
+                )}
               </FormControl>
               <FormControl mb="20px">
                 <Textarea
                   disabled={loading}
-                  {...register("storeDescription")}
+                  {...register("storeDescription", {
+                    required: "Store description is required",
+                  })}
                   borderColor="gray.500"
                 />
+                {errors.storeDescription && (
+                  <Text color="red">{errors.storeDescription.message}</Text>
+                )}
               </FormControl>
               <FormControl mb="20px">
                 <Input
                   disabled={loading}
-                  {...register("address")}
+                  {...register("address", {
+                    required: "Address is required",
+                  })}
                   type="text"
                   borderColor="gray.500"
                 />
+                {errors.address && (
+                  <Text color="red">{errors.address.message}</Text>
+                )}
               </FormControl>
               <FormControl mb="20px">
                 <Input
                   disabled={loading}
-                  {...register("contactNumber")}
+                  {...register("contactNumber", {
+                    required: "Contact number is required",
+                  })}
                   type="text"
                   borderColor="gray.500"
                 />
+                {errors.contactNumber && (
+                  <Text color="red">{errors.contactNumber.message}</Text>
+                )}
               </FormControl>
               <FormControl mb="20px">
                 <Input
                   disabled={loading}
-                  {...register("shippingFee")}
+                  {...register("shippingFee", {
+                    required: "Shipping fee is required",
+                  })}
                   type="text"
                   borderColor="gray.500"
                 />
+                {errors.shippingFee && (
+                  <Text color="red">{errors.shippingFee.message}</Text>
+                )}
               </FormControl>
 
               <Button

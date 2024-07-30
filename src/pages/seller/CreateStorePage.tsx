@@ -3,11 +3,13 @@ import {
   Card,
   CardBody,
   Center,
+  FormControl,
   Grid,
   GridItem,
   Heading,
   Input,
   Stack,
+  Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
@@ -20,7 +22,11 @@ import useCreateStore, {
 
 const CreateStorePage = () => {
   const { onSubmit } = useCreateStore();
-  const { register, handleSubmit } = useForm<CreateStoreProps>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateStoreProps>();
   const [loading, setLoading] = useState(false);
 
   return (
@@ -45,45 +51,78 @@ const CreateStorePage = () => {
               <CardBody>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <VStack spacing={4} mt="5px">
-                    <Input
-                      disabled={loading}
-                      {...register("storeName")}
-                      type="text"
-                      placeholder="Shop Name"
-                      borderColor="gray.500"
-                    />
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        {...register("storeName", {
+                          required: "Store name is required",
+                        })}
+                        type="text"
+                        placeholder="Shop Name"
+                        borderColor="gray.500"
+                      />
+                      {errors.storeName && (
+                        <Text color="red">{errors.storeName.message}</Text>
+                      )}
+                    </FormControl>
+                    <FormControl>
+                      <Textarea
+                        disabled={loading}
+                        {...register("storeDescription", {
+                          required: "Store description is required",
+                        })}
+                        placeholder="Shop Description"
+                        borderColor="gray.500"
+                      />
+                      {errors.storeDescription && (
+                        <Text color="red">
+                          {errors.storeDescription.message}
+                        </Text>
+                      )}
+                    </FormControl>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        {...register("address", {
+                          required: "Address is required",
+                        })}
+                        type="text"
+                        placeholder="Shop Address"
+                        borderColor="gray.500"
+                      />
+                      {errors.address && (
+                        <Text color="red">{errors.address.message}</Text>
+                      )}
+                    </FormControl>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        {...register("contactNumber", {
+                          required: "Contact number is required",
+                        })}
+                        type="text"
+                        placeholder="Shop Contact Number"
+                        borderColor="gray.500"
+                      />
 
-                    <Textarea
-                      disabled={loading}
-                      {...register("storeDescription")}
-                      placeholder="Shop Description"
-                      borderColor="gray.500"
-                    />
-
-                    <Input
-                      disabled={loading}
-                      {...register("address")}
-                      type="text"
-                      placeholder="Shop Address"
-                      borderColor="gray.500"
-                    />
-
-                    <Input
-                      disabled={loading}
-                      {...register("contactNumber")}
-                      type="text"
-                      placeholder="Shop Contact Number"
-                      borderColor="gray.500"
-                    />
-
-                    <Input
-                      disabled={loading}
-                      {...register("shippingFee")}
-                      type="text"
-                      placeholder="Shop Shipping Fee"
-                      borderColor="gray.500"
-                    />
-
+                      {errors.contactNumber && (
+                        <Text color="red">{errors.contactNumber.message}</Text>
+                      )}
+                    </FormControl>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        {...register("shippingFee", {
+                          required: "Shipping fee is required",
+                        })}
+                        type="text"
+                        placeholder="Shop Shipping Fee"
+                        borderColor="gray.500"
+                      />
+                      {errors.shippingFee && (
+                        <Text color="red">{errors.shippingFee.message}</Text>
+                      )}
+                    </FormControl>
                     <Button
                       isLoading={loading}
                       type="submit"

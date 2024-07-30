@@ -24,7 +24,12 @@ const AccountProfilePage = () => {
   const { data: user } = useGetUser(jwtToken);
   const { onSubmit, loading } = useUpdateAccountInfo();
   const uploadPhoto = useUploadUserPhoto();
-  const { register, handleSubmit, setValue } = useForm<UpdateAccountProps>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<UpdateAccountProps>({
     defaultValues: {
       name: user?.name,
       address: user?.address,
@@ -100,26 +105,39 @@ const AccountProfilePage = () => {
             <FormControl pb="20px">
               <Input
                 disabled={loading}
-                {...register("name")}
+                {...register("name", {
+                  required: "Name is required",
+                })}
                 type="text"
                 borderColor="gray.500"
               />
+              {errors.name && <Text color="red">{errors.name.message}</Text>}
             </FormControl>
             <FormControl pb="20px">
               <Input
                 disabled={loading}
-                {...register("address")}
+                {...register("address", {
+                  required: "Address is required",
+                })}
                 type="text"
                 borderColor="gray.500"
               />
+              {errors.address && (
+                <Text color="red">{errors.address.message}</Text>
+              )}
             </FormControl>
             <FormControl mb="20px">
               <Input
                 disabled={loading}
-                {...register("contactNumber")}
+                {...register("contactNumber", {
+                  required: "Phone number is required",
+                })}
                 type="text"
                 borderColor="gray.500"
               />
+              {errors.contactNumber && (
+                <Text color="red">{errors.contactNumber.message}</Text>
+              )}
             </FormControl>
 
             <Button
