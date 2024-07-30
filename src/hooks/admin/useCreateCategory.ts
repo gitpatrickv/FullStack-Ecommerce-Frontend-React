@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { useDisclosure, useToast } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ const apiClient = axiosInstance;
 
 const useCreateCategory = () => {
     const { authStore } = useAuthQueryStore();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const jwtToken = authStore.jwtToken;
     const queryClient = useQueryClient();
     const toast = useToast();
@@ -41,6 +42,7 @@ const useCreateCategory = () => {
             });
             setLoading(false);
             reset();
+            onClose();
           },
           onError: (error: any) => {
             console.error("Error saving product:", error);
@@ -76,7 +78,10 @@ const useCreateCategory = () => {
     onSubmit,
     register,
     handleSubmit,
-    errors
+    errors,
+    isOpen, 
+    onOpen, 
+    onClose
   };
 }
 

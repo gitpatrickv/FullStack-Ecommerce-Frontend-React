@@ -15,15 +15,15 @@ import {
   ModalOverlay,
   Text,
   useBreakpointValue,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
 import useCreateCategory from "../../hooks/admin/useCreateCategory";
 
 const CategoryListHeader = () => {
-  const { onSubmit, register, handleSubmit, errors } = useCreateCategory();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onSubmit, register, handleSubmit, errors, isOpen, onOpen, onClose } =
+    useCreateCategory();
   const fontSize = useBreakpointValue({ base: "sm", xl: "xl" });
+
   return (
     <Card mb="10px" borderRadius="none">
       <CardBody>
