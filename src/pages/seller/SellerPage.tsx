@@ -145,9 +145,9 @@ const SellerPage = () => {
                   </MenuList>
                 </Menu>
                 {store?.online === true ? (
-                  <Text ml="10px">{store?.email}</Text>
+                  <Text ml="5px">{store?.email}</Text>
                 ) : (
-                  <Text ml="10px" color="red">
+                  <Text ml="5px" color="red">
                     Shop Suspended
                   </Text>
                 )}

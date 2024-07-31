@@ -96,7 +96,7 @@ const UserPage = () => {
                 color={
                   location.pathname.startsWith("/user/account")
                     ? "orange.400"
-                    : "gray.600"
+                    : "white.500"
                 }
               >
                 My Account
@@ -114,7 +114,7 @@ const UserPage = () => {
                       color={
                         location.pathname === "/user/account/profile"
                           ? "orange.400"
-                          : "gray.600"
+                          : "white.500"
                       }
                       cursor="pointer"
                       mb="5px"
@@ -129,7 +129,7 @@ const UserPage = () => {
                       color={
                         location.pathname === "/user/account/password"
                           ? "orange.400"
-                          : "gray.600"
+                          : "white.500"
                       }
                       cursor="pointer"
                       mb="5px"
@@ -162,7 +162,7 @@ const UserPage = () => {
                 color={
                   location.pathname === "/user/favorites"
                     ? "orange.400"
-                    : "gray.600"
+                    : "white.500"
                 }
               >
                 My Favorites
@@ -194,7 +194,7 @@ const UserPage = () => {
                 color={
                   location.pathname.startsWith("/user/purchase")
                     ? "orange.400"
-                    : "gray.600"
+                    : "white.500"
                 }
               >
                 My Purchase

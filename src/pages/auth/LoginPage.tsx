@@ -32,7 +32,7 @@ const LoginPage = () => {
           <Card
             variant="outline"
             borderColor="gray"
-            w="500px"
+            w="400px"
             borderRadius="none"
           >
             <Box alignSelf="flex-end">
@@ -88,7 +88,7 @@ const LoginPage = () => {
           <Card
             variant="outline"
             borderColor="gray"
-            w="500px"
+            w="400px"
             borderRadius="none"
           >
             <CardBody>

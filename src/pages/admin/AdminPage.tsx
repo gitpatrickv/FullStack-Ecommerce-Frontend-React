@@ -27,13 +27,15 @@ import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
 import useGetAllOrders from "../../hooks/admin/useGetAllOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { paginationRange } from "../../utilities/pagination";
+import useGetUser from "../../hooks/user/useGetUser";
 
 const AdminPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const { logout } = useAuthQueryStore();
-
+  const { logout, authStore } = useAuthQueryStore();
+  const jwtToken = authStore.jwtToken;
+  const { data: user } = useGetUser(jwtToken);
   const getPageFromUrl = () => {
     const params = new URLSearchParams(location.search);
     const pageFromUrl = params.get("pageNo");
@@ -167,6 +169,7 @@ const AdminPage = () => {
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>
+                <Text ml="5px">{user?.email}</Text>
               </Box>
             </Box>
           </CardBody>
