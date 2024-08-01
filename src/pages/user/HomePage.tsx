@@ -81,6 +81,7 @@ const HomePage = () => {
             cursor="pointer"
             userSelect="none"
             _hover={{
+              color: "orange.500",
               borderColor: "orange.500",
               transform: "scale(1.03)",
               transition: "transform .15s ease-in",

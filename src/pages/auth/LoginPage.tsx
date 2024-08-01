@@ -9,16 +9,27 @@ import {
   FormLabel,
   HStack,
   Heading,
+  IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useLogin from "../../hooks/user/useLogin";
+import { IoIosEye } from "react-icons/io";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { useState } from "react";
 
 const LoginPage = () => {
   const { register, handleSubmit, loading, onSubmit, errors } = useLogin();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handleShowPasswordClick = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Box>
@@ -58,17 +69,35 @@ const LoginPage = () => {
                   </FormControl>
                   <FormControl>
                     <FormLabel color="white.500">Password</FormLabel>
-                    <Input
-                      disabled={loading}
-                      {...register("password", {
-                        required: "Password is required",
-                      })}
-                      type="password"
-                      placeholder="Password"
-                      borderColor="gray"
-                    />
+                    <InputGroup>
+                      <Input
+                        disabled={loading}
+                        {...register("password", {
+                          required: "Password is required",
+                        })}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        borderColor="gray"
+                      />
+                      <InputRightElement>
+                        <IconButton
+                          aria-label="show"
+                          icon={
+                            showPassword ? (
+                              <IoIosEye size="25px" />
+                            ) : (
+                              <RiEyeCloseLine size="25px" />
+                            )
+                          }
+                          onClick={handleShowPasswordClick}
+                          bg="transparent"
+                          _hover={{ bg: "transparent" }}
+                          mr="15px"
+                        />
+                      </InputRightElement>
+                    </InputGroup>
                     {errors.password && (
-                      <Text color="red"> {errors.password.message} </Text>
+                      <Text color="red">{errors.password.message} </Text>
                     )}
                   </FormControl>
                   <Button

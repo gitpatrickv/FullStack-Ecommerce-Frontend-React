@@ -195,6 +195,7 @@ const RegisterPage = () => {
                     bg="orange.400"
                     _hover={{ bg: "orange.500" }}
                     _active={{ bg: "orange.600" }}
+                    mt="5px"
                   >
                     Register
                   </Button>
