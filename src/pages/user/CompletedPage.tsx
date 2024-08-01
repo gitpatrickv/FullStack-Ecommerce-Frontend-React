@@ -144,7 +144,10 @@ const CompletedPage = () => {
                       </Text>
                     </Text>
                     <Box display="flex">
-                      <ProductToRate orderId={storeOrders[0].orderId} />
+                      <ProductToRate
+                        orderId={storeOrders[0].orderId}
+                        storeRated={storeOrders[0].storeRated}
+                      />
                       <Button
                         onClick={() =>
                           handleBuyAgainClick(storeOrders[0].orderId)

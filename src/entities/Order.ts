@@ -18,6 +18,7 @@ export default interface OrderItem {
     sizes: string;
     productId: string;
     rated: boolean;
+    storeRated: boolean;
   }
   
   export interface Order {

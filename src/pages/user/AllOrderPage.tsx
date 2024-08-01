@@ -277,7 +277,10 @@ const AllOrderPage = () => {
                     )}
                     {storeOrders[0].orderStatus === "COMPLETED" ? (
                       <Box position="absolute" bottom="20px" right="125px">
-                        <ProductToRate orderId={storeOrders[0].orderId} />
+                        <ProductToRate
+                          orderId={storeOrders[0].orderId}
+                          storeRated={storeOrders[0].storeRated}
+                        />
                       </Box>
                     ) : (
                       ""
