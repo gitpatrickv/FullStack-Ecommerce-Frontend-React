@@ -10,38 +10,32 @@ import {
   GridItem,
   Text,
 } from "@chakra-ui/react";
-import { FaStore } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import useGetStoreRating from "../../hooks/user/useGetStoreRating";
-import Product from "../../entities/Product";
 import { IoIosStar } from "react-icons/io";
+import { useParams } from "react-router-dom";
+import useGetStoreRating from "../../hooks/user/useGetStoreRating";
 
 interface Props {
-  product: Product;
+  storePhotoUrl: string;
+  storeName: string;
 }
 
-const ShopSection = ({ product }: Props) => {
-  const navigate = useNavigate();
-  const { data: storeRating } = useGetStoreRating(product.storeId);
-
-  const handleNavigateStorePageClick = () => {
-    navigate(`/store/` + product.storeId);
-  };
-
+const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
+  const { storeId } = useParams();
+  const { data: storeRating } = useGetStoreRating(storeId!);
   return (
-    <Card borderRadius="none">
+    <Card borderRadius="none" minWidth="1000px">
       <CardBody>
         <Grid
           templateColumns="0.3fr 0.3fr 0.3fr 0.3fr"
           templateAreas={`
-      "content1 content2 content3 content4"
-    `}
+    "content1 content2 content3 content4"
+  `}
         >
           <GridItem area="content1">
             <Box display="flex">
               <Avatar
                 src={
-                  product.storePhotoUrl ||
+                  storePhotoUrl ||
                   "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
                 }
                 size="xl"
@@ -54,9 +48,22 @@ const ShopSection = ({ product }: Props) => {
                   mr="20px"
                   ml="15px"
                 >
-                  {product.storeName}
+                  {storeName}
                 </Text>
                 <Box display="flex">
+                  <Button
+                    cursor="pointer"
+                    display="flex"
+                    _hover={{ color: "orange.400" }}
+                    mt="10px"
+                    ml="15px"
+                    isDisabled={true}
+                    width="150px"
+                  >
+                    <Text pl="5px" fontSize="medium">
+                      Follow
+                    </Text>
+                  </Button>
                   <Button
                     cursor="pointer"
                     display="flex"
@@ -70,22 +77,9 @@ const ShopSection = ({ product }: Props) => {
                       Chat Now
                     </Text>
                   </Button>
-                  <Button
-                    cursor="pointer"
-                    display="flex"
-                    _hover={{ color: "orange.400" }}
-                    onClick={handleNavigateStorePageClick}
-                    mt="10px"
-                    ml="10px"
-                    width="150px"
-                  >
-                    <FaStore size="20px" />
-                    <Text pl="5px" fontSize="medium">
-                      View Store
-                    </Text>
-                  </Button>
                 </Box>
               </Box>
+
               <Center maxHeight="100%" ml="20px" mr="20px">
                 <Divider orientation="vertical" />
               </Center>
@@ -93,7 +87,7 @@ const ShopSection = ({ product }: Props) => {
           </GridItem>
 
           <GridItem area="content2">
-            <Box display="flex" mt="15px" alignItems="center">
+            <Box display="flex" mt="15px" alignItems="center" minWidth="150px">
               <IoIosStar size="20px" />
               <Text mr="10px" ml="5px" fontWeight="semibold" fontSize="md">
                 Rating
@@ -194,4 +188,4 @@ const ShopSection = ({ product }: Props) => {
   );
 };
 
-export default ShopSection;
+export default StoreHeader;

@@ -1,9 +1,7 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
-  CardBody,
   Grid,
   GridItem,
   HStack,
@@ -17,6 +15,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";
 import ProductCardSkeleton from "../../components/Product/ProductCardSkeleton";
 import StoreProductCard from "../../components/Product/StoreProductCard";
+import StoreHeader from "../../components/Store/StoreHeader";
 import useGetAllStoreProducts from "../../hooks/user/useGetAllStoreProducts";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { paginationRange } from "../../utilities/pagination";
@@ -121,36 +120,19 @@ const StorePage = () => {
         </Grid>
       ) : (
         <Grid
-          templateColumns="0.2fr 0.5fr 0.5fr 0.5fr 0.2fr"
-          templateRows="0fr 1fr"
+          templateColumns="250px 1fr 250px"
           templateAreas={`
-      "asideLeft header1 header1 header1 asideRight"
-      "asideLeft content1 content1 content1 asideRight"
+      "asideLeft content1  asideRight"
     `}
         >
-          <GridItem area="header1" mb="10px">
-            <Card
-              backgroundImage="url('https://t3.ftcdn.net/jpg/02/93/94/22/360_F_293942282_dCV0T2E0411M2J1AHsCzCiKWEx3zYrM2.jpg')"
-              backgroundSize="cover"
-              backgroundPosition="center"
-              borderRadius="none"
-            >
-              <CardBody>
-                <Box display="flex" justifyContent="start">
-                  <Avatar
-                    src={
-                      getAllStoreProducts?.data.storeInfo.storePhotoUrl ||
-                      "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
-                    }
-                    size="xl"
-                  />
-                  <Text ml="15px" fontSize="x-large" textTransform="capitalize">
-                    {getAllStoreProducts?.data.storeInfo.storeName}
-                  </Text>
-                </Box>
-              </CardBody>
-            </Card>
-            <Card p="13px" mb="10px" borderRadius="none">
+          <GridItem area="content1" mb="10px">
+            <StoreHeader
+              storePhotoUrl={
+                getAllStoreProducts?.data.storeInfo.storePhotoUrl || ""
+              }
+              storeName={getAllStoreProducts?.data.storeInfo.storeName || ""}
+            />
+            <Card p="13px" mb="10px" borderRadius="none" minWidth="1000px">
               <Box display="flex" alignItems="center">
                 <Text fontSize="medium" pr="10px">
                   Sort By
@@ -228,14 +210,13 @@ const StorePage = () => {
                 </Button>
               </Box>
             </Card>
-          </GridItem>
 
-          <GridItem area="content1">
             <Box>
               <SimpleGrid
-                columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
+                columns={{ base: 5 }}
                 spacing={2}
                 padding="10px"
+                minW="1000px"
               >
                 {isLoading &&
                   skeletons.map((skeleton) => (

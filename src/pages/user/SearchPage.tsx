@@ -101,14 +101,10 @@ export const SearchPage = () => {
 
   return (
     <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " asideLeft main asideRight" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "0.2fr 1fr 0.2fr",
-      }}
+      templateColumns="250px 1fr 250px"
+      templateAreas={`
+      " asideLeft main asideRight"
+    `}
     >
       <GridItem area="main">
         <>
@@ -173,9 +169,10 @@ export const SearchPage = () => {
             </Box>
           ) : (
             <SimpleGrid
-              columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
+              columns={{ base: 5 }}
               spacing={2}
               padding="10px"
+              minW="1000px"
             >
               {searchResults?.map((product: AllProductModels) => (
                 <ProductCardContainer key={product.productId}>
