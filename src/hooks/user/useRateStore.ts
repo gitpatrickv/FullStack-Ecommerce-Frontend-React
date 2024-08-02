@@ -31,6 +31,8 @@ const useRateStore = (orderId: string) => {
         onSuccess: () => {
             queryClient.invalidateQueries(['completedOrders']);
             queryClient.invalidateQueries(['allOrders']);
+            queryClient.invalidateQueries(['manageProductReview']);
+            queryClient.invalidateQueries(['storeRating']);
             toast({
                 position: "top",
                 title: "Thank You for Your Feedback!",

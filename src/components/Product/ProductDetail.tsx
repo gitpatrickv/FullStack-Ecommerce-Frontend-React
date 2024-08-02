@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -13,11 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
-import { FaHeart, FaRegHeart, FaStore } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoIosStar } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import Inventory from "../../entities/Inventory";
 import Product from "../../entities/Product";
+import useSuspendProduct from "../../hooks/admin/useSuspendProduct";
 import useAddToCart from "../../hooks/user/useAddToCart";
 import useAddToCartVariation from "../../hooks/user/useAddToCartVariation";
 import useAddToFavorites from "../../hooks/user/useAddToFavorites";
@@ -32,12 +32,12 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 import AllStarRating from "./AllStarRating";
 import FromTheSameStore from "./FromTheSameStore";
 import ProductImages from "./ProductImages";
+import ShopSection from "./ShopSection";
 import Star1Rating from "./Star1Rating";
 import Star2Rating from "./Star2Rating";
 import Star3Rating from "./Star3Rating";
 import Star4Rating from "./Star4Rating";
 import Star5Rating from "./Star5Rating";
-import useSuspendProduct from "../../hooks/admin/useSuspendProduct";
 interface Props {
   product: Product;
 }
@@ -187,10 +187,6 @@ const ProductDetail = ({ product }: Props) => {
 
   const handleSuspendProductClick = () => {
     suspendProduct(product.productId);
-  };
-
-  const handleNavigateStorePageClick = (storeId: string) => {
-    navigate(`/store/` + storeId);
   };
 
   const [selectedRating, setSelectedRating] = useState<string | null>("All");
@@ -591,44 +587,11 @@ const ProductDetail = ({ product }: Props) => {
         templateAreas={`
       "content1 "
     `}
-        mt="15px"
+        mt="10px"
       >
         <GridItem area="content1">
-          <Card borderRadius="none">
-            <CardBody>
-              <Box display="flex">
-                <Avatar
-                  src={
-                    product.storePhotoUrl ||
-                    "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
-                  }
-                  size="xl"
-                />
-                <Text
-                  fontSize="x-large"
-                  fontWeight="semibold"
-                  textTransform="capitalize"
-                  mr="20px"
-                  ml="15px"
-                  color="orange.400"
-                >
-                  {product.storeName}
-                </Text>
-                <Button
-                  cursor="pointer"
-                  display="flex"
-                  _hover={{ color: "orange.400" }}
-                  onClick={() => handleNavigateStorePageClick(product.storeId)}
-                >
-                  <FaStore size="20px" />
-                  <Text pl="5px" fontSize="medium">
-                    View Store
-                  </Text>
-                </Button>
-              </Box>
-            </CardBody>
-          </Card>
-          <Card mt="15px" borderRadius="none">
+          <ShopSection product={product} />
+          <Card mt="10px" borderRadius="none">
             <CardBody>
               <Text
                 fontSize="x-large"
@@ -643,7 +606,7 @@ const ProductDetail = ({ product }: Props) => {
             </CardBody>
           </Card>
 
-          <Card mt="15px" borderRadius="none">
+          <Card mt="10px" borderRadius="none">
             <CardBody>
               <Text
                 fontSize="x-large"
