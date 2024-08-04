@@ -8,7 +8,6 @@ import {
   IconButton,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   Text,
@@ -46,7 +45,7 @@ const Header = () => {
     queryClient.setQueryData(["user"], null);
   };
   return (
-    <Card height="125px">
+    <Card height="125px" borderRadius="none">
       <Grid
         templateColumns="0.4fr 0.5fr 2fr 0.5fr 0.4fr"
         templateRows=" 0.3fr 0.5fr"
@@ -64,7 +63,10 @@ const Header = () => {
             <HStack spacing={3}>
               {user ? (
                 <>
-                  <Box>
+                  <Box display="flex">
+                    <Text mt="10px" mr="5px">
+                      {user.email}
+                    </Text>
                     <Menu>
                       <MenuButton
                         as={IconButton}
@@ -82,8 +84,8 @@ const Header = () => {
                         variant="none"
                       />
                       <MenuList>
-                        <MenuItem>{user.email}</MenuItem>
-                        <MenuDivider />
+                        {/* <MenuItem>{user.email}</MenuItem>
+                        <MenuDivider /> */}
                         {role === "USER" || role === "SELLER" ? (
                           <>
                             <Link to="/user/account/profile">

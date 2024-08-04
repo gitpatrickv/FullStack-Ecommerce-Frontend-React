@@ -1,4 +1,3 @@
-
 export default interface Store{
     storeId: string;
     storeName: string;
@@ -11,4 +10,18 @@ export default interface Store{
     productCount: number;
     orderCount: number;
     online: boolean;
+}
+
+
+interface PageResponse {
+    pageNo: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+}
+
+export interface StoreResponse {
+    storeModels : Store[];
+    pageResponse: PageResponse;
 }

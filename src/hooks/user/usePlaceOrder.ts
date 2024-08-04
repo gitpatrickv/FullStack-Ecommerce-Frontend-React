@@ -4,18 +4,27 @@ import { axiosInstance } from "../../services/api-client";
 
 const apiClient = axiosInstance;
 
+interface Props{
+    jwtToken: string,
+    paymentMethod: string;
+}
+
 const usePlaceOrder = () => {
     const toast = useToast();
     const queryClient = useQueryClient();
     return useMutation(
-        async (jwtToken : string) => {
-            const { data } = await apiClient.post("/order", {},
+        async ({jwtToken,paymentMethod} : Props) => {
+            const { data } = await apiClient.post(`/order/${paymentMethod}`, {},
                 {
                     headers: {
                         Authorization: `Bearer ${jwtToken}`
                     }
                 }
             )
+
+            if(data.payment_url){
+                window.location.href = data.payment_url;
+            } 
             return data;
         },
         {
@@ -31,7 +40,7 @@ const usePlaceOrder = () => {
                 status: "success",
                 duration: 2000,
                 isClosable: true,
-              });     
+              });    
         }
     }
     )

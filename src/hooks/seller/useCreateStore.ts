@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../services/api-client";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { useToast } from "@chakra-ui/react";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 export interface CreateStoreProps {
@@ -17,6 +17,12 @@ const apiClient = axiosInstance;
 
 const useCreateStore = () => {
   const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError
+  } = useForm<CreateStoreProps>();
   const toast = useToast();
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
@@ -47,7 +53,7 @@ const useCreateStore = () => {
         });
         navigate("/seller")
       },
-      onError: (error) => {
+      onError: (error: any) => {
         console.error("Error creating store:", error);
         toast({
           position: "top",
@@ -56,6 +62,12 @@ const useCreateStore = () => {
           duration: 2000,
           isClosable: true,
         });
+        if(error.response?.data.storeName) {
+          setError('storeName', {
+              type: 'server',
+              message: error.response.data.storeName
+          })
+      }
       }
     }
   );
@@ -65,7 +77,7 @@ const useCreateStore = () => {
   }
 
   return {
-    onSubmit
+    onSubmit,register, handleSubmit, errors
   };
 };
 

@@ -21,6 +21,7 @@ const useDelistProduct = () => {
             onSuccess: () => {
                 queryClient.invalidateQueries(['storeProduct']);
                 queryClient.invalidateQueries(['product']);
+                queryClient.invalidateQueries(['favorites']);
             }
         },
     )

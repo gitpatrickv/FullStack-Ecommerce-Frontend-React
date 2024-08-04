@@ -18,6 +18,7 @@ export default interface OrderItem {
     sizes: string;
     productId: string;
     rated: boolean;
+    storeRated: boolean;
   }
   
   export interface Order {
@@ -31,10 +32,26 @@ export default interface OrderItem {
     fullName: string;
     contactNumber: string;
     orderItemModels: OrderItem[];
+    createdDate: string;
+    lastModified: string;
+    shopName: string;
   }
   
   export interface OrdersResponse {
     orderModel: Order[];
   }
+
+  interface PageResponse {
+    pageNo: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+}
+
+export interface PaginateOrdersResponse {
+    orderModels: Order[];
+    pageResponse: PageResponse;
+}
   
 

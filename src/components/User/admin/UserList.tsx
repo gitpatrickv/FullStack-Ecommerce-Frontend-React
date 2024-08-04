@@ -59,8 +59,8 @@ const UserList = ({ user, onRefetchUser }: Props) => {
             <Box
               border="1px solid"
               borderRadius="20px"
-              bg={user.frozen ? "red" : "green"}
-              borderColor={user.frozen ? "red" : "green"}
+              bg={user.frozen ? "red" : "orange.500"}
+              borderColor={user.frozen ? "red" : "orange.500"}
               width="10px"
               height="10px"
               textAlign="center"
@@ -112,7 +112,7 @@ const UserList = ({ user, onRefetchUser }: Props) => {
             justifyContent="center"
             minWidth="100px"
           >
-            <Text color={user.frozen ? "red" : "white.500"}>
+            <Text color={user.frozen ? "red" : "orange.500"}>
               {user.frozen ? "FROZEN" : "ACTIVE"}
             </Text>
           </Box>

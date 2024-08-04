@@ -84,14 +84,10 @@ const ProductCategoryPage = () => {
 
   return (
     <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " asideLeft main asideRight" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "0.2fr 1fr 0.2fr",
-      }}
+      templateColumns="250px 1fr 250px"
+      templateAreas={`
+      " asideLeft main asideRight"
+    `}
     >
       <GridItem area="main">
         <Card mt="20px" mb="5px" borderRadius="none">
@@ -105,9 +101,10 @@ const ProductCategoryPage = () => {
 
         <Box>
           <SimpleGrid
-            columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
+            columns={{ base: 5 }}
             spacing={2}
             padding="10px"
+            minW="1000px"
           >
             {isLoading &&
               skeletons.map((skeleton) => (

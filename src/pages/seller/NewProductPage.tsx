@@ -2,7 +2,9 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Card,
   Checkbox,
+  Divider,
   Grid,
   GridItem,
   HStack,
@@ -59,7 +61,7 @@ const NewProductPage = () => {
   };
 
   return (
-    <>
+    <Card borderRadius="none">
       <Grid
         templateAreas={{
           base: `"main"`,
@@ -69,10 +71,27 @@ const NewProductPage = () => {
           lg: " 1fr",
         }}
       >
-        <GridItem area="main">
+        <GridItem area="main" padding={5}>
+          <Text fontSize="xl" fontWeight="semibold">
+            Create New Product
+          </Text>
+          <Divider mb="10px" mt="10px" />
           <Box p={4}>
+            <Text mb="5px" fontSize="large" fontWeight="semibold">
+              Category
+            </Text>
+            <Select
+              maxWidth="30%"
+              {...register("categoryId", { required: true })}
+            >
+              {category?.data.map((cat) => (
+                <option key={cat.categoryId} value={cat.categoryId}>
+                  {cat.categoryName}
+                </option>
+              ))}
+            </Select>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Text mb="5px" fontSize="large" fontWeight="semibold">
+              <Text mb="5px" fontSize="large" fontWeight="semibold" mt="10px">
                 Product Name
               </Text>
               <Input
@@ -86,19 +105,7 @@ const NewProductPage = () => {
                 {...register("productDescription", { required: true })}
                 placeholder="Product Description"
               />
-              <Text mb="5px" mt="10px" fontSize="large" fontWeight="semibold">
-                Category
-              </Text>
-              <Select
-                maxWidth="30%"
-                {...register("categoryId", { required: true })}
-              >
-                {category?.data.map((cat) => (
-                  <option key={cat.categoryId} value={cat.categoryId}>
-                    {cat.categoryName}
-                  </option>
-                ))}
-              </Select>
+
               <Box display="flex" mt="20px" alignItems="center" mr="10px">
                 <Checkbox
                   size="lg"
@@ -289,7 +296,7 @@ const NewProductPage = () => {
           </Box>
         </GridItem>
       </Grid>
-    </>
+    </Card>
   );
 };
 

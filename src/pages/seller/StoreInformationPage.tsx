@@ -1,10 +1,3 @@
-import React, { useEffect } from "react";
-import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
-import useUpdateShopInfo, {
-  UpdateShopProps,
-} from "../../hooks/seller/useUpdateShopInfo";
-import { useAuthQueryStore } from "../../store/auth-store";
-import { useForm } from "react-hook-form";
 import {
   Avatar,
   Box,
@@ -12,13 +5,21 @@ import {
   Card,
   Divider,
   FormControl,
+  FormLabel,
   Grid,
   GridItem,
   Input,
   Text,
   Textarea,
 } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
+import useUpdateShopInfo, {
+  UpdateShopProps,
+} from "../../hooks/seller/useUpdateShopInfo";
 import useUploadStorePhoto from "../../hooks/seller/useUploadStorePhoto";
+import { useAuthQueryStore } from "../../store/auth-store";
 
 const StoreInformationPage = () => {
   const { authStore } = useAuthQueryStore();
@@ -26,7 +27,12 @@ const StoreInformationPage = () => {
   const { data: shop } = useGetStoreInfo(jwtToken);
   const { onSubmit, loading } = useUpdateShopInfo(shop?.storeId || "");
   const uploadPhoto = useUploadStorePhoto(shop?.storeId || "");
-  const { register, handleSubmit, setValue } = useForm<UpdateShopProps>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<UpdateShopProps>({
     defaultValues: {
       storeName: shop?.storeName,
       storeDescription: shop?.storeDescription,
@@ -54,13 +60,13 @@ const StoreInformationPage = () => {
   };
 
   return (
-    <Card mt="30px" borderRadius="none">
+    <Card borderRadius="none">
       <Grid
         templateRows="0.3fr 0.7fr"
-        templateColumns=" 0.2fr 0.4fr 0.4fr "
+        templateColumns="0.6fr 0.4fr "
         templateAreas={`
-  "header header header "
-"content1 content2 content3 "
+  "header header "
+"content2 content3 "
 `}
         gap={5}
         p={5}
@@ -74,103 +80,121 @@ const StoreInformationPage = () => {
             <Divider pt="15px" />
           </Box>
         </GridItem>
-
-        <GridItem area="content1" mt="10px">
-          <Box mt="10px">
-            <Box textAlign="end">
-              <Text
-                fontSize="large"
-                mb="28px"
-                fontWeight="semibold"
-                whiteSpace="nowrap"
-              >
-                Store Name
-              </Text>
-              <Text
-                fontSize="large"
-                mb="78px"
-                fontWeight="semibold"
-                whiteSpace="nowrap"
-              >
-                Store Description
-              </Text>
-              <Text
-                fontSize="large"
-                mb="34px"
-                fontWeight="semibold"
-                whiteSpace="nowrap"
-              >
-                Address
-              </Text>
-              <Text
-                fontSize="large"
-                mb="30px"
-                fontWeight="semibold"
-                whiteSpace="nowrap"
-              >
-                Contact Number
-              </Text>
-              <Text fontSize="large" fontWeight="semibold" whiteSpace="nowrap">
-                Shipping Fee
-              </Text>
-            </Box>
-          </Box>
-        </GridItem>
         <GridItem area="content2" mt="10px">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Box textAlign="start">
+            <Box ml="30px">
               <FormControl pb="20px">
-                <Input
-                  disabled={loading}
-                  {...register("storeName")}
-                  type="text"
-                  borderColor="gray.500"
-                />
+                <Box display="flex">
+                  <FormLabel mt="10px" whiteSpace="nowrap">
+                    Store Name
+                  </FormLabel>
+                  <Box display="flex" flexDirection="column" ml="20px">
+                    <Input
+                      disabled={loading}
+                      {...register("storeName", {
+                        required: "Store name is required",
+                      })}
+                      type="text"
+                      borderColor="gray.500"
+                      width="600px"
+                    />
+                    {errors.storeName && (
+                      <Text color="red"> {errors.storeName.message} </Text>
+                    )}
+                  </Box>
+                </Box>
               </FormControl>
               <FormControl mb="20px">
-                <Textarea
-                  disabled={loading}
-                  {...register("storeDescription")}
-                  borderColor="gray.500"
-                />
+                <Box display="flex">
+                  <FormLabel mt="10px">Description</FormLabel>
+                  <Box display="flex" flexDirection="column" ml="23px">
+                    <Textarea
+                      disabled={loading}
+                      {...register("storeDescription", {
+                        required: "Store description is required",
+                      })}
+                      borderColor="gray.500"
+                      width="600px"
+                    />
+                    {errors.storeDescription && (
+                      <Text color="red">{errors.storeDescription.message}</Text>
+                    )}
+                  </Box>
+                </Box>
               </FormControl>
               <FormControl mb="20px">
-                <Input
-                  disabled={loading}
-                  {...register("address")}
-                  type="text"
-                  borderColor="gray.500"
-                />
+                <Box display="flex">
+                  <FormLabel mt="10px">Address</FormLabel>
+                  <Box display="flex" flexDirection="column" ml="48px">
+                    <Input
+                      disabled={loading}
+                      {...register("address", {
+                        required: "Address is required",
+                      })}
+                      type="text"
+                      borderColor="gray.500"
+                      width="600px"
+                    />
+                    {errors.address && (
+                      <Text color="red">{errors.address.message}</Text>
+                    )}
+                  </Box>
+                </Box>
+              </FormControl>
+
+              <FormControl mb="20px">
+                <Box display="flex">
+                  <FormLabel mt="10px">Contact No.</FormLabel>
+                  <Box display="flex" flexDirection="column" ml="19px">
+                    <Input
+                      disabled={loading}
+                      {...register("contactNumber", {
+                        required: "Contact number is required",
+                      })}
+                      type="text"
+                      borderColor="gray.500"
+                      width="600px"
+                    />
+                    {errors.contactNumber && (
+                      <Text color="red">{errors.contactNumber.message}</Text>
+                    )}
+                  </Box>
+                </Box>
               </FormControl>
               <FormControl mb="20px">
-                <Input
-                  disabled={loading}
-                  {...register("contactNumber")}
-                  type="text"
-                  borderColor="gray.500"
-                />
-              </FormControl>
-              <FormControl mb="20px">
-                <Input
-                  disabled={loading}
-                  {...register("shippingFee")}
-                  type="text"
-                  borderColor="gray.500"
-                />
+                <Box display="flex">
+                  <FormLabel mt="10px">Shipping Fee</FormLabel>
+                  <Box display="flex" flexDirection="column" ml="13px">
+                    <Input
+                      disabled={loading}
+                      {...register("shippingFee", {
+                        required: "Shipping fee is required",
+                      })}
+                      type="text"
+                      borderColor="gray.500"
+                      width="600px"
+                    />
+                    {errors.shippingFee && (
+                      <Text color="red">{errors.shippingFee.message}</Text>
+                    )}
+                  </Box>
+                </Box>
               </FormControl>
 
               <Button
                 isLoading={loading}
                 type="submit"
-                _hover={{ color: "orange.400" }}
+                bg="orange.500"
+                _hover={{ bg: "orange.600" }}
                 width="120px"
+                ml="120px"
               >
                 Save
               </Button>
             </Box>
           </form>
         </GridItem>
-        <GridItem area="content3" mt="10px">
+        <GridItem area="content3" mt="10px" ml="30px">
           <Box display="flex" justifyContent="center">
             <Box display="flex" flexDirection="column" alignItems="center">
               <Avatar

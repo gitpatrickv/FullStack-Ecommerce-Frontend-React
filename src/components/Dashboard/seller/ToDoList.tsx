@@ -24,7 +24,7 @@ const ToDoList = ({ storeId }: Props) => {
   const { data: getTodoTotal } = useGetTodoTotal(storeId);
 
   return (
-    <Card>
+    <Card borderRadius="none">
       <CardBody>
         <Grid
           templateRows="0.3fr 0.7fr"

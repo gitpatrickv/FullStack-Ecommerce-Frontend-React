@@ -144,7 +144,7 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
                     fontWeight="semibold"
                     textTransform="capitalize"
                     mb="5px"
-                    color="orange.400"
+                    color="white.500"
                   >
                     Input Quantity
                   </Text>
@@ -194,7 +194,7 @@ const InventoryList = ({ inventory, refetchProducts }: Props) => {
                     fontWeight="semibold"
                     textTransform="capitalize"
                     mb="5px"
-                    color="orange.400"
+                    color="white.500"
                   >
                     Input Price
                   </Text>

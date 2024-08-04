@@ -12,26 +12,29 @@ import {
 
 import { useEffect } from "react";
 
-import Rate from "./Rate";
 import useGetProductsToRate from "../../hooks/user/useGetProductsToRate";
+import Rate from "./Rate";
+import RateStore from "./RateStore";
 
 interface Props {
   orderId: string;
+  storeRated: boolean;
 }
 
-const ProductToRate = ({ orderId }: Props) => {
+const ProductToRate = ({ orderId, storeRated }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: getProductsToRate, refetch: refetchProductsToRate } =
     useGetProductsToRate(orderId);
+
   useEffect(() => {
-    if (getProductsToRate?.length === 0) {
+    if (getProductsToRate?.length === 0 && storeRated === true) {
       onClose();
     }
-  }, [getProductsToRate, onClose]);
+  }, [getProductsToRate, onClose, storeRated]);
 
   return (
     <>
-      {getProductsToRate?.length === 0 ? (
+      {getProductsToRate?.length === 0 && storeRated === true ? (
         ""
       ) : (
         <Button
@@ -60,6 +63,7 @@ const ProductToRate = ({ orderId }: Props) => {
                   onRefetch={refetchProductsToRate}
                 />
               ))}
+              {storeRated === false && <RateStore orderId={orderId} />}
             </ModalBody>
           </ModalContent>
         </Modal>

@@ -1,23 +1,84 @@
-import { useState } from "react";
+import { Box, Button, Card, HStack, Spacer, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../../components/User/admin/Header";
 import UserList from "../../components/User/admin/UserList";
-import { useGetAllUsers } from "../../hooks/admin/useGetAllUsers";
-import { useNavigate } from "react-router-dom";
 import UserListHeader from "../../components/User/admin/UserListHeader";
-import { Card, Box, Button, Text } from "@chakra-ui/react";
+import { useGetAllUsers } from "../../hooks/admin/useGetAllUsers";
+import { paginationRange } from "../../utilities/pagination";
 
 const UserListPage = () => {
+  const getPageFromUrl = () => {
+    const params = new URLSearchParams(location.search);
+    const pageFromUrl = params.get("pageNo");
+    return pageFromUrl ? parseInt(pageFromUrl, 10) : 1;
+  };
+
   const navigate = useNavigate();
+  const location = useLocation();
   const [sortBy, setSortBy] = useState("");
-  const { data: getAllUsers, refetch: refetchUserList } =
-    useGetAllUsers(sortBy);
+  const [page, setPage] = useState(getPageFromUrl);
+  const pageSize = 5;
+  const { data: getAllUsers, refetch: refetchUserList } = useGetAllUsers({
+    pageNo: page,
+    pageSize,
+    sortBy: sortBy,
+  });
+
+  const cPage = getAllUsers?.pageResponse.pageNo ?? 0;
+  const currentPage = cPage + 1;
+  const totalPages = getAllUsers?.pageResponse.totalPages ?? 0;
+  const isLastPage = getAllUsers?.pageResponse.last ?? false;
+  const totalElements = getAllUsers?.pageResponse.totalElements ?? 0;
+  const pages = Math.ceil(totalElements / pageSize);
+
+  const paginationRangeArray = paginationRange({
+    totalPage: pages,
+    page: page,
+    limit: pageSize,
+    siblings: 1,
+  });
+
+  useEffect(() => {
+    const pageFromUrl = getPageFromUrl();
+    if (pageFromUrl !== page) {
+      setPage(pageFromUrl);
+    }
+  }, [location.search]);
+
+  const updatePage = (newPage: number) => {
+    setPage(newPage);
+    navigate(`/admin/user/list?pageNo=${newPage}&pageSize=${pageSize}`);
+  };
+
+  function handlePageChange(value: any) {
+    if (value === "&laquo;" || value === "... ") {
+      updatePage(1);
+    } else if (value === "&lsaquo;") {
+      if (page > 1) {
+        updatePage(page - 1);
+      }
+    } else if (value === "&rsaquo;") {
+      if (!isLastPage) {
+        updatePage(page + 1);
+      }
+    } else if (value === "&raquo;" || value === " ...") {
+      updatePage(pages);
+    } else {
+      updatePage(value);
+    }
+  }
 
   const handleSortClick = (event: any) => {
     setSortBy(event.target.value);
-    navigate(`/admin/user/list?sortBy=${event.target.value}`);
+    navigate(
+      `/admin/user/list?pageNo=1&pageSize=${pageSize}&sortBy=${event.target.value}`
+    );
   };
 
   return (
     <>
+      <Header />
       <Card borderRadius="none">
         <Box padding={4}>
           <Box display="flex" alignItems="center">
@@ -43,16 +104,16 @@ const UserListPage = () => {
               User
             </Button>
             <Button
-              value="seller"
+              value="admin"
               onClick={handleSortClick}
               mr="5px"
               width="120px"
-              color={sortBy === "seller" ? "orange.400" : "white.500"}
-              border={sortBy === "seller" ? "1px solid orange" : "none"}
+              color={sortBy === "admin" ? "orange.400" : "white.500"}
+              border={sortBy === "admin" ? "1px solid orange" : "none"}
               _hover={{ color: "orange.400" }}
               borderRadius="20px"
             >
-              Seller
+              Admin
             </Button>
             <Button
               value="false"
@@ -78,17 +139,51 @@ const UserListPage = () => {
             >
               Frozen
             </Button>
+            <Spacer />
+            <Text pr="15px" fontSize="medium">
+              <Text as="span" color="orange">
+                {currentPage}
+              </Text>
+              /{totalPages}
+            </Text>
+            <Button mr="2px" onClick={() => handlePageChange("&lsaquo;")}>
+              &lsaquo;
+            </Button>
+            <Button onClick={() => handlePageChange("&rsaquo;")}>
+              &rsaquo;
+            </Button>
           </Box>
         </Box>
       </Card>
       <UserListHeader />
-      {getAllUsers?.map((user) => (
+      {getAllUsers?.userModels.map((user) => (
         <UserList
           key={user.email}
           user={user}
           onRefetchUser={refetchUserList}
         />
       ))}
+      <Box display="flex" justifyContent="center" alignItems="center" pt="20px">
+        <HStack justifyContent="center">
+          <Button onClick={() => handlePageChange("&laquo;")}>&laquo;</Button>
+          <Button onClick={() => handlePageChange("&lsaquo;")}>&lsaquo;</Button>
+          {paginationRangeArray.map((number, index) => {
+            if (number === number) {
+              return (
+                <Button
+                  key={index}
+                  onClick={() => handlePageChange(number)}
+                  color={page === number ? "orange.500" : "white.500"}
+                >
+                  {number}
+                </Button>
+              );
+            }
+          })}
+          <Button onClick={() => handlePageChange("&rsaquo;")}>&rsaquo;</Button>
+          <Button onClick={() => handlePageChange("&raquo;")}>&raquo;</Button>
+        </HStack>
+      </Box>
     </>
   );
 };

@@ -30,7 +30,9 @@ import ProductDetailPage from "../pages/user/ProductDetailPage";
 import AdminRoute from "../components/ProtectedRoute/AdminRoute";
 import SellerRoute from "../components/ProtectedRoute/SellerRoute";
 import UserRoute from "../components/ProtectedRoute/UserRoute";
+import CategoryPage from "../pages/admin/CategoryPage";
 import ShopListPage from "../pages/admin/ShopListPage";
+import UserListPage from "../pages/admin/UserListPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import CreateStorePage from "../pages/seller/CreateStorePage";
@@ -42,7 +44,6 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import UserListPage from "../pages/admin/UserListPage";
 
 const router = createBrowserRouter([
   {
@@ -160,6 +161,7 @@ const router = createBrowserRouter([
     children: [
       { path: "shop/list", element: <ShopListPage /> },
       { path: "user/list", element: <UserListPage /> },
+      { path: "category/list", element: <CategoryPage /> },
     ],
   },
 ]);

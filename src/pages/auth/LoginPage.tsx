@@ -6,24 +6,36 @@ import {
   Center,
   CloseButton,
   FormControl,
+  FormLabel,
   HStack,
   Heading,
+  IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useLogin from "../../hooks/user/useLogin";
+import { IoIosEye } from "react-icons/io";
+import { RiEyeCloseLine } from "react-icons/ri";
+import { useState } from "react";
 
 const LoginPage = () => {
-  const { register, handleSubmit, loading, onSubmit } = useLogin();
+  const { register, handleSubmit, loading, onSubmit, errors } = useLogin();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handleShowPasswordClick = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Box>
       <Center>
         <Stack spacing="5">
-          <VStack as="header" spacing="6" mt="8">
+          <VStack as="header" mt="8">
             <Heading>
               {loading ? <Text>Logging In...</Text> : <Text>Log In</Text>}
             </Heading>
@@ -43,22 +55,50 @@ const LoginPage = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={4}>
                   <FormControl>
+                    <FormLabel color="white.500">Email</FormLabel>
                     <Input
                       disabled={loading}
-                      {...register("email", { required: true })}
+                      {...register("email", { required: "Email is required" })}
                       type="text"
                       placeholder="Username or Email"
                       borderColor="gray"
                     />
+                    {errors.email && (
+                      <Text color="red"> {errors.email.message} </Text>
+                    )}
                   </FormControl>
                   <FormControl>
-                    <Input
-                      disabled={loading}
-                      {...register("password", { required: true })}
-                      type="password"
-                      placeholder="Password"
-                      borderColor="gray"
-                    />
+                    <FormLabel color="white.500">Password</FormLabel>
+                    <InputGroup>
+                      <Input
+                        disabled={loading}
+                        {...register("password", {
+                          required: "Password is required",
+                        })}
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Password"
+                        borderColor="gray"
+                      />
+                      <InputRightElement>
+                        <IconButton
+                          aria-label="show"
+                          icon={
+                            showPassword ? (
+                              <IoIosEye size="25px" />
+                            ) : (
+                              <RiEyeCloseLine size="25px" />
+                            )
+                          }
+                          onClick={handleShowPasswordClick}
+                          bg="transparent"
+                          _hover={{ bg: "transparent" }}
+                          mr="15px"
+                        />
+                      </InputRightElement>
+                    </InputGroup>
+                    {errors.password && (
+                      <Text color="red">{errors.password.message} </Text>
+                    )}
                   </FormControl>
                   <Button
                     isLoading={loading}

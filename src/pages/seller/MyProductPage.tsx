@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  Divider,
   Grid,
   GridItem,
   HStack,
@@ -101,9 +102,13 @@ const MyProductPage = () => {
     `}
     >
       <GridItem area="main">
-        <Box mt="20px">
+        <Box>
           <Card borderRadius="none">
             <Box padding={5}>
+              <Text fontSize="xl" fontWeight="semibold" mb="10px">
+                My Products
+              </Text>
+              <Divider mb="15px" />
               <Box display="flex" alignItems="center">
                 <Text
                   fontSize="lg"

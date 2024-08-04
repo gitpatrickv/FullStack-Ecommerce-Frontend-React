@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   FormControl,
+  FormLabel,
   Grid,
   GridItem,
   Input,
@@ -24,7 +25,12 @@ const AccountProfilePage = () => {
   const { data: user } = useGetUser(jwtToken);
   const { onSubmit, loading } = useUpdateAccountInfo();
   const uploadPhoto = useUploadUserPhoto();
-  const { register, handleSubmit, setValue } = useForm<UpdateAccountProps>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<UpdateAccountProps>({
     defaultValues: {
       name: user?.name,
       address: user?.address,
@@ -50,10 +56,10 @@ const AccountProfilePage = () => {
   return (
     <Grid
       templateRows="0.3fr 1fr"
-      templateColumns=" 0.5fr 1fr 1fr "
+      templateColumns="1fr 1fr "
       templateAreas={`
-      "header header header "
-    "content1 content2 content3 "
+      "header header "
+    "content2 content3 "
   `}
       gap={5}
       p={5}
@@ -67,72 +73,91 @@ const AccountProfilePage = () => {
           <Divider pt="15px" />
         </Box>
       </GridItem>
-
-      <GridItem area="content1" pt="20px">
-        <Box>
-          <Box textAlign="end">
-            <Text fontSize="large" mb="27px" fontWeight="semibold">
-              Email
-            </Text>
-            <Text fontSize="large" mb="34px" fontWeight="semibold">
-              Name
-            </Text>
-            <Text
-              fontSize="large"
-              mb="32px"
-              fontWeight="semibold"
-              whiteSpace="nowrap"
-            >
-              Address
-            </Text>
-            <Text fontSize="large" fontWeight="semibold" whiteSpace="nowrap">
-              Phone Number
-            </Text>
-          </Box>
-        </Box>
-      </GridItem>
       <GridItem area="content2" pt="20px">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Box textAlign="start">
-            <Text fontSize="large" mb="20px">
-              {user?.email}
-            </Text>
+          <Box ml="30px">
+            <Box display="flex" alignItems="center" mb="20px">
+              <Text mr="65px" fontSize="lg" fontWeight="semibold">
+                Email
+              </Text>
+              <Text fontSize="lg">{user?.email}</Text>
+            </Box>
             <FormControl pb="20px">
-              <Input
-                disabled={loading}
-                {...register("name")}
-                type="text"
-                borderColor="gray.500"
-              />
+              <Box display="flex">
+                <FormLabel mt="10px">Name</FormLabel>
+                <Box display="flex" flexDirection="column" ml="50px">
+                  <Input
+                    disabled={loading}
+                    {...register("name", {
+                      required: "Name is required",
+                    })}
+                    type="text"
+                    borderColor="gray.500"
+                    width="600px"
+                  />
+                  {errors.name && (
+                    <Text color="red">{errors.name.message}</Text>
+                  )}
+                </Box>
+              </Box>
             </FormControl>
+
             <FormControl pb="20px">
-              <Input
-                disabled={loading}
-                {...register("address")}
-                type="text"
-                borderColor="gray.500"
-              />
+              <Box display="flex">
+                <FormLabel mt="10px">Address</FormLabel>
+                <Box display="flex" flexDirection="column" ml="35px">
+                  <Input
+                    disabled={loading}
+                    {...register("address", {
+                      required: "Address is required",
+                    })}
+                    type="text"
+                    borderColor="gray.500"
+                    width="600px"
+                  />
+                  {errors.address && (
+                    <Text color="red">{errors.address.message}</Text>
+                  )}
+                </Box>
+              </Box>
             </FormControl>
+
             <FormControl mb="20px">
-              <Input
-                disabled={loading}
-                {...register("contactNumber")}
-                type="text"
-                borderColor="gray.500"
-              />
+              <Box display="flex">
+                <FormLabel mt="10px" whiteSpace="nowrap">
+                  Contact No.
+                </FormLabel>
+                <Box display="flex" flexDirection="column" ml="8px">
+                  <Input
+                    disabled={loading}
+                    {...register("contactNumber", {
+                      required: "Phone number is required",
+                    })}
+                    type="text"
+                    borderColor="gray.500"
+                    width="600px"
+                  />
+                  {errors.contactNumber && (
+                    <Text color="red">{errors.contactNumber.message}</Text>
+                  )}
+                </Box>
+              </Box>
             </FormControl>
 
             <Button
               isLoading={loading}
               type="submit"
-              _hover={{ color: "orange.400" }}
+              bg="orange.500"
+              _hover={{ bg: "orange.600" }}
+              width="120px"
+              ml="107px"
             >
               Save
             </Button>
           </Box>
         </form>
       </GridItem>
-      <GridItem area="content3" pt="20px">
+      <GridItem area="content3" pt="20px" ml="30px">
         <Box display="flex" justifyContent="center">
           <Box display="flex" flexDirection="column" alignItems="center">
             <Avatar

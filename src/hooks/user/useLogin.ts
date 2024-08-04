@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../services/api-client';
 import { useAuthQueryStore } from '../../store/auth-store';
+import { useToast } from '@chakra-ui/react';
 
 interface FormData {
   email: string;
@@ -14,10 +15,11 @@ const apiClient = axiosInstance;
 
 const useLogin = () => {
   const queryClient = useQueryClient();
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {setJwtToken, setRole} = useAuthQueryStore();
+  const toast = useToast();
   
   const mutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("/user/login", data)
@@ -61,6 +63,14 @@ const useLogin = () => {
     },
     onError: (error) => {
       console.error("Login failed", error);
+      setLoading(false);
+      toast({
+        position: "top",
+        title: "Invalid account info.",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });     
     },
   });
 
@@ -74,6 +84,7 @@ const useLogin = () => {
     handleSubmit,
     loading,
     onSubmit,
+    errors
   };
 };
 

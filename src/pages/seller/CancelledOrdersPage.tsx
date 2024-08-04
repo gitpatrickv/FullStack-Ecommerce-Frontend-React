@@ -9,12 +9,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import OrderCard from "../../components/Order/OrderCard";
+import SellersOrderCard from "../../components/Order/SellersOrderCard";
 import OrderItem from "../../entities/Order";
+import useConfirmCancelOrder from "../../hooks/seller/useConfirmCancelOrder";
 import useGetCancelledOrders from "../../hooks/seller/useGetCancelledOrders";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { formatCurrency } from "../../utilities/formatCurrency";
-import useConfirmCancelOrder from "../../hooks/seller/useConfirmCancelOrder";
 const CancelledOrdersPage = () => {
   const { authStore } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
@@ -113,7 +113,7 @@ const CancelledOrdersPage = () => {
                     </Box>
                     <Divider mt={2} mb={2} />
                     {storeOrders.map((order) => (
-                      <OrderCard key={order.id} order={order} />
+                      <SellersOrderCard key={order.id} order={order} />
                     ))}
                     <Divider mt={2} mb={2} />
                     <Box

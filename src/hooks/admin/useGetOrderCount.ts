@@ -6,6 +6,7 @@ import { useAuthQueryStore } from "../../store/auth-store";
 interface Props {
     orderCount: number;
     totalSales: number;
+    totalShippingFee: number;
 }
 
 const apiClient = axiosInstance;

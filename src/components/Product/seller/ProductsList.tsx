@@ -148,15 +148,31 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               >
                 {product.productName}
               </Text>
-              {product.suspended === true && (
-                <Text ml="20px" color="red">
-                  Suspended
-                </Text>
+              {product.suspended && (
+                <Box
+                  border="1px solid"
+                  width="120px"
+                  textAlign="center"
+                  borderRadius="20px"
+                  bg="red.500"
+                  borderColor="red.500"
+                  ml="20px"
+                >
+                  <Text mb="2px">Suspended</Text>
+                </Box>
               )}
-              {product.listed === false && (
-                <Text ml="20px" color="red">
-                  {product.suspended ? "" : "Delisted"}
-                </Text>
+              {!product.listed && (
+                <Box
+                  border="1px solid"
+                  width="120px"
+                  textAlign="center"
+                  borderRadius="20px"
+                  bg="red.500"
+                  borderColor="red.500"
+                  ml="20px"
+                >
+                  <Text mb="2px">Delisted</Text>
+                </Box>
               )}
             </Box>
           </Box>
@@ -218,6 +234,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               variant="link"
               mb="10px"
               fontWeight="semibold"
+              color="white.500"
               _hover={{
                 color: "orange.400",
               }}
@@ -230,17 +247,19 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
               variant="link"
               mb="10px"
               fontWeight="semibold"
+              color="white.500"
               _hover={{
                 color: "orange.400",
               }}
               onClick={deleteOnOpen}
-              isDisabled={product.suspended ? true : false}
+              // isDisabled={product.suspended ? true : false}
             >
               Delete
             </Button>
             <Button
               variant="link"
               fontWeight="semibold"
+              color="white.500"
               _hover={{
                 color: "orange.400",
               }}
@@ -272,12 +291,12 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                         fontWeight="semibold"
                         textTransform="capitalize"
                         mb="5px"
-                        color="orange.400"
+                        color="white.500"
                         mr="10px"
                       >
                         {product.productName}
                       </Text>
-                      <Box pb="5px" cursor="pointer" color="gray.500">
+                      <Box pb="5px" cursor="pointer" color="white.500">
                         <FaRegEdit size="20" onClick={onProductInfoOpen} />
                       </Box>
                     </Box>
@@ -285,7 +304,7 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                       fontSize="small"
                       textTransform="capitalize"
                       mb="5px"
-                      color="gray.400"
+                      color="white.500"
                     >
                       {product.productDescription}
                     </Text>
@@ -449,18 +468,23 @@ const ProductsList = ({ product, refetchProducts }: Props) => {
                     fontWeight="semibold"
                     textTransform="capitalize"
                     mb="5px"
-                    color="orange.400"
+                    color="white.500"
+                    mt="10px"
                   >
                     Product Information
                   </Text>
-                  <FormLabel color="gray.400">Product Name</FormLabel>
+                  <FormLabel color="white.500" mt="10px">
+                    Product Name
+                  </FormLabel>
                   <Input
                     {...register("productName", { required: true })}
                     type="text"
                     placeholder="Product Name"
                     mb="10px"
                   />
-                  <FormLabel color="gray.400">Product Description</FormLabel>
+                  <FormLabel color="white.500" mt="10px">
+                    Product Description
+                  </FormLabel>
                   <Textarea
                     {...register("productDescription", { required: true })}
                     placeholder="Product Description"

@@ -26,14 +26,14 @@ const Metrics = () => {
   const { data: orderCount } = useGetOrderCount();
 
   return (
-    <Card>
+    <Card borderRadius="none">
       <CardBody>
         <Grid
           templateRows="0.3fr 0.7fr"
-          templateColumns="0.2fr 0.2fr 0.2fr 0.2fr 0.2fr"
+          templateColumns="0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr"
           templateAreas={`
-      "header header header header header"
-      "content1 content2 content3 content4 content5"
+      "header header header header header header"
+      "content1 content2 content3 content4 content5 content6"
   `}
           gap={4}
           p={3}
@@ -90,7 +90,7 @@ const Metrics = () => {
             </Box>
           </GridItem>
 
-          <GridItem area="content4">
+          <GridItem area="content5">
             <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
@@ -101,12 +101,12 @@ const Metrics = () => {
                   fontWeight="semibold"
                   whiteSpace="nowrap"
                 >
-                  Total Sales
+                  Product Revenue
                 </Text>
               </Box>
             </Box>
           </GridItem>
-          <GridItem area="content5">
+          <GridItem area="content4">
             <Box display="flex" justifyContent="center" userSelect="none">
               <Box display="flex" flexDirection="column" textAlign="center">
                 <Text color="blue.500" fontSize="lg" fontWeight="semibold">
@@ -118,6 +118,22 @@ const Metrics = () => {
                   whiteSpace="nowrap"
                 >
                   Total Orders
+                </Text>
+              </Box>
+            </Box>
+          </GridItem>
+          <GridItem area="content6">
+            <Box display="flex" justifyContent="center" userSelect="none">
+              <Box display="flex" flexDirection="column" textAlign="center">
+                <Text color="blue.500" fontSize="lg" fontWeight="semibold">
+                  {formatCurrency(orderCount?.totalShippingFee ?? 0)}
+                </Text>
+                <Text
+                  fontSize={fontSize}
+                  fontWeight="semibold"
+                  whiteSpace="nowrap"
+                >
+                  Shipping Revenue
                 </Text>
               </Box>
             </Box>
