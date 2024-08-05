@@ -40,6 +40,14 @@ const Header = () => {
     }
   };
 
+  const handleNavigateSellerClick = () => {
+    if (role === "SELLER") {
+      navigate("/seller");
+    } else {
+      navigate("/seller/login");
+    }
+  };
+
   const handleLogout = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
@@ -58,6 +66,31 @@ const Header = () => {
         gridGap="25px"
         mt="5px"
       >
+        <GridItem area="content1" display="flex" justifyContent="start">
+          {!user || role === "SELLER" ? (
+            <Text
+              _hover={{
+                color: "orange.400",
+              }}
+              onClick={handleNavigateSellerClick}
+              cursor="pointer"
+            >
+              Seller Centre
+            </Text>
+          ) : role === "USER" ? (
+            <Link to="/seller/store/create">
+              <Text
+                _hover={{
+                  color: "orange.400",
+                }}
+              >
+                Start Selling
+              </Text>
+            </Link>
+          ) : (
+            ""
+          )}
+        </GridItem>
         <GridItem area="content3" display="flex" justifyContent="flex-end">
           <Box>
             <HStack spacing={3}>

@@ -35,6 +35,7 @@ import ShopListPage from "../pages/admin/ShopListPage";
 import UserListPage from "../pages/admin/UserListPage";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import SellerLoginPage from "../pages/auth/SellerLoginPage";
 import CreateStorePage from "../pages/seller/CreateStorePage";
 import ReviewManagementPage from "../pages/seller/ReviewManagementPage";
 import StoreInformationPage from "../pages/seller/StoreInformationPage";
@@ -44,6 +45,7 @@ import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
+import UserSellerRoute from "../components/ProtectedRoute/UserSellerRoute";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/register", element: <RegisterPage /> },
       { path: "/login", element: <LoginPage /> },
+      { path: "/seller/login", element: <SellerLoginPage /> },
       { path: `/api/product/:productId`, element: <ProductDetailPage /> },
       { path: "/daily_discover", element: <DailyDiscoverPage /> },
       {
@@ -144,9 +147,9 @@ const router = createBrowserRouter([
   {
     path: "/seller/store/create",
     element: (
-      <SellerRoute>
+      <UserSellerRoute>
         <CreateStorePage />
-      </SellerRoute>
+      </UserSellerRoute>
     ),
     errorElement: <ErrorPage />,
   },

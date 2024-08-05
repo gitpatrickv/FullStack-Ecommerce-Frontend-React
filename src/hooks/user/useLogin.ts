@@ -1,10 +1,10 @@
+import { useToast } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../services/api-client';
 import { useAuthQueryStore } from '../../store/auth-store';
-import { useToast } from '@chakra-ui/react';
 
 interface FormData {
   email: string;
@@ -20,6 +20,8 @@ const useLogin = () => {
   const navigate = useNavigate();
   const {setJwtToken, setRole} = useAuthQueryStore();
   const toast = useToast();
+  const location = useLocation();
+
   
   const mutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("/user/login", data)
@@ -50,15 +52,18 @@ const useLogin = () => {
       queryClient.invalidateQueries(['userCount'])
       const role = response.role;
       setRole(role);
-      if(role==="ADMIN"){
+      
+      if(location.pathname === "/login"){
+            if(role==="ADMIN"){
         navigate("/admin");
-      }
-      else if(role==="SELLER"){
-        navigate("/seller")
       }else{
         navigate("/")
       }
-      console.log("login successful", role)
+      }
+
+      if(location.pathname === "/seller/login"){
+          navigate("/seller")
+      }
       
     },
     onError: (error) => {
@@ -70,7 +75,7 @@ const useLogin = () => {
         status: "error",
         duration: 1000,
         isClosable: true,
-      });     
+      });
     },
   });
 

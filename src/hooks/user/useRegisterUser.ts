@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { useToast } from '@chakra-ui/react';
 const apiClient = axiosInstance;
 
 const useRegisterUser = () => {
+  const queryClient = useQueryClient();
     const { register, handleSubmit, formState: { errors },  setError } = useForm<User>({ resolver: zodResolver(schema) });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ const useRegisterUser = () => {
         .then((res) => res.data),
 
         onSuccess: (response) => {
+          queryClient.invalidateQueries(['user']);
             const jwtToken = response.jwtToken;
             setJwtToken(jwtToken);
             const role = response.role;
