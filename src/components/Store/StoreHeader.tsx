@@ -10,8 +10,11 @@ import {
   GridItem,
   Text,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { IoIosStar } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import useFollowStore from "../../hooks/user/useFollowStore";
+import useGetFollowedStoreStatus from "../../hooks/user/useGetFollowedStoreStatus";
 import useGetStoreRating from "../../hooks/user/useGetStoreRating";
 
 interface Props {
@@ -22,6 +25,21 @@ interface Props {
 const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   const { storeId } = useParams();
   const { data: storeRating } = useGetStoreRating(storeId!);
+  const { mutate: followStore } = useFollowStore();
+  const { data: getFollowedStatus } = useGetFollowedStoreStatus(storeId!);
+  const [isFollowed, setIsFollowed] = useState<boolean>(
+    getFollowedStatus?.followed || false
+  );
+
+  useEffect(() => {
+    setIsFollowed(getFollowedStatus?.followed || false);
+  }, [getFollowedStatus?.followed]);
+
+  const handleFollowStoreClick = () => {
+    followStore(storeId!);
+    setIsFollowed(!isFollowed);
+  };
+
   return (
     <Card borderRadius="none" minWidth="1000px">
       <CardBody>
@@ -57,11 +75,20 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     _hover={{ color: "orange.400" }}
                     mt="10px"
                     ml="15px"
-                    isDisabled={true}
                     width="150px"
+                    onClick={handleFollowStoreClick}
                   >
                     <Text pl="5px" fontSize="medium">
-                      Follow
+                      {isFollowed === true ? (
+                        "Following"
+                      ) : (
+                        <>
+                          <Text as="span" fontSize="lg" mr="3px">
+                            +
+                          </Text>
+                          Follow
+                        </>
+                      )}
                     </Text>
                   </Button>
                   <Button
@@ -157,7 +184,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                 Joined
               </Text>
               <Text fontWeight="semibold" fontSize="md" color="orange.500">
-                2024
+                {storeRating?.createdDate || ""}
               </Text>
               <Text fontWeight="semibold" fontSize="md"></Text>
             </Box>

@@ -163,7 +163,7 @@ const ShopSection = ({ product }: Props) => {
                 Joined
               </Text>
               <Text fontWeight="semibold" fontSize="md" color="orange.500">
-                2024
+                {storeRating?.createdDate || ""}
               </Text>
               <Text fontWeight="semibold" fontSize="md"></Text>
             </Box>
