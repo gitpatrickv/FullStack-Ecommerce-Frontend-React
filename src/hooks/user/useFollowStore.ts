@@ -21,6 +21,7 @@ const useFollowStore = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['followedStatus']);
+                queryClient.invalidateQueries(['storeFollowerCount'])
             }
         },
     )

@@ -11,10 +11,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaStore } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import useGetStoreRating from "../../hooks/user/useGetStoreRating";
-import Product from "../../entities/Product";
 import { IoIosStar } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import Product from "../../entities/Product";
+import useGetStoreFollowerCount from "../../hooks/user/useGetStoreFollowerCount";
+import useGetStoreRating from "../../hooks/user/useGetStoreRating";
 
 interface Props {
   product: Product;
@@ -23,6 +24,9 @@ interface Props {
 const ShopSection = ({ product }: Props) => {
   const navigate = useNavigate();
   const { data: storeRating } = useGetStoreRating(product.storeId);
+  const { data: storeFollowerCount } = useGetStoreFollowerCount(
+    product.storeId
+  );
 
   const handleNavigateStorePageClick = () => {
     navigate(`/store/` + product.storeId);
@@ -183,7 +187,7 @@ const ShopSection = ({ product }: Props) => {
                 color="orange.500"
                 whiteSpace="nowrap"
               >
-                0
+                {storeFollowerCount?.storeFollowerCount ?? 0}
               </Text>
               <Text fontWeight="semibold" fontSize="md"></Text>
             </Box>

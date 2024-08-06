@@ -15,6 +15,7 @@ import { IoIosStar } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import useFollowStore from "../../hooks/user/useFollowStore";
 import useGetFollowedStoreStatus from "../../hooks/user/useGetFollowedStoreStatus";
+import useGetStoreFollowerCount from "../../hooks/user/useGetStoreFollowerCount";
 import useGetStoreRating from "../../hooks/user/useGetStoreRating";
 
 interface Props {
@@ -25,6 +26,7 @@ interface Props {
 const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   const { storeId } = useParams();
   const { data: storeRating } = useGetStoreRating(storeId!);
+  const { data: storeFollowerCount } = useGetStoreFollowerCount(storeId!);
   const { mutate: followStore } = useFollowStore();
   const { data: getFollowedStatus } = useGetFollowedStoreStatus(storeId!);
   const [isFollowed, setIsFollowed] = useState<boolean>(
@@ -204,7 +206,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                 color="orange.500"
                 whiteSpace="nowrap"
               >
-                0
+                {storeFollowerCount?.storeFollowerCount ?? 0}
               </Text>
               <Text fontWeight="semibold" fontSize="md"></Text>
             </Box>
