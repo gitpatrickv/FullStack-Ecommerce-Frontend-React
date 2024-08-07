@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaShopify, FaShoppingCart } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import useCartTotal from "../../hooks/user/useCartTotal";
@@ -189,7 +189,7 @@ const Header = () => {
             onClick={handleNavigateHomeClick}
             cursor="pointer"
           >
-            <FaHome size="40" />
+            <FaShopify size="40" />
           </Box>
         </GridItem>
         <GridItem area="content5">

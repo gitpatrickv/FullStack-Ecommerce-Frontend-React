@@ -10,7 +10,8 @@ import FollowingShopList from "../../components/Shop/user/FollowingShopList";
 import useGetAllFollowedStore from "../../hooks/user/useGetAllFollowedStore";
 
 const MyFollowingPage = () => {
-  const { data: getFollowedStoreList } = useGetAllFollowedStore();
+  const { data: getFollowedStoreList, refetch: refetchFollowedStoreList } =
+    useGetAllFollowedStore();
 
   return (
     <Grid
@@ -43,7 +44,11 @@ const MyFollowingPage = () => {
       <GridItem area="content1">
         <SimpleGrid columns={{ base: 2 }} spacing={2} minW="700px">
           {getFollowedStoreList?.map((list) => (
-            <FollowingShopList key={list.storeFollowerId} list={list} />
+            <FollowingShopList
+              key={list.storeFollowerId}
+              list={list}
+              onRetchFollowing={refetchFollowedStoreList}
+            />
           ))}
         </SimpleGrid>
       </GridItem>

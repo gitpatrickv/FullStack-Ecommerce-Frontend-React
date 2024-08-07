@@ -9,16 +9,27 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { StoreFollowerProps } from "../../../hooks/user/useGetAllFollowedStore";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import useFollowStore from "../../../hooks/user/useFollowStore";
+import { StoreFollowerProps } from "../../../hooks/user/useGetAllFollowedStore";
 
 interface Props {
   list: StoreFollowerProps;
+  onRetchFollowing: () => void;
 }
 
-const FollowingShopList = ({ list }: Props) => {
+const FollowingShopList = ({ list, onRetchFollowing }: Props) => {
+  const { mutate: followStore } = useFollowStore();
   const isTruncated = useBreakpointValue({ base: true });
   const fontSize = useBreakpointValue({ base: "sm", lg: "xl" });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleUnfollowStoreClick = () => {
+    followStore(list.storeId);
+    onRetchFollowing();
+  };
+
   return (
     <Card borderRadius="none" mb="1px">
       <Grid
@@ -35,7 +46,7 @@ const FollowingShopList = ({ list }: Props) => {
                 <Image
                   src={
                     list.storePhotoUrl ||
-                    "https://img.freepik.com/free-vector/shop-with-sign-we-are-open_52683-38687.jpg"
+                    "https://media.istockphoto.com/id/912819604/vector/storefront-flat-design-e-commerce-icon.jpg?s=612x612&w=0&k=20&c=_x_QQJKHw_B9Z2HcbA2d1FH1U1JVaErOAp2ywgmmoTI="
                   }
                   w={{ base: "50px", md: "90px", lg: "120px" }}
                   h={{ base: "40px", md: "60px", lg: "80px" }}
@@ -60,10 +71,12 @@ const FollowingShopList = ({ list }: Props) => {
               ml="15px"
               mr="10px"
               width="120px"
-              // onClick={handleFollowStoreClick}
+              onClick={handleUnfollowStoreClick}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               <Text pl="5px" fontSize="medium">
-                Following
+                {isHovered ? "Unfollow" : "Following"}
               </Text>
             </Button>
           </Box>

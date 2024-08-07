@@ -30,6 +30,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   const { data: storeFollowerCount } = useGetStoreFollowerCount(storeId!);
   const { mutate: followStore } = useFollowStore();
   const { data: getFollowedStatus } = useGetFollowedStoreStatus(storeId!);
+  const [isHovered, setIsHovered] = useState(false);
   const { authStore } = useAuthQueryStore();
   const role = authStore.role;
   const [isFollowed, setIsFollowed] = useState<boolean>(
@@ -85,10 +86,12 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     isDisabled={
                       role === "USER" || role === "SELLER" ? false : true
                     }
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                   >
                     <Text pl="5px" fontSize="medium">
                       {isFollowed === true ? (
-                        "Following"
+                        <>{isHovered ? "Unfollow" : "Following"}</>
                       ) : (
                         <>
                           <Text as="span" fontSize="lg" mr="3px">

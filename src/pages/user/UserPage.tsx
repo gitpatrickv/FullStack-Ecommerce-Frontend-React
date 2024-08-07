@@ -14,7 +14,7 @@ import {
   FaRegEdit,
   FaRegFileAlt,
   FaRegUser,
-  FaShopify,
+  FaStore,
 } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useGetUser from "../../hooks/user/useGetUser";
@@ -183,7 +183,7 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
-            <FaShopify
+            <FaStore
               size="20px"
               color={
                 location.pathname === "/user/following" ? "orange" : "gray"
