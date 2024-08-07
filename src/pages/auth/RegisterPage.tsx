@@ -23,11 +23,12 @@ import { IoIosEye } from "react-icons/io";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import useRegisterUser from "../../hooks/user/useRegisterUser";
+// import ReCAPTCHA from "react-google-recaptcha";
 
 const RegisterPage = () => {
   const { register, handleSubmit, loading, onSubmit, errors } =
     useRegisterUser();
-
+  // const [captcha, setCaptcha] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
@@ -38,6 +39,14 @@ const RegisterPage = () => {
   const handleShowConfirmPasswordClick = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  // const handleCaptchaClick = (value: string | null) => {
+  //   if (value !== null) {
+  //     setCaptcha(value);
+  //   } else {
+  //     setCaptcha("");
+  //   }
+  // };
 
   return (
     <Box>
@@ -173,7 +182,7 @@ const RegisterPage = () => {
                       <Text color="red">{errors.confirmPassword.message}</Text>
                     )}
                   </FormControl>
-                  <FormControl>
+                  <FormControl mb="5px">
                     <FormLabel color="white.500">Role</FormLabel>
                     <Select
                       {...register("role", { required: true })}
@@ -188,7 +197,10 @@ const RegisterPage = () => {
                       <Text color="red">{errors.role.message}</Text>
                     )}
                   </FormControl>
-
+                  {/* <ReCAPTCHA
+                    sitekey="6Ld5ciEqAAAAAOMHz2mlCAsMuVwWC_imsKWpfd-K"
+                    onChange={handleCaptchaClick}
+                  /> */}
                   <Button
                     isLoading={loading}
                     type="submit"
@@ -196,6 +208,7 @@ const RegisterPage = () => {
                     _hover={{ bg: "orange.500" }}
                     _active={{ bg: "orange.600" }}
                     mt="5px"
+                    // isDisabled={!captcha}
                   >
                     Register
                   </Button>
