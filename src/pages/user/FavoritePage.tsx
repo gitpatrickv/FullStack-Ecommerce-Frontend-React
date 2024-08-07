@@ -14,7 +14,6 @@ import useGetAllFavorites from "../../hooks/user/useGetAllFavorites";
 
 const FavoritePage = () => {
   const { data: favorites, error } = useGetAllFavorites();
-  const isTruncated = useBreakpointValue({ base: true });
 
   if (error) {
     console.log(error);
@@ -36,7 +35,7 @@ const FavoritePage = () => {
           <Text fontSize="xl" fontWeight="semibold">
             My Favorites
           </Text>
-          <Text fontSize="md" isTruncated={isTruncated} whiteSpace="nowrap">
+          <Text fontSize="md" whiteSpace="nowrap">
             Keep track of the products you love and revisit them anytime, making
             your shopping experience more personalized and efficient.
           </Text>
@@ -44,7 +43,7 @@ const FavoritePage = () => {
         </Box>
       </GridItem>
       <GridItem area="content1">
-        <SimpleGrid columns={{ sm: 1, md: 3, lg: 3, xl: 4 }} spacing={2}>
+        <SimpleGrid columns={{ base: 4 }} spacing={2} minW="700px">
           {favorites?.map((product: AllProductModels) => (
             <ProductCardContainer key={product.productId}>
               <ProductCard product={product} />

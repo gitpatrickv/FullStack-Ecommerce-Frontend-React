@@ -9,9 +9,8 @@ import {
 } from "@chakra-ui/react";
 import useGetSuspendedProductCount from "../../../hooks/admin/useGetSuspendedProductCount";
 import useGetTotalSales from "../../../hooks/seller/useGetTotalSales";
-import useGetStoreRating from "../../../hooks/user/useGetStoreRating";
+import useGetStoreFollowerCount from "../../../hooks/user/useGetStoreFollowerCount";
 import { formatCurrency } from "../../../utilities/formatCurrency";
-import { IoIosStar } from "react-icons/io";
 
 interface Props {
   orderCount: number;
@@ -25,10 +24,10 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
     md: "md",
     lg: "lg",
   });
-  const { data: storeRating } = useGetStoreRating(storeId);
 
   const { data: totalSales } = useGetTotalSales(storeId);
   const { data: suspendedProductCount } = useGetSuspendedProductCount(storeId);
+  const { data: storeFollowerCount } = useGetStoreFollowerCount(storeId);
 
   return (
     <Card mt="5px" borderRadius="none" minWidth="1000px">
@@ -113,32 +112,16 @@ const BusinessInsights = ({ orderCount, productCount, storeId }: Props) => {
           </GridItem>
           <GridItem area="content5">
             <Box display="flex" justifyContent="center" userSelect="none">
-              <Box
-                display="flex"
-                flexDirection="column"
-                textAlign="center"
-                alignItems="center"
-              >
-                <Box display="flex" alignItems="center">
-                  <IoIosStar size="20px" color="orange" />
-                  <Text
-                    color="blue.500"
-                    fontSize="lg"
-                    fontWeight="semibold"
-                    ml="5px"
-                  >
-                    {storeRating?.storeRatingAvg ?? 0}{" "}
-                    <Text as="span" fontSize="md">
-                      / 5
-                    </Text>
-                  </Text>
-                </Box>
+              <Box display="flex" flexDirection="column" textAlign="center">
+                <Text color="blue.500" fontSize="lg" fontWeight="semibold">
+                  {storeFollowerCount?.storeFollowerCount ?? 0}
+                </Text>
                 <Text
                   fontSize={fontSize}
                   fontWeight="semibold"
                   whiteSpace="nowrap"
                 >
-                  Shop Rating
+                  Follower
                 </Text>
               </Box>
             </Box>

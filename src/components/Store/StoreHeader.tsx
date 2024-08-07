@@ -17,6 +17,7 @@ import useFollowStore from "../../hooks/user/useFollowStore";
 import useGetFollowedStoreStatus from "../../hooks/user/useGetFollowedStoreStatus";
 import useGetStoreFollowerCount from "../../hooks/user/useGetStoreFollowerCount";
 import useGetStoreRating from "../../hooks/user/useGetStoreRating";
+import { useAuthQueryStore } from "../../store/auth-store";
 
 interface Props {
   storePhotoUrl: string;
@@ -29,6 +30,8 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   const { data: storeFollowerCount } = useGetStoreFollowerCount(storeId!);
   const { mutate: followStore } = useFollowStore();
   const { data: getFollowedStatus } = useGetFollowedStoreStatus(storeId!);
+  const { authStore } = useAuthQueryStore();
+  const role = authStore.role;
   const [isFollowed, setIsFollowed] = useState<boolean>(
     getFollowedStatus?.followed || false
   );
@@ -79,6 +82,9 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     ml="15px"
                     width="150px"
                     onClick={handleFollowStoreClick}
+                    isDisabled={
+                      role === "USER" || role === "SELLER" ? false : true
+                    }
                   >
                     <Text pl="5px" fontSize="medium">
                       {isFollowed === true ? (

@@ -39,13 +39,13 @@ import SellerLoginPage from "../pages/auth/SellerLoginPage";
 import CreateStorePage from "../pages/seller/CreateStorePage";
 import ReviewManagementPage from "../pages/seller/ReviewManagementPage";
 import StoreInformationPage from "../pages/seller/StoreInformationPage";
+import MyFollowingPage from "../pages/user/MyFollowingPage";
 import { SearchPage } from "../pages/user/SearchPage";
 import StorePage from "../pages/user/StorePage";
 import ToPayPage from "../pages/user/ToPayPage";
 import ToReceivePage from "../pages/user/ToReceivePage";
 import ToShipPage from "../pages/user/ToShipPage";
 import UserPage from "../pages/user/UserPage";
-import UserSellerRoute from "../components/ProtectedRoute/UserSellerRoute";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +95,7 @@ const router = createBrowserRouter([
           },
           { path: "account/password", element: <ChangePasswordPage /> },
           { path: "favorites", element: <FavoritePage /> },
+          { path: "following", element: <MyFollowingPage /> },
           {
             path: "purchase",
             element: <MyPurchasePage />,
@@ -147,9 +148,9 @@ const router = createBrowserRouter([
   {
     path: "/seller/store/create",
     element: (
-      <UserSellerRoute>
+      <UserRoute>
         <CreateStorePage />
-      </UserSellerRoute>
+      </UserRoute>
     ),
     errorElement: <ErrorPage />,
   },
