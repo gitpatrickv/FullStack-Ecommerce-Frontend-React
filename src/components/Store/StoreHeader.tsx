@@ -64,13 +64,19 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                 }
                 size="xl"
               />
-              <Box display="flex" flexDirection="column">
+              <Box
+                display="flex"
+                flexDirection="column"
+                minWidth="180px"
+                maxWidth="350px"
+              >
                 <Text
                   fontSize="x-large"
                   fontWeight="semibold"
                   textTransform="capitalize"
                   mr="20px"
                   ml="15px"
+                  isTruncated
                 >
                   {storeName}
                 </Text>
@@ -102,7 +108,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                       )}
                     </Text>
                   </Button>
-                  <Button
+                  {/* <Button
                     cursor="pointer"
                     display="flex"
                     _hover={{ color: "orange.400" }}
@@ -114,7 +120,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     <Text pl="5px" fontSize="medium">
                       Chat Now
                     </Text>
-                  </Button>
+                  </Button> */}
                 </Box>
               </Box>
 

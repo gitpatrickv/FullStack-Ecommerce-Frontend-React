@@ -57,11 +57,14 @@ const ShopSection = ({ product }: Props) => {
                   textTransform="capitalize"
                   mr="20px"
                   ml="15px"
+                  isTruncated
+                  minWidth="160px"
+                  maxWidth="350px"
                 >
                   {product.storeName}
                 </Text>
                 <Box display="flex">
-                  <Button
+                  {/* <Button
                     cursor="pointer"
                     display="flex"
                     _hover={{ color: "orange.400" }}
@@ -73,7 +76,7 @@ const ShopSection = ({ product }: Props) => {
                     <Text pl="5px" fontSize="medium">
                       Chat Now
                     </Text>
-                  </Button>
+                  </Button> */}
                   <Button
                     cursor="pointer"
                     display="flex"
