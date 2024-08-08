@@ -24,8 +24,9 @@ const useCreateStore = () => {
     setError
   } = useForm<CreateStoreProps>();
   const toast = useToast();
-  const { authStore } = useAuthQueryStore();
+  const { authStore,setRole } = useAuthQueryStore();
   const jwtToken = authStore.jwtToken;
+  const role = authStore.role;
   const navigate = useNavigate();
 
   const mutation = useMutation(
@@ -51,6 +52,11 @@ const useCreateStore = () => {
           duration: 2000,
           isClosable: true,
         });
+
+        if(role === "USER"){
+          setRole("SELLER")
+        }
+
         navigate("/seller")
       },
       onError: (error: any) => {

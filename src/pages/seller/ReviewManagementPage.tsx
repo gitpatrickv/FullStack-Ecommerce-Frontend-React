@@ -9,11 +9,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { IoIosStar } from "react-icons/io";
 import { TbStarOff } from "react-icons/tb";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewManagement from "../../components/Review/seller/ReviewManagement";
 import ReviewManagementHeader from "../../components/Review/seller/ReviewManagementHeader";
 import useManageAllProductReview from "../../hooks/seller/useManageAllProductReview";
+import useGetStoreRating from "../../hooks/user/useGetStoreRating";
 import { paginationRange } from "../../utilities/pagination";
 
 const ReviewManagementPage = () => {
@@ -30,7 +32,7 @@ const ReviewManagementPage = () => {
   const [page, setPage] = useState(getPageFromUrl);
   const pageSize = 4;
   const [sortBy, setSortBy] = useState("");
-
+  const { data: storeRating } = useGetStoreRating(storeId!);
   const { data: manageReview, refetch: refetchReviews } =
     useManageAllProductReview({
       storeId: storeId!,
@@ -100,9 +102,23 @@ const ReviewManagementPage = () => {
       <GridItem area="main">
         <Card mb="5px" borderRadius="none">
           <Box padding={5}>
-            <Text fontSize="xl" fontWeight="semibold">
-              Shop Rating List
-            </Text>
+            <Box display="flex" alignItems="center">
+              <Text fontSize="xl" fontWeight="semibold" mr="10px">
+                Shop Rating
+              </Text>
+              <IoIosStar size="25px" color="orange" />
+              <Text
+                color="blue.500"
+                fontSize="xl"
+                fontWeight="semibold"
+                ml="5px"
+              >
+                {storeRating?.storeRatingAvg ?? 0}{" "}
+                <Text as="span" fontSize="md">
+                  / 5
+                </Text>
+              </Text>
+            </Box>
             <Divider mb="15px" mt="10px" />
             <Box display="flex" alignItems="center" mt="10px">
               <Text fontSize="lg" fontWeight="semibold" pr="20px">

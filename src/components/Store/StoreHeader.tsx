@@ -10,9 +10,14 @@ import {
   GridItem,
   Text,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { IoIosStar } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import useFollowStore from "../../hooks/user/useFollowStore";
+import useGetFollowedStoreStatus from "../../hooks/user/useGetFollowedStoreStatus";
+import useGetStoreFollowerCount from "../../hooks/user/useGetStoreFollowerCount";
 import useGetStoreRating from "../../hooks/user/useGetStoreRating";
+import { useAuthQueryStore } from "../../store/auth-store";
 
 interface Props {
   storePhotoUrl: string;
@@ -22,6 +27,25 @@ interface Props {
 const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   const { storeId } = useParams();
   const { data: storeRating } = useGetStoreRating(storeId!);
+  const { data: storeFollowerCount } = useGetStoreFollowerCount(storeId!);
+  const { mutate: followStore } = useFollowStore();
+  const { data: getFollowedStatus } = useGetFollowedStoreStatus(storeId!);
+  const [isHovered, setIsHovered] = useState(false);
+  const { authStore } = useAuthQueryStore();
+  const role = authStore.role;
+  const [isFollowed, setIsFollowed] = useState<boolean>(
+    getFollowedStatus?.followed || false
+  );
+
+  useEffect(() => {
+    setIsFollowed(getFollowedStatus?.followed || false);
+  }, [getFollowedStatus?.followed]);
+
+  const handleFollowStoreClick = () => {
+    followStore(storeId!);
+    setIsFollowed(!isFollowed);
+  };
+
   return (
     <Card borderRadius="none" minWidth="1000px">
       <CardBody>
@@ -40,13 +64,19 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                 }
                 size="xl"
               />
-              <Box display="flex" flexDirection="column">
+              <Box
+                display="flex"
+                flexDirection="column"
+                minWidth="180px"
+                maxWidth="350px"
+              >
                 <Text
                   fontSize="x-large"
                   fontWeight="semibold"
                   textTransform="capitalize"
                   mr="20px"
                   ml="15px"
+                  isTruncated
                 >
                   {storeName}
                 </Text>
@@ -57,14 +87,28 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     _hover={{ color: "orange.400" }}
                     mt="10px"
                     ml="15px"
-                    isDisabled={true}
                     width="150px"
+                    onClick={handleFollowStoreClick}
+                    isDisabled={
+                      role === "USER" || role === "SELLER" ? false : true
+                    }
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                   >
                     <Text pl="5px" fontSize="medium">
-                      Follow
+                      {isFollowed === true ? (
+                        <>{isHovered ? "Unfollow" : "Following"}</>
+                      ) : (
+                        <>
+                          <Text as="span" fontSize="lg" mr="3px">
+                            +
+                          </Text>
+                          Follow
+                        </>
+                      )}
                     </Text>
                   </Button>
-                  <Button
+                  {/* <Button
                     cursor="pointer"
                     display="flex"
                     _hover={{ color: "orange.400" }}
@@ -76,7 +120,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     <Text pl="5px" fontSize="medium">
                       Chat Now
                     </Text>
-                  </Button>
+                  </Button> */}
                 </Box>
               </Box>
 
@@ -157,7 +201,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                 Joined
               </Text>
               <Text fontWeight="semibold" fontSize="md" color="orange.500">
-                2024
+                {storeRating?.createdDate || ""}
               </Text>
               <Text fontWeight="semibold" fontSize="md"></Text>
             </Box>
@@ -177,7 +221,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                 color="orange.500"
                 whiteSpace="nowrap"
               >
-                0
+                {storeFollowerCount?.storeFollowerCount ?? 0}
               </Text>
               <Text fontWeight="semibold" fontSize="md"></Text>
             </Box>

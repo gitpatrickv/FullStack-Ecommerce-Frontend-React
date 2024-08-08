@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaShopify, FaShoppingCart } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import useCartTotal from "../../hooks/user/useCartTotal";
@@ -40,6 +40,14 @@ const Header = () => {
     }
   };
 
+  const handleNavigateSellerClick = () => {
+    if (role === "SELLER") {
+      navigate("/seller");
+    } else {
+      navigate("/seller/login");
+    }
+  };
+
   const handleLogout = () => {
     logout(navigate);
     queryClient.setQueryData(["user"], null);
@@ -58,6 +66,31 @@ const Header = () => {
         gridGap="25px"
         mt="5px"
       >
+        <GridItem area="content1" display="flex" justifyContent="start">
+          {!user || role === "SELLER" ? (
+            <Text
+              _hover={{
+                color: "orange.400",
+              }}
+              onClick={handleNavigateSellerClick}
+              cursor="pointer"
+            >
+              Seller Centre
+            </Text>
+          ) : role === "USER" ? (
+            <Link to="/seller/store/create">
+              <Text
+                _hover={{
+                  color: "orange.400",
+                }}
+              >
+                Start Selling
+              </Text>
+            </Link>
+          ) : (
+            ""
+          )}
+        </GridItem>
         <GridItem area="content3" display="flex" justifyContent="flex-end">
           <Box>
             <HStack spacing={3}>
@@ -93,6 +126,9 @@ const Header = () => {
                             </Link>
                             <Link to="/user/favorites">
                               <MenuItem>My Favorites</MenuItem>
+                            </Link>
+                            <Link to="/user/following">
+                              <MenuItem>My Following</MenuItem>
                             </Link>
                             <Link to="/user/purchase">
                               <MenuItem>My Purchase</MenuItem>
@@ -153,7 +189,7 @@ const Header = () => {
             onClick={handleNavigateHomeClick}
             cursor="pointer"
           >
-            <FaHome size="40" />
+            <FaShopify size="40" />
           </Box>
         </GridItem>
         <GridItem area="content5">

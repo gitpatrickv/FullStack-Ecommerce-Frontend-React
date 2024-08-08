@@ -7,6 +7,7 @@ interface StoreRatingProps {
     storeTotalRating: number;
     storeRatingAvg: number;
     productCount: number;
+    createdDate: string;
 }
 
 const useGetStoreRating = (storeId: string) => {

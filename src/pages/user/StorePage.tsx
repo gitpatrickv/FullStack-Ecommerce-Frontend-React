@@ -138,20 +138,6 @@ const StorePage = () => {
                   Sort By
                 </Text>
                 <Button
-                  value="productName"
-                  onClick={handleSortClick}
-                  mr="5px"
-                  width="120px"
-                  color={sortBy === "productName" ? "orange.400" : "white.500"}
-                  border={
-                    sortBy === "productName" ? "1px solid orange" : "none"
-                  }
-                  borderRadius="20px"
-                  _hover={{ color: "orange.400" }}
-                >
-                  Relevance
-                </Button>
-                <Button
                   value="createdDate"
                   onClick={handleSortClick}
                   mr="5px"

@@ -125,6 +125,9 @@ export const SearchPage = () => {
                 onClick={handleSortClick}
                 mr="5px"
                 width="120px"
+                color={sortBy === "productName" ? "orange.400" : "white.500"}
+                border={sortBy === "productName" ? "1px solid orange" : "none"}
+                borderRadius="20px"
                 _hover={{ color: "orange.400" }}
               >
                 Relevance
@@ -134,6 +137,9 @@ export const SearchPage = () => {
                 onClick={handleSortClick}
                 mr="5px"
                 width="120px"
+                color={sortBy === "createdDate" ? "orange.400" : "white.500"}
+                border={sortBy === "createdDate" ? "1px solid orange" : "none"}
+                borderRadius="20px"
                 _hover={{ color: "orange.400" }}
               >
                 Latest
@@ -142,6 +148,9 @@ export const SearchPage = () => {
                 value="productSold"
                 onClick={handleSortClick}
                 width="120px"
+                color={sortBy === "productSold" ? "orange.400" : "white.500"}
+                border={sortBy === "productSold" ? "1px solid orange" : "none"}
+                borderRadius="20px"
                 _hover={{ color: "orange.400" }}
               >
                 Top Sales

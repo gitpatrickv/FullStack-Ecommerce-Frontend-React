@@ -9,7 +9,13 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaHeart, FaRegEdit, FaRegFileAlt, FaRegUser } from "react-icons/fa";
+import {
+  FaHeart,
+  FaRegEdit,
+  FaRegFileAlt,
+  FaRegUser,
+  FaStore,
+} from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
@@ -177,6 +183,36 @@ const UserPage = () => {
             ml="15px"
             cursor="pointer"
           >
+            <FaStore
+              size="20px"
+              color={
+                location.pathname === "/user/following" ? "orange" : "gray"
+              }
+            />
+            <Link to="/user/following">
+              <Text
+                fontSize={fontSize}
+                pl="15px"
+                _hover={{ color: "orange.400" }}
+                fontWeight="semibold"
+                color={
+                  location.pathname === "/user/following"
+                    ? "orange.400"
+                    : "white.500"
+                }
+              >
+                My Following
+              </Text>
+            </Link>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="start"
+            alignItems="center"
+            pt="20px"
+            ml="15px"
+            cursor="pointer"
+          >
             <FaRegFileAlt
               size="20px"
               color={
@@ -205,7 +241,8 @@ const UserPage = () => {
       </GridItem>
       <GridItem area="main">
         {location.pathname === "/user/favorites" ||
-        location.pathname.startsWith("/user/purchase") ? (
+        location.pathname.startsWith("/user/purchase") ||
+        location.pathname === "/user/following" ? (
           <Box>
             <Outlet />
           </Box>

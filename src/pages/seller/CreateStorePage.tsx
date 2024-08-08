@@ -124,10 +124,13 @@ const CreateStorePage = () => {
                     <Button
                       isLoading={loading}
                       type="submit"
-                      _hover={{ color: "orange.400" }}
-                      mr="5px"
+                      bg="orange.400"
+                      _hover={{ bg: "orange.500" }}
+                      _active={{ bg: "orange.600" }}
+                      width="120px"
+                      mt="5px"
                     >
-                      Create Shop
+                      <Text mb="3px">Save</Text>
                     </Button>
                   </VStack>
                 </form>

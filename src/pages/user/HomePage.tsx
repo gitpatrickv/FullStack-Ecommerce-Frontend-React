@@ -23,9 +23,13 @@ const HomePage = () => {
   const { data, isLoading } = useProducts({ pageNo: page, pageSize });
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-
+  const totalElements = data?.data.pageResponse.totalElements ?? 0;
   const onClickNavigate = () => {
-    navigate(`/daily_discover?pageNo=${page + 1}&pageSize=${pageSize}`);
+    if (totalElements > pageSize) {
+      navigate(`/daily_discover?pageNo=${page + 1}&pageSize=${pageSize}`);
+    } else {
+      navigate(`/daily_discover?pageNo=${page}&pageSize=${pageSize}`);
+    }
   };
 
   return (
