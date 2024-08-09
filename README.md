@@ -1,30 +1,77 @@
-# React + TypeScript + Vite
+# Shopee E-Commerce Platform Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
+Welcome to the Shopee E-Commerce Platform Clone! This project is an imitation of the popular e-commerce platform, Shopee, designed to replicate its core features and functionalities. The goal of this project is to provide a comprehensive, full-stack implementation that covers everything from user authentication, product management, and shopping cart features, to payment processing, order management, product rating, store service rating, and the ability to follow your favorite stores.
 
-Currently, two official plugins are available:
+The project utilizes React and TypeScript for the frontend, with Chakra UI for styling and Zustand for state management. The backend is powered by Java and Spring Boot, ensuring secure login through Spring Security with JWT-based authentication.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **User Authentication & Authorization:** Secure sign-up, login, and role-based access control (admin, seller, and buyer).
+- **Product Management:** Create, update, delete, and manage product listings with support for multiple categories, sizes, and colors.
+- **Search & Filtering:** Advanced search capabilities with filters based on price, category, rating, and more.
+- **Shopping Cart & Checkout:** Seamless shopping cart experience with options for payment via Stripe or cash on delivery.
+- **Order Management:** Track order history, manage returns, and view delivery status.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend:** React, TypeScript, Chakra UI, React Query, Zustand
+- **Backend:** Spring Boot, Java, MySql
+- **Authentication:** Spring Security, JWT
+- **Payments:** Stripe API integration
+- **DevOps:** Docker, Docker Compose
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Getting Started
+
+1. Clone the Repository:
+
+- **For the frontend:**
+```bash
+git@github.com:gitpatrickv/FullStack-Ecommerce-Frontend-React.git
+```
+- **For the backend:**
+```bash
+git@github.com:gitpatrickv/Fullstack-Ecommerce-Backend-Springboot.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Install Frontend Dependencies in the terminal:
+   ```bash
+   npm install
+   ```
+   
+3. Install Backend Dependencies in the terminal:
+    ```bash
+   mvn clean install
+   ```
+
+4. Configure Environment Variables:
+   
+     - **Configure Spring Boot application.yml for database and other configurations.**
+
+5. Run the Application:
+    - **Start the frontend:**
+    ```bash
+    npm run dev
+    ```
+
+    - **Start the backend:**
+    ```bash
+    mvn spring-boot:run
+    ```
+
+6. Open your browser and visit `http://localhost:5173` to access the application.
+
+   Log in using one of the following credentials or register a new account:
+
+   - **Admin:**
+     - Username: `admin@gmail.com`
+     - Password: `admin`
+   
+   - **User:**
+     - Username: `customer@gmail.com`
+     - Password: `12345678`
+   
+   - **Seller:**
+     - Username: `seller@gmail.com`
+     - Password: `12345678`
+
