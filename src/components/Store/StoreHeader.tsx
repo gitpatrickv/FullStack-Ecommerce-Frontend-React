@@ -108,7 +108,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                       )}
                     </Text>
                   </Button>
-                  {/* <Button
+                  <Button
                     cursor="pointer"
                     display="flex"
                     _hover={{ color: "orange.400" }}
@@ -120,7 +120,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     <Text pl="5px" fontSize="medium">
                       Chat Now
                     </Text>
-                  </Button> */}
+                  </Button>
                 </Box>
               </Box>
 

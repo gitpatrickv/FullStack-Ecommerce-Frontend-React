@@ -5,4 +5,5 @@ export default interface Inventory {
     colors: string;
     sizes: string;
     productId: string;
+    productName: string;
 }
