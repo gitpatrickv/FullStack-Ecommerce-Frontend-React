@@ -30,6 +30,8 @@ const useAddStock = (inventoryId: number) => {
 
         onSuccess: () => {
             queryClient.invalidateQueries(['storeProduct']);
+            queryClient.invalidateQueries(['outOfStock']);
+            queryClient.invalidateQueries(['todoTotal']);
             toast({
                 position: "top",
                 title: "Stock Successfully Updated",
