@@ -77,8 +77,6 @@ git@github.com:gitpatrickv/Fullstack-Ecommerce-Backend-Springboot.git
 7. Screenshots & Video
 - **Video**
   
-https://youtu.be/Eje4XYn_NCg
-
 - **User Page**
 
 ![ss_homepage](https://github.com/user-attachments/assets/6c5541ee-d35e-4139-aa36-cb42ee00931d)
