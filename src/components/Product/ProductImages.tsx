@@ -6,7 +6,7 @@ interface Props {
 }
 
 const ProductImages = ({ productImage }: Props) => {
-  const [images, setImages] = useState(productImage);
+  const [images, _setImages] = useState(productImage);
 
   const [activeImage, setActiveImage] = useState(images[0]);
   return (

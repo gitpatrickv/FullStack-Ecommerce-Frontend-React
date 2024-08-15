@@ -27,7 +27,7 @@ const useChangePassword = () => {
     const queryClient = useQueryClient();
     const toast = useToast();
     const { register, handleSubmit, reset, setError, formState: { errors } } = useForm<changePasswordProps>({resolver: zodResolver(schema)});
-    const [loading, setLoading] = useState(false);
+    const [loading, _setLoading] = useState(false);
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
 

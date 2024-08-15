@@ -16,7 +16,7 @@ const apiClient = axiosInstance;
 const useUpdateAccountInfo = () => {
     const queryClient = useQueryClient();
     const toast = useToast();
-    const [loading, setLoading] = useState(false);
+    const [loading, _setLoading] = useState(false);
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
   

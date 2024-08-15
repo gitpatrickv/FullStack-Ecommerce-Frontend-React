@@ -15,9 +15,9 @@ const FromTheSameStore = ({ storeId }: Props) => {
   const { authStore } = useAuthQueryStore();
   const role = authStore.role;
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
+  const [page, _setPage] = useState(1);
   const pageSize = 30;
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, _setSortBy] = useState("");
   const { data: getAllStoreProducts, isLoading } = useGetAllStoreProducts({
     storeId: storeId,
     pageNo: page,

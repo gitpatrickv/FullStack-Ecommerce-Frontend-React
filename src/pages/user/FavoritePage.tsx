@@ -5,7 +5,6 @@ import {
   GridItem,
   SimpleGrid,
   Text,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import ProductCard from "../../components/Product/ProductCard";
 import ProductCardContainer from "../../components/Product/ProductCardContainer";

@@ -35,7 +35,7 @@ const CartPage = () => {
     refetch: refetchCarts,
   } = useCarts(jwtToken);
   const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
-  const { data: checkout, refetch: refetchCheckout } = useCheckout(jwtToken);
+  const { refetch: refetchCheckout } = useCheckout(jwtToken);
   const { refetch: refetchFavorites } = useGetAllFavorites();
   const { mutate: filterAllCart } = useFilterAllCarts();
   const { mutate: deleteAllCarts } = useDeleteAllCarts();

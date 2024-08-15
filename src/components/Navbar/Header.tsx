@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { FaShopify, FaShoppingCart } from "react-icons/fa";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import useCartTotal from "../../hooks/user/useCartTotal";
 import useGetUser from "../../hooks/user/useGetUser";
@@ -165,20 +164,7 @@ const Header = () => {
                   </Link>
                 </>
               )}
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<RxHamburgerMenu size="22px" />}
-                  variant="outline"
-                  size="sm"
-                />
-                <MenuList>
-                  <MenuItem>
-                    <ColorModeSwitch />
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              <ColorModeSwitch />
             </HStack>
           </Box>
         </GridItem>

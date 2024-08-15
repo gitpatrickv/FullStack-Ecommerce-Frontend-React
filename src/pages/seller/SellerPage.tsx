@@ -13,7 +13,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { RxHamburgerMenu } from "react-icons/rx";
 import {
   Outlet,
   ScrollRestoration,
@@ -101,21 +100,7 @@ const SellerPage = () => {
                 </Text>
               </Box>
               <Box display="flex" alignItems="center" mr="20px">
-                <Menu>
-                  <MenuButton
-                    mr="10px"
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<RxHamburgerMenu size="22px" />}
-                    variant="outline"
-                    size="sm"
-                  />
-                  <MenuList>
-                    <MenuItem>
-                      <ColorModeSwitch />
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                <ColorModeSwitch />
                 <Menu>
                   <MenuButton
                     as={IconButton}

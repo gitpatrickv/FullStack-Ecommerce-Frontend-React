@@ -17,7 +17,6 @@ import {
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import ColorModeSwitch from "../../components/ColorModeSwitch";
 import LatestOrders from "../../components/Dashboard/admin/LatestOrders";
@@ -25,9 +24,9 @@ import LatestOrdersHeader from "../../components/Dashboard/admin/LatestOrdersHea
 import Metrics from "../../components/Dashboard/admin/Metrics";
 import SidebarAdmin from "../../components/Sidebar/admin/SidebarAdmin";
 import useGetAllOrders from "../../hooks/admin/useGetAllOrders";
+import useGetUser from "../../hooks/user/useGetUser";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { paginationRange } from "../../utilities/pagination";
-import useGetUser from "../../hooks/user/useGetUser";
 
 const AdminPage = () => {
   const navigate = useNavigate();
@@ -136,21 +135,7 @@ const AdminPage = () => {
                 </Box>
               </Link>
               <Box display="flex" alignItems="center" mr="20px">
-                <Menu>
-                  <MenuButton
-                    mr="10px"
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<RxHamburgerMenu size="22px" />}
-                    variant="outline"
-                    size="sm"
-                  />
-                  <MenuList>
-                    <MenuItem>
-                      <ColorModeSwitch />
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                <ColorModeSwitch />
                 <Menu>
                   <MenuButton
                     as={IconButton}

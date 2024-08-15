@@ -19,7 +19,7 @@ import useCreateStore from "../../hooks/seller/useCreateStore";
 
 const CreateStorePage = () => {
   const { onSubmit, register, handleSubmit, errors } = useCreateStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, _setLoading] = useState(false);
 
   return (
     <Grid
