@@ -26,7 +26,7 @@ interface Props {
 
 const ShopSection = ({ product }: Props) => {
   const navigate = useNavigate();
-  const { maximizeChat, chatId } = useChatStore();
+  const { maximizeChat } = useChatStore();
   const { mutate: chatNow } = useCreateChat();
   const { data: storeRating } = useGetStoreRating(product.storeId);
   const { data: storeFollowerCount } = useGetStoreFollowerCount(

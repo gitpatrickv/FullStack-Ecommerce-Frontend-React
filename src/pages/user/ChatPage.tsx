@@ -23,9 +23,10 @@ const ChatPage = () => {
           borderRadius="none"
           onClick={maximizeChat}
           cursor="pointer"
+          bg="orange.500"
         >
           <Box
-            color="orange.500"
+            color="white"
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -81,25 +82,3 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
-
-{
-  /* <Grid
-templateColumns="200px 20px 400px"
-templateAreas={`
-"list divider message"
-`}
-height="100vh"
->
-<GridItem area="list" mt="10px">
-  {chatList?.map((chat) => (
-    <ChatList key={chat.chatId} list={chat} />
-  ))}
-</GridItem>
-<GridItem area="divider">
-  <Divider orientation="vertical" ml="5px" mr="5px" />
-</GridItem>
-<GridItem area="message" mt="10px">
-  <Message />
-</GridItem>
-</Grid> */
-}

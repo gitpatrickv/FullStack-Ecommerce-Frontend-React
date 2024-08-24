@@ -1,4 +1,4 @@
-import { Avatar, Box, Text } from "@chakra-ui/react";
+import { Avatar, Box, Text, useColorMode } from "@chakra-ui/react";
 import { ChatProps } from "../../hooks/user/useGetAllChats";
 import { useChatStore } from "../../store/chat-store";
 
@@ -11,12 +11,13 @@ const ChatList = ({ list }: Props) => {
   const handleChatSelectClick = (chatId: number) => {
     setChatId(chatId);
   };
+  const { colorMode } = useColorMode();
 
   return (
     <Box
       display="flex"
       justifyContent="space-between"
-      bg={chatId === list.chatId ? "teal.300" : "none"}
+      bg={chatId === list.chatId ? "gray.100" : "none"}
     >
       <Box
         display="flex"
@@ -41,6 +42,7 @@ const ChatList = ({ list }: Props) => {
             textTransform="capitalize"
             isTruncated={true}
             maxWidth="120px"
+            color={colorMode === "dark" ? "orange.500" : "black.500"}
           >
             {list.storeName}
           </Text>
