@@ -52,7 +52,15 @@ const Header = () => {
     queryClient.setQueryData(["user"], null);
   };
   return (
-    <Card height="125px" borderRadius="none">
+    <Card
+      height="125px"
+      borderRadius="none"
+      position="fixed"
+      top="0"
+      width="100%"
+      zIndex={10}
+      as="header"
+    >
       <Grid
         templateColumns="0.4fr 0.5fr 2fr 0.5fr 0.4fr"
         templateRows=" 0.3fr 0.5fr"
@@ -73,6 +81,7 @@ const Header = () => {
               }}
               onClick={handleNavigateSellerClick}
               cursor="pointer"
+              whiteSpace="nowrap"
             >
               Seller Centre
             </Text>

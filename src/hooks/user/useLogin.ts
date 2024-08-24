@@ -18,11 +18,10 @@ const useLogin = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {setJwtToken, setRole} = useAuthQueryStore();
+  const {setJwtToken, setRole, setAuthUser} = useAuthQueryStore();
   const toast = useToast();
   const location = useLocation();
 
-  
   const mutation = useMutation({
     mutationFn: (data: FormData) => apiClient.post("/user/login", data)
     .then((res) => res.data),
@@ -50,9 +49,11 @@ const useLogin = () => {
       queryClient.invalidateQueries(['manageProductReview'])
       queryClient.invalidateQueries(['todoTotal'])
       queryClient.invalidateQueries(['userCount'])
+      const currentUser = response.authUser;
+      setAuthUser(currentUser);
       const role = response.role;
       setRole(role);
-      
+
       if(location.pathname === "/login"){
             if(role==="ADMIN"){
         navigate("/admin");
