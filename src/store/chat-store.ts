@@ -7,16 +7,16 @@ interface ChatStore {
   maximizeChat: () => void;
   chatId: number | null;
   setChatId: (id: number | null) => void;
-  clearChatId: () => void;
+  // clearChatId: () => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
-  isChatMinimized: false,
+  isChatMinimized: true,
   chatId: null,
   // toggleChat: () => set((state) => ({ isChatMinimized: !state.isChatMinimized })),
   minimizeChat: () => set({ isChatMinimized: true }),
   maximizeChat: () => set({ isChatMinimized: false }),
   setChatId: (id: number | null) => set({ chatId: id }), 
-  clearChatId: () => set({ chatId: null }),
+  // clearChatId: () => set({ chatId: null }),
 }));
 
