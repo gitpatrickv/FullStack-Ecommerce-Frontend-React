@@ -16,7 +16,7 @@ const ChatList = ({ list }: Props) => {
     <Box
       display="flex"
       justifyContent="space-between"
-      bg={chatId === list.chatId ? "gray.500" : "none"}
+      bg={chatId === list.chatId ? "teal.300" : "none"}
     >
       <Box
         display="flex"
@@ -31,7 +31,7 @@ const ChatList = ({ list }: Props) => {
               ? list.storePhotoUrl
               : "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
           }
-          size="md"
+          size="sm"
         />
 
         <Box display="flex" flexDirection="column" ml="10px">
@@ -44,11 +44,20 @@ const ChatList = ({ list }: Props) => {
           >
             {list.storeName}
           </Text>
-          <Text fontSize="sm">Message....</Text>
+          <Text
+            fontSize="sm"
+            isTruncated={true}
+            maxWidth="120px"
+            color="gray.500"
+          >
+            {list.content}
+          </Text>
         </Box>
       </Box>
       <Box mt="15px" mr="5px">
-        <Text fontSize="sm">08/08</Text>
+        <Text fontSize="sm" color="gray.500">
+          {list.timestamp}
+        </Text>
       </Box>
     </Box>
   );

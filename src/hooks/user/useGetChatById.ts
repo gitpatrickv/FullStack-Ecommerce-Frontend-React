@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import Chat from "../../entities/Message";
+import Message from "../../entities/Message";
 import { axiosInstance } from "../../services/api-client";
 import { useAuthQueryStore } from "../../store/auth-store";
 
@@ -11,7 +11,7 @@ const useGetChatById = (chatId: number) => {
     return useQuery ({
     queryKey: ['chat', chatId],
     queryFn: async () => {
-        const {data} = await apiClient.get<Chat>(`/chat/${chatId}`,
+        const {data} = await apiClient.get<Message>(`/chat/${chatId}`,
     {
         headers:{
             Authorization: `Bearer ${jwtToken}`,

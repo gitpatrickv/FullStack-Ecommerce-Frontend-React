@@ -9,6 +9,8 @@ export interface ChatProps{
     storeName: string;
     storePhotoUrl: string;
     chatId: number;
+    content: string;
+    timestamp: string;
 }
 
 const useGetAllChats = () => {

@@ -49,6 +49,8 @@ const useLogin = () => {
       queryClient.invalidateQueries(['manageProductReview'])
       queryClient.invalidateQueries(['todoTotal'])
       queryClient.invalidateQueries(['userCount'])
+      queryClient.invalidateQueries(['chat'])
+      queryClient.invalidateQueries(['chatList'])
       const currentUser = response.authUser;
       setAuthUser(currentUser);
       const role = response.role;

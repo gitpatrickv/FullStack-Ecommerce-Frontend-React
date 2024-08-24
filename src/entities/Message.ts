@@ -6,9 +6,6 @@ export interface MessageModel {
     chatId: number;
 }
 
-export default interface Chat {
-    chatId: number;
-    storeName: string;
-    storePhotoUrl: string;
+export default interface Message {
     messageModelList: MessageModel[];
 }

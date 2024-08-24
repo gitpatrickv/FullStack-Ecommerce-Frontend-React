@@ -12,8 +12,7 @@ const Message = ({ messages, isSender }: Props) => {
       display="flex"
       flexDirection={isSender ? "row-reverse" : "row"}
       alignItems="center"
-      mb={4}
-      width="100%"
+      mb={2}
     >
       {/* {!isSender && (
         <Avatar
@@ -26,12 +25,15 @@ const Message = ({ messages, isSender }: Props) => {
       )} */}
       <Box
         bg={isSender ? "blue.500" : "gray.500"}
-        color={isSender ? "white" : "black"}
-        p={3}
+        color="black"
+        p={2}
         borderRadius="10px"
       >
         <Text whiteSpace="pre-wrap" fontSize="lg">
           {messages.content}
+        </Text>
+        <Text textAlign="end" fontSize="xs">
+          {messages.timestamp}
         </Text>
       </Box>
     </Box>
