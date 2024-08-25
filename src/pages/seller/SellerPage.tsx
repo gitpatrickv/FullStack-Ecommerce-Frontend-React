@@ -29,6 +29,7 @@ import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
 import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
 import { useAuthQueryStore } from "../../store/auth-store";
+import ChatPage from "../user/ChatPage";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
@@ -180,6 +181,11 @@ const SellerPage = () => {
           <Box mt="30px" ml="10px">
             <Outlet />
             <ScrollRestoration />
+          </Box>
+        )}
+        {jwtToken && (
+          <Box position="fixed" bottom="0" right="20px" zIndex={10}>
+            <ChatPage />
           </Box>
         )}
       </GridItem>

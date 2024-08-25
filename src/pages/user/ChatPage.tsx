@@ -8,10 +8,14 @@ import useGetAllChats from "../../hooks/user/useGetAllChats";
 import useGetChatMessages from "../../hooks/user/useGetChatMessages";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { useChatStore } from "../../store/chat-store";
+import { useLocation } from "react-router-dom";
+import useGetAllStoreChats from "../../hooks/seller/useGetAllStoreChats";
 
 const ChatPage = () => {
+  const location = useLocation();
   const { isChatMinimized, maximizeChat, chatId } = useChatStore();
   const { data: chatList } = useGetAllChats();
+  const { data: storeChatList } = useGetAllStoreChats();
   const { data: getChatById } = useGetChatMessages(chatId ?? 0);
   const { authStore } = useAuthQueryStore();
   const currentUser = authStore.authUser;
@@ -55,9 +59,19 @@ const ChatPage = () => {
           >
             <GridItem area="list" mt="10px">
               <Box overflowY="auto">
-                {chatList?.map((chat) => (
-                  <ChatList key={chat.chatId} list={chat} />
-                ))}
+                {location.pathname.startsWith("/seller") ? (
+                  <>
+                    {storeChatList?.map((chat) => (
+                      <ChatList key={chat.chatId} list={chat} />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {chatList?.map((chat) => (
+                      <ChatList key={chat.chatId} list={chat} />
+                    ))}
+                  </>
+                )}
               </Box>
             </GridItem>
             <GridItem area="divider">

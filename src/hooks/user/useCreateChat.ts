@@ -33,6 +33,7 @@ const useCreateChat = () => {
         {
             onSuccess: (data) => {
               queryClient.invalidateQueries(['chatList']);
+              queryClient.invalidateQueries(['storeChatList']);
               const storeChatId = data.chatId;
               setChatId(storeChatId);
             }
