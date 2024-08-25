@@ -56,7 +56,7 @@ const ChatList = ({ list }: Props) => {
           </Text>
         </Box>
       </Box>
-      <Box mt="15px" mr="5px">
+      <Box mt="15px" mr="10px">
         <Text fontSize="sm" color="gray.500">
           {list.timestamp}
         </Text>

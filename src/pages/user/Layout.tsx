@@ -10,24 +10,20 @@ const Layout = () => {
   const jwtToken = authStore.jwtToken;
   return (
     <Box minHeight="100vh" display="flex" flexDirection="column">
-      <>
-        <Header />
-        <Grid templateColumns="1fr" templateAreas={`"main"`} mt="120px">
-          <GridItem area="main">
-            <Box padding={5}>
-              <Outlet />
-              <ScrollRestoration />
-            </Box>
-          </GridItem>
-        </Grid>
-        {jwtToken ? (
-          <Box position="fixed" bottom="0" right="20px" zIndex={10}>
-            <ChatPage />
+      <Header />
+      <Grid templateColumns="1fr" templateAreas={`"main"`} mt="120px">
+        <GridItem area="main">
+          <Box padding={5}>
+            <Outlet />
+            <ScrollRestoration />
           </Box>
-        ) : (
-          ""
-        )}
-      </>
+        </GridItem>
+      </Grid>
+      {jwtToken && (
+        <Box position="fixed" bottom="0" right="20px" zIndex={10}>
+          <ChatPage />
+        </Box>
+      )}
       <Footer />
     </Box>
   );

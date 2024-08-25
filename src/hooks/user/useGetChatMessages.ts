@@ -5,13 +5,13 @@ import { useAuthQueryStore } from "../../store/auth-store";
 
 const apiClient = axiosInstance;
 
-const useGetChatById = (chatId: number) => {
+const useGetChatMessages = (chatId: number) => {
     const { authStore } = useAuthQueryStore();
     const jwtToken = authStore.jwtToken;
     return useQuery ({
-    queryKey: ['chat', chatId],
+    queryKey: ['messages', chatId],
     queryFn: async () => {
-        const {data} = await apiClient.get<Message>(`/chat/${chatId}`,
+        const {data} = await apiClient.get<Message>(`/messages/${chatId}`,
     {
         headers:{
             Authorization: `Bearer ${jwtToken}`,
@@ -24,4 +24,4 @@ const useGetChatById = (chatId: number) => {
 })
 }
 
-export default useGetChatById
+export default useGetChatMessages

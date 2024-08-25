@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
-import { FiMinimize2 } from "react-icons/fi";
 import { IoMdChatboxes } from "react-icons/io";
+import { TbWindowMinimize } from "react-icons/tb";
 
 import { useChatStore } from "../../store/chat-store";
 
@@ -21,7 +21,7 @@ const ChatHeader = () => {
           </Text>
         </Box>
         <Box onClick={minimizeChat} cursor="pointer">
-          <FiMinimize2 size="28px" />
+          <TbWindowMinimize size="28px" />
         </Box>
       </Box>
     </>

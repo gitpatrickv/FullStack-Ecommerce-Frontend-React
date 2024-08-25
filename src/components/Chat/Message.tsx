@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import { MessageModel } from "../../entities/Message";
+import { useRef, useEffect } from "react";
 
 interface Props {
   messages: MessageModel;
@@ -7,12 +8,22 @@ interface Props {
 }
 
 const Message = ({ messages, isSender }: Props) => {
+  const chatBottom = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatBottom.current) {
+      chatBottom.current.scrollIntoView();
+    }
+  }, [messages.content]);
+
   return (
     <Box
       display="flex"
       flexDirection={isSender ? "row-reverse" : "row"}
       alignItems="center"
       mb={2}
+      mr="10px"
+      ml="10px"
     >
       {/* {!isSender && (
         <Avatar
@@ -36,6 +47,7 @@ const Message = ({ messages, isSender }: Props) => {
           {messages.timestamp}
         </Text>
       </Box>
+      <Box ref={chatBottom}></Box>
     </Box>
   );
 };
