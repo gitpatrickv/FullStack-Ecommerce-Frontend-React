@@ -28,7 +28,6 @@ const useSendMessage = (chatId: number) => {
         onSuccess: () => {
             queryClient.invalidateQueries(['messages']);
             reset();
-           
         },
         onError: (error) => {
             console.error("Message submission failed:", error);
@@ -40,7 +39,7 @@ const useSendMessage = (chatId: number) => {
       };
 
       return {
-        register,handleSubmit,onSubmit
+        register,handleSubmit,onSubmit, reset
       }
     
 }

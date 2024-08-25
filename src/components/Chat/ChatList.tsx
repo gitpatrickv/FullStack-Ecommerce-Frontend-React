@@ -28,8 +28,8 @@ const ChatList = ({ list }: Props) => {
       >
         <Avatar
           src={
-            list.storePhotoUrl
-              ? list.storePhotoUrl
+            list.photoUrl
+              ? list.photoUrl
               : "https://st.depositphotos.com/2101611/3925/v/450/depositphotos_39258193-stock-illustration-anonymous-business-man-icon.jpg"
           }
           size="sm"
@@ -44,7 +44,7 @@ const ChatList = ({ list }: Props) => {
             maxWidth="120px"
             color={colorMode === "dark" ? "orange.500" : "black.500"}
           >
-            {list.storeName}
+            {list.name}
           </Text>
           <Text
             fontSize="sm"

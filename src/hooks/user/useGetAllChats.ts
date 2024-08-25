@@ -6,8 +6,8 @@ import { useAuthQueryStore } from '../../store/auth-store';
 const apiClient = axiosInstance;
 
 export interface ChatProps{
-    storeName: string;
-    storePhotoUrl: string;
+    name: string;
+    photoUrl: string;
     chatId: number;
     content: string;
     timestamp: string;
