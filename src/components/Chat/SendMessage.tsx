@@ -4,15 +4,25 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { IoMdSend } from "react-icons/io";
-import useSendMessage from "../../hooks/user/useSendMessage";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
+import useGetChatMessages from "../../hooks/user/useGetChatMessages";
+import useSendMessage, {
+  SendMessageProps,
+} from "../../hooks/user/useSendMessage";
 import { useChatStore } from "../../store/chat-store";
 
 const SendMessage = () => {
   const { chatId } = useChatStore();
+  const { refetch: refetchMessages } = useGetChatMessages(chatId ?? 0);
   const focusRef = useRef<HTMLInputElement | null>(null);
-  const { register, handleSubmit, onSubmit, reset } = useSendMessage(chatId!);
+  // const { register, handleSubmit, onSubmit, reset } = useSendMessage(chatId!);
+  const { mutate: sendMessage } = useSendMessage();
+
+  const { register, handleSubmit, reset } = useForm<SendMessageProps>();
 
   useEffect(() => {
     reset();
@@ -24,14 +34,71 @@ const SendMessage = () => {
     }
   }, [chatId]);
 
+  //------------------------------------------------------------------------
+
+  const stompClientRef = useRef<Stomp.Client | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [messages, setMessages] = useState<any[]>([]);
+
+  useEffect(() => {
+    const socket = new SockJS("http://localhost:8080/ws");
+    const client = Stomp.over(socket);
+
+    client.connect(
+      {},
+      () => {
+        stompClientRef.current = client;
+        setIsConnected(true);
+
+        console.log(`Connected to WebSocket for chat ID: ${chatId}`);
+
+        client.subscribe(`/user/${chatId}/messages`, (message) => {
+          const receivedMessage = JSON.parse(message.body);
+          console.log("Message received:", receivedMessage);
+          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+        });
+      },
+      (error) => {
+        console.error("WebSocket connection error:", error);
+      }
+    );
+
+    return () => {
+      if (stompClientRef.current) {
+        stompClientRef.current.disconnect(() => {
+          console.log("Disconnected");
+          setIsConnected(false);
+        });
+        stompClientRef.current = null;
+      }
+    };
+  }, [chatId]);
+
+  const onSubmit = (data: SendMessageProps) => {
+    const stompClient = stompClientRef.current;
+    if (stompClient && stompClient.connected) {
+      stompClient.send(`/app/chat`, {}, JSON.stringify({ ...data, chatId }));
+    } else {
+      console.error("STOMP client is not connected");
+    }
+
+    sendMessage(
+      { content: data.content, chatId: chatId! },
+      {
+        onSuccess: () => {
+          reset();
+          refetchMessages();
+        },
+        onError: (error) => {
+          console.error("Error sending message:", error);
+        },
+      }
+    );
+  };
+
   return (
     <>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleSubmit(onSubmit)(event);
-        }}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup>
           <Input
             {...register("content", { required: true })}

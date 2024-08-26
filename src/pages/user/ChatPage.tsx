@@ -1,15 +1,15 @@
 import { Box, Card, Divider, Grid, GridItem, Text } from "@chakra-ui/react";
 import { IoMdChatboxes } from "react-icons/io";
+import { useLocation } from "react-router-dom";
 import ChatHeader from "../../components/Chat/ChatHeader";
 import ChatList from "../../components/Chat/ChatList";
 import Message from "../../components/Chat/Message";
 import SendMessage from "../../components/Chat/SendMessage";
+import useGetAllStoreChats from "../../hooks/seller/useGetAllStoreChats";
 import useGetAllChats from "../../hooks/user/useGetAllChats";
 import useGetChatMessages from "../../hooks/user/useGetChatMessages";
 import { useAuthQueryStore } from "../../store/auth-store";
 import { useChatStore } from "../../store/chat-store";
-import { useLocation } from "react-router-dom";
-import useGetAllStoreChats from "../../hooks/seller/useGetAllStoreChats";
 
 const ChatPage = () => {
   const location = useLocation();
