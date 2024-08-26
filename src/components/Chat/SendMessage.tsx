@@ -15,7 +15,7 @@ import useSendMessage, {
 import { useChatStore } from "../../store/chat-store";
 
 const SendMessage = () => {
-  const { chatId, addMessage } = useChatStore();
+  const { chatId, addMessage, clearMessages } = useChatStore();
   const focusRef = useRef<HTMLInputElement | null>(null);
   const { mutate: sendMessage } = useSendMessage();
 
@@ -80,6 +80,7 @@ const SendMessage = () => {
       {
         onSuccess: () => {
           reset();
+          clearMessages();
         },
         onError: (error) => {
           console.error("Error sending message:", error);
