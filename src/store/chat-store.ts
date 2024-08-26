@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { MessageModel } from "../entities/Message";
 
 interface ChatStore {
   isChatMinimized: boolean;
@@ -8,6 +9,9 @@ interface ChatStore {
   chatId: number | null;
   setChatId: (id: number | null) => void;
   // clearChatId: () => void;
+  messages: MessageModel[];
+  setMessages: (messages: MessageModel[]) => void;
+  addMessage: (message: MessageModel) => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -18,5 +22,8 @@ export const useChatStore = create<ChatStore>((set) => ({
   maximizeChat: () => set({ isChatMinimized: false }),
   setChatId: (id: number | null) => set({ chatId: id }), 
   // clearChatId: () => set({ chatId: null }),
+  messages: [],
+  setMessages: (messages) => set({ messages }),
+  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
 }));
 

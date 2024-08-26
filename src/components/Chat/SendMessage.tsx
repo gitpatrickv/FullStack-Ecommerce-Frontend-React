@@ -9,17 +9,14 @@ import { useForm } from "react-hook-form";
 import { IoMdSend } from "react-icons/io";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
-import useGetChatMessages from "../../hooks/user/useGetChatMessages";
 import useSendMessage, {
   SendMessageProps,
 } from "../../hooks/user/useSendMessage";
 import { useChatStore } from "../../store/chat-store";
 
 const SendMessage = () => {
-  const { chatId } = useChatStore();
-  const { refetch: refetchMessages } = useGetChatMessages(chatId ?? 0);
+  const { chatId, addMessage } = useChatStore();
   const focusRef = useRef<HTMLInputElement | null>(null);
-  // const { register, handleSubmit, onSubmit, reset } = useSendMessage(chatId!);
   const { mutate: sendMessage } = useSendMessage();
 
   const { register, handleSubmit, reset } = useForm<SendMessageProps>();
@@ -34,11 +31,8 @@ const SendMessage = () => {
     }
   }, [chatId]);
 
-  //------------------------------------------------------------------------
-
   const stompClientRef = useRef<Stomp.Client | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<any[]>([]);
+  const [_isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     const socket = new SockJS("http://localhost:8080/ws");
@@ -54,8 +48,7 @@ const SendMessage = () => {
 
         client.subscribe(`/user/${chatId}/messages`, (message) => {
           const receivedMessage = JSON.parse(message.body);
-          console.log("Message received:", receivedMessage);
-          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+          addMessage(receivedMessage);
         });
       },
       (error) => {
@@ -87,7 +80,6 @@ const SendMessage = () => {
       {
         onSuccess: () => {
           reset();
-          refetchMessages();
         },
         onError: (error) => {
           console.error("Error sending message:", error);

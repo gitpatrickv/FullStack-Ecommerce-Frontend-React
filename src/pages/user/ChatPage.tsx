@@ -1,4 +1,5 @@
 import { Box, Card, Divider, Grid, GridItem, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import ChatHeader from "../../components/Chat/ChatHeader";
@@ -13,12 +14,20 @@ import { useChatStore } from "../../store/chat-store";
 
 const ChatPage = () => {
   const location = useLocation();
-  const { isChatMinimized, maximizeChat, chatId } = useChatStore();
+  const { isChatMinimized, maximizeChat, chatId, setMessages, messages } =
+    useChatStore();
   const { data: chatList } = useGetAllChats();
   const { data: storeChatList } = useGetAllStoreChats();
   const { data: getChatById } = useGetChatMessages(chatId ?? 0);
   const { authStore } = useAuthQueryStore();
   const currentUser = authStore.authUser;
+
+  useEffect(() => {
+    if (getChatById) {
+      setMessages(getChatById.messageModelList);
+      console.log(messages);
+    }
+  }, [getChatById, setMessages]);
 
   return (
     <>
@@ -50,7 +59,7 @@ const ChatPage = () => {
           <Divider color="gray.500" />
           <Grid
             templateColumns="250px 1px 449px"
-            templateRows="452px 98px"
+            templateRows="453px 97px"
             templateAreas={`
       "list divider message"
       "list divider send"
@@ -85,7 +94,7 @@ const ChatPage = () => {
               justifyContent="flex-end"
             >
               <Box overflowY="auto" mb="5px">
-                {getChatById?.messageModelList.map((message) => (
+                {messages.map((message) => (
                   <Message
                     key={message.messageId}
                     messages={message}

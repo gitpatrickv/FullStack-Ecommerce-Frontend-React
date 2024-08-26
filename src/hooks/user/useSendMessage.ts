@@ -9,43 +9,6 @@ export interface SendMessageProps {
 
 const apiClient = axiosInstance;
 
-// const useSendMessage = (chatId: number) => {
-//     const queryClient = useQueryClient();
-//     const { register, handleSubmit, reset } = useForm<SendMessageProps>();
-//     const { authStore } = useAuthQueryStore();
-//     const jwtToken = authStore.jwtToken;
-
-//     const mutation = useMutation({
-//         mutationFn: (data: SendMessageProps) => apiClient.post("/messages", data, 
-//             {
-//                 headers: {
-//                         Authorization: `Bearer ${jwtToken}`
-//                         }
-//                 }
-//         )
-//         .then((res) => res.data),
-//         onSuccess: () => {
-//             queryClient.invalidateQueries(['messages']);
-//             reset();
-//         },
-//         onError: (error) => {
-//             console.error("Message submission failed:", error);
-//           },
-//     })
-
-//     const onSubmit: SubmitHandler<{content: string}> = (data) => {
-//         mutation.mutate({...data, chatId});
-//       };
-
-//       return {
-//         register,handleSubmit,onSubmit, reset
-//       }
-    
-// }
-
-// export default useSendMessage
-
-
 const useSendMessage = () => {
     const queryClient = useQueryClient();
         const { authStore } = useAuthQueryStore();
