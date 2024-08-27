@@ -178,6 +178,7 @@ const ShopList = ({ store, onRefetchStore }: Props) => {
               }
               width="120px"
               onClick={onOpen}
+              isDisabled={store.frozen ? true : false}
             >
               {store.online === true ? "Suspend" : "Activate"}
             </Button>

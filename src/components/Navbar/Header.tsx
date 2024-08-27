@@ -94,6 +94,7 @@ const Header = () => {
                 _hover={{
                   color: "orange.400",
                 }}
+                whiteSpace="nowrap"
               >
                 Start Selling
               </Text>
