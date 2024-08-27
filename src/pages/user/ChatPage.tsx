@@ -1,4 +1,12 @@
-import { Box, Card, Divider, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Divider,
+  Grid,
+  GridItem,
+  Text,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { IoMdChatboxes } from "react-icons/io";
 import { useLocation } from "react-router-dom";
@@ -18,14 +26,14 @@ const ChatPage = () => {
     useChatStore();
   const { data: chatList } = useGetAllChats();
   const { data: storeChatList } = useGetAllStoreChats();
-  const { data: getChatById } = useGetChatMessages(chatId ?? 0);
+  const { data: getChatById, refetch: refetchChatMessages } =
+    useGetChatMessages(chatId ?? 0);
   const { authStore } = useAuthQueryStore();
   const currentUser = authStore.authUser;
 
   useEffect(() => {
     if (getChatById) {
       setMessages(getChatById.messageModelList);
-      console.log(messages);
     }
   }, [getChatById, setMessages]);
 
@@ -71,13 +79,23 @@ const ChatPage = () => {
                 {location.pathname.startsWith("/seller") ? (
                   <>
                     {storeChatList?.map((chat) => (
-                      <ChatList key={chat.chatId} list={chat} />
+                      <Box key={chat.chatId}>
+                        <ChatList
+                          list={chat}
+                          refetchMessages={refetchChatMessages}
+                        />
+                      </Box>
                     ))}
                   </>
                 ) : (
                   <>
                     {chatList?.map((chat) => (
-                      <ChatList key={chat.chatId} list={chat} />
+                      <Box key={chat.chatId}>
+                        <ChatList
+                          list={chat}
+                          refetchMessages={refetchChatMessages}
+                        />
+                      </Box>
                     ))}
                   </>
                 )}
@@ -94,15 +112,37 @@ const ChatPage = () => {
               justifyContent="flex-end"
             >
               <Box overflowY="auto" mb="5px">
-                {messages.map((message) => (
-                  <Message
-                    key={message.messageId}
-                    messages={message}
-                    isSender={message.sender === currentUser}
-                  />
-                ))}
+                {chatId ? (
+                  <>
+                    {messages.map((message) => (
+                      <Box key={message.messageId}>
+                        <Message
+                          messages={message}
+                          isSender={message.sender === currentUser}
+                        />
+                      </Box>
+                    ))}
+                  </>
+                ) : (
+                  <Card>
+                    <CardBody>
+                      <Box display="flex" justifyContent="center" mb="150px">
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          alignItems="center"
+                        >
+                          <IoMdChatboxes size="80px" />
+                          <Text fontSize="xx-large">
+                            Welcome to Shopee Chat
+                          </Text>
+                        </Box>
+                      </Box>
+                    </CardBody>
+                  </Card>
+                )}
               </Box>
-              <Divider />
+              {chatId && <Divider />}
             </GridItem>
             <GridItem area="send">
               <SendMessage />

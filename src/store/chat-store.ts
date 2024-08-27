@@ -8,11 +8,11 @@ interface ChatStore {
   maximizeChat: () => void;
   chatId: number | null;
   setChatId: (id: number | null) => void;
-  // clearChatId: () => void;
+  clearChatId: () => void;
   messages: MessageModel[];
   setMessages: (messages: MessageModel[]) => void;
   addMessage: (message: MessageModel) => void;
-  clearMessages: () => void;
+  // clearMessages: () => void;
 }
 
 export const useChatStore = create<ChatStore>((set) => ({
@@ -22,10 +22,10 @@ export const useChatStore = create<ChatStore>((set) => ({
   minimizeChat: () => set({ isChatMinimized: true }),
   maximizeChat: () => set({ isChatMinimized: false }),
   setChatId: (id: number | null) => set({ chatId: id }), 
-  // clearChatId: () => set({ chatId: null }),
+  clearChatId: () => set({ chatId: null }),
   messages: [],
   setMessages: (messages) => set({ messages }),
   addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
-  clearMessages: () => set({messages: []})
+  // clearMessages: () => set({messages: []})
 }));
 

@@ -5,7 +5,13 @@ import { TbWindowMinimize } from "react-icons/tb";
 import { useChatStore } from "../../store/chat-store";
 
 const ChatHeader = () => {
-  const { minimizeChat } = useChatStore();
+  const { minimizeChat, clearChatId } = useChatStore();
+
+  const handleMinimizeChatClick = () => {
+    minimizeChat();
+    clearChatId();
+  };
+
   return (
     <>
       <Box
@@ -20,7 +26,7 @@ const ChatHeader = () => {
             Chat
           </Text>
         </Box>
-        <Box onClick={minimizeChat} cursor="pointer">
+        <Box onClick={handleMinimizeChatClick} cursor="pointer">
           <TbWindowMinimize size="28px" />
         </Box>
       </Box>

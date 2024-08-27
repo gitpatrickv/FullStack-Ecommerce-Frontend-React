@@ -34,6 +34,9 @@ const usePlaceOrder = () => {
             queryClient.invalidateQueries(['toPayOrders']);
             queryClient.invalidateQueries(['productDetail']);
             queryClient.invalidateQueries(['product']);
+            queryClient.invalidateQueries(['messages']);
+            queryClient.invalidateQueries(['chatList']);
+            queryClient.invalidateQueries(['storeChatList']);
             toast({
                 position: "top",
                 title: "Your order has been placed successfully!",

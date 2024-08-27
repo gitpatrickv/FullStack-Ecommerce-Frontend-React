@@ -4,12 +4,14 @@ import { useChatStore } from "../../store/chat-store";
 
 interface Props {
   list: ChatProps;
+  refetchMessages: () => void;
 }
 
-const ChatList = ({ list }: Props) => {
+const ChatList = ({ list, refetchMessages }: Props) => {
   const { setChatId, chatId } = useChatStore();
   const handleChatSelectClick = (chatId: number) => {
     setChatId(chatId);
+    refetchMessages();
   };
   const { colorMode } = useColorMode();
 

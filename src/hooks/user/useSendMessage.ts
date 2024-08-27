@@ -27,6 +27,8 @@ const useSendMessage = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['messages']);
+                queryClient.invalidateQueries(['chatList']);
+                queryClient.invalidateQueries(['storeChatList']);
             },   
             onError: (error) => {
                 console.error("Message submission failed:", error);

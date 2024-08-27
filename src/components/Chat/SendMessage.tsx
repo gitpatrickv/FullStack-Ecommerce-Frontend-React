@@ -15,7 +15,7 @@ import useSendMessage, {
 import { useChatStore } from "../../store/chat-store";
 
 const SendMessage = () => {
-  const { chatId, addMessage, clearMessages } = useChatStore();
+  const { chatId, addMessage } = useChatStore();
   const focusRef = useRef<HTMLInputElement | null>(null);
   const { mutate: sendMessage } = useSendMessage();
 
@@ -80,7 +80,6 @@ const SendMessage = () => {
       {
         onSuccess: () => {
           reset();
-          clearMessages();
         },
         onError: (error) => {
           console.error("Error sending message:", error);
@@ -91,30 +90,33 @@ const SendMessage = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputGroup>
-          <Input
-            {...register("content", { required: true })}
-            placeholder="Type a message here"
-            borderRadius="none"
-            maxWidth="400px"
-            ref={(e) => {
-              register("content", { required: true }).ref(e);
-              focusRef.current = e;
-            }}
-          />
-          <InputRightElement>
-            <IconButton
-              aria-label="show"
-              icon={<IoMdSend size="25px" />}
-              bg="transparent"
-              _hover={{ bg: "transparent" }}
-              mr="5px"
-              type="submit"
+      {chatId && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <InputGroup>
+            <Input
+              {...register("content", { required: true })}
+              placeholder="Type a message here"
+              borderRadius="none"
+              maxWidth="400px"
+              ref={(e) => {
+                register("content", { required: true }).ref(e);
+                focusRef.current = e;
+              }}
             />
-          </InputRightElement>
-        </InputGroup>
-      </form>
+            <InputRightElement>
+              <IconButton
+                aria-label="show"
+                icon={<IoMdSend size="25px" />}
+                bg="transparent"
+                _hover={{ bg: "transparent" }}
+                mr="5px"
+                type="submit"
+                isDisabled={chatId ? false : true}
+              />
+            </InputRightElement>
+          </InputGroup>
+        </form>
+      )}
     </>
   );
 };
