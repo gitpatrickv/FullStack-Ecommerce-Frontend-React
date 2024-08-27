@@ -20,6 +20,7 @@ const useFreezeUserAccount = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries(['userList']);
+                queryClient.invalidateQueries(['storeList']);
             }
         },
     )

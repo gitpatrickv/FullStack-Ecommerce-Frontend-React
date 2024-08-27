@@ -162,50 +162,46 @@ const ToShipPage = () => {
                     >
                       Cancel Order
                     </Button>
-                    <AlertDialog
-                      isOpen={isOpen}
-                      leastDestructiveRef={cancelRef}
-                      onClose={onClose}
-                      isCentered
-                    >
-                      <AlertDialogOverlay>
-                        <AlertDialogContent>
-                          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                            <Text color="orange.400" fontSize="large">
-                              Cancel Order
-                            </Text>
-                          </AlertDialogHeader>
-
-                          <AlertDialogBody>
-                            <Text>
-                              Are you sure you want to cancel your order?
-                            </Text>
-                          </AlertDialogBody>
-
-                          <AlertDialogFooter>
-                            <Button ref={cancelRef} onClick={onClose}>
-                              Close
-                            </Button>
-                            <Button
-                              bg="red.500"
-                              _hover={{ bg: "red.600" }}
-                              ml={3}
-                              onClick={() =>
-                                handleCancelOrderClick(selectedOrderId!)
-                              }
-                            >
-                              Cancel Order
-                            </Button>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialogOverlay>
-                    </AlertDialog>
                   </Box>
                 </CardBody>
               </Card>
             </Box>
           );
         })}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+        isCentered
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              <Text color="orange.400" fontSize="large">
+                Cancel Order
+              </Text>
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              <Text>Are you sure you want to cancel your order?</Text>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Close
+              </Button>
+              <Button
+                bg="red.500"
+                _hover={{ bg: "red.600" }}
+                ml={3}
+                onClick={() => handleCancelOrderClick(selectedOrderId!)}
+              >
+                Cancel Order
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };

@@ -10,6 +10,7 @@ export default interface Store{
     productCount: number;
     orderCount: number;
     online: boolean;
+    frozen: boolean;
 }
 
 

@@ -157,54 +157,51 @@ const ToReceivePage = () => {
                     >
                       Order Received
                     </Button>
-                    <AlertDialog
-                      isOpen={isOpen}
-                      leastDestructiveRef={cancelRef}
-                      onClose={onClose}
-                      isCentered
-                      size="lg"
-                    >
-                      <AlertDialogOverlay>
-                        <AlertDialogContent>
-                          <AlertDialogBody mt="20px">
-                            <Text>
-                              Check that you received all items in satisfactory
-                              condition before confirming receipt. Once you
-                              confirm, the order is completed and we will
-                              release the payment to seller
-                            </Text>
-                          </AlertDialogBody>
-
-                          <AlertDialogFooter mb="10px">
-                            <Button
-                              ref={cancelRef}
-                              onClick={onClose}
-                              _hover={{ color: "orange.500" }}
-                              width="120px"
-                            >
-                              NOT NOW
-                            </Button>
-                            <Button
-                              bg="orange.500"
-                              _hover={{ bg: "orange.600" }}
-                              ml={3}
-                              onClick={() =>
-                                handleOrderReceivedClick(selectedOrderId!)
-                              }
-                              width="120px"
-                            >
-                              Confirm
-                            </Button>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialogOverlay>
-                    </AlertDialog>
                   </Box>
                 </CardBody>
               </Card>
             </Box>
           );
         })}
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+        isCentered
+        size="lg"
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogBody mt="20px">
+              <Text>
+                Check that you received all items in satisfactory condition
+                before confirming receipt. Once you confirm, the order is
+                completed and we will release the payment to seller
+              </Text>
+            </AlertDialogBody>
+
+            <AlertDialogFooter mb="10px">
+              <Button
+                ref={cancelRef}
+                onClick={onClose}
+                _hover={{ color: "orange.500" }}
+                width="120px"
+              >
+                NOT NOW
+              </Button>
+              <Button
+                bg="orange.500"
+                _hover={{ bg: "orange.600" }}
+                ml={3}
+                onClick={() => handleOrderReceivedClick(selectedOrderId!)}
+                width="120px"
+              >
+                Confirm
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };
