@@ -13,7 +13,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { RxHamburgerMenu } from "react-icons/rx";
 import {
   Outlet,
   ScrollRestoration,
@@ -30,6 +29,7 @@ import useGetStoreInfo from "../../hooks/seller/useGetStoreInfo";
 import useGetTodoTotal from "../../hooks/seller/useGetTodoTotal";
 import useGetTotalSales from "../../hooks/seller/useGetTotalSales";
 import { useAuthQueryStore } from "../../store/auth-store";
+import ChatPage from "../user/ChatPage";
 
 const SellerPage = () => {
   const queryClient = useQueryClient();
@@ -101,21 +101,7 @@ const SellerPage = () => {
                 </Text>
               </Box>
               <Box display="flex" alignItems="center" mr="20px">
-                <Menu>
-                  <MenuButton
-                    mr="10px"
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<RxHamburgerMenu size="22px" />}
-                    variant="outline"
-                    size="sm"
-                  />
-                  <MenuList>
-                    <MenuItem>
-                      <ColorModeSwitch />
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                <ColorModeSwitch />
                 <Menu>
                   <MenuButton
                     as={IconButton}
@@ -195,6 +181,11 @@ const SellerPage = () => {
           <Box mt="30px" ml="10px">
             <Outlet />
             <ScrollRestoration />
+          </Box>
+        )}
+        {jwtToken && (
+          <Box position="fixed" bottom="0" right="20px" zIndex={10}>
+            <ChatPage />
           </Box>
         )}
       </GridItem>

@@ -38,13 +38,20 @@ const UserPage = () => {
 
   return (
     <Grid
-      templateColumns="200px 300px 1fr 200px "
+      templateColumns="0.2fr 0.8fr"
       templateAreas={`
-      " asideLeft user main asideRight"     
+      " user main"     
       `}
       pt="25px"
+      minW="1300px"
     >
-      <GridItem area="user" position="fixed" left="13rem">
+      <GridItem
+        area="user"
+        // position="fixed"
+        left="13rem"
+        minWidth="200px"
+        mr="20px"
+      >
         <Box>
           <Link to="/user/account/profile">
             <Box display="flex" justifyContent="start" pt="26px" pl="15px">
@@ -239,7 +246,7 @@ const UserPage = () => {
           </Box>
         </Box>
       </GridItem>
-      <GridItem area="main">
+      <GridItem area="main" minWidth="100px">
         {location.pathname === "/user/favorites" ||
         location.pathname.startsWith("/user/purchase") ||
         location.pathname === "/user/following" ? (

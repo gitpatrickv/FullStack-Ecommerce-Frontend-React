@@ -18,7 +18,7 @@ const useCreateCategory = () => {
     const jwtToken = authStore.jwtToken;
     const queryClient = useQueryClient();
     const toast = useToast();
-    const [loading, setLoading] = useState(false);
+    const [_loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm<CategoryProps>();
 
     const mutation = useMutation(

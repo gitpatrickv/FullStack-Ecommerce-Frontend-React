@@ -18,6 +18,8 @@ import useGetFollowedStoreStatus from "../../hooks/user/useGetFollowedStoreStatu
 import useGetStoreFollowerCount from "../../hooks/user/useGetStoreFollowerCount";
 import useGetStoreRating from "../../hooks/user/useGetStoreRating";
 import { useAuthQueryStore } from "../../store/auth-store";
+import { useChatStore } from "../../store/chat-store";
+import useCreateChat from "../../hooks/user/useCreateChat";
 
 interface Props {
   storePhotoUrl: string;
@@ -29,10 +31,12 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   const { data: storeRating } = useGetStoreRating(storeId!);
   const { data: storeFollowerCount } = useGetStoreFollowerCount(storeId!);
   const { mutate: followStore } = useFollowStore();
+  const { mutate: chatNow } = useCreateChat();
   const { data: getFollowedStatus } = useGetFollowedStoreStatus(storeId!);
   const [isHovered, setIsHovered] = useState(false);
   const { authStore } = useAuthQueryStore();
   const role = authStore.role;
+  const { maximizeChat } = useChatStore();
   const [isFollowed, setIsFollowed] = useState<boolean>(
     getFollowedStatus?.followed || false
   );
@@ -46,8 +50,13 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
     setIsFollowed(!isFollowed);
   };
 
+  const handleChatNowClick = () => {
+    chatNow({ recipient: storeId! });
+    maximizeChat();
+  };
+
   return (
-    <Card borderRadius="none" minWidth="1000px">
+    <Card borderRadius="none" mb="5px">
       <CardBody>
         <Grid
           templateColumns="0.3fr 0.3fr 0.3fr 0.3fr"
@@ -95,7 +104,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                   >
-                    <Text pl="5px" fontSize="medium">
+                    <Text pl="5px" fontSize="medium" mb="3px">
                       {isFollowed === true ? (
                         <>{isHovered ? "Unfollow" : "Following"}</>
                       ) : (
@@ -114,10 +123,13 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
                     _hover={{ color: "orange.400" }}
                     mt="10px"
                     ml="15px"
-                    isDisabled={true}
                     width="150px"
+                    isDisabled={
+                      role === "SELLER" || role === "USER" ? false : true
+                    }
+                    onClick={handleChatNowClick}
                   >
-                    <Text pl="5px" fontSize="medium">
+                    <Text pl="5px" fontSize="medium" mb="2px">
                       Chat Now
                     </Text>
                   </Button>

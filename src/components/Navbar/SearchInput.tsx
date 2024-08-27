@@ -10,7 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import { useNavigate, useSearchParams } from "react-router-dom";
 const SearchInput = () => {
   const ref = useRef<HTMLInputElement>(null);
-  const [searchText, setSearchText] = useState("");
+  const [_searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 

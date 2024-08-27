@@ -15,9 +15,9 @@ const FromTheSameStore = ({ storeId }: Props) => {
   const { authStore } = useAuthQueryStore();
   const role = authStore.role;
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
+  const [page, _setPage] = useState(1);
   const pageSize = 30;
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, _setSortBy] = useState("");
   const { data: getAllStoreProducts, isLoading } = useGetAllStoreProducts({
     storeId: storeId,
     pageNo: page,
@@ -50,12 +50,7 @@ const FromTheSameStore = ({ storeId }: Props) => {
             See all &raquo;
           </Text>
         </Box>
-        <SimpleGrid
-          columns={{ base: 5 }}
-          spacing={2}
-          padding="10px"
-          minW="1000px"
-        >
+        <SimpleGrid columns={{ base: 6 }} spacing={2} padding="10px">
           {isLoading &&
             skeletons.map((skeleton) => (
               <ProductCardContainer key={skeleton}>

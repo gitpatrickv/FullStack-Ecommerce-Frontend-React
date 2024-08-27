@@ -35,7 +35,7 @@ const CartPage = () => {
     refetch: refetchCarts,
   } = useCarts(jwtToken);
   const { data: cartTotal, refetch: refetchTotal } = useCartTotal(jwtToken);
-  const { data: checkout, refetch: refetchCheckout } = useCheckout(jwtToken);
+  const { refetch: refetchCheckout } = useCheckout(jwtToken);
   const { refetch: refetchFavorites } = useGetAllFavorites();
   const { mutate: filterAllCart } = useFilterAllCarts();
   const { mutate: deleteAllCarts } = useDeleteAllCarts();
@@ -117,16 +117,7 @@ const CartPage = () => {
   return (
     <>
       {cartTotal?.cartItems === 0 ? (
-        <Grid
-          templateAreas={{
-            base: `"main"`,
-            lg: ` " asideLeft main asideRight" `,
-          }}
-          templateColumns={{
-            base: "1fr",
-            lg: "0.2fr 1fr 0.2fr",
-          }}
-        >
+        <Grid templateColumns="1fr" templateAreas={`"main"`}>
           <GridItem area="main">
             <Box
               display="flex"
@@ -164,18 +155,9 @@ const CartPage = () => {
           </GridItem>
         </Grid>
       ) : (
-        <Grid
-          templateAreas={{
-            base: `"main"`,
-            lg: ` " asideLeft main asideRight" `,
-          }}
-          templateColumns={{
-            base: "1fr",
-            lg: "200px 1fr 200px",
-          }}
-        >
+        <Grid templateColumns="1fr" templateAreas={`"main"`}>
           <GridItem area="main">
-            <Box minWidth="800px">
+            <Box>
               <CartHeader isChecked={isChecked} onFilterAll={handleFilterAll} />
               {groupedCarts &&
                 Object.entries(groupedCarts).map(([storeId, storeCarts]) => {

@@ -7,7 +7,7 @@ interface Props{
     siblings:number;
 }
 
-export const paginationRange = ({totalPage, page, limit, siblings} : Props) => {
+export const paginationRange = ({totalPage, page, limit: _limit, siblings} : Props) => {
   let totalPageNoInArray = 7 + siblings;
   if (totalPageNoInArray >= totalPage) {
     return _.range(1, totalPage + 1);

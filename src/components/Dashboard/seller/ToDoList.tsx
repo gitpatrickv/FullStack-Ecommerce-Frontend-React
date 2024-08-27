@@ -266,10 +266,10 @@ const ToDoList = ({ storeId }: Props) => {
                   </Box>
 
                   {getAllOutOfStock?.map((inv) => (
-                    <>
-                      <SoldOut key={inv.inventoryId} inventory={inv} />
+                    <Box key={inv.inventoryId}>
+                      <SoldOut inventory={inv} />
                       <Divider />
-                    </>
+                    </Box>
                   ))}
                 </ModalBody>
 

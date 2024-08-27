@@ -120,9 +120,9 @@ const StorePage = () => {
         </Grid>
       ) : (
         <Grid
-          templateColumns="250px 1fr 250px"
+          templateColumns="1fr"
           templateAreas={`
-      "asideLeft content1  asideRight"
+      "content1"
     `}
         >
           <GridItem area="content1" mb="10px">
@@ -132,7 +132,7 @@ const StorePage = () => {
               }
               storeName={getAllStoreProducts?.data.storeInfo.storeName || ""}
             />
-            <Card p="13px" mb="10px" borderRadius="none" minWidth="1000px">
+            <Card p="13px" mb="10px" borderRadius="none">
               <Box display="flex" alignItems="center">
                 <Text fontSize="medium" pr="10px">
                   Sort By
@@ -199,10 +199,10 @@ const StorePage = () => {
 
             <Box>
               <SimpleGrid
-                columns={{ base: 5 }}
+                columns={{ base: 6 }}
                 spacing={2}
                 padding="10px"
-                minW="1000px"
+                minWidth="1300px"
               >
                 {isLoading &&
                   skeletons.map((skeleton) => (

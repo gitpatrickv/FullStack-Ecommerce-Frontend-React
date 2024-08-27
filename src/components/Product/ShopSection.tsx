@@ -16,6 +16,9 @@ import { useNavigate } from "react-router-dom";
 import Product from "../../entities/Product";
 import useGetStoreFollowerCount from "../../hooks/user/useGetStoreFollowerCount";
 import useGetStoreRating from "../../hooks/user/useGetStoreRating";
+import { useChatStore } from "../../store/chat-store";
+import useCreateChat from "../../hooks/user/useCreateChat";
+import { useAuthQueryStore } from "../../store/auth-store";
 
 interface Props {
   product: Product;
@@ -23,17 +26,26 @@ interface Props {
 
 const ShopSection = ({ product }: Props) => {
   const navigate = useNavigate();
+  const { maximizeChat } = useChatStore();
+  const { mutate: chatNow } = useCreateChat();
   const { data: storeRating } = useGetStoreRating(product.storeId);
   const { data: storeFollowerCount } = useGetStoreFollowerCount(
     product.storeId
   );
+  const { authStore } = useAuthQueryStore();
+  const role = authStore.role;
+
+  const handleChatNowClick = () => {
+    chatNow({ recipient: product.storeId });
+    maximizeChat();
+  };
 
   const handleNavigateStorePageClick = () => {
     navigate(`/store/` + product.storeId);
   };
 
   return (
-    <Card borderRadius="none">
+    <Card borderRadius="none" minWidth="1300px">
       <CardBody>
         <Grid
           templateColumns="0.3fr 0.3fr 0.3fr 0.3fr"
@@ -73,7 +85,10 @@ const ShopSection = ({ product }: Props) => {
                     _hover={{ color: "orange.400" }}
                     mt="10px"
                     ml="15px"
-                    isDisabled={true}
+                    isDisabled={
+                      role === "SELLER" || role === "USER" ? false : true
+                    }
+                    onClick={handleChatNowClick}
                     width="150px"
                   >
                     <Text pl="5px" fontSize="medium">

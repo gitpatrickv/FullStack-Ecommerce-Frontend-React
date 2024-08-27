@@ -11,10 +11,10 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { FaShopify, FaShoppingCart } from "react-icons/fa";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import useCartTotal from "../../hooks/user/useCartTotal";
 import useGetUser from "../../hooks/user/useGetUser";
@@ -29,6 +29,7 @@ const Header = () => {
   const role = authStore.role;
   const { data: user } = useGetUser(jwtToken);
   const { data: cartTotal } = useCartTotal(jwtToken);
+  const { colorMode } = useColorMode();
 
   const navigate = useNavigate();
 
@@ -53,7 +54,16 @@ const Header = () => {
     queryClient.setQueryData(["user"], null);
   };
   return (
-    <Card height="125px" borderRadius="none">
+    <Card
+      height="125px"
+      borderRadius="none"
+      position="fixed"
+      top="0"
+      width="100%"
+      zIndex={10}
+      as="header"
+      bg={colorMode === "dark" ? "gray.700" : "orange.500"}
+    >
       <Grid
         templateColumns="0.4fr 0.5fr 2fr 0.5fr 0.4fr"
         templateRows=" 0.3fr 0.5fr"
@@ -74,6 +84,7 @@ const Header = () => {
               }}
               onClick={handleNavigateSellerClick}
               cursor="pointer"
+              whiteSpace="nowrap"
             >
               Seller Centre
             </Text>
@@ -165,20 +176,7 @@ const Header = () => {
                   </Link>
                 </>
               )}
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<RxHamburgerMenu size="22px" />}
-                  variant="outline"
-                  size="sm"
-                />
-                <MenuList>
-                  <MenuItem>
-                    <ColorModeSwitch />
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              <ColorModeSwitch />
             </HStack>
           </Box>
         </GridItem>

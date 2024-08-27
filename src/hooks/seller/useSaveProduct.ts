@@ -27,7 +27,7 @@ const useSaveProduct = () => {
   const jwtToken = authStore.jwtToken;
   const queryClient = useQueryClient();
   const toast = useToast();
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const { register, handleSubmit, control, reset, formState: { errors } } = useForm<SaveProductProps>();
 
   const mutation = useMutation(

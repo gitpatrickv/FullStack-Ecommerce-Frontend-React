@@ -245,7 +245,8 @@ const NewProductPage = () => {
                       type="number"
                       placeholder="Price"
                       {...register(`inventoryModels.0.price`, {
-                        required: true,
+                        required: "Price is required",
+                        min: { value: 1, message: "Price must be at least 1" },
                       })}
                     />
                     <Text fontSize="large" mb="5px">
@@ -257,7 +258,11 @@ const NewProductPage = () => {
                       type="number"
                       placeholder="Quantity"
                       {...register(`inventoryModels.0.quantity`, {
-                        required: true,
+                        required: "Quantity is required",
+                        min: {
+                          value: 1,
+                          message: "Quantity must be at least 1",
+                        },
                       })}
                     />
                   </Box>

@@ -31,7 +31,7 @@ const PendingPage = () => {
   return (
     <>
       {groupedOrders &&
-        Object.entries(groupedOrders).map(([storeName, storeOrders]) => {
+        Object.entries(groupedOrders).map(([_, storeOrders]) => {
           return (
             <Box key={storeOrders[0].orderId} mt="5px">
               <Card borderRadius="none">

@@ -73,16 +73,7 @@ const DailyDiscoverPage = () => {
     }
   }
   return (
-    <Grid
-      templateAreas={{
-        base: `"main"`,
-        lg: ` " asideLeft main asideRight" `,
-      }}
-      templateColumns={{
-        base: "1fr",
-        lg: "0.2fr 1fr 0.2fr",
-      }}
-    >
+    <Grid templateColumns="1fr" templateAreas={`"main"`}>
       <GridItem area="main">
         <>
           <Card mt="20px" mb="20px" borderRadius="none">
@@ -92,11 +83,7 @@ const DailyDiscoverPage = () => {
               </Text>
             </CardBody>
           </Card>
-          <SimpleGrid
-            columns={{ base: 2, sm: 3, md: 3, lg: 3, xl: 5 }}
-            spacing={2}
-            padding="10px"
-          >
+          <SimpleGrid columns={{ base: 6 }} spacing={2} padding="10px">
             {isLoading &&
               skeletons.map((skeleton) => (
                 <ProductCardContainer key={skeleton}>
