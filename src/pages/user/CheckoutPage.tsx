@@ -41,12 +41,7 @@ const CheckoutPage = () => {
   );
 
   return (
-    <Grid
-      templateColumns="250px 1fr 250px"
-      templateAreas={`
-      " asideLeft main asideRight"
-    `}
-    >
+    <Grid templateColumns="1fr" templateAreas={`"main"`}>
       <GridItem area="main">
         <UserInfo />
         <ProductOrderedHeader />

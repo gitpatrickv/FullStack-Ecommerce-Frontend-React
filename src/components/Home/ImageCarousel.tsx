@@ -54,13 +54,13 @@ const ImageCarousel = () => {
           <Image
             src="https://cf.shopee.ph/file/ph-11134258-7r98s-lxt6vst7n7r8b6_xhdpi"
             height="130px"
-            minWidth="600px"
+            minWidth="400px"
           />
           <Image
             src="https://cf.shopee.ph/file/ph-50009109-fe70ed2abeeaf4aa09f381bde1ecc1a9_xhdpi"
             height="130px"
             mt="10px"
-            minWidth="600px"
+            minWidth="400px"
           />
         </Box>
       </GridItem>

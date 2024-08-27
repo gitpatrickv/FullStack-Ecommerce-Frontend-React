@@ -33,12 +33,7 @@ const HomePage = () => {
   };
 
   return (
-    <Grid
-      templateColumns="250px 1fr 250px"
-      templateAreas={`
-      " asideLeft main asideRight"
-    `}
-    >
+    <Grid templateColumns="1fr" templateAreas={`"main"`}>
       <GridItem area="main">
         <ImageCarousel />
         <Card mt="20px" mb="10px" borderRadius="none">
@@ -56,12 +51,7 @@ const HomePage = () => {
             </Text>
           </CardBody>
         </Card>
-        <SimpleGrid
-          columns={{ base: 5 }}
-          spacing={2}
-          padding="10px"
-          minW="1000px"
-        >
+        <SimpleGrid columns={{ base: 6 }} spacing={2} padding="10px">
           {isLoading &&
             skeletons.map((skeleton) => (
               <ProductCardContainer key={skeleton}>
@@ -97,13 +87,6 @@ const HomePage = () => {
             </Text>
           </Box>
         </Box>
-      </GridItem>
-
-      <GridItem area="asideLeft">
-        <Box minWidth="250px"></Box>
-      </GridItem>
-      <GridItem area="asideRight">
-        <Box minWidth="250px"></Box>
       </GridItem>
     </Grid>
   );

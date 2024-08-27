@@ -34,7 +34,7 @@ const CartHeader = ({ isChecked, onFilterAll }: Props) => {
   };
 
   return (
-    <Card maxW="100%" borderRadius="none">
+    <Card borderRadius="none">
       <CardBody>
         <Grid
           templateColumns="1fr 0.5fr 0.5fr 0.5fr 0.5fr"

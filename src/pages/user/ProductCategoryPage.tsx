@@ -83,12 +83,7 @@ const ProductCategoryPage = () => {
   }
 
   return (
-    <Grid
-      templateColumns="250px 1fr 250px"
-      templateAreas={`
-      " asideLeft main asideRight"
-    `}
-    >
+    <Grid templateColumns="1fr" templateAreas={`"main"`}>
       <GridItem area="main">
         <Card mt="20px" mb="5px" borderRadius="none">
           <CardBody>
@@ -101,7 +96,7 @@ const ProductCategoryPage = () => {
 
         <Box>
           <SimpleGrid
-            columns={{ base: 5 }}
+            columns={{ base: 6 }}
             spacing={2}
             padding="10px"
             minW="1000px"

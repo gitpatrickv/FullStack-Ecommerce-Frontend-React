@@ -45,7 +45,7 @@ const ShopSection = ({ product }: Props) => {
   };
 
   return (
-    <Card borderRadius="none">
+    <Card borderRadius="none" minWidth="1300px">
       <CardBody>
         <Grid
           templateColumns="0.3fr 0.3fr 0.3fr 0.3fr"

@@ -11,6 +11,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { FaShopify, FaShoppingCart } from "react-icons/fa";
@@ -28,6 +29,7 @@ const Header = () => {
   const role = authStore.role;
   const { data: user } = useGetUser(jwtToken);
   const { data: cartTotal } = useCartTotal(jwtToken);
+  const { colorMode } = useColorMode();
 
   const navigate = useNavigate();
 
@@ -60,6 +62,7 @@ const Header = () => {
       width="100%"
       zIndex={10}
       as="header"
+      bg={colorMode === "dark" ? "gray.700" : "orange.500"}
     >
       <Grid
         templateColumns="0.4fr 0.5fr 2fr 0.5fr 0.4fr"

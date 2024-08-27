@@ -56,7 +56,7 @@ const StoreHeader = ({ storePhotoUrl, storeName }: Props) => {
   };
 
   return (
-    <Card borderRadius="none" minWidth="1000px">
+    <Card borderRadius="none" mb="5px">
       <CardBody>
         <Grid
           templateColumns="0.3fr 0.3fr 0.3fr 0.3fr"

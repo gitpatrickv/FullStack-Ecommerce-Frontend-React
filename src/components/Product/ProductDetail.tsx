@@ -197,10 +197,10 @@ const ProductDetail = ({ product }: Props) => {
 
   return (
     <>
-      <Card borderRadius="none">
+      <Card borderRadius="none" minWidth="1300px">
         <CardBody>
           <Grid
-            templateColumns="0.6fr 600px "
+            templateColumns="0.5fr 0.5fr "
             templateAreas={`
       "content1 content2"
     `}
@@ -212,7 +212,7 @@ const ProductDetail = ({ product }: Props) => {
             </GridItem>
 
             <GridItem area="content2">
-              <Box p={3}>
+              <Box p={3} minWidth="600px">
                 <Box>
                   <Text
                     fontSize="x-large"

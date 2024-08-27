@@ -47,6 +47,7 @@ const ChatPage = () => {
           onClick={maximizeChat}
           cursor="pointer"
           bg="orange.500"
+          as="section"
         >
           <Box
             color="white"

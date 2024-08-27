@@ -3,7 +3,14 @@ import MyLinks from "./MyLinks";
 
 const Footer = () => {
   return (
-    <Card borderRadius="none" as="footer" bottom="0" width="100%" mt="auto">
+    <Card
+      borderRadius="none"
+      as="footer"
+      bottom="0"
+      width="100%"
+      mt="auto"
+      minWidth={{ base: "1400px", lg: "1650px" }}
+    >
       <CardBody>
         <Box display="flex" flexDirection="column" alignItems="center">
           <MyLinks />
