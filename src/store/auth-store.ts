@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface AuthStore {
     jwtToken: string;
@@ -19,35 +19,35 @@ export const useAuthQueryStore = create<AuthQueryStore>()(
     persist(
         (set) => ({
             authStore: {
-                jwtToken: sessionStorage.getItem("jwtToken") || "",
-                role: sessionStorage.getItem("role") || "",
-                authUser: sessionStorage.getItem("authUser") || "",
+                jwtToken: localStorage.getItem("jwtToken") || "",
+                role: localStorage.getItem("role") || "",
+                authUser: localStorage.getItem("authUser") || "",
             },
             setJwtToken: (jwtToken) => {
-                sessionStorage.setItem("jwtToken", jwtToken);
+                localStorage.setItem("jwtToken", jwtToken);
                 set((state) => ({ authStore: { ...state.authStore, jwtToken } }));
             },
             setRole: (role) => {
-                sessionStorage.setItem("role", role);
+                localStorage.setItem("role", role);
                 set((state) => ({ authStore: { ...state.authStore, role } }));
             },
             setAuthUser: (authUser) => {
-                sessionStorage.setItem("authUser", authUser);
+                localStorage.setItem("authUser", authUser);
                 set((state) => ({ authStore: { ...state.authStore, authUser } }));
             },
             logout: (navigate) => {
-                sessionStorage.removeItem("jwtToken");
+                localStorage.removeItem("jwtToken");
                 set((state) => ({ authStore: { ...state.authStore, jwtToken: "" } }));
-                sessionStorage.removeItem("role");
+                localStorage.removeItem("role");
                 set((state) => ({ authStore: { ...state.authStore, role: "" } }));
-                sessionStorage.removeItem("authUser");
+                localStorage.removeItem("authUser");
                 set((state) => ({ authStore: { ...state.authStore, authUser: "" } }));
                 navigate("/");
             },
         }),
         {
             name: "auth-storage",
-             getStorage: () => sessionStorage
+            storage: createJSONStorage(() => localStorage) 
         }
     )
 );
